@@ -1,0 +1,27 @@
+# Ignore artifacts:
+build
+coverage
+node_modules
+public
+
+# Ignore all other files:
+*.ico
+*.png
+*.md
+*.svg
+*.jpg
+*.sh
+*.html
+*.yaml
+*pre-commit
+*.gitignore
+*.gcloudignore
+*.prettierignore
+*.eslintcache
+*.eslintignore
+*.editorconfig
+*.lock
+*.env
+*.env.*
+Dockerfile
+.dockerignore
