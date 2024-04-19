@@ -1,5 +1,6 @@
 {
     "*/**/*.{js,jsx,ts,tsx}": [
+        "jest --bail --findRelatedTests --passWithNoTests",
         "prettier --write",
         "eslint --cache --fix",
         "eslint"
