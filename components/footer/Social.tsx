@@ -66,8 +66,10 @@ const InstagramImages: FC<InstagramImagesProps> = ({
 									<Image
 										src={image.src}
 										alt="Instagram post"
-										layout="fill"
-										objectFit="cover"
+										fill
+										style={{
+											objectFit: "cover",
+										}}
 										priority
 									/>
 									<motion.div
