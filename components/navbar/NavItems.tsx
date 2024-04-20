@@ -30,8 +30,19 @@ const NavItems: NavItem[] = [
 	},
 ];
 
-const CartIcon = ({ cartItems }: { cartItems: number }) => (
-	<div className="relative">
+const CartIcon = ({
+	cartItems,
+	setCartOpen,
+}: {
+	cartItems: number;
+	setCartOpen: (open: boolean) => void;
+}) => (
+	<button
+		type="button"
+		aria-label="Open shopping cart"
+		className="relative"
+		onClick={() => setCartOpen(true)}
+	>
 		<BagIcon />
 		<div
 			className="absolute -top-2 -right-2 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"
@@ -39,7 +50,7 @@ const CartIcon = ({ cartItems }: { cartItems: number }) => (
 		>
 			{cartItems}
 		</div>
-	</div>
+	</button>
 );
 
 const SearchIcon = ({
@@ -76,6 +87,7 @@ const icons = (
 	cartItems: number,
 	setSearchOpen: (open: boolean) => void,
 	setLoginModalOpen: (open: boolean) => void,
+	setCartOpen: (open: boolean) => void,
 ): NavIcon[] => [
 	{
 		title: "Magnifier",
@@ -92,8 +104,7 @@ const icons = (
 	},
 	{
 		title: "Cart",
-		icon: <CartIcon cartItems={cartItems} />,
-		url: "/cart",
+		icon: <CartIcon cartItems={cartItems} setCartOpen={setCartOpen} />,
 	},
 ];
 
