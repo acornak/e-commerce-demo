@@ -3,6 +3,7 @@ import React from "react";
 import Navbar from "@/components/navbar/Navbar";
 // Next
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 // Fonts
 import { montserrat } from "./fonts";
 // Styles
@@ -21,6 +22,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={montserrat.className}>
+				<Analytics />
 				<Navbar />
 				<main className="h-full overflow-y-auto main overscroll-none">
 					{children}
