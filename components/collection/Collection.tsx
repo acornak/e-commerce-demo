@@ -72,10 +72,14 @@ const Collection = (): JSX.Element => {
 									>
 										<motion.div
 											initial={{ opacity: 0 }}
-											whileHover={{ opacity: 0.8 }}
+											whileHover={{ opacity: 1 }}
 											className="absolute inset-0 bg-black bg-opacity-20 flex justify-center items-center rounded-full overflow-hidden"
 											transition={{ duration: 0.3 }}
-										/>
+										>
+											<span className="text-white text-5xl font-thin select-none">
+												+
+											</span>
+										</motion.div>
 										<Image
 											src={category.image}
 											alt={category.title}
