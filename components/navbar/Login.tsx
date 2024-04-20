@@ -15,12 +15,12 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => (
 		<input
 			type="text"
 			placeholder="Email address"
-			className="text-xs border border-gray-300 p-4"
+			className="md:text-xs border border-gray-300 p-4"
 		/>
 		<input
 			type="password"
 			placeholder="Password"
-			className="text-xs border border-gray-300 p-4"
+			className="md:text-xs border border-gray-300 p-4"
 		/>
 		<p className="inline text-start text-xs">
 			<motion.button

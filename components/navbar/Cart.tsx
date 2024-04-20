@@ -28,8 +28,7 @@ const ShoppingCart: FC<ShoppingCartProps> = ({
 				ease: "easeInOut",
 				duration: 0.3,
 			}}
-			className="fixed top-0 right-0 h-full bg-white shadow-xl z-50"
-			style={{ width: "500px" }}
+			className="fixed top-0 right-0 h-full bg-white shadow-xl z-50 w-5/6 max-w-[500px]"
 		>
 			<div className="flex items-center justify-between w-full">
 				<motion.button

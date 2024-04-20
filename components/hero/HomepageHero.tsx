@@ -31,11 +31,11 @@ const HeroHeading: FC<HeroHeadingProps> = ({
 }): JSX.Element => (
 	<div className="xl:-ml-96 px-20">
 		<p>
-			<span className="text-white text-sm tracking-3xl uppercase">
+			<span className="text-white text-xs md:text-sm tracking-3xl uppercase">
 				{subheading}
 			</span>
 		</p>
-		<h1 className="text-white text-5xl md:text-6xl pb-4 tracking-widest font-semibold">
+		<h1 className="text-white text-3xl sm:text-5xl md:text-6xl pb-4 tracking-widest font-semibold">
 			{heading}
 		</h1>
 	</div>
@@ -78,7 +78,7 @@ const HeroContent: FC<HeroContentProps> = ({
 	buttonText,
 	href,
 }): JSX.Element => (
-	<div className="flex flex-col text-white md:text-xl items-center justify-center xl:-ml-96 px-20">
+	<div className="flex flex-col text-white text-sm md:text-xl items-center justify-center xl:-ml-96 px-20">
 		<p className="pb-6">{text}</p>
 
 		<HeroButton text={buttonText} href={href} />

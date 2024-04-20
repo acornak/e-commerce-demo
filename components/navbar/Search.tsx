@@ -16,7 +16,7 @@ const SearchBar: FC<SearchBarProps> = ({ searchOpen }) => {
 					animate="open"
 					exit="closed"
 					variants={{
-						open: { height: "400px", opacity: 1, y: 0 },
+						open: { height: "350px", opacity: 1, y: 0 },
 						closed: { height: 0, opacity: 0, y: "-100%" },
 					}}
 					transition={{
@@ -30,7 +30,7 @@ const SearchBar: FC<SearchBarProps> = ({ searchOpen }) => {
 						initial={{ opacity: 0, y: "-100%" }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.3, duration: 0.3 }}
-						className="text-4xl font-semibold text-center py-20 p-4"
+						className="text-2xl md:text-4xl font-semibold text-center py-20 p-4"
 					>
 						Start typing and hit Enter
 					</motion.h2>
@@ -42,7 +42,7 @@ const SearchBar: FC<SearchBarProps> = ({ searchOpen }) => {
 					>
 						<input
 							type="search"
-							className="w-full p-2"
+							className="w-full p-2 bg-white"
 							placeholder="Search for products..."
 						/>
 						<button type="button" aria-label="Search for products">
