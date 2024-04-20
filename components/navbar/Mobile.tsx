@@ -2,7 +2,7 @@
 
 import React, { FC, useState } from "react";
 // Animations
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 // Components
 import { NavItems } from "./NavItems";
 import { LoginForm, RegisterForm } from "./Login";
@@ -72,67 +72,76 @@ const MobileItems: FC<MobileItemsProps> = ({
 	};
 
 	return (
-		<motion.div
-			initial="closed"
-			animate={drawerOpen ? "open" : "closed"}
-			variants={{
-				open: { x: 0, opacity: 1 },
-				closed: { x: "-100%", opacity: 0 },
-			}}
-			transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
-			className="fixed top-0 left-0 h-full bg-white shadow-xl z-50 uppercase"
-			style={{ width: "400px" }}
-		>
-			<ul>
-				<div className="flex justify-between border-b border-gray-300 uppercase text-xs">
-					<button
-						type="button"
-						className={`${
-							showLogin
-								? "bg-white text-black"
-								: "bg-black text-white"
-						} p-3 flex items-center justify-center w-1/2 md:w-full cursor-pointer`}
-						onClick={() =>
-							showLogin
-								? setShowLogin(false)
-								: setdrawerOpen(false)
-						}
-					>
-						<BarsIcon />
-						<span className="pl-4">Menu</span>
-					</button>
-					<button
-						type="button"
-						className={`${
-							showLogin
-								? "bg-black text-white"
-								: "bg-white text-black"
-						} flex items-center justify-center w-1/2 md:hidden`}
-						onClick={() =>
-							showLogin
-								? setdrawerOpen(false)
-								: setShowLogin(true)
-						}
-					>
-						<div className="w-5 h-5">
-							<UserIcon />
+		<AnimatePresence>
+			{drawerOpen && (
+				<motion.div
+					initial="closed"
+					animate="open"
+					exit="closed"
+					variants={{
+						open: { x: 0, opacity: 1 },
+						closed: { x: "-100%", opacity: 0 },
+					}}
+					transition={{
+						type: "tween",
+						ease: "easeInOut",
+						duration: 0.3,
+					}}
+					className="fixed top-0 left-0 h-full bg-white shadow-xl uppercase z-50"
+					style={{ width: "400px" }}
+				>
+					<ul>
+						<div className="flex justify-between border-b border-gray-300 uppercase text-xs">
+							<button
+								type="button"
+								className={`${
+									showLogin
+										? "bg-white text-black"
+										: "bg-black text-white"
+								} p-3 flex items-center justify-center w-1/2 md:w-full cursor-pointer`}
+								onClick={() =>
+									showLogin
+										? setShowLogin(false)
+										: setdrawerOpen(false)
+								}
+							>
+								<BarsIcon />
+								<span className="pl-4">Menu</span>
+							</button>
+							<button
+								type="button"
+								className={`${
+									showLogin
+										? "bg-black text-white"
+										: "bg-white text-black"
+								} flex items-center justify-center w-1/2 md:hidden`}
+								onClick={() =>
+									showLogin
+										? setdrawerOpen(false)
+										: setShowLogin(true)
+								}
+							>
+								<div className="w-5 h-5">
+									<UserIcon />
+								</div>
+								<span className="pl-4">Login</span>
+							</button>
 						</div>
-						<span className="pl-4">Login</span>
+						{handleContent()}
+					</ul>
+					<button
+						type="button"
+						onClick={() => setdrawerOpen(false)}
+						className="absolute bottom-0 w-full p-4 text-white uppercase text-sm"
+						style={{
+							backgroundColor: "#FF6347",
+						}}
+					>
+						Close
 					</button>
-				</div>
-				{handleContent()}
-			</ul>
-			<button
-				type="button"
-				onClick={() => setdrawerOpen(false)}
-				className="absolute bottom-0 w-full p-4 text-white uppercase text-sm"
-				style={{
-					backgroundColor: "#FF6347",
-				}}
-			>
-				Close
-			</button>
-		</motion.div>
+				</motion.div>
+			)}
+		</AnimatePresence>
 	);
 };
 

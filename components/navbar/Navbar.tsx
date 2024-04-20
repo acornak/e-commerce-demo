@@ -140,7 +140,16 @@ const Navbar = (): JSX.Element => {
 				setCartOpen={setCartOpen}
 				cartItems={cartItems}
 			/>
-			<nav className="top-0 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8">
+			<MobileItems
+				drawerOpen={drawerOpen}
+				setdrawerOpen={setdrawerOpen}
+			/>
+			<nav
+				className="sticky top-0 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8 border border-b border-gray-300"
+				style={{
+					zIndex: 20,
+				}}
+			>
 				<motion.div
 					className="cursor-pointer lg:hidden"
 					initial={{ color: "#333" }}
@@ -150,10 +159,6 @@ const Navbar = (): JSX.Element => {
 				>
 					<BarsIcon />
 				</motion.div>
-				<MobileItems
-					drawerOpen={drawerOpen}
-					setdrawerOpen={setdrawerOpen}
-				/>
 
 				<Link
 					className={`${dancing.className} text-4xl hidden lg:flex cursor-pointer select-none`}

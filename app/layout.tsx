@@ -5,6 +5,8 @@ import { Analytics } from "@vercel/analytics/react";
 // Components
 import Navbar from "@/components/navbar/Navbar";
 import CookieConsent from "@/components/cookie/CookieConsent";
+import Footer from "@/components/footer/Footer";
+import Sitemap from "@/components/footer/Sitemap";
 // Fonts
 import { montserrat } from "./fonts";
 // Styles
@@ -24,10 +26,12 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={montserrat.className}>
 				<Analytics />
-				<Navbar />
 				<main className="h-full overflow-y-auto main overscroll-none">
+					<Navbar />
 					<CookieConsent />
 					{children}
+					<Sitemap />
+					<Footer />
 				</main>
 			</body>
 		</html>

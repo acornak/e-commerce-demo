@@ -11,37 +11,37 @@ describe("Navbar", () => {
 	it("renders the navigation items", () => {
 		render(<Navbar />);
 		NavItems.forEach((item: NavItem) => {
-			const navItem = screen.queryAllByText(item.title);
-			expect(navItem).toHaveLength(2);
+			const navItem = screen.getByText(item.title);
+			expect(navItem).toBeInTheDocument();
 		});
 	});
 
 	it("renders all icons", () => {
 		render(<Navbar />);
-		const bagIcon = screen.queryAllByTestId("Bagicon");
-		const heartIcon = screen.queryAllByTestId("Hearticon");
-		const magnifierIcon = screen.queryAllByTestId("Magnifiericon");
-		const userIcon = screen.queryAllByTestId("Usericon");
+		const bagIcon = screen.getAllByTestId("Bagicon");
+		const heartIcon = screen.getAllByTestId("Hearticon");
+		const magnifierIcon = screen.getAllByTestId("Magnifiericon");
+		const userIcon = screen.getAllByTestId("Usericon");
 
 		expect(bagIcon).toHaveLength(2);
 		expect(heartIcon).toHaveLength(1);
 		expect(magnifierIcon).toHaveLength(2);
-		expect(userIcon).toHaveLength(2);
+		expect(userIcon).toHaveLength(1);
 	});
 
 	it("changes text color on mouse enter - navitem", async () => {
 		render(<Navbar />);
-		const hoveredNavItem = screen.queryAllByText(NavItems[0].title);
-		const notHoveredNavItem = screen.queryAllByText(NavItems[1].title);
+		const hoveredNavItem = screen.getByText(NavItems[0].title);
+		const notHoveredNavItem = screen.getByText(NavItems[1].title);
 
-		fireEvent.mouseEnter(hoveredNavItem[1]);
+		fireEvent.mouseEnter(hoveredNavItem);
 		await waitFor(() => {
-			expect(hoveredNavItem[1].parentElement).toHaveStyle(
+			expect(hoveredNavItem.parentElement).toHaveStyle(
 				"color: rgb(255, 99, 71);",
 			);
 		});
 
-		expect(notHoveredNavItem[1].parentElement).toHaveStyle(
+		expect(notHoveredNavItem.parentElement).toHaveStyle(
 			"color: rgb(51, 51, 51);",
 		);
 	});

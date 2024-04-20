@@ -29,7 +29,7 @@ const SearchBar: FC<SearchBarProps> = ({ searchOpen }) => {
 					<motion.h2
 						initial={{ opacity: 0, y: "-100%" }}
 						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.3, duration: 0.3 }}
+						transition={{ delay: 0.2, duration: 0.3 }}
 						className="text-2xl md:text-4xl font-semibold text-center py-20 p-4"
 					>
 						Start typing and hit Enter
@@ -37,7 +37,7 @@ const SearchBar: FC<SearchBarProps> = ({ searchOpen }) => {
 					<motion.div
 						initial={{ opacity: 0, y: "-100%" }}
 						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.6, duration: 0.3 }}
+						transition={{ delay: 0.4, duration: 0.3 }}
 						className="mx-10 md:mx-20 lg:mx-48 flex items-center border-b"
 					>
 						<input
