@@ -156,17 +156,17 @@ const Navbar = (): JSX.Element => {
 				/>
 
 				<Link
-					className={`${dancing.className} text-3xl hidden lg:flex cursor-pointer select-none`}
+					className={`${dancing.className} text-4xl hidden lg:flex cursor-pointer select-none`}
 					href="/"
 				>
-					Demo Project
+					Glassify
 				</Link>
 				<ul className="flex justify-center items-center space-x-8">
 					<Link
-						className={`${dancing.className} text-2xl lg:hidden cursor-pointer select-none`}
+						className={`${dancing.className} text-3xl lg:hidden cursor-pointer select-none`}
 						href="/"
 					>
-						Demo Project
+						Glassify
 					</Link>
 					<DesktopItems
 						selected={selected}

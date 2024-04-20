@@ -9,7 +9,7 @@ import { montserrat } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "E-commerce demo",
+	title: "Glassify",
 	description: "Demo project for e-commerce website",
 };
 

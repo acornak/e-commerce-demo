@@ -8,6 +8,14 @@ export default function Home(): JSX.Element {
 		<>
 			<HomepageHero />
 			<Collection />
+			<div className="p-20">Ahoj</div>
+			<div className="p-20">Ahoj</div>
+			<div className="p-20">Ahoj</div>
+			<div className="p-20">Ahoj</div>
+			<div className="p-20">Ahoj</div>
+			<div className="p-20">Ahoj</div>
+			<div className="p-20">Ahoj</div>
+			<div className="p-20">Ahoj</div>
 		</>
 	);
 }

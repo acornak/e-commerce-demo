@@ -176,9 +176,9 @@ const LoginModal: FC<LoginModalProps> = ({
 							<CloseIcon />
 						</motion.button>
 						<h2
-							className={`${dancing.className} text-6xl select-none pb-4`}
+							className={`${dancing.className} text-6xl select-none pb-4 mx-12`}
 						>
-							Demo Project
+							Glassify
 						</h2>
 						<hr className="pb-4" />
 						<p className="pb-4 text-xl">
