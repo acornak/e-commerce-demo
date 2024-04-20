@@ -163,13 +163,44 @@ const HomepageHero: FC = (): JSX.Element => {
 	};
 
 	useEffect(() => {
-		const intervalId = setInterval(() => {
-			if (!isChanging) {
-				setCurrent((prevCurrent) => (prevCurrent + 1) % heroes.length);
-			}
-		}, 4000);
+		let intervalId: number | null = null;
 
-		return () => clearInterval(intervalId);
+		const startInterval = () => {
+			if (!isChanging && !intervalId) {
+				intervalId = window.setInterval(() => {
+					setCurrent(
+						(prevCurrent) => (prevCurrent + 1) % heroes.length,
+					);
+				}, 4000);
+			}
+		};
+
+		const stopInterval = () => {
+			if (intervalId) {
+				clearInterval(intervalId);
+				intervalId = null;
+			}
+		};
+
+		startInterval();
+
+		const handleVisibilityChange = () => {
+			if (document.visibilityState === "hidden") {
+				stopInterval();
+			} else {
+				startInterval();
+			}
+		};
+
+		document.addEventListener("visibilitychange", handleVisibilityChange);
+
+		return () => {
+			stopInterval();
+			document.removeEventListener(
+				"visibilitychange",
+				handleVisibilityChange,
+			);
+		};
 	}, [isChanging]);
 
 	return (
