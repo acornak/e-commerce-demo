@@ -67,7 +67,7 @@ const NavIcons: FC<NavIconsProps> = ({
 						<AnimatePresence>
 							{selected === index + NavItems.length && (
 								<motion.div
-									className="absolute left-0 bottom-0 h-0.5"
+									className="absolute left-0 bottom-0 h-0.5 bg-secondary"
 									data-testid={`${icon.title}Underline`}
 									layoutId={`underline-${index}`}
 									initial={{
@@ -87,7 +87,6 @@ const NavIcons: FC<NavIconsProps> = ({
 										duration: 0.3,
 										ease: "easeInOut",
 									}}
-									style={{ backgroundColor: "#FF6347" }}
 								/>
 							)}
 						</AnimatePresence>

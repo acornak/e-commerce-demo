@@ -20,6 +20,9 @@ const config: Config = {
 			"3xl": ".5em",
 		},
 		extend: {
+			colors: {
+				secondary: "#FF6347",
+			},
 			margin: {
 				"96": "25rem",
 				"128": "32rem",

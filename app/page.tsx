@@ -3,6 +3,7 @@ import React from "react";
 import HomepageHero from "@/components/hero/HomepageHero";
 import Collection from "@/components/collection/Collection";
 import TopProducts from "@/components/products/TopProducts";
+import Social from "@/components/footer/Social";
 
 export default function Home(): JSX.Element {
 	return (
@@ -10,6 +11,8 @@ export default function Home(): JSX.Element {
 			<HomepageHero />
 			<Collection />
 			<TopProducts />
+
+			<Social />
 		</>
 	);
 }

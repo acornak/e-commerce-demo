@@ -22,10 +22,7 @@ export default function Error({
 				<div className="mt-6 text-center">
 					<button
 						type="button"
-						className="px-4 py-2 text-white uppercase text-sm"
-						style={{
-							backgroundColor: "#FF6347",
-						}}
+						className="px-4 py-2 text-white uppercase text-sm bg-secondary"
 						onClick={() => reset()}
 					>
 						Try again

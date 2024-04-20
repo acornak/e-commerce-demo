@@ -132,10 +132,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 					<button
 						type="button"
 						onClick={() => setdrawerOpen(false)}
-						className="absolute bottom-0 w-full p-4 text-white uppercase text-sm"
-						style={{
-							backgroundColor: "#FF6347",
-						}}
+						className="absolute bottom-0 w-full p-4 text-white uppercase text-sm bg-secondary"
 					>
 						Close
 					</button>

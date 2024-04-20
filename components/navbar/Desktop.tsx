@@ -28,7 +28,7 @@ const DesktopItems: FC<DesktopNavProps> = ({ selected, setSelected }) => (
 				<AnimatePresence>
 					{selected === index && (
 						<motion.div
-							className="absolute left-0 bottom-0 h-0.5"
+							className="absolute left-0 bottom-0 h-0.5 bg-secondary"
 							layoutId={`underline-${index}`}
 							initial={{
 								width: 0,
@@ -47,7 +47,6 @@ const DesktopItems: FC<DesktopNavProps> = ({ selected, setSelected }) => (
 								duration: 0.3,
 								ease: "easeInOut",
 							}}
-							style={{ backgroundColor: "#FF6347" }}
 						/>
 					)}
 				</AnimatePresence>
