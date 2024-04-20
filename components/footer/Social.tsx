@@ -68,6 +68,7 @@ const InstagramImages: FC<InstagramImagesProps> = ({
 										alt="Instagram post"
 										layout="fill"
 										objectFit="cover"
+										priority
 									/>
 									<motion.div
 										className="absolute inset-0 flex justify-center items-center text-white bg-black bg-opacity-40"
