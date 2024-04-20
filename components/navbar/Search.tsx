@@ -4,13 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import MagnifierIcon from "../icons/Magnifier";
 
 type SearchBarProps = {
-	isSearchOpen: boolean;
+	searchOpen: boolean;
 };
 
-const SearchBar: FC<SearchBarProps> = ({ isSearchOpen }) => {
+const SearchBar: FC<SearchBarProps> = ({ searchOpen }) => {
 	return (
 		<AnimatePresence>
-			{isSearchOpen && (
+			{searchOpen && (
 				<motion.div
 					initial="closed"
 					animate="open"

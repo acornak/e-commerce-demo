@@ -33,22 +33,21 @@ const DesktopItems: FC<DesktopNavProps> = ({ selected, setSelected }) => (
 							initial={{
 								width: 0,
 								x: 0,
-								backgroundColor: "#FF6347",
 							}}
 							animate={{
 								width: "100%",
 								x: 0,
-								backgroundColor: "#FF6347",
 							}}
 							exit={{
 								width: 0,
 								x: 0,
-								backgroundColor: "black",
+								backgroundColor: "#333",
 							}}
 							transition={{
 								duration: 0.3,
 								ease: "easeInOut",
 							}}
+							style={{ backgroundColor: "#FF6347" }}
 						/>
 					)}
 				</AnimatePresence>

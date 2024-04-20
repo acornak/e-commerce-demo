@@ -43,32 +43,47 @@ const CartIcon = ({ cartItems }: { cartItems: number }) => (
 );
 
 const SearchIcon = ({
-	setIsSearchOpen,
+	setSearchOpen,
 }: {
-	setIsSearchOpen: (open: boolean) => void;
+	setSearchOpen: (open: boolean) => void;
 }) => (
 	<button
 		type="button"
 		aria-label="Search for products"
 		className="relative"
-		onClick={() => setIsSearchOpen(true)}
+		onClick={() => setSearchOpen(true)}
 	>
 		<MagnifierIcon />
 	</button>
 );
 
+const LoginIcon = ({
+	setLoginModalOpen,
+}: {
+	setLoginModalOpen: (open: boolean) => void;
+}) => (
+	<button
+		type="button"
+		aria-label="Search for products"
+		className="relative"
+		onClick={() => setLoginModalOpen(true)}
+	>
+		<UserIcon />
+	</button>
+);
+
 const icons = (
 	cartItems: number,
-	setIsSearchOpen: (open: boolean) => void,
+	setSearchOpen: (open: boolean) => void,
+	setLoginModalOpen: (open: boolean) => void,
 ): NavIcon[] => [
 	{
 		title: "Magnifier",
-		icon: <SearchIcon setIsSearchOpen={setIsSearchOpen} />,
+		icon: <SearchIcon setSearchOpen={setSearchOpen} />,
 	},
 	{
 		title: "User",
-		icon: <UserIcon />,
-		url: "/user",
+		icon: <LoginIcon setLoginModalOpen={setLoginModalOpen} />,
 	},
 	{
 		title: "Heart",

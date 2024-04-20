@@ -16,9 +16,11 @@ import { NavItems, icons } from "./NavItems";
 // Icons
 import BarsIcon from "../icons/Bars";
 import SearchBar from "./Search";
+import LoginModal from "./Login";
 
 interface NavIconsProps extends DesktopNavProps {
-	setIsSearchOpen: (open: boolean) => void;
+	setSearchOpen: (open: boolean) => void;
+	setLoginModalOpen: (open: boolean) => void;
 	cartItems: number;
 	mobile?: boolean;
 }
@@ -26,13 +28,14 @@ interface NavIconsProps extends DesktopNavProps {
 const NavIcons: FC<NavIconsProps> = ({
 	selected,
 	setSelected,
-	setIsSearchOpen,
+	setSearchOpen,
+	setLoginModalOpen,
 	cartItems,
 	mobile,
 }) => {
 	return (
 		<LayoutGroup id="nav-icons">
-			{icons(cartItems, setIsSearchOpen).map(
+			{icons(cartItems, setSearchOpen, setLoginModalOpen).map(
 				(icon: NavIcon, index: number): JSX.Element | null => {
 					if (
 						mobile &&
@@ -66,22 +69,21 @@ const NavIcons: FC<NavIconsProps> = ({
 										initial={{
 											width: 0,
 											x: 0,
-											backgroundColor: "#FF6347",
 										}}
 										animate={{
 											width: "100%",
 											x: 0,
-											backgroundColor: "#FF6347",
 										}}
 										exit={{
 											width: 0,
 											x: 0,
-											backgroundColor: "black",
+											backgroundColor: "#333",
 										}}
 										transition={{
 											duration: 0.3,
 											ease: "easeInOut",
 										}}
+										style={{ backgroundColor: "#FF6347" }}
 									/>
 								)}
 							</AnimatePresence>
@@ -95,15 +97,17 @@ const NavIcons: FC<NavIconsProps> = ({
 
 const Navbar = (): JSX.Element => {
 	const [selected, setSelected] = useState<number | null>(null);
-	const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+	const [searchOpen, setSearchOpen] = useState<boolean>(false);
+	const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+	const [drawerOpen, setdrawerOpen] = useState<boolean>(false);
 	const cartItems = 0;
 
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
-				if (isSearchOpen) setIsSearchOpen(false);
-				if (isDrawerOpen) setIsDrawerOpen(false);
+				if (searchOpen) setSearchOpen(false);
+				if (drawerOpen) setdrawerOpen(false);
+				if (loginModalOpen) setLoginModalOpen(false);
 			}
 		};
 
@@ -112,24 +116,33 @@ const Navbar = (): JSX.Element => {
 		return () => {
 			window.removeEventListener("keydown", handleEsc);
 		};
-	}, [isSearchOpen, isDrawerOpen]);
+	}, [searchOpen, drawerOpen, loginModalOpen]);
+
+	const showFade = (): boolean => {
+		if (searchOpen || drawerOpen || loginModalOpen) return true;
+		return false;
+	};
 
 	return (
 		<>
-			<SearchBar isSearchOpen={isSearchOpen} />
+			<LoginModal
+				loginModalOpen={loginModalOpen}
+				setLoginModalOpen={setLoginModalOpen}
+			/>
+			<SearchBar searchOpen={searchOpen} />
 			<nav className="top-0 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8">
 				<motion.div
 					className="cursor-pointer lg:hidden"
 					initial={{ color: "#333" }}
 					whileHover={{ color: "#FF6347" }}
 					transition={{ duration: 0.2 }}
-					onClick={() => setIsDrawerOpen((prev) => !prev)}
+					onClick={() => setdrawerOpen((prev) => !prev)}
 				>
 					<BarsIcon />
 				</motion.div>
 				<MobileItems
-					isDrawerOpen={isDrawerOpen}
-					setIsDrawerOpen={setIsDrawerOpen}
+					drawerOpen={drawerOpen}
+					setdrawerOpen={setdrawerOpen}
 				/>
 
 				<Link
@@ -155,7 +168,8 @@ const Navbar = (): JSX.Element => {
 						selected={selected}
 						setSelected={setSelected}
 						cartItems={cartItems}
-						setIsSearchOpen={setIsSearchOpen}
+						setSearchOpen={setSearchOpen}
+						setLoginModalOpen={setLoginModalOpen}
 					/>
 				</div>
 				<div className="flex space-x-4 md:hidden">
@@ -163,28 +177,14 @@ const Navbar = (): JSX.Element => {
 						selected={selected}
 						setSelected={setSelected}
 						cartItems={cartItems}
-						setIsSearchOpen={setIsSearchOpen}
+						setSearchOpen={setSearchOpen}
+						setLoginModalOpen={setLoginModalOpen}
 						mobile
 					/>
 				</div>
 			</nav>
 			<AnimatePresence>
-				{isDrawerOpen && (
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 0.7 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.2 }}
-						className="fixed inset-0 bg-black bg-opacity-80"
-						style={{
-							zIndex: 20,
-						}}
-						onClick={() => setIsDrawerOpen(false)}
-					/>
-				)}
-			</AnimatePresence>
-			<AnimatePresence>
-				{isSearchOpen && (
+				{showFade() && (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.7 }}
@@ -195,7 +195,9 @@ const Navbar = (): JSX.Element => {
 							zIndex: 20,
 						}}
 						onClick={() => {
-							setIsSearchOpen(false);
+							setSearchOpen(false);
+							setdrawerOpen(false);
+							setLoginModalOpen(false);
 						}}
 					/>
 				)}
