@@ -4,9 +4,8 @@ const BagIcon = (): JSX.Element => (
 	<svg
 		fill="none"
 		viewBox="0 0 15 15"
-		height="1.5em"
-		width="1.5em"
 		data-testid="Bagicon"
+		className="w-5 h-5 lg:w-6 lg:h-6"
 	>
 		<path
 			fill="currentColor"

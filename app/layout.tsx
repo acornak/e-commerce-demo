@@ -1,6 +1,11 @@
 import React from "react";
+// Components
+import Navbar from "@/components/navbar/Navbar";
+// Next
 import type { Metadata } from "next";
-import { roboto } from "./fonts";
+// Fonts
+import { montserrat } from "./fonts";
+// Styles
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +20,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={roboto.className}>{children}</body>
+			<body className={montserrat.className}>
+				<Navbar />
+				<main className="h-full overflow-y-auto main overscroll-none">
+					{children}
+				</main>
+			</body>
 		</html>
 	);
 }

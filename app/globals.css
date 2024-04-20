@@ -16,6 +16,20 @@
 	}
 }
 
+html,
+body {
+	/* Prevents scrolling beyond the top or bottom of the page */
+	overflow: hidden;
+	/* Ensures the page takes up full viewport height */
+	height: 100%;
+	/* Prevents accidental user selection */
+	-webkit-tap-highlight-color: transparent;
+	/* Removes scrollbar space to prevent horizontal scrolling */
+	overflow-x: hidden;
+	/* Prevents overscrolling effects like bounce-back in supported browsers */
+	overscroll-behavior: none;
+}
+
 body {
 	color: rgb(var(--foreground-rgb));
 	background: linear-gradient(

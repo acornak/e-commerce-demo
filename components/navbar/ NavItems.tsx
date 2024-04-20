@@ -28,13 +28,21 @@ const NavItems: NavItem[] = [
 		title: "Blog",
 		url: "/blog",
 	},
-	{
-		title: "Portfolio",
-		url: "/portfolio",
-	},
 ];
 
-const Icons: NavIcon[] = [
+const CartIcon = ({ cartItems }: { cartItems: number }) => (
+	<div className="relative">
+		<BagIcon />
+		<div
+			className="absolute -top-2 -right-2 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"
+			style={{ backgroundColor: "#FF6347" }}
+		>
+			{cartItems}
+		</div>
+	</div>
+);
+
+const icons = (cartItems: number): NavIcon[] => [
 	{
 		title: "Magnifier",
 		icon: <MagnifierIcon />,
@@ -51,10 +59,10 @@ const Icons: NavIcon[] = [
 		url: "/wishlist",
 	},
 	{
-		title: "Bag",
-		icon: <BagIcon />,
-		url: "/bag",
+		title: "Cart",
+		icon: <CartIcon cartItems={cartItems} />,
+		url: "/cart",
 	},
 ];
 
-export { NavItems, Icons };
+export { NavItems, icons };

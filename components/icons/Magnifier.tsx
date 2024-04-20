@@ -3,20 +3,25 @@ import React from "react";
 const MagnifierIcon = (): JSX.Element => (
 	<svg
 		fill="currentColor"
-		viewBox="0 0 64 64"
-		height="1.45em"
-		width="1.45em"
+		version="1.1"
+		id="Capa_1"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 490.4 490.4"
 		data-testid="Magnifiericon"
+		className="w-5 h-5 lg:w-6 lg:h-6"
 	>
+		<g id="SVGRepo_bgCarrier" strokeWidth="0" />
 		<g
-			fill="none"
-			stroke="currentColor"
-			strokeMiterlimit={20}
-			strokeWidth={4}
-		>
-			<path d="M41 21 A20 20 0 0 1 21 41 A20 20 0 0 1 1 21 A20 20 0 0 1 41 21 z" />
-			<path d="M35 35l6 6" />
-			<path strokeWidth={3.88888} d="M63 57l-5.999 6-19-19 6-6z" />
+			id="SVGRepo_tracerCarrier"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+		/>
+		<g id="SVGRepo_iconCarrier">
+			{" "}
+			<g>
+				{" "}
+				<path d="M484.1,454.796l-110.5-110.6c29.8-36.3,47.6-82.8,47.6-133.4c0-116.3-94.3-210.6-210.6-210.6S0,94.496,0,210.796 s94.3,210.6,210.6,210.6c50.8,0,97.4-18,133.8-48l110.5,110.5c12.9,11.8,25,4.2,29.2,0C492.5,475.596,492.5,463.096,484.1,454.796z M41.1,210.796c0-93.6,75.9-169.5,169.5-169.5s169.6,75.9,169.6,169.5s-75.9,169.5-169.5,169.5S41.1,304.396,41.1,210.796z" />{" "}
+			</g>{" "}
 		</g>
 	</svg>
 );

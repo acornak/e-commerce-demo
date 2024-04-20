@@ -2,19 +2,13 @@ import React from "react";
 
 const UserIcon = (): JSX.Element => (
 	<svg
-		fill="currentColor"
 		viewBox="0 0 24 24"
-		height="1.9em"
-		width="2em"
+		fill="currentColor"
 		data-testid="Usericon"
+		className="w-5 h-5 lg:w-6 lg:h-6"
 	>
-		<path
-			fill="none"
-			stroke="currentColor"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-			d="M10.5 2.5a3 3 0 013 3v2a3 3 0 11-6 0v-2a3 3 0 013-3zm7 14v-.728c0-3.187-3.686-5.272-7-5.272s-7 2.085-7 5.272v.728a1 1 0 001 1h12a1 1 0 001-1z"
-		/>{" "}
+		<path fill="none" d="M0 0h24v24H0z" />
+		<path d="M20 22h-2v-2a3 3 0 00-3-3H9a3 3 0 00-3 3v2H4v-2a5 5 0 015-5h6a5 5 0 015 5v2zm-8-9a6 6 0 110-12 6 6 0 010 12zm0-2a4 4 0 100-8 4 4 0 000 8z" />
 	</svg>
 );
 
