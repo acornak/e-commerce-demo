@@ -1,16 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+// Next
+import { usePathname } from "next/navigation";
 // Cookie
 import { hasCookie, setCookie } from "cookies-next";
 import Link from "next/link";
 
 const CookieConsent = (): JSX.Element | null => {
+	const pathname = usePathname();
 	const [showConsent, setShowConsent] = useState<boolean>(false);
 
 	useEffect(() => {
-		setShowConsent(!hasCookie("cookieConsent"));
-	}, []);
+		setShowConsent(
+			!hasCookie("cookieConsent") && pathname !== "/privacy-policy",
+		);
+	}, [pathname]);
 
 	const acceptCookie = (): void => {
 		setShowConsent(false);

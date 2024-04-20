@@ -85,7 +85,7 @@ const CategoriesCarousel = ({
 						.map((category: Category) => (
 							<div
 								key={category.title}
-								className="w-1/2 sm:w-1/3 md:w-1/4 py-2 px-6 flex-none"
+								className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 py-2 px-5 lg:px-4 xl:px-10 flex-none"
 							>
 								<div className="relative">
 									<motion.div
@@ -99,13 +99,9 @@ const CategoriesCarousel = ({
 										<motion.div
 											initial={{ opacity: 0 }}
 											whileHover={{ opacity: 1 }}
-											className="flex-none absolute inset-0 bg-black bg-opacity-20 justify-center items-center rounded-full overflow-hidden"
+											className="absolute inset-0 bg-black bg-opacity-20 rounded-full overflow-hidden"
 											transition={{ duration: 0.3 }}
-										>
-											<span className="text-white text-5xl font-thin select-none">
-												+
-											</span>
-										</motion.div>
+										/>
 										<Image
 											src={category.image}
 											alt={category.title}
@@ -117,7 +113,7 @@ const CategoriesCarousel = ({
 										/>
 									</motion.div>
 								</div>
-								<p className="uppercase tracking-widest text-sm text-center mt-2">
+								<p className="uppercase tracking-widest text-sm text-center mt-6">
 									{category.title}
 								</p>
 							</div>
@@ -138,50 +134,6 @@ const CategoriesCarousel = ({
 	);
 };
 
-const CategoriesLarge = (): JSX.Element => (
-	<div className="flex justify-center items-center space-x-8 xl:space-x-20 my-20">
-		{categories.map(
-			(category: Category): JSX.Element => (
-				<div key={category.title} className="text-center">
-					<div className="relative group">
-						<motion.div
-							whileHover={{ scale: 1.1 }}
-							className="inline-block rounded-full overflow-hidden border border-gray-300 flex justify-center items-center cursor-pointer"
-							style={{
-								width: "120px",
-								height: "120px",
-							}}
-						>
-							<motion.div
-								initial={{ opacity: 0 }}
-								whileHover={{ opacity: 1 }}
-								className="absolute inset-0 bg-black bg-opacity-20 flex justify-center items-center rounded-full overflow-hidden"
-								transition={{ duration: 0.3 }}
-							>
-								<span className="text-white text-5xl font-thin select-none">
-									+
-								</span>
-							</motion.div>
-							<Image
-								src={category.image}
-								alt={category.title}
-								width={110}
-								height={110}
-								style={{
-									objectFit: "contain",
-								}}
-							/>
-						</motion.div>
-					</div>
-					<p className="mt-8 uppercase tracking-widest text-sm">
-						{category.title}
-					</p>
-				</div>
-			),
-		)}
-	</div>
-);
-
 const Collection = (): JSX.Element => {
 	return (
 		<div className="flex justify-center items-center">
@@ -200,10 +152,10 @@ const Collection = (): JSX.Element => {
 					<CategoriesCarousel itemCount={3} />
 				</div>
 				<div className="hidden md:block lg:hidden">
-					<CategoriesCarousel />
+					<CategoriesCarousel itemCount={4} />
 				</div>
 				<div className="hidden lg:block">
-					<CategoriesLarge />
+					<CategoriesCarousel itemCount={6} />
 				</div>
 			</div>
 		</div>
