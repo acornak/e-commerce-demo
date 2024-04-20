@@ -3,7 +3,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 // Components
 import Navbar from "@/components/navbar/Navbar";
-import { NavItems } from "@/components/navbar/ NavItems";
+import { NavItems } from "@/components/navbar/NavItems";
 // Types
 import { NavItem } from "@/config/types";
 

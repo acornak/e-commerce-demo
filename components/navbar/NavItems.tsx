@@ -42,11 +42,28 @@ const CartIcon = ({ cartItems }: { cartItems: number }) => (
 	</div>
 );
 
-const icons = (cartItems: number): NavIcon[] => [
+const SearchIcon = ({
+	setIsSearchOpen,
+}: {
+	setIsSearchOpen: (open: boolean) => void;
+}) => (
+	<button
+		type="button"
+		aria-label="Search for products"
+		className="relative"
+		onClick={() => setIsSearchOpen(true)}
+	>
+		<MagnifierIcon />
+	</button>
+);
+
+const icons = (
+	cartItems: number,
+	setIsSearchOpen: (open: boolean) => void,
+): NavIcon[] => [
 	{
 		title: "Magnifier",
-		icon: <MagnifierIcon />,
-		url: "/search",
+		icon: <SearchIcon setIsSearchOpen={setIsSearchOpen} />,
 	},
 	{
 		title: "User",

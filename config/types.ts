@@ -6,9 +6,14 @@ export type NavItem = {
 export type NavIcon = {
 	title: string;
 	icon: JSX.Element;
-	url: string;
+	url?: string;
 };
 
 export type ChevronProps = {
 	size?: string;
+};
+
+export type DesktopNavProps = {
+	selected: null | number;
+	setSelected: (index: number | null) => void;
 };
