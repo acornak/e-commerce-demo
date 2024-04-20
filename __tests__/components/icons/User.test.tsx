@@ -1,6 +1,7 @@
 import React from "react";
-import "@testing-library/jest-dom";
+// Testing
 import { render, screen } from "@testing-library/react";
+// Components
 import UserIcon from "@/components/icons/User";
 
 describe("UserIcon", () => {
