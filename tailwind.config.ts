@@ -7,7 +7,23 @@ const config: Config = {
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
+		letterSpacing: {
+			tightest: "-.075em",
+			tighter: "-.05em",
+			tight: "-.025em",
+			normal: "0",
+			wide: ".025em",
+			wider: ".05em",
+			widest: ".10em",
+			xl: ".25em",
+			"2xl": ".35em",
+			"3xl": ".5em",
+		},
 		extend: {
+			margin: {
+				"96": "25rem",
+				"128": "32rem",
+			},
 			backgroundImage: {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":

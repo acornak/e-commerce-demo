@@ -9,14 +9,11 @@ const NotFound: NextPage = () => {
 				<h2 className="mt-6 text-center text-6xl font-semibold">
 					404 - Page Not Found
 				</h2>
-				<p className="mt-2 text-center text-white dark:text-black">
+				<p className="mt-2 text-center">
 					The page you are looking for does not exist.
 					<br />
 					If you want to go to homepage, click{" "}
-					<Link
-						href="/"
-						className="underline text-secondary dark:text-darksecondary"
-					>
+					<Link href="/" className="underline">
 						here
 					</Link>
 					.

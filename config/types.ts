@@ -8,3 +8,7 @@ export type NavIcon = {
 	icon: JSX.Element;
 	url: string;
 };
+
+export type ChevronProps = {
+	size?: string;
+};

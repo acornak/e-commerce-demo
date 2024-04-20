@@ -3,7 +3,6 @@
 import React, { FC, useState } from "react";
 // Next
 import Link from "next/link";
-// Components
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 // Fonts
@@ -291,7 +290,10 @@ const Navbar = (): JSX.Element => {
 						animate={{ opacity: 0.7 }}
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.2 }}
-						className="fixed inset-0 bg-black bg-opacity-70 z-60"
+						className="fixed inset-0 bg-black bg-opacity-80"
+						style={{
+							zIndex: 20,
+						}}
 						onClick={() => setIsDrawerOpen(false)}
 					/>
 				)}
