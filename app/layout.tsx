@@ -1,9 +1,10 @@
 import React from "react";
-// Components
-import Navbar from "@/components/navbar/Navbar";
 // Next
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+// Components
+import Navbar from "@/components/navbar/Navbar";
+import CookieConsent from "@/components/cookie/CookieConsent";
 // Fonts
 import { montserrat } from "./fonts";
 // Styles
@@ -25,6 +26,7 @@ export default function RootLayout({
 				<Analytics />
 				<Navbar />
 				<main className="h-full overflow-y-auto main overscroll-none">
+					<CookieConsent />
 					{children}
 				</main>
 			</body>
