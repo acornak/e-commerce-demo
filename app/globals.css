@@ -19,7 +19,7 @@
 html,
 body {
 	/* Prevents scrolling beyond the top or bottom of the page */
-	overflow: hidden;
+	overflow: -moz-scrollbars-none;
 	/* Ensures the page takes up full viewport height */
 	height: 100%;
 	/* Prevents accidental user selection */
@@ -28,9 +28,31 @@ body {
 	overflow-x: hidden;
 	/* Prevents overscrolling effects like bounce-back in supported browsers */
 	overscroll-behavior: none;
+
+	scrollbar-width: none;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+	width: 0px;
+	background: transparent; /* make scrollbar transparent */
+}
+
+@-moz-document url-prefix() {
+	/* Disable scrollbar Firefox */
+	html {
+		scrollbar-width: none;
+	}
+}
+
+body::-webkit-scrollbar {
+	width: 0px;
+	background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
 }
 
 body {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 	color: rgb(var(--foreground-rgb));
 	background: linear-gradient(
 			to bottom,

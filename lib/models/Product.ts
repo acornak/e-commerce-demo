@@ -1,11 +1,11 @@
 export type Product = {
-	_id: number;
+	id: number;
 	name: string;
-	slug: string;
+	slug?: string;
 	image: string;
 	banner: string;
 	price: number;
-	previousPrice: number;
+	previousPrice?: number;
 	brand: string;
 	description: string;
 	category: string[];

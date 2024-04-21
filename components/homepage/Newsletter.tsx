@@ -31,7 +31,7 @@ const Newsletter = (): JSX.Element => {
 							}}
 						/>
 					</div>
-					<div className="w-3/4 lg:w-1/3 mx-10 flex flex-col items-center border border-secondary py-20 lg:py-24 px-10">
+					<div className="w-full lg:w-1/3 mx-10 flex flex-col items-center border border-secondary py-20 lg:py-24 px-10">
 						<div className="text-2xl uppercase tracking-widest font-normal">
 							Get updates
 							<div className="w-1/2 bg-secondary h-1 mx-auto mt-2" />
@@ -40,7 +40,7 @@ const Newsletter = (): JSX.Element => {
 							Subscribe to our newsletter and get the latest
 							products and 30% off discount!
 						</div>
-						<div className="flex mt-4 w-5/6">
+						<div className="flex mt-4 w-full md:w-2/3 lg:w-5/6">
 							<input
 								type="email"
 								placeholder="Your email"

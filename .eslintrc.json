@@ -24,6 +24,8 @@
 	},
 	"plugins": ["react", "@typescript-eslint"],
 	"rules": {
+		"jsx-a11y/click-events-have-key-events": 1,
+		"jsx-a11y/no-static-element-interactions": 1,
 		"react/require-default-props": "off",
 		"react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
 		"prettier/prettier": "error",
