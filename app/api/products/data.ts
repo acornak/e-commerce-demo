@@ -1,4 +1,4 @@
-// types
+// Types
 import { Product } from "@/lib/models/Product";
 
 const products: Product[] = [

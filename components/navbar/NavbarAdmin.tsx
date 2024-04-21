@@ -5,22 +5,22 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
-// Components
+// Hooks
 import useOutsideAlerter from "@/hooks/OutsideClick";
+// Fonts
 import { dancing } from "@/app/fonts";
+// Components
 import DesktopItems from "./Desktop";
 import MobileItems from "./Mobile";
 import { NavItemsAdmin } from "./NavItems";
 import { NavIcons, adminIcons } from "./NavIcons";
-// Hooks
-// Fonts
 // Icons
 import BarsIcon from "../icons/Bars";
 
 const NavbarAdmin = (): JSX.Element => {
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const [selected, setSelected] = useState<number | null>(null);
-	const [drawerOpen, setdrawerOpen] = useState<boolean>(false);
+	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
 	useOutsideAlerter(dropdownRef, () => {
@@ -31,7 +31,7 @@ const NavbarAdmin = (): JSX.Element => {
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
 				if (dropdownOpen) setDropdownOpen(false);
-				if (drawerOpen) setdrawerOpen(false);
+				if (drawerOpen) setDrawerOpen(false);
 			}
 		};
 
@@ -55,7 +55,7 @@ const NavbarAdmin = (): JSX.Element => {
 		<>
 			<MobileItems
 				drawerOpen={drawerOpen}
-				setdrawerOpen={setdrawerOpen}
+				setDrawerOpen={setDrawerOpen}
 				items={NavItemsAdmin}
 			/>
 			<nav
@@ -69,7 +69,7 @@ const NavbarAdmin = (): JSX.Element => {
 					initial={{ color: "#333" }}
 					whileHover={{ color: "#FF6347" }}
 					transition={{ duration: 0.2 }}
-					onClick={() => setdrawerOpen((prev) => !prev)}
+					onClick={() => setDrawerOpen((prev) => !prev)}
 				>
 					<BarsIcon />
 				</motion.div>
@@ -113,7 +113,7 @@ const NavbarAdmin = (): JSX.Element => {
 							zIndex: 20,
 						}}
 						onClick={() => {
-							setdrawerOpen(false);
+							setDrawerOpen(false);
 						}}
 					/>
 				)}

@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 // Next
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 // Cookie
 import { hasCookie, setCookie } from "cookies-next";
-import Link from "next/link";
 
 const CookieConsent = (): JSX.Element | null => {
 	const pathname = usePathname();

@@ -5,18 +5,17 @@ import React from "react";
 import Image from "next/image";
 // Animations
 import { motion } from "framer-motion";
-// Icons
-import newsletter from "@/public/misc/newsletter.webp";
-import PlaneIcon from "../icons/Plane";
 // Images
+import newsletter from "@/public/misc/newsletter.webp";
+// Components
+import SectionHeading from "../styled/Heading";
+// Icons
+import PlaneIcon from "../icons/Plane";
 
 const Newsletter = (): JSX.Element => {
 	return (
 		<div className="my-12 items-center justify-center text-center">
-			<div className="text-3xl uppercase tracking-widest py-6">
-				Let&apos;s stay in touch
-				<div className="w-1/6 bg-orange-500 h-1 mx-auto mt-2" />
-			</div>
+			<SectionHeading title="Let's stay in touch" />
 			<div className="flex justify-center items-center">
 				<div className="flex flex-row w-full justify-center">
 					<div className="hidden lg:flex md:w-1/2 justify-center items-center">

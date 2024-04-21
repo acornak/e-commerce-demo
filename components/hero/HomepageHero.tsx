@@ -11,8 +11,8 @@ import heroWomen from "@/public/homepage/hero_1.jpeg";
 import heroMen from "@/public/homepage/hero_2.webp";
 import heroChildren from "@/public/homepage/hero_3.jpeg";
 // Icons
-import ChevronLeftIcon from "../icons/ChevronLeft";
 import ChevronRightIcon from "../icons/ChevronRight";
+import ChevronLeftIcon from "../icons/ChevronLeft";
 
 type Heroes = {
 	image: StaticImageData;

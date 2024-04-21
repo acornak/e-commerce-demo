@@ -3,9 +3,9 @@
 import React from "react";
 // Next
 import Link from "next/link";
-// Framer Motion
-import { motion } from "framer-motion";
 import Image from "next/image";
+// Animations
+import { motion } from "framer-motion";
 
 const Footer = (): JSX.Element => {
 	return (

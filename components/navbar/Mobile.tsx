@@ -3,24 +3,24 @@
 import React, { FC, useState } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
-// Components
+// Types
 import { NavItem } from "@/config/types";
+// Components
 import { LoginForm, RegisterForm } from "./Login";
 // Icons
 import BarsIcon from "../icons/Bars";
 import ChevronRightIcon from "../icons/ChevronRight";
 import UserIcon from "../icons/User";
-// Types
 
 type MobileItemsProps = {
 	drawerOpen: boolean;
-	setdrawerOpen: (open: boolean) => void;
+	setDrawerOpen: (open: boolean) => void;
 	items: NavItem[];
 };
 
 const MobileItems: FC<MobileItemsProps> = ({
 	drawerOpen,
-	setdrawerOpen,
+	setDrawerOpen,
 	items,
 }): JSX.Element => {
 	const [hoverIndex, setHoverIndex] = useState<number | null>(null);
@@ -105,7 +105,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 								onClick={() =>
 									showLogin
 										? setShowLogin(false)
-										: setdrawerOpen(false)
+										: setDrawerOpen(false)
 								}
 							>
 								<BarsIcon />
@@ -120,7 +120,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 								} flex items-center justify-center w-1/2 md:hidden`}
 								onClick={() =>
 									showLogin
-										? setdrawerOpen(false)
+										? setDrawerOpen(false)
 										: setShowLogin(true)
 								}
 							>
@@ -134,7 +134,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 					</ul>
 					<button
 						type="button"
-						onClick={() => setdrawerOpen(false)}
+						onClick={() => setDrawerOpen(false)}
 						className="absolute bottom-0 w-full p-4 text-white uppercase text-sm bg-secondary"
 					>
 						Close

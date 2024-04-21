@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
+// Next
+import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
-import Link from "next/link";
 
 const Sitemap = (): JSX.Element => {
 	return (

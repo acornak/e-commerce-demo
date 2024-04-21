@@ -6,13 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
-// Icons
+// Types
 import { Product } from "@/lib/models/Product";
+// Icons
 import HeartIcon from "../icons/Heart";
 import BagIcon from "../icons/Bag";
 import MagnifierIcon from "../icons/Magnifier";
 import CloseIcon from "../icons/Close";
-// Types
 
 type ProductButtonProps = {
 	children: ReactNode;
@@ -297,7 +297,7 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 						</>
 					)}
 				</div>
-				<div className="text-sm flex flex-col items-center min-h-12 text-center">
+				<div className="text-sm flex flex-col items-center min-h-12 text-center mt-4">
 					{product.name}
 				</div>
 				<div className="text-base flex flex-row items-center font-bold text-secondary space-x-2 justify-center">

@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
-// Components
+// Fonts
 import { dancing } from "@/app/fonts";
+// Components
 import DesktopItems from "./Desktop";
 import MobileItems from "./Mobile";
 import { NavItems } from "./NavItems";
@@ -14,7 +15,6 @@ import SearchBar from "./Search";
 import LoginModal from "./Login";
 import ShoppingCart from "./Cart";
 import { NavIcons, menuIcons } from "./NavIcons";
-// Fonts
 // Icons
 import BarsIcon from "../icons/Bars";
 
@@ -23,14 +23,14 @@ const Navbar = (): JSX.Element => {
 	const [searchOpen, setSearchOpen] = useState<boolean>(false);
 	const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
 	const [cartOpen, setCartOpen] = useState<boolean>(false);
-	const [drawerOpen, setdrawerOpen] = useState<boolean>(false);
+	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 	const cartItems = 0;
 
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
 				if (searchOpen) setSearchOpen(false);
-				if (drawerOpen) setdrawerOpen(false);
+				if (drawerOpen) setDrawerOpen(false);
 				if (loginModalOpen) setLoginModalOpen(false);
 				if (cartOpen) setCartOpen(false);
 			}
@@ -62,7 +62,7 @@ const Navbar = (): JSX.Element => {
 			/>
 			<MobileItems
 				drawerOpen={drawerOpen}
-				setdrawerOpen={setdrawerOpen}
+				setDrawerOpen={setDrawerOpen}
 				items={NavItems}
 			/>
 			<nav
@@ -76,7 +76,7 @@ const Navbar = (): JSX.Element => {
 					initial={{ color: "#333" }}
 					whileHover={{ color: "#FF6347" }}
 					transition={{ duration: 0.2 }}
-					onClick={() => setdrawerOpen((prev) => !prev)}
+					onClick={() => setDrawerOpen((prev) => !prev)}
 				>
 					<BarsIcon />
 				</motion.div>
@@ -106,9 +106,9 @@ const Navbar = (): JSX.Element => {
 						setSelected={setSelected}
 						icons={menuIcons(
 							cartItems,
-							setCartOpen,
+							setSearchOpen,
 							setLoginModalOpen,
-							setdrawerOpen,
+							setCartOpen,
 						)}
 					/>
 				</div>
@@ -118,9 +118,9 @@ const Navbar = (): JSX.Element => {
 						setSelected={setSelected}
 						icons={menuIcons(
 							cartItems,
-							setCartOpen,
+							setSearchOpen,
 							setLoginModalOpen,
-							setdrawerOpen,
+							setCartOpen,
 						)}
 						mobile
 					/>
@@ -139,7 +139,7 @@ const Navbar = (): JSX.Element => {
 						}}
 						onClick={() => {
 							setSearchOpen(false);
-							setdrawerOpen(false);
+							setDrawerOpen(false);
 							setLoginModalOpen(false);
 							setCartOpen(false);
 						}}

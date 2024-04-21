@@ -14,9 +14,12 @@ import ig4 from "@/public/instagram/ig_4.webp";
 import ig5 from "@/public/instagram/ig_5.jpeg";
 import ig6 from "@/public/instagram/ig_6.jpeg";
 import ig7 from "@/public/instagram/ig_7.webp";
-import ChevronRightIcon from "../icons/ChevronRight";
-import ChevronLeftIcon from "../icons/ChevronLeft";
+// Icons
 import InstagramIcon from "../icons/Instagram";
+import ChevronLeftIcon from "../icons/ChevronLeft";
+import ChevronRightIcon from "../icons/ChevronRight";
+// Components
+import SectionHeading from "../styled/Heading";
 
 const images: StaticImageData[] = [ig1, ig2, ig3, ig4, ig5, ig6, ig7];
 
@@ -114,10 +117,7 @@ const Social = (): JSX.Element => {
 
 	return (
 		<div className="flex flex-col justify-center items-center text-center">
-			<div className="text-3xl uppercase tracking-widest pt-6">
-				Glassify on Instagram
-				<div className="w-2/3 bg-secondary h-1 mx-auto mt-2" />
-			</div>
+			<SectionHeading title="Glassify on Instagram" />
 			<p className="text-2xl tracking-widest py-6 text-secondary">
 				#glassify
 			</p>

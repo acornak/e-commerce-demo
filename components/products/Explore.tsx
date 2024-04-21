@@ -9,6 +9,8 @@ import { motion } from "framer-motion";
 // Images
 import borat from "@/public/misc/borat.png";
 import woman from "@/public/misc/woman.png";
+// Components
+import SectionHeading from "../styled/Heading";
 
 const ExploreButton = ({ href }: { href: string }): JSX.Element => (
 	<Link href={href}>
@@ -32,10 +34,7 @@ const Explore = (): JSX.Element => {
 
 	return (
 		<>
-			<div className="text-3xl uppercase tracking-widest mt-6 text-center">
-				Explore new arrivals
-				<div className="w-1/6 bg-orange-500 h-1 mx-auto mt-2" />
-			</div>
+			<SectionHeading title="Explore new arrivals" />
 			<div className="flex justify-center items-center mt-10 px-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
 					<div className="flex flex-col bg-secondary-red">

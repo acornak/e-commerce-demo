@@ -12,8 +12,11 @@ import rectangle from "@/public/categories/rectangle.png";
 import round from "@/public/categories/round.png";
 import safety from "@/public/categories/safety.png";
 import stylish from "@/public/categories/stylish.png";
+// Icons
 import ChevronRightIcon from "../icons/ChevronRight";
 import ChevronLeftIcon from "../icons/ChevronLeft";
+// Components
+import SectionHeading from "../styled/Heading";
 
 type Category = {
 	image: StaticImageData;
@@ -140,13 +143,10 @@ const Collection = (): JSX.Element => {
 	return (
 		<div className="flex justify-center items-center">
 			<div
-				className="w-[90%] text-center bg-white z-60 -mt-10 border border-gray-200"
+				className="w-[90%] bg-white z-60 -mt-10 border border-gray-200"
 				style={{ zIndex: 10 }}
 			>
-				<div className="text-3xl uppercase tracking-widest pt-6">
-					Our Collection
-					<div className="w-1/6 bg-orange-500 h-1 mx-auto mt-2" />
-				</div>
+				<SectionHeading title="Our Collection" />
 				<div className="sm:hidden">
 					<CategoriesCarousel itemCount={2} />
 				</div>

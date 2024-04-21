@@ -3,8 +3,9 @@ import React, { FC } from "react";
 import Link from "next/link";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
-// Components
+// Types
 import { NavIcon, DesktopNavProps } from "@/config/types";
+// Components
 import { NavItems } from "./NavItems";
 // Icons
 import BagIcon from "../icons/Bag";

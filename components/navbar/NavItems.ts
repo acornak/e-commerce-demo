@@ -1,4 +1,4 @@
-// Icons
+// Types
 import { NavItem } from "@/config/types";
 
 const NavItems: NavItem[] = [

@@ -1,7 +1,9 @@
 import React, { FC } from "react";
+// Next
+import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
-import Link from "next/link";
+// Icons
 import CloseIcon from "../icons/Close";
 
 type ShoppingCartProps = {
