@@ -32,11 +32,11 @@ const Newsletter = (): JSX.Element => {
 							Subscribe to our newsletter and get the latest
 							products and 30% off discount!
 						</div>
-						<div className="flex mt-4">
+						<div className="flex mt-4 w-5/6">
 							<input
 								type="email"
 								placeholder="Your email"
-								className="md:text-xs px-4 py-2 border border-gray-300 border-r-0 bg-gray-100"
+								className="flex-grow md:text-xs px-4 py-2 border border-gray-300 border-r-0 bg-gray-100"
 							/>
 							<motion.button
 								whileHover={{
@@ -44,7 +44,7 @@ const Newsletter = (): JSX.Element => {
 									color: "#F6347",
 								}}
 								transition={{ duration: 0.3 }}
-								className="px-4 py-2 bg-secondary text-white cursor-pointer border border-secondary border-1"
+								className="px-4 py-2 bg-secondary text-white cursor-pointer border border-secondary"
 							>
 								<PlaneIcon />
 							</motion.button>

@@ -22,6 +22,8 @@ const config: Config = {
 		extend: {
 			colors: {
 				secondary: "#FF6347",
+				"secondary-red": "#df393a",
+				"secondary-blue": "#1c2d49",
 			},
 			margin: {
 				"96": "25rem",
