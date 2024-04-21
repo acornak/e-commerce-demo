@@ -271,6 +271,7 @@ const HomepageHero: FC = (): JSX.Element => {
 						type: "spring",
 						stiffness: 300,
 					}}
+					style={{ transformOrigin: "left center" }}
 				>
 					<ChevronLeftIcon size="3em" />
 				</motion.button>
