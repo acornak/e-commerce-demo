@@ -1,38 +1,37 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Next
 import Link from "next/link";
 // Animations
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 // Components
+import useOutsideAlerter from "@/hooks/OutsideClick";
 import { dancing } from "@/app/fonts";
 import DesktopItems from "./Desktop";
 import MobileItems from "./Mobile";
-import { NavItems } from "./NavItems";
-import SearchBar from "./Search";
-import LoginModal from "./Login";
-import ShoppingCart from "./Cart";
-import { NavIcons, menuIcons } from "./NavIcons";
+import { NavItemsAdmin } from "./NavItems";
+import { NavIcons, adminIcons } from "./NavIcons";
+// Hooks
 // Fonts
 // Icons
 import BarsIcon from "../icons/Bars";
 
-const Navbar = (): JSX.Element => {
+const NavbarAdmin = (): JSX.Element => {
+	const dropdownRef = useRef<HTMLDivElement>(null);
 	const [selected, setSelected] = useState<number | null>(null);
-	const [searchOpen, setSearchOpen] = useState<boolean>(false);
-	const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
-	const [cartOpen, setCartOpen] = useState<boolean>(false);
 	const [drawerOpen, setdrawerOpen] = useState<boolean>(false);
-	const cartItems = 0;
+	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+
+	useOutsideAlerter(dropdownRef, () => {
+		if (dropdownOpen) setDropdownOpen(false);
+	});
 
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
-				if (searchOpen) setSearchOpen(false);
+				if (dropdownOpen) setDropdownOpen(false);
 				if (drawerOpen) setdrawerOpen(false);
-				if (loginModalOpen) setLoginModalOpen(false);
-				if (cartOpen) setCartOpen(false);
 			}
 		};
 
@@ -41,29 +40,23 @@ const Navbar = (): JSX.Element => {
 		return () => {
 			window.removeEventListener("keydown", handleEsc);
 		};
-	}, [searchOpen, drawerOpen, loginModalOpen, cartOpen]);
+	}, [dropdownOpen, drawerOpen]);
+
+	const handleDropdown = () => {
+		setDropdownOpen((prev) => !prev);
+	};
 
 	const showFade = (): boolean => {
-		if (searchOpen || drawerOpen || loginModalOpen || cartOpen) return true;
+		if (drawerOpen) return true;
 		return false;
 	};
 
 	return (
 		<>
-			<LoginModal
-				loginModalOpen={loginModalOpen}
-				setLoginModalOpen={setLoginModalOpen}
-			/>
-			<SearchBar searchOpen={searchOpen} />
-			<ShoppingCart
-				cartOpen={cartOpen}
-				setCartOpen={setCartOpen}
-				cartItems={cartItems}
-			/>
 			<MobileItems
 				drawerOpen={drawerOpen}
 				setdrawerOpen={setdrawerOpen}
-				items={NavItems}
+				items={NavItemsAdmin}
 			/>
 			<nav
 				className="sticky top-0 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8 border border-b border-gray-300"
@@ -83,46 +76,28 @@ const Navbar = (): JSX.Element => {
 
 				<Link
 					className={`${dancing.className} text-4xl hidden lg:flex cursor-pointer select-none`}
-					href="/"
+					href="/admin"
 				>
 					Glassify
 				</Link>
 				<ul className="flex justify-center items-center space-x-8">
 					<Link
 						className={`${dancing.className} text-3xl lg:hidden cursor-pointer select-none`}
-						href="/"
+						href="/admin"
 					>
 						Glassify
 					</Link>
 					<DesktopItems
 						selected={selected}
 						setSelected={setSelected}
-						items={NavItems}
+						items={NavItemsAdmin}
 					/>
 				</ul>
-				<div className="space-x-4 hidden md:flex">
+				<div className="space-x-4 flex" ref={dropdownRef}>
 					<NavIcons
 						selected={selected}
 						setSelected={setSelected}
-						icons={menuIcons(
-							cartItems,
-							setCartOpen,
-							setLoginModalOpen,
-							setdrawerOpen,
-						)}
-					/>
-				</div>
-				<div className="flex space-x-4 md:hidden">
-					<NavIcons
-						selected={selected}
-						setSelected={setSelected}
-						icons={menuIcons(
-							cartItems,
-							setCartOpen,
-							setLoginModalOpen,
-							setdrawerOpen,
-						)}
-						mobile
+						icons={adminIcons(dropdownOpen, handleDropdown)}
 					/>
 				</div>
 			</nav>
@@ -138,10 +113,7 @@ const Navbar = (): JSX.Element => {
 							zIndex: 20,
 						}}
 						onClick={() => {
-							setSearchOpen(false);
 							setdrawerOpen(false);
-							setLoginModalOpen(false);
-							setCartOpen(false);
 						}}
 					/>
 				)}
@@ -150,4 +122,4 @@ const Navbar = (): JSX.Element => {
 	);
 };
 
-export default Navbar;
+export default NavbarAdmin;

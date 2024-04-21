@@ -5,14 +5,20 @@ import React, { FC } from "react";
 import Link from "next/link";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
-
 // Types
 import { DesktopNavProps, NavItem } from "@/config/types";
-import { NavItems } from "./NavItems";
 
-const DesktopItems: FC<DesktopNavProps> = ({ selected, setSelected }) => (
+interface DesktopItemsProps extends DesktopNavProps {
+	items: NavItem[];
+}
+
+const DesktopItems: FC<DesktopItemsProps> = ({
+	selected,
+	setSelected,
+	items,
+}) => (
 	<LayoutGroup id="nav-items">
-		{NavItems.map((item: NavItem, index: number) => (
+		{items.map((item: NavItem, index: number) => (
 			<motion.li
 				key={item.title}
 				onMouseEnter={() => setSelected(index)}

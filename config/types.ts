@@ -16,4 +16,5 @@ export type ChevronProps = {
 export type DesktopNavProps = {
 	selected: null | number;
 	setSelected: (index: number | null) => void;
+	items?: NavItem[];
 };

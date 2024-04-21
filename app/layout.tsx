@@ -3,10 +3,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 // Components
-import Navbar from "@/components/navbar/Navbar";
-import CookieConsent from "@/components/cookie/CookieConsent";
-import Footer from "@/components/footer/Footer";
-import Sitemap from "@/components/footer/Sitemap";
+import LayoutWrapper from "@/components/wrappers/LayoutWrapper";
 // Fonts
 import { montserrat } from "./fonts";
 // Styles
@@ -27,11 +24,7 @@ export default function RootLayout({
 			<body className={montserrat.className}>
 				<Analytics />
 				<main className="h-full overflow-y-auto main overscroll-none">
-					<Navbar />
-					<CookieConsent />
-					{children}
-					<Sitemap />
-					<Footer />
+					<LayoutWrapper>{children}</LayoutWrapper>
 				</main>
 			</body>
 		</html>

@@ -11,8 +11,10 @@ const PrivacyHero = (): JSX.Element => {
 				<Image
 					src={heroImage.src}
 					alt="Privacy Hero"
-					layout="fill"
-					objectFit="cover"
+					fill
+					style={{
+						objectFit: "cover",
+					}}
 					priority
 				/>
 			</div>

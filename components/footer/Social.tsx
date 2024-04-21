@@ -112,7 +112,7 @@ const Social = (): JSX.Element => {
 	};
 
 	return (
-		<div className="flex flex-col justify-center items-center">
+		<div className="flex flex-col justify-center items-center text-center">
 			<div className="text-3xl uppercase tracking-widest pt-6">
 				Glassify on Instagram
 				<div className="w-2/3 bg-secondary h-1 mx-auto mt-2" />

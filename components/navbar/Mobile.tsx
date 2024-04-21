@@ -4,21 +4,24 @@ import React, { FC, useState } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Components
-import { NavItems } from "./NavItems";
+import { NavItem } from "@/config/types";
 import { LoginForm, RegisterForm } from "./Login";
 // Icons
 import BarsIcon from "../icons/Bars";
 import ChevronRightIcon from "../icons/ChevronRight";
 import UserIcon from "../icons/User";
+// Types
 
 type MobileItemsProps = {
 	drawerOpen: boolean;
 	setdrawerOpen: (open: boolean) => void;
+	items: NavItem[];
 };
 
 const MobileItems: FC<MobileItemsProps> = ({
 	drawerOpen,
 	setdrawerOpen,
+	items,
 }): JSX.Element => {
 	const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 	const [showLogin, setShowLogin] = useState<boolean>(false);
@@ -36,7 +39,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 				</div>
 			);
 		}
-		return NavItems.map((item, index) => (
+		return items.map((item, index) => (
 			<motion.li
 				key={item.title}
 				className="border-b border-gray-300"
