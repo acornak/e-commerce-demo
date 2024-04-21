@@ -109,6 +109,8 @@ const CategoriesCarousel = ({
 											height={110}
 											style={{
 												objectFit: "contain",
+												height: "auto",
+												width: "auto",
 											}}
 										/>
 									</motion.div>

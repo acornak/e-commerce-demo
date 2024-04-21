@@ -33,6 +33,9 @@ const Footer = (): JSX.Element => {
 							height={100}
 							alt="Visa"
 							className="mx-2"
+							style={{
+								height: "auto",
+							}}
 						/>
 						<Image
 							src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/2560px-MasterCard_Logo.svg.png"
@@ -40,6 +43,9 @@ const Footer = (): JSX.Element => {
 							height={100}
 							alt="Mastercard"
 							className="mx-2"
+							style={{
+								height: "auto",
+							}}
 						/>
 						<Image
 							src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/1200px-Google_Pay_Logo.svg.png"
@@ -47,6 +53,9 @@ const Footer = (): JSX.Element => {
 							height={100}
 							alt="Google Pay"
 							className="mx-2"
+							style={{
+								height: "auto",
+							}}
 						/>
 					</div>
 				</div>

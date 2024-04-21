@@ -67,6 +67,7 @@ const InstagramImages: FC<InstagramImagesProps> = ({
 										src={image.src}
 										alt="Instagram post"
 										fill
+										sizes="10vw"
 										style={{
 											objectFit: "cover",
 										}}
