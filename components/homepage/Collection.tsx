@@ -16,7 +16,7 @@ import stylish from "@/public/categories/stylish.png";
 import ChevronRightIcon from "../icons/ChevronRight";
 import ChevronLeftIcon from "../icons/ChevronLeft";
 // Components
-import SectionHeading from "../styled/Heading";
+import { StyledSectionHeading } from "../styled/Heading";
 
 type Category = {
 	image: StaticImageData;
@@ -148,7 +148,7 @@ const Collection = (): JSX.Element => {
 				className="w-[90%] bg-white z-60 -mt-10 border border-gray-200"
 				style={{ zIndex: 10 }}
 			>
-				<SectionHeading title="Our Collection" />
+				<StyledSectionHeading title="Our Collection" />
 				<div className="sm:hidden">
 					<CategoriesCarousel itemCount={2} />
 				</div>

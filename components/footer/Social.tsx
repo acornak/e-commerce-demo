@@ -19,7 +19,7 @@ import InstagramIcon from "../icons/Instagram";
 import ChevronLeftIcon from "../icons/ChevronLeft";
 import ChevronRightIcon from "../icons/ChevronRight";
 // Components
-import SectionHeading from "../styled/Heading";
+import { StyledSectionHeading } from "../styled/Heading";
 
 const images: StaticImageData[] = [ig1, ig2, ig3, ig4, ig5, ig6, ig7];
 
@@ -119,7 +119,7 @@ const Social = (): JSX.Element => {
 
 	return (
 		<div className="flex flex-col justify-center items-center text-center">
-			<SectionHeading title="Glassify on Instagram" />
+			<StyledSectionHeading title="Glassify on Instagram" />
 			<p className="text-2xl tracking-widest py-6 text-secondary">
 				#glassify
 			</p>

@@ -2,16 +2,16 @@ import React from "react";
 // Next
 import { NextPage } from "next";
 // Components
-import SectionHeading from "@/components/styled/Heading";
+import { StyledSectionHeading } from "@/components/styled/Heading";
 
-const PrivacyPolicy: NextPage = (): JSX.Element => {
+const Admin: NextPage = (): JSX.Element => {
 	return (
 		<>
 			<div className="text-center mt-6">
-				<SectionHeading title="Admin Dashboard" />
+				<StyledSectionHeading title="Admin Dashboard" />
 			</div>
 		</>
 	);
 };
 
-export default PrivacyPolicy;
+export default Admin;

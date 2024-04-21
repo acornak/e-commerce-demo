@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Product } from "@/lib/models/Product";
 // Components
 import ProductPreview from "./ProductPreview";
-import SectionHeading from "../styled/Heading";
+import { StyledSectionHeading } from "../styled/Heading";
 
 const TopProducts = (): JSX.Element => {
 	const [topProducts, setTopProducts] = useState<Product[]>([]);
@@ -36,7 +36,7 @@ const TopProducts = (): JSX.Element => {
 		<>
 			<div className="flex justify-center items-center text-center mt-6">
 				<div>
-					<SectionHeading title="Top Products" />
+					<StyledSectionHeading title="Top Products" />
 					<div className="container mx-auto">
 						<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 							{topProducts.map(

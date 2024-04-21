@@ -9,13 +9,13 @@ import { motion } from "framer-motion";
 // Types and Constants
 import colors from "@/config/constants";
 // Images
-import heroImage from "@/public/misc/privacy.webp";
+import heroImage from "@/public/misc/wishlist.webp";
 // Components
 import { StyledHeroHeading } from "../styled/Heading";
 // Icons
 import ChevronRightIcon from "../icons/ChevronRight";
 
-const PrivacyHero = (): JSX.Element => {
+const WishlistHero = (): JSX.Element => {
 	return (
 		<section className="flex flex-col items-center justify-center h-[70%]">
 			<div className="flex justify-center items-center relative w-full h-full">
@@ -30,7 +30,8 @@ const PrivacyHero = (): JSX.Element => {
 				/>
 				<div className="absolute inset-0 bg-black bg-opacity-50" />
 				<div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-					<StyledHeroHeading title="Privacy Policy" />
+					<StyledHeroHeading title="Wishlist" />
+
 					<div className="text-white flex items-center">
 						<Link href="/">
 							<motion.p
@@ -47,7 +48,7 @@ const PrivacyHero = (): JSX.Element => {
 							</motion.p>
 						</Link>
 						<ChevronRightIcon />
-						Privacy Policy
+						Wishlist
 					</div>
 				</div>
 			</div>
@@ -55,4 +56,4 @@ const PrivacyHero = (): JSX.Element => {
 	);
 };
 
-export default PrivacyHero;
+export default WishlistHero;

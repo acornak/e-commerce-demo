@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 
-type SectionHeadingProps = {
+type HeadingProps = {
 	title: string;
 };
 
-const SectionHeading: FC<SectionHeadingProps> = ({ title }) => {
+export const StyledSectionHeading: FC<HeadingProps> = ({ title }) => {
 	return (
 		<div className="text-3xl uppercase tracking-widest py-6 text-center">
 			{title}
@@ -13,4 +13,10 @@ const SectionHeading: FC<SectionHeadingProps> = ({ title }) => {
 	);
 };
 
-export default SectionHeading;
+export const StyledHeroHeading: FC<HeadingProps> = ({ title }) => {
+	return (
+		<h1 className="text-white text-3xl sm:text-5xl md:text-6xl pb-4 tracking-widest font-semibold">
+			{title}
+		</h1>
+	);
+};

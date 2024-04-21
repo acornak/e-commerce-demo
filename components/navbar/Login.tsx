@@ -1,12 +1,43 @@
 import React, { FC, useEffect, useState } from "react";
+// Next
+import Image from "next/image";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Types and constants
 import colors from "@/config/constants";
+// Images
+import googleIcon from "@/public/misc/google.svg";
 // Icons
 import CloseIcon from "../icons/Close";
+
+type GoogleButtonProps = {
+	text: string;
+};
+
+const GoogleButton: FC<GoogleButtonProps> = ({ text }) => (
+	<motion.button
+		initial={{
+			scale: 1,
+			color: "#5F6368",
+			backgroundColor: "#FFFFFF",
+		}}
+		whileHover={{
+			scale: 1.05,
+		}}
+		whileTap={{
+			scale: 1.05,
+			backgroundColor: "#EEEEEE",
+		}}
+		transition={{ duration: 0.2 }}
+		type="submit"
+		className="p-4 uppercase text-sm font-semibold flex items-center justify-center gap-2 border border-gray-300"
+	>
+		<Image src={googleIcon.src} alt="Google" width={20} height={20} />{" "}
+		{text}
+	</motion.button>
+);
 
 type FormProps = {
 	setShowRegister: (show: boolean) => void;
@@ -57,30 +88,25 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => (
 		>
 			Log in
 		</motion.button>
-		<div className="bg-gray-300 text-center">
-			<p className="text-xs p-4 text-gray-500">
-				Don`&apos;t have an account?
-				<span className="inline">
-					{"   "}
-					<motion.span
-						initial={{
-							color: "#6b7280",
-						}}
-						whileHover={{
-							color: colors.secondary,
-						}}
-						whileTap={{
-							color: colors.secondary,
-						}}
-						transition={{ duration: 0.2 }}
-						className="cursor-pointer"
-						onClick={() => setShowRegister(true)}
-					>
-						Register now!
-					</motion.span>
-				</span>
+		<GoogleButton text="Log in with Google" />
+		<motion.div
+			className="bg-gray-300 text-center cursor-pointer"
+			onClick={() => setShowRegister(true)}
+			initial={{
+				color: "#6b7280",
+			}}
+			whileHover={{
+				scale: 1.05,
+				color: colors.secondary,
+			}}
+			whileTap={{ scale: 1.05, color: colors.secondary }}
+			transition={{ duration: 0.2 }}
+		>
+			<p className="text-xs p-4">
+				Don&apos;t have an account?{" "}
+				<span className="inline">Register now!</span>
 			</p>
-		</div>
+		</motion.div>
 	</form>
 );
 
@@ -127,28 +153,24 @@ const RegisterForm: FC<FormProps> = ({ setShowRegister }) => (
 		>
 			Register
 		</motion.button>
-		<div className="bg-gray-300">
-			<p className="text-xs p-4 text-gray-500 text-center">
-				<span className="inline">
-					<motion.span
-						initial={{
-							color: "#6b7280",
-						}}
-						whileHover={{
-							color: colors.secondary,
-						}}
-						whileTap={{
-							color: colors.secondary,
-						}}
-						transition={{ duration: 0.2 }}
-						className="cursor-pointer"
-						onClick={() => setShowRegister(false)}
-					>
-						Back to login
-					</motion.span>
-				</span>
+		<GoogleButton text="Register with Google" />
+		<motion.div
+			className="bg-gray-300 text-center cursor-pointer"
+			onClick={() => setShowRegister(true)}
+			initial={{
+				color: "#6b7280",
+			}}
+			whileHover={{
+				scale: 1.05,
+				color: colors.secondary,
+			}}
+			whileTap={{ scale: 1.05, color: colors.secondary }}
+			transition={{ duration: 0.2 }}
+		>
+			<p className="text-xs p-4 text-center">
+				<span className="inline">Back to login</span>
 			</p>
-		</div>
+		</motion.div>
 	</form>
 );
 

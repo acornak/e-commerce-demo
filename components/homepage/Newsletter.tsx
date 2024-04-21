@@ -9,14 +9,14 @@ import { motion } from "framer-motion";
 import newsletter from "@/public/misc/newsletter.webp";
 // Components
 import colors from "@/config/constants";
-import SectionHeading from "../styled/Heading";
+import { StyledSectionHeading } from "../styled/Heading";
 // Icons
 import PlaneIcon from "../icons/Plane";
 
 const Newsletter = (): JSX.Element => {
 	return (
 		<div className="my-12 items-center justify-center text-center">
-			<SectionHeading title="Let's stay in touch" />
+			<StyledSectionHeading title="Let's stay in touch" />
 			<div className="flex justify-center items-center">
 				<div className="flex flex-row w-full justify-center">
 					<div className="hidden lg:flex md:w-1/2 justify-center items-center">

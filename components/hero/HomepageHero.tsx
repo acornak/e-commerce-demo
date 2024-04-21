@@ -14,6 +14,8 @@ import heroChildren from "@/public/homepage/hero_3.jpeg";
 import colors from "@/config/constants";
 import ChevronRightIcon from "../icons/ChevronRight";
 import ChevronLeftIcon from "../icons/ChevronLeft";
+// Components
+import { StyledHeroHeading } from "../styled/Heading";
 
 type Heroes = {
 	image: StaticImageData;
@@ -36,9 +38,7 @@ const HeroHeading: FC<HeroHeadingProps> = ({
 				{subheading}
 			</span>
 		</p>
-		<h1 className="text-white text-3xl sm:text-5xl md:text-6xl pb-4 tracking-widest font-semibold">
-			{heading}
-		</h1>
+		<StyledHeroHeading title={heading} />
 	</div>
 );
 
