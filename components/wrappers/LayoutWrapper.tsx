@@ -22,7 +22,9 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			<>
 				<NavbarAdmin />
 				{children}
-				<Footer />
+				<div className="sticky top-[100vh]">
+					<Footer />
+				</div>
 			</>
 		);
 	}
@@ -32,8 +34,10 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			<Navbar />
 			<CookieConsent />
 			{children}
-			<Sitemap />
-			<Footer />
+			<div className="sticky top-[100vh]">
+				<Sitemap />
+				<Footer />
+			</div>
 		</>
 	);
 };
