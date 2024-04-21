@@ -5,8 +5,9 @@ import React, { FC } from "react";
 import Link from "next/link";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
-// Types
+// Types and constants
 import { DesktopNavProps, NavItem } from "@/config/types";
+import colors from "@/config/constants";
 
 interface DesktopItemsProps extends DesktopNavProps {
 	items: NavItem[];
@@ -26,7 +27,7 @@ const DesktopItems: FC<DesktopItemsProps> = ({
 				className="cursor-pointer relative hidden lg:flex uppercase grow"
 				initial={{ color: "#333" }}
 				animate={{
-					color: selected === index ? "#FF6347" : "#333",
+					color: selected === index ? colors.secondary : "#333",
 				}}
 				transition={{ duration: 0.2 }}
 			>

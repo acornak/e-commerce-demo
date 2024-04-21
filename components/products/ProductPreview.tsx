@@ -6,8 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
-// Types
+// Types and constants
 import { Product } from "@/lib/models/Product";
+import colors from "@/config/constants";
 // Icons
 import HeartIcon from "../icons/Heart";
 import BagIcon from "../icons/Bag";
@@ -40,13 +41,13 @@ const ProductButton: FC<ProductButtonProps> = ({
 				tabIndex={0}
 				whileHover={{
 					scale: 1.1,
-					backgroundColor: "#F6347",
-					color: "#FFFFFF",
+					backgroundColor: colors.secondary,
+					color: colors.white,
 				}}
 				whileTap={{
 					scale: 1.1,
-					backgroundColor: "#F6347",
-					color: "#FFFFFF",
+					backgroundColor: colors.secondary,
+					color: colors.white,
 				}}
 				onMouseEnter={() => {
 					setShowTooltip(true);
@@ -126,8 +127,15 @@ const ProductModal: FC<ProductModalProps> = ({
 						transition={{ duration: 0.3 }}
 					>
 						<motion.button
-							initial={{ rotate: 0, color: "#FFFFFF" }}
-							whileHover={{ rotate: 180, color: "#FF6347" }}
+							initial={{ rotate: 0, color: colors.white }}
+							whileHover={{
+								rotate: 180,
+								color: colors.secondary,
+							}}
+							whileTap={{
+								rotate: 180,
+								color: colors.secondary,
+							}}
 							transition={{ duration: 0.2 }}
 							className="absolute -top-4 -right-2 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 							onClick={() => setModalOpen(false)}
@@ -183,8 +191,12 @@ const ProductModal: FC<ProductModalProps> = ({
 									<div className="col-span-2">
 										<motion.button
 											whileHover={{
-												color: "#FFFFFF",
-												backgroundColor: "#000000",
+												color: colors.white,
+												backgroundColor: colors.black,
+											}}
+											whileTap={{
+												color: colors.white,
+												backgroundColor: colors.black,
 											}}
 											className="bg-secondary text-white px-4 py-2 uppercase tracking-widest font-semibold"
 											onClick={() => setModalOpen(false)}

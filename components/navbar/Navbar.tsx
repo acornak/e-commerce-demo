@@ -7,6 +7,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
+// Types and constants
+import colors from "@/config/constants";
 // Components
 import DesktopItems from "./Desktop";
 import MobileItems from "./Mobile";
@@ -74,7 +76,8 @@ const Navbar = (): JSX.Element => {
 				<motion.div
 					className="cursor-pointer lg:hidden"
 					initial={{ color: "#333" }}
-					whileHover={{ color: "#FF6347" }}
+					whileHover={{ color: colors.secondary }}
+					whileTap={{ color: colors.secondary }}
 					transition={{ duration: 0.2 }}
 					onClick={() => setDrawerOpen((prev) => !prev)}
 				>

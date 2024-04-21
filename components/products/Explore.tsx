@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
+// Types and constants
+import colors from "@/config/constants";
 // Images
 import borat from "@/public/misc/borat.png";
 import woman from "@/public/misc/woman.png";
@@ -17,8 +19,13 @@ const ExploreButton = ({ href }: { href: string }): JSX.Element => (
 		<motion.button
 			whileHover={{
 				scale: 1.05,
-				backgroundColor: "#FF6347",
-				color: "#FFFFFF",
+				backgroundColor: colors.secondary,
+				color: colors.white,
+			}}
+			whileTap={{
+				scale: 1.05,
+				backgroundColor: colors.secondary,
+				color: colors.white,
 			}}
 			type="button"
 			transition={{ duration: 0.6 }}

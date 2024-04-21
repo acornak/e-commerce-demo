@@ -7,6 +7,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
+// Types and constants
+import colors from "@/config/constants";
 
 const Sitemap = (): JSX.Element => {
 	return (
@@ -22,7 +24,8 @@ const Sitemap = (): JSX.Element => {
 						</h3>
 						<ul className="mt-4 ">
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 pr-10 cursor-pointer"
 							>
 								Sophisticated simplicity for the independent
@@ -37,25 +40,29 @@ const Sitemap = (): JSX.Element => {
 						</h3>
 						<ul className="mt-4">
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Woman&apos;s glasses
 							</motion.li>
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Mens&apos;s glasses
 							</motion.li>
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Children&apos;s glasses
 							</motion.li>
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Designer eyeglasses
@@ -69,27 +76,31 @@ const Sitemap = (): JSX.Element => {
 						</h3>
 						<ul className="mt-4">
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								FAQ
 							</motion.li>
 							<Link href="/privacy-policy">
 								<motion.li
-									whileHover={{ color: "#FF6347" }}
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
 									className="py-2 cursor-pointer"
 								>
 									Privacy Policy
 								</motion.li>
 							</Link>
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Terms of Service
 							</motion.li>
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Accessibility
@@ -103,27 +114,31 @@ const Sitemap = (): JSX.Element => {
 						</h3>
 						<ul className="mt-4">
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Facebook
 							</motion.li>
 							<Link href="/privacy-policy">
 								<motion.li
-									whileHover={{ color: "#FF6347" }}
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
 									className="py-2 cursor-pointer"
 								>
 									Instagram
 								</motion.li>
 							</Link>
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Write us
 							</motion.li>
 							<motion.li
-								whileHover={{ color: "#FF6347" }}
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
 								className="py-2 cursor-pointer"
 							>
 								Career

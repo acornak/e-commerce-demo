@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// Types
+// Types and constants
 import { Product } from "@/lib/models/Product";
 // Components
 import ProductPreview from "./ProductPreview";

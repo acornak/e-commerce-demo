@@ -5,6 +5,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
+// Types and constants
+import colors from "@/config/constants";
 // Hooks
 import useOutsideAlerter from "@/hooks/OutsideClick";
 // Fonts
@@ -67,7 +69,8 @@ const NavbarAdmin = (): JSX.Element => {
 				<motion.div
 					className="cursor-pointer lg:hidden"
 					initial={{ color: "#333" }}
-					whileHover={{ color: "#FF6347" }}
+					whileHover={{ color: colors.secondary }}
+					whileTap={{ color: colors.secondary }}
 					transition={{ duration: 0.2 }}
 					onClick={() => setDrawerOpen((prev) => !prev)}
 				>

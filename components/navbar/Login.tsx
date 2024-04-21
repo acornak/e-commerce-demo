@@ -3,6 +3,8 @@ import React, { FC, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
+// Types and constants
+import colors from "@/config/constants";
 // Icons
 import CloseIcon from "../icons/Close";
 
@@ -24,8 +26,9 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => (
 		/>
 		<p className="inline text-start text-xs">
 			<motion.button
-				initial={{ color: "#000000" }}
-				whileHover={{ color: "#FF6347" }}
+				initial={{ color: colors.black }}
+				whileHover={{ color: colors.secondary }}
+				whileTap={{ color: colors.secondary }}
 				className="inline text-start text-xs"
 				onClick={(e) => e.stopPropagation()}
 			>
@@ -35,13 +38,18 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => (
 		<motion.button
 			initial={{
 				scale: 1,
-				color: "#FFFFFF",
-				backgroundColor: "#000000",
+				color: colors.white,
+				backgroundColor: colors.black,
 			}}
 			whileHover={{
 				scale: 1.05,
-				backgroundColor: "#FF6347",
-				color: "#000000",
+				backgroundColor: colors.secondary,
+				color: colors.black,
+			}}
+			whileTap={{
+				scale: 1.05,
+				backgroundColor: colors.secondary,
+				color: colors.black,
 			}}
 			transition={{ duration: 0.2 }}
 			type="submit"
@@ -59,7 +67,10 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => (
 							color: "#6b7280",
 						}}
 						whileHover={{
-							color: "#FF6347",
+							color: colors.secondary,
+						}}
+						whileTap={{
+							color: colors.secondary,
 						}}
 						transition={{ duration: 0.2 }}
 						className="cursor-pointer"
@@ -87,8 +98,9 @@ const RegisterForm: FC<FormProps> = ({ setShowRegister }) => (
 		/>
 		<p className="inline text-start text-xs">
 			<motion.button
-				initial={{ color: "#000000" }}
-				whileHover={{ color: "#FF6347" }}
+				initial={{ color: colors.black }}
+				whileHover={{ color: colors.secondary }}
+				whileTap={{ color: colors.secondary }}
 				className="inline text-start text-xs"
 				onClick={() => {}}
 			/>
@@ -96,13 +108,18 @@ const RegisterForm: FC<FormProps> = ({ setShowRegister }) => (
 		<motion.button
 			initial={{
 				scale: 1,
-				color: "#FFFFFF",
-				backgroundColor: "#000000",
+				color: colors.white,
+				backgroundColor: colors.black,
 			}}
 			whileHover={{
 				scale: 1.05,
-				backgroundColor: "#FF6347",
-				color: "#000000",
+				backgroundColor: colors.secondary,
+				color: colors.black,
+			}}
+			whileTap={{
+				scale: 1.05,
+				backgroundColor: colors.secondary,
+				color: colors.black,
 			}}
 			transition={{ duration: 0.2 }}
 			type="submit"
@@ -118,7 +135,10 @@ const RegisterForm: FC<FormProps> = ({ setShowRegister }) => (
 							color: "#6b7280",
 						}}
 						whileHover={{
-							color: "#FF6347",
+							color: colors.secondary,
+						}}
+						whileTap={{
+							color: colors.secondary,
 						}}
 						transition={{ duration: 0.2 }}
 						className="cursor-pointer"
@@ -167,8 +187,15 @@ const LoginModal: FC<LoginModalProps> = ({
 						onClick={(e) => e.stopPropagation()}
 					>
 						<motion.button
-							initial={{ rotate: 0, color: "#FFFFFF" }}
-							whileHover={{ rotate: 180, color: "#FF6347" }}
+							initial={{ rotate: 0, color: colors.white }}
+							whileHover={{
+								rotate: 180,
+								color: colors.secondary,
+							}}
+							whileTap={{
+								rotate: 180,
+								color: colors.secondary,
+							}}
 							transition={{ duration: 0.2 }}
 							className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 							onClick={() => setLoginModalOpen(false)}

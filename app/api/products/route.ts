@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-// Types
+// Types and constants
 import { Product } from "@/lib/models/Product";
 // dummy data
 import products from "./data";

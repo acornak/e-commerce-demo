@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 // Images
 import newsletter from "@/public/misc/newsletter.webp";
 // Components
+import colors from "@/config/constants";
 import SectionHeading from "../styled/Heading";
 // Icons
 import PlaneIcon from "../icons/Plane";
@@ -47,8 +48,12 @@ const Newsletter = (): JSX.Element => {
 							/>
 							<motion.button
 								whileHover={{
-									backgroundColor: "#FFFFFF",
-									color: "#F6347",
+									backgroundColor: colors.white,
+									color: colors.secondary,
+								}}
+								whileTap={{
+									backgroundColor: colors.white,
+									color: colors.secondary,
 								}}
 								transition={{ duration: 0.3 }}
 								className="px-4 py-2 bg-secondary text-white cursor-pointer border border-secondary"

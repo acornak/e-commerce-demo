@@ -3,8 +3,9 @@ import React, { FC } from "react";
 import Link from "next/link";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
-// Types
+// Types and constants
 import { NavIcon, DesktopNavProps } from "@/config/types";
+import colors from "@/config/constants";
 // Components
 import { NavItems } from "./NavItems";
 // Icons
@@ -116,7 +117,14 @@ const AdminUserIcon = ({
 					<ul className="uppercase tracking-widest">
 						<Link href="/admin/settings">
 							<motion.li
-								whileHover={{ scale: 1.05, color: "#FF6347" }}
+								whileHover={{
+									scale: 1.05,
+									color: colors.secondary,
+								}}
+								whileTap={{
+									scale: 1.05,
+									color: colors.secondary,
+								}}
 								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 							>
 								Settings
@@ -124,7 +132,14 @@ const AdminUserIcon = ({
 						</Link>
 						<Link href="/admin/profile">
 							<motion.li
-								whileHover={{ scale: 1.05, color: "#FF6347" }}
+								whileHover={{
+									scale: 1.05,
+									color: colors.secondary,
+								}}
+								whileTap={{
+									scale: 1.05,
+									color: colors.secondary,
+								}}
 								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 							>
 								Profile
@@ -132,7 +147,14 @@ const AdminUserIcon = ({
 						</Link>
 						<Link href="/logout">
 							<motion.li
-								whileHover={{ scale: 1.05, color: "#FF6347" }}
+								whileHover={{
+									scale: 1.05,
+									color: colors.secondary,
+								}}
+								whileTap={{
+									scale: 1.05,
+									color: colors.secondary,
+								}}
 								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 							>
 								Logout
@@ -181,7 +203,8 @@ const NavIcons: FC<NavIconsProps> = ({
 				return (
 					<motion.div
 						key={icon.title}
-						whileHover={{ color: "#FF6347" }}
+						whileHover={{ color: colors.secondary }}
+						whileTap={{ color: colors.secondary }}
 						onMouseEnter={() =>
 							setSelected(index + NavItems.length)
 						}

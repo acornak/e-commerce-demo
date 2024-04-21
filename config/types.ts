@@ -1,3 +1,7 @@
+export type Color = {
+	[key: string]: string;
+};
+
 export type NavItem = {
 	title: string;
 	url: string;

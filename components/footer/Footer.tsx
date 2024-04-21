@@ -6,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 // Animations
 import { motion } from "framer-motion";
+// Types and constants
+import colors from "@/config/constants";
 
 const Footer = (): JSX.Element => {
 	return (
@@ -15,13 +17,19 @@ const Footer = (): JSX.Element => {
 					<div className="text-xs uppercase tracking-widest py-6 px-4">
 						©2024{" "}
 						<Link href="www.antoncornak.com">
-							<motion.span whileHover={{ color: "#FF6347" }}>
+							<motion.span
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
+							>
 								Anton Čorňák
 							</motion.span>
 						</Link>{" "}
 						| Inspired by{" "}
 						<Link href="https://pertic-store-demo.myshopify.com/">
-							<motion.span whileHover={{ color: "#FF6347" }}>
+							<motion.span
+								whileHover={{ color: colors.secondary }}
+								whileTap={{ color: colors.secondary }}
+							>
 								Pertic
 							</motion.span>
 						</Link>

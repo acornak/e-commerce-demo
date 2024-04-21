@@ -3,8 +3,9 @@
 import React, { FC, useState } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
-// Types
+// Types and constants
 import { NavItem } from "@/config/types";
+import colors from "@/config/constants";
 // Components
 import { LoginForm, RegisterForm } from "./Login";
 // Icons
@@ -47,7 +48,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 				onHoverEnd={() => setHoverIndex(null)}
 				initial={{ color: "#333" }}
 				animate={{
-					color: hoverIndex === index ? "#FF6347" : "#333",
+					color: hoverIndex === index ? colors.secondary : "#333",
 				}}
 			>
 				<a

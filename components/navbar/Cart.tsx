@@ -3,6 +3,8 @@ import React, { FC } from "react";
 import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
+// Types and constants
+import colors from "@/config/constants";
 // Icons
 import CloseIcon from "../icons/Close";
 
@@ -34,8 +36,9 @@ const ShoppingCart: FC<ShoppingCartProps> = ({
 		>
 			<div className="flex items-center justify-between w-full">
 				<motion.button
-					initial={{ rotate: 0, color: "#000000" }}
-					whileHover={{ rotate: 180, color: "#FF6347" }}
+					initial={{ rotate: 0, color: colors.black }}
+					whileHover={{ rotate: 180, color: colors.secondary }}
+					whileTap={{ rotate: 180, color: colors.secondary }}
 					transition={{ duration: 0.2 }}
 					className="transform -translate-y-1/2 translate-x-1/2 px-3"
 					onClick={() => setCartOpen(false)}
@@ -60,13 +63,18 @@ const ShoppingCart: FC<ShoppingCartProps> = ({
 					<motion.div
 						initial={{
 							scale: 1,
-							color: "#FFFFFF",
-							backgroundColor: "#000000",
+							color: colors.white,
+							backgroundColor: colors.black,
 						}}
 						whileHover={{
 							scale: 1.05,
-							backgroundColor: "#FF6347",
-							color: "#000000",
+							backgroundColor: colors.secondary,
+							color: colors.black,
+						}}
+						whileTap={{
+							scale: 1.05,
+							backgroundColor: colors.secondary,
+							color: colors.black,
 						}}
 						transition={{ duration: 0.2 }}
 						className="p-4 uppercase text-xs tracking-widest"

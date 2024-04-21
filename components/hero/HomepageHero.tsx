@@ -11,6 +11,7 @@ import heroWomen from "@/public/homepage/hero_1.jpeg";
 import heroMen from "@/public/homepage/hero_2.webp";
 import heroChildren from "@/public/homepage/hero_3.jpeg";
 // Icons
+import colors from "@/config/constants";
 import ChevronRightIcon from "../icons/ChevronRight";
 import ChevronLeftIcon from "../icons/ChevronLeft";
 
@@ -51,13 +52,19 @@ const HeroButton: FC<HeroButtonProps> = ({ text, href }): JSX.Element => (
 		<motion.div
 			whileHover={{
 				scale: 1.05,
-				backgroundColor: "#FF6347",
-				color: "#FFFFFF",
+				backgroundColor: colors.secondary,
+				color: colors.white,
+				transition: { duration: 0.3 },
+			}}
+			whileTap={{
+				scale: 1.05,
+				backgroundColor: colors.secondary,
+				color: colors.white,
 				transition: { duration: 0.3 },
 			}}
 			style={{
-				backgroundColor: "#FFFFFF",
-				color: "#000000",
+				backgroundColor: colors.white,
+				color: colors.black,
 				borderRadius: "9999px",
 			}}
 			className="py-3 rounded-full px-6 uppercase text-xs cursor-pointer"
@@ -247,46 +254,47 @@ const HomepageHero: FC = (): JSX.Element => {
 					{heroes[current].heading}
 					{heroes[current].content}
 				</motion.div>
-
-				<button
+				<motion.button
 					type="button"
 					onClick={handlePrev}
-					className="absolute left-0 z-10 bg-white"
+					className="absolute left-0 z-10 bg-white overflow-hidden"
 					aria-label="Go to previous slide"
+					whileHover={{
+						scale: 1.3,
+						color: colors.secondary,
+					}}
+					whileTap={{
+						scale: 1.3,
+						color: colors.secondary,
+					}}
+					transition={{
+						type: "spring",
+						stiffness: 300,
+					}}
 				>
-					<motion.div
-						whileHover={{
-							scale: 1.3,
-							color: "#FF6347",
-						}}
-						transition={{
-							type: "spring",
-							stiffness: 300,
-						}}
-					>
-						<ChevronLeftIcon size="3em" />
-					</motion.div>
-				</button>
-
-				<button
+					<ChevronLeftIcon size="3em" />
+				</motion.button>
+				<motion.button
 					type="button"
 					onClick={handleNext}
-					className="absolute right-0 z-10 bg-white"
+					className="absolute right-0 z-10 bg-white overflow-hidden"
 					aria-label="Go to next slide"
+					whileHover={{
+						scale: 1.3,
+						color: colors.secondary,
+					}}
+					whileTap={{
+						scale: 1.3,
+						color: colors.secondary,
+					}}
+					transition={{
+						type: "spring",
+						stiffness: 300,
+					}}
+					style={{ transformOrigin: "right center" }}
 				>
-					<motion.div
-						whileHover={{
-							scale: 1.3,
-							color: "#FF6347",
-						}}
-						transition={{
-							type: "spring",
-							stiffness: 300,
-						}}
-					>
-						<ChevronRightIcon size="3em" />
-					</motion.div>
-				</button>
+					<ChevronRightIcon size="3em" />
+				</motion.button>
 			</div>
 		</section>
 	);

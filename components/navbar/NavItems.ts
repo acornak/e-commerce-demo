@@ -1,4 +1,4 @@
-// Types
+// Types and constants
 import { NavItem } from "@/config/types";
 
 const NavItems: NavItem[] = [

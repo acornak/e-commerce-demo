@@ -29,7 +29,7 @@ body {
 	/* Prevents overscrolling effects like bounce-back in supported browsers */
 	overscroll-behavior: none;
 
-	scrollbar-width: none;
+	/* scrollbar-width: none; */
 }
 
 /* scrollbar */

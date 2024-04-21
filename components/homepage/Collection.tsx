@@ -93,6 +93,7 @@ const CategoriesCarousel = ({
 								<div className="relative">
 									<motion.div
 										whileHover={{ scale: 1.1 }}
+										whileTap={{ scale: 1.1 }}
 										className="inline-block rounded-full overflow-hidden border border-gray-300 flex justify-center items-center cursor-pointer"
 										style={{
 											width: "120px",
@@ -102,6 +103,7 @@ const CategoriesCarousel = ({
 										<motion.div
 											initial={{ opacity: 0 }}
 											whileHover={{ opacity: 1 }}
+											whileTap={{ opacity: 1 }}
 											className="absolute inset-0 bg-black bg-opacity-20 rounded-full overflow-hidden"
 											transition={{ duration: 0.3 }}
 										/>

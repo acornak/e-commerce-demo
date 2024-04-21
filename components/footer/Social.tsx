@@ -64,6 +64,7 @@ const InstagramImages: FC<InstagramImagesProps> = ({
 									className="absolute inset-0"
 									initial={{ opacity: 1 }}
 									whileHover={{ opacity: 1, scale: 1.05 }}
+									whileTap={{ opacity: 1, scale: 1.05 }}
 									transition={{ duration: 0.3 }}
 								>
 									<Image
@@ -80,6 +81,7 @@ const InstagramImages: FC<InstagramImagesProps> = ({
 										className="absolute inset-0 flex justify-center items-center text-white bg-black bg-opacity-40"
 										initial={{ opacity: 0 }}
 										whileHover={{ opacity: 1 }}
+										whileTap={{ opacity: 1 }}
 										transition={{ duration: 0.3 }}
 									>
 										<InstagramIcon />

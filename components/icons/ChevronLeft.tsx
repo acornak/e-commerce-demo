@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-// Types
+// Types and constants
 import { ChevronProps } from "@/config/types";
 
 const ChevronLeftIcon: FC<ChevronProps> = ({ size = "1.3em" }): JSX.Element => (
