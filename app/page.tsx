@@ -1,4 +1,6 @@
 import React from "react";
+// Next
+import { NextPage } from "next";
 // Components
 import HomepageHero from "@/components/hero/HomepageHero";
 import Collection from "@/components/homepage/Collection";
@@ -7,7 +9,7 @@ import TopProducts from "@/components/products/TopProducts";
 import Newsletter from "@/components/homepage/Newsletter";
 import Social from "@/components/footer/Social";
 
-export default function Home(): JSX.Element {
+const Home: NextPage = (): JSX.Element => {
 	return (
 		<>
 			<HomepageHero />
@@ -18,4 +20,6 @@ export default function Home(): JSX.Element {
 			<Social />
 		</>
 	);
-}
+};
+
+export default Home;

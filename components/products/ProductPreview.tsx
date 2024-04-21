@@ -3,14 +3,15 @@
 import React, { FC, ReactNode, useEffect, useState } from "react";
 // Next
 import Image from "next/image";
+import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Icons
 import { Product } from "@/lib/models/Product";
-import Link from "next/link";
 import HeartIcon from "../icons/Heart";
 import BagIcon from "../icons/Bag";
 import MagnifierIcon from "../icons/Magnifier";
+import CloseIcon from "../icons/Close";
 // Types
 
 type ProductButtonProps = {
@@ -52,6 +53,10 @@ const ProductButton: FC<ProductButtonProps> = ({
 					setHovered(true);
 				}}
 				onMouseLeave={() => setShowTooltip(false)}
+				onClick={() => {
+					setShowTooltip(false);
+					setHovered(false);
+				}}
 				className="bg-white rounded-full p-2 m-1 cursor-pointer"
 				type="button"
 				aria-label="Go to the product page"
@@ -71,30 +76,129 @@ const ProductButton: FC<ProductButtonProps> = ({
 	);
 };
 
-const ProductModal = ({ product }: { product: Product }): JSX.Element => {
+type ProductModalProps = {
+	product: Product;
+	imageUrl: string;
+	modalOpen: boolean;
+	setModalOpen: (open: boolean) => void;
+};
+
+const ProductModal: FC<ProductModalProps> = ({
+	product,
+	imageUrl,
+	modalOpen,
+	setModalOpen,
+}): JSX.Element => {
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				setModalOpen(false);
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [setModalOpen]);
+
+	const handleOutsideClick = (
+		event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+	) => {
+		if (event.target === event.currentTarget) {
+			setModalOpen(false);
+		}
+	};
+
 	return (
-		<div className="flex flex-col items-center">
-			<div className="relative flex justify-center items-center">
-				<Image
-					src={`/api/products/image?productId=${product.id}`}
-					alt={product.name}
-					width={500}
-					height={500}
-				/>
-			</div>
-			<div className="text-sm flex flex-col items-center min-h-12 text-center">
-				{product.name}
-			</div>
-			<div className="text-base flex flex-row items-center font-bold text-secondary space-x-2 justify-center">
-				${product.price}
-				{product.previousPrice &&
-					product.previousPrice > product.price && (
-						<span className="pl-2 text-sm line-through text-gray-400">
-							${product.previousPrice}
-						</span>
-					)}
-			</div>
-		</div>
+		<AnimatePresence>
+			{modalOpen && (
+				<motion.div
+					className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+					onClick={handleOutsideClick}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.3 }}
+				>
+					<motion.div
+						className="relative bg-white p-6 w-full lg:max-w-[60%] xl:max-w-[50%] m-4 max-h-[80%]"
+						initial={{ scale: 0.9 }}
+						animate={{ scale: 1 }}
+						exit={{ scale: 0.9 }}
+						transition={{ duration: 0.3 }}
+					>
+						<motion.button
+							initial={{ rotate: 0, color: "#FFFFFF" }}
+							whileHover={{ rotate: 180, color: "#FF6347" }}
+							transition={{ duration: 0.2 }}
+							className="absolute -top-4 -right-2 transform -translate-y-1/2 translate-x-1/2 -mt-8"
+							onClick={() => setModalOpen(false)}
+						>
+							<CloseIcon />
+						</motion.button>
+						<div className="grid grid-cols-1 sm:grid-cols-2 w-full">
+							<div className="relative flex justify-center items-center mb-4">
+								<Link href={`/products/${product.slug}`}>
+									<Image
+										src={imageUrl}
+										alt={product.name}
+										width={500}
+										height={500}
+										className="mx-auto w-3/5 sm:w-full"
+									/>
+								</Link>
+							</div>
+							<div className="sm:text-start mt-8">
+								<div className="text-lg flex flex-col min-h-12 font-semibold">
+									{product.name}
+								</div>
+								<div className="justify-center sm:justify-start text-base items-center flex flex-row font-bold text-secondary space-x-2 mb-6">
+									${product.price.toFixed(2)}
+									{product.previousPrice &&
+										product.previousPrice >
+											product.price && (
+											<span className="pl-2 text-sm line-through text-gray-400">
+												$
+												{product.previousPrice.toFixed(
+													2,
+												)}
+											</span>
+										)}
+								</div>
+								<hr />
+								<div className="text-sm py-4 text-justify">
+									{product.description.slice(0, 200)}...
+								</div>
+								<hr />
+								<div className="py-4 grid grid-cols-3 gap-4">
+									<div className="col-span-1">
+										<input
+											type="number"
+											id="quantity"
+											name="quantity"
+											min="1"
+											max="10"
+											defaultValue="1"
+											className="w-20 p-2 border border-gray-300 text-center text-lg"
+										/>
+									</div>
+									<div className="col-span-2">
+										<motion.button
+											whileHover={{
+												color: "#FFFFFF",
+												backgroundColor: "#000000",
+											}}
+											className="bg-secondary text-white px-4 py-2 uppercase tracking-widest font-semibold"
+											onClick={() => setModalOpen(false)}
+										>
+											Add to cart
+										</motion.button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</motion.div>
+				</motion.div>
+			)}
+		</AnimatePresence>
 	);
 };
 
@@ -124,9 +228,21 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 
 	return (
 		<>
-			{modalOpen && <ProductModal product={product} />}
+			{imageUrl && (
+				<ProductModal
+					product={product}
+					modalOpen={modalOpen}
+					setModalOpen={setModalOpen}
+					imageUrl={imageUrl}
+				/>
+			)}
 			<div className="flex flex-col items-center">
-				<div className="relative flex justify-center items-center">
+				<div
+					className="relative flex justify-center items-center"
+					onMouseEnter={() => setHovered(true)}
+					onMouseLeave={() => setHovered(false)}
+					onTouchStart={() => setHovered((prev) => !prev)}
+				>
 					{imageUrl && (
 						<>
 							<Link href={`/products/${product.slug}`}>
@@ -135,11 +251,6 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 									alt={product.name}
 									width={500}
 									height={500}
-									onMouseEnter={() => setHovered(true)}
-									onMouseLeave={() => setHovered(false)}
-									onTouchStart={() =>
-										setHovered((prev) => !prev)
-									}
 								/>
 							</Link>
 							<AnimatePresence>

@@ -1,6 +1,8 @@
 import React from "react";
+// Next
+import { NextPage } from "next";
 
-export default function PrivacyPolicy(): JSX.Element {
+const PrivacyPolicy: NextPage = (): JSX.Element => {
 	return (
 		<>
 			<div className="text-center mt-6">
@@ -10,4 +12,6 @@ export default function PrivacyPolicy(): JSX.Element {
 			</div>
 		</>
 	);
-}
+};
+
+export default PrivacyPolicy;

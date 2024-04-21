@@ -33,8 +33,10 @@ const TopProducts = (): JSX.Element => {
 	return (
 		<>
 			<div className="flex justify-center items-center text-center mt-6">
-				<div className="text-3xl tracking-widest pt-6">
-					<p className="uppercase">Pick your winner</p>
+				<div className="pt-6">
+					<p className="text-3xl tracking-widest uppercase">
+						Pick your winner
+					</p>
 					<div className="w-1/5 bg-orange-500 h-1 mx-auto mt-2" />
 					<div className="container mx-auto">
 						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
