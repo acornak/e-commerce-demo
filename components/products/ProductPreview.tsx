@@ -7,8 +7,12 @@ import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
-import { Product } from "@/lib/models/Product";
-import colors from "@/config/constants";
+import { Product } from "@/lib/models/product_1";
+import colors from "@/lib/config/constants";
+// Store
+import { useCartStore } from "@/lib/stores/cart-store";
+// Components
+import StyledLoading from "../styled/Loading";
 // Icons
 import HeartIcon from "../icons/Heart";
 import BagIcon from "../icons/Bag";
@@ -56,7 +60,6 @@ const ProductButton: FC<ProductButtonProps> = ({
 				onMouseLeave={() => setShowTooltip(false)}
 				onClick={() => {
 					setShowTooltip(false);
-					setHovered(false);
 				}}
 				className="bg-white rounded-full p-2 m-1 cursor-pointer"
 				type="button"
@@ -78,18 +81,39 @@ const ProductButton: FC<ProductButtonProps> = ({
 };
 
 type ProductModalProps = {
-	product: Product;
-	imageUrl: string;
-	modalOpen: boolean;
+	productId: number;
 	setModalOpen: (open: boolean) => void;
 };
 
 const ProductModal: FC<ProductModalProps> = ({
-	product,
-	imageUrl,
-	modalOpen,
+	productId,
 	setModalOpen,
 }): JSX.Element => {
+	const [product, setProduct] = useState<Product | null>(null);
+	const [imageUrl, setImageUrl] = useState<string | null>(null);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [quantity, setQuantity] = useState<number>(1);
+	const addItem = useCartStore((state) => state.addItem);
+
+	useEffect(() => {
+		fetch(`/api/products?id=${productId}`)
+			.then((response) => response.json())
+			.then((data) => setProduct(data.product))
+			.catch((error) => console.error("Fetching product failed:", error));
+
+		fetch(`/api/products/image?productId=${productId}`)
+			.then((response) => response.blob())
+			.then((blob) => {
+				const url = URL.createObjectURL(blob);
+				setImageUrl(url);
+				return () => URL.revokeObjectURL(url);
+			})
+			.catch((error) => console.error("Fetching image failed:", error));
+
+		const timeout = setTimeout(() => setLoading(false), 400);
+		return () => clearTimeout(timeout);
+	}, [productId]);
+
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
@@ -108,109 +132,122 @@ const ProductModal: FC<ProductModalProps> = ({
 		}
 	};
 
-	return (
-		<AnimatePresence>
-			{modalOpen && (
-				<motion.div
-					className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-					onClick={handleOutsideClick}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
+	const handleContent = () => {
+		if (loading || !product || !imageUrl) {
+			return <StyledLoading />;
+		}
+
+		return (
+			<motion.div
+				className="relative bg-white p-6 w-full lg:max-w-[60%] xl:max-w-[50%] m-4 max-h-[80%]"
+				initial={{ scale: 0.9 }}
+				animate={{ scale: 1 }}
+				exit={{ scale: 0.9 }}
+				transition={{ duration: 0.3 }}
+			>
+				<motion.button
+					initial={{ rotate: 0, color: colors.white }}
+					whileHover={{
+						rotate: 180,
+						color: colors.secondary,
+					}}
+					whileTap={{
+						rotate: 180,
+						color: colors.secondary,
+					}}
+					transition={{ duration: 0.2 }}
+					className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
+					onClick={() => setModalOpen(false)}
 				>
-					<motion.div
-						className="relative bg-white p-6 w-full lg:max-w-[60%] xl:max-w-[50%] m-4 max-h-[80%]"
-						initial={{ scale: 0.9 }}
-						animate={{ scale: 1 }}
-						exit={{ scale: 0.9 }}
-						transition={{ duration: 0.3 }}
-					>
-						<motion.button
-							initial={{ rotate: 0, color: colors.white }}
-							whileHover={{
-								rotate: 180,
-								color: colors.secondary,
-							}}
-							whileTap={{
-								rotate: 180,
-								color: colors.secondary,
-							}}
-							transition={{ duration: 0.2 }}
-							className="absolute -top-4 -right-2 transform -translate-y-1/2 translate-x-1/2 -mt-8"
-							onClick={() => setModalOpen(false)}
-						>
-							<CloseIcon />
-						</motion.button>
-						<div className="grid grid-cols-1 sm:grid-cols-2 w-full">
-							<div className="relative flex justify-center items-center mb-4">
-								<Link href={`/products/${product.slug}`}>
-									<Image
-										src={imageUrl}
-										alt={product.name}
-										width={500}
-										height={500}
-										className="mx-auto w-3/5 sm:w-full"
-									/>
-								</Link>
+					<CloseIcon />
+				</motion.button>
+				<div className="grid grid-cols-1 sm:grid-cols-2 w-full">
+					<div className="relative flex justify-center items-center mb-4">
+						<Link href={`/products/${product.slug}`}>
+							<Image
+								src={imageUrl}
+								alt={product.name}
+								width={500}
+								height={500}
+								className="mx-auto w-3/5 sm:w-full"
+							/>
+						</Link>
+					</div>
+					<div className="sm:text-start mt-8">
+						<div className="text-lg flex flex-col min-h-12 font-semibold">
+							{product.name}
+						</div>
+						<div className="justify-center sm:justify-start text-base items-center flex flex-row font-bold text-secondary space-x-2 mb-6">
+							${product.price.toFixed(2)}
+							{product.previousPrice &&
+								product.previousPrice > product.price && (
+									<span className="pl-2 text-sm line-through text-gray-400">
+										${product.previousPrice.toFixed(2)}
+									</span>
+								)}
+						</div>
+						<hr />
+						<div className="text-sm py-4 text-justify">
+							{product.description.slice(0, 200)}...
+						</div>
+						<hr />
+						<div className="py-4 grid grid-cols-3 gap-4">
+							<div className="col-span-1">
+								<input
+									type="number"
+									id="quantity"
+									name="quantity"
+									min="1"
+									max="10"
+									defaultValue="1"
+									className="w-20 p-2 border border-gray-300 text-center text-lg"
+									onChange={(event) =>
+										setQuantity(
+											parseInt(event.target.value, 10),
+										)
+									}
+								/>
 							</div>
-							<div className="sm:text-start mt-8">
-								<div className="text-lg flex flex-col min-h-12 font-semibold">
-									{product.name}
-								</div>
-								<div className="justify-center sm:justify-start text-base items-center flex flex-row font-bold text-secondary space-x-2 mb-6">
-									${product.price.toFixed(2)}
-									{product.previousPrice &&
-										product.previousPrice >
-											product.price && (
-											<span className="pl-2 text-sm line-through text-gray-400">
-												$
-												{product.previousPrice.toFixed(
-													2,
-												)}
-											</span>
-										)}
-								</div>
-								<hr />
-								<div className="text-sm py-4 text-justify">
-									{product.description.slice(0, 200)}...
-								</div>
-								<hr />
-								<div className="py-4 grid grid-cols-3 gap-4">
-									<div className="col-span-1">
-										<input
-											type="number"
-											id="quantity"
-											name="quantity"
-											min="1"
-											max="10"
-											defaultValue="1"
-											className="w-20 p-2 border border-gray-300 text-center text-lg"
-										/>
-									</div>
-									<div className="col-span-2">
-										<motion.button
-											whileHover={{
-												color: colors.white,
-												backgroundColor: colors.black,
-											}}
-											whileTap={{
-												color: colors.white,
-												backgroundColor: colors.black,
-											}}
-											className="bg-secondary text-white px-4 py-2 uppercase tracking-widest font-semibold"
-											onClick={() => setModalOpen(false)}
-										>
-											Add to cart
-										</motion.button>
-									</div>
-								</div>
+							<div className="col-span-2">
+								<motion.button
+									whileHover={{
+										color: colors.white,
+										backgroundColor: colors.black,
+									}}
+									whileTap={{
+										color: colors.white,
+										backgroundColor: colors.black,
+									}}
+									className="bg-secondary text-white px-4 py-2 uppercase tracking-widest font-semibold"
+									onClick={() =>
+										addItem({
+											productId,
+											price: product.price,
+											quantity,
+										})
+									}
+								>
+									Add to cart
+								</motion.button>
 							</div>
 						</div>
-					</motion.div>
-				</motion.div>
-			)}
-		</AnimatePresence>
+					</div>
+				</div>
+			</motion.div>
+		);
+	};
+
+	return (
+		<motion.div
+			className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+			onClick={handleOutsideClick}
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 0.3 }}
+		>
+			{handleContent()}
+		</motion.div>
 	);
 };
 
@@ -222,6 +259,7 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [hovered, setHovered] = useState<boolean>(false);
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	const addItem = useCartStore((state) => state.addItem);
 
 	useEffect(() => {
 		fetch(`/api/products/image?productId=${product.id}`)
@@ -234,20 +272,16 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 			.catch((error) => console.error("Fetching image failed:", error));
 	}, [product.id]);
 
-	const handleAddToCart = () => {
-		console.log("Added to cart");
-	};
-
 	return (
 		<>
-			{imageUrl && (
-				<ProductModal
-					product={product}
-					modalOpen={modalOpen}
-					setModalOpen={setModalOpen}
-					imageUrl={imageUrl}
-				/>
-			)}
+			<AnimatePresence>
+				{imageUrl && modalOpen && (
+					<ProductModal
+						productId={product.id}
+						setModalOpen={setModalOpen}
+					/>
+				)}
+			</AnimatePresence>
 			<div className="flex flex-col items-center">
 				<div
 					className="relative flex justify-center items-center"
@@ -289,7 +323,13 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 										<ProductButton
 											setHovered={setHovered}
 											tooltipText="Add to cart"
-											onClickEvent={handleAddToCart}
+											onClickEvent={() =>
+												addItem({
+													productId: product.id,
+													price: product.price,
+													quantity: 1,
+												})
+											}
 										>
 											<BagIcon />
 										</ProductButton>

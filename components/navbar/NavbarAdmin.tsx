@@ -6,9 +6,9 @@ import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
-import colors from "@/config/constants";
+import colors from "@/lib/config/constants";
 // Hooks
-import useOutsideAlerter from "@/hooks/OutsideClick";
+import useOutsideAlerter from "@/lib/hooks/outside-click";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Components

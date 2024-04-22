@@ -10,8 +10,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import heroWomen from "@/public/homepage/hero_1.jpeg";
 import heroMen from "@/public/homepage/hero_2.webp";
 import heroChildren from "@/public/homepage/hero_3.jpeg";
+// Types and constants
+import colors from "@/lib/config/constants";
 // Icons
-import colors from "@/config/constants";
 import ChevronRightIcon from "../icons/ChevronRight";
 import ChevronLeftIcon from "../icons/ChevronLeft";
 // Components

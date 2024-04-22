@@ -5,7 +5,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Navbar from "@/components/navbar/Navbar";
 import { NavItems } from "@/components/navbar/NavItems";
 // Types and constants
-import { NavItem } from "@/config/types";
+import { NavItem } from "@/lib/config/types";
 
 describe("Navbar", () => {
 	it("renders the navigation items", () => {

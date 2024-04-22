@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Types and constants
-import colors from "@/config/constants";
+import colors from "@/lib/config/constants";
 
 const Sitemap = (): JSX.Element => {
 	return (

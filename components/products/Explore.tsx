@@ -7,7 +7,7 @@ import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
 // Types and constants
-import colors from "@/config/constants";
+import colors from "@/lib/config/constants";
 // Images
 import borat from "@/public/misc/borat.png";
 import woman from "@/public/misc/woman.png";

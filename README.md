@@ -16,3 +16,5 @@
 - https://medium.com/@vaibhavsinha619/setting-up-prettier-eslint-husky-and-lint-staged-with-a-next-js-and-typescript-project-75d1a804e1fd
 - https://pertic-store-demo.myshopify.com/
 - https://blog.logrocket.com/guide-adding-google-login-react-app/
+- https://medium.com/@mak-dev/zustand-with-next-js-14-server-components-da9c191b73df
+- https://docs.pmnd.rs/zustand/guides/nextjs

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 // Types and constants
-import { ChevronProps } from "@/config/types";
+import { ChevronProps } from "@/lib/config/types";
 
 const ChevronLeftIcon: FC<ChevronProps> = ({ size = "1.3em" }): JSX.Element => (
 	<svg

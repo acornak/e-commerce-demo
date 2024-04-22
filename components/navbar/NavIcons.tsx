@@ -4,8 +4,8 @@ import Link from "next/link";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 // Types and constants
-import { NavIcon, DesktopNavProps } from "@/config/types";
-import colors from "@/config/constants";
+import { NavIcon, DesktopNavProps } from "@/lib/config/types";
+import colors from "@/lib/config/constants";
 // Components
 import { NavItems } from "./NavItems";
 // Icons

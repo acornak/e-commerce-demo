@@ -6,8 +6,8 @@ import Link from "next/link";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 // Types and constants
-import { DesktopNavProps, NavItem } from "@/config/types";
-import colors from "@/config/constants";
+import { DesktopNavProps, NavItem } from "@/lib/config/types";
+import colors from "@/lib/config/constants";
 
 interface DesktopItemsProps extends DesktopNavProps {
 	items: NavItem[];

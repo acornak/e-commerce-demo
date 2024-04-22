@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Types and constants
-import colors from "@/config/constants";
+import colors from "@/lib/config/constants";
 // Images
 import googleIcon from "@/public/misc/google.svg";
 // Icons

@@ -7,8 +7,9 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 // Images
 import newsletter from "@/public/misc/newsletter.webp";
+// Types and constants
+import colors from "@/lib/config/constants";
 // Components
-import colors from "@/config/constants";
 import { StyledSectionHeading } from "../styled/Heading";
 // Icons
 import PlaneIcon from "../icons/Plane";

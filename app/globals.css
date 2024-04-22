@@ -71,3 +71,23 @@ body {
 		text-wrap: balance;
 	}
 }
+
+@keyframes move-vertical {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(100%);
+	}
+}
+
+@keyframes move-vertical-reverse {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-100%);
+	}
+}

@@ -4,8 +4,8 @@ import React, { FC, useState } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Types and constants
-import { NavItem } from "@/config/types";
-import colors from "@/config/constants";
+import { NavItem } from "@/lib/config/types";
+import colors from "@/lib/config/constants";
 // Components
 import { LoginForm, RegisterForm } from "./Login";
 // Icons

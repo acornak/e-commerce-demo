@@ -8,7 +8,9 @@ import { motion, AnimatePresence } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Types and constants
-import colors from "@/config/constants";
+import colors from "@/lib/config/constants";
+// Store
+import { useCartStore } from "@/lib/stores/cart-store";
 // Components
 import DesktopItems from "./Desktop";
 import MobileItems from "./Mobile";
@@ -26,7 +28,10 @@ const Navbar = (): JSX.Element => {
 	const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
 	const [cartOpen, setCartOpen] = useState<boolean>(false);
 	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
-	const cartItems = 0;
+	const items = useCartStore((state) => state.items);
+	const cartItems = useCartStore((state) =>
+		state.items.reduce((total, item) => total + item.quantity, 0),
+	);
 
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
@@ -60,7 +65,7 @@ const Navbar = (): JSX.Element => {
 			<ShoppingCart
 				cartOpen={cartOpen}
 				setCartOpen={setCartOpen}
-				cartItems={cartItems}
+				items={items}
 			/>
 			<MobileItems
 				drawerOpen={drawerOpen}

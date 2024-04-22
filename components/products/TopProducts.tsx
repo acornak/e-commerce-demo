@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 // Types and constants
-import { Product } from "@/lib/models/Product";
+import { Product } from "@/lib/models/product_1";
 // Components
 import ProductPreview from "./ProductPreview";
 import { StyledSectionHeading } from "../styled/Heading";
@@ -26,17 +26,11 @@ const TopProducts = (): JSX.Element => {
 		// 	.then((data) => setTopRates(data.products));
 	}, []);
 
-	useEffect(() => {
-		console.log(topProducts);
-		// console.log(bestSellers);
-		// console.log(topRates);
-	}, [topProducts]);
-
 	return (
 		<>
 			<div className="flex justify-center items-center text-center mt-6">
 				<div>
-					<StyledSectionHeading title="Top Products" />
+					<StyledSectionHeading title="Pick your Winner" />
 					<div className="container mx-auto">
 						<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 							{topProducts.map(

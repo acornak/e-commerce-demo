@@ -7,7 +7,7 @@ import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
 // Types and Constants
-import colors from "@/config/constants";
+import colors from "@/lib/config/constants";
 // Images
 import heroImage from "@/public/misc/wishlist.webp";
 // Components

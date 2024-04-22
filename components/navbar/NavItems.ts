@@ -1,5 +1,5 @@
 // Types and constants
-import { NavItem } from "@/config/types";
+import { NavItem } from "@/lib/config/types";
 
 const NavItems: NavItem[] = [
 	{

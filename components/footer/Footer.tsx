@@ -7,7 +7,7 @@ import Image from "next/image";
 // Animations
 import { motion } from "framer-motion";
 // Types and constants
-import colors from "@/config/constants";
+import colors from "@/lib/config/constants";
 
 const Footer = (): JSX.Element => {
 	return (
