@@ -10,9 +10,9 @@ import { Product } from "@/lib/models/product";
 import { CartItem, useCartStore } from "@/lib/stores/cart-store";
 // Icons
 import Image from "next/image";
-import CloseIcon from "../icons/Close";
+import CloseIcon from "../icon/Close";
 // Components
-import TrashIcon from "../icons/Trash";
+import TrashIcon from "../icon/Trash";
 
 const EmptyCart = () => (
 	<>
@@ -168,7 +168,7 @@ const ShoppingCart: FC<ShoppingCartProps> = ({ items, setCartOpen }) => {
 			<div className="sticky top-0 bg-white z-10">
 				<div className="flex items-center justify-between w-full px-3 py-2">
 					<motion.button
-						initial={{ rotate: 0, color: colors.black }}
+						initial={{ rotate: 0, color: "black" }}
 						whileHover={{
 							rotate: 180,
 							color: colors.secondary,
@@ -183,12 +183,13 @@ const ShoppingCart: FC<ShoppingCartProps> = ({ items, setCartOpen }) => {
 					<span className="text-xl font-semibold text-center flex-grow border-l border-r border-gray-300">
 						Shopping Cart
 					</span>
-					<span className="text-lg flex-shrink-0 font-bold px-4">
+					<span className="text-lg flex-shrink-0 font-bold px-4 w-16 text-right">
 						{items
 							.map((item) => item.quantity)
 							.reduce((a, b) => a + b, 0)}
 					</span>
 				</div>
+
 				<hr className="border-gray-300" />
 			</div>
 			<div className="flex-grow overflow-auto">

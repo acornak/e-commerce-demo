@@ -13,8 +13,8 @@ import heroChildren from "@/public/homepage/hero_3.jpeg";
 // Types and constants
 import colors from "@/lib/config/constants";
 // Icons
-import ChevronRightIcon from "../icons/ChevronRight";
-import ChevronLeftIcon from "../icons/ChevronLeft";
+import ChevronRightIcon from "../icon/ChevronRight";
+import ChevronLeftIcon from "../icon/ChevronLeft";
 // Components
 import { StyledHeroHeading } from "../styled/Heading";
 

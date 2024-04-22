@@ -2,7 +2,7 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import PlaneIcon from "@/components/icons/Plane";
+import PlaneIcon from "@/components/icon/Plane";
 
 describe("PlaneIcon", () => {
 	it("renders an icon", () => {

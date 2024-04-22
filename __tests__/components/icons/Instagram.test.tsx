@@ -2,7 +2,7 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import InstagramIcon from "@/components/icons/Instagram";
+import InstagramIcon from "@/components/icon/Instagram";
 
 describe("InstagramIcon", () => {
 	it("renders an icon", () => {

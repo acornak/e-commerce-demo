@@ -13,7 +13,7 @@ import heroImage from "@/public/misc/privacy.webp";
 // Components
 import { StyledHeroHeading } from "../styled/Heading";
 // Icons
-import ChevronRightIcon from "../icons/ChevronRight";
+import ChevronRightIcon from "../icon/ChevronRight";
 
 const PrivacyHero = (): JSX.Element => {
 	return (

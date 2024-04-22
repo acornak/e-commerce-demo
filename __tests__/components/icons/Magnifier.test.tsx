@@ -2,7 +2,7 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import MagnifierIcon from "@/components/icons/Magnifier";
+import MagnifierIcon from "@/components/icon/Magnifier";
 
 describe("MagnifierIcon", () => {
 	it("renders an icon", () => {

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Icons
-import MagnifierIcon from "../icons/Magnifier";
+import MagnifierIcon from "../icon/Magnifier";
 
 type SearchBarProps = {
 	searchOpen: boolean;

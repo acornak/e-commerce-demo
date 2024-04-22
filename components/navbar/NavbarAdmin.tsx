@@ -17,7 +17,7 @@ import MobileItems from "./Mobile";
 import { NavItemsAdmin } from "./NavItems";
 import { NavIcons, adminIcons } from "./NavIcons";
 // Icons
-import BarsIcon from "../icons/Bars";
+import BarsIcon from "../icon/Bars";
 
 const NavbarAdmin = (): JSX.Element => {
 	const dropdownRef = useRef<HTMLDivElement>(null);

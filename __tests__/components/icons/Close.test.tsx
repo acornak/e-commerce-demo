@@ -2,7 +2,7 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import CloseIcon from "@/components/icons/Close";
+import CloseIcon from "@/components/icon/Close";
 
 describe("CloseIcon", () => {
 	it("renders an icon", () => {

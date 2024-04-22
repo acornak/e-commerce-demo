@@ -16,11 +16,11 @@ import DesktopItems from "./Desktop";
 import MobileItems from "./Mobile";
 import { NavItems } from "./NavItems";
 import SearchBar from "./Search";
-import LoginModal from "./Login";
+import LoginModal from "../modal/LoginModal";
 import ShoppingCart from "./Cart";
 import { NavIcons, menuIcons } from "./NavIcons";
 // Icons
-import BarsIcon from "../icons/Bars";
+import BarsIcon from "../icon/Bars";
 
 const Navbar = (): JSX.Element => {
 	const [selected, setSelected] = useState<number | null>(null);

@@ -14,10 +14,10 @@ import { useCartStore } from "@/lib/stores/cart-store";
 // Components
 import StyledLoading from "../styled/Loading";
 // Icons
-import HeartIcon from "../icons/Heart";
-import BagIcon from "../icons/Bag";
-import MagnifierIcon from "../icons/Magnifier";
-import CloseIcon from "../icons/Close";
+import HeartIcon from "../icon/Heart";
+import BagIcon from "../icon/Bag";
+import MagnifierIcon from "../icon/Magnifier";
+import CloseIcon from "../icon/Close";
 
 type ProductButtonProps = {
 	children: ReactNode;

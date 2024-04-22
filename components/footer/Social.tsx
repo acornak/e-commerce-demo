@@ -15,9 +15,9 @@ import ig5 from "@/public/instagram/ig_5.jpeg";
 import ig6 from "@/public/instagram/ig_6.jpeg";
 import ig7 from "@/public/instagram/ig_7.webp";
 // Icons
-import InstagramIcon from "../icons/Instagram";
-import ChevronLeftIcon from "../icons/ChevronLeft";
-import ChevronRightIcon from "../icons/ChevronRight";
+import InstagramIcon from "../icon/Instagram";
+import ChevronLeftIcon from "../icon/ChevronLeft";
+import ChevronRightIcon from "../icon/ChevronRight";
 // Components
 import { StyledSectionHeading } from "../styled/Heading";
 

@@ -9,10 +9,10 @@ import colors from "@/lib/config/constants";
 // Components
 import { NavItems } from "./NavItems";
 // Icons
-import BagIcon from "../icons/Bag";
-import MagnifierIcon from "../icons/Magnifier";
-import UserIcon from "../icons/User";
-import HeartIcon from "../icons/Heart";
+import BagIcon from "../icon/Bag";
+import MagnifierIcon from "../icon/Magnifier";
+import UserIcon from "../icon/User";
+import HeartIcon from "../icon/Heart";
 
 const CartIcon = ({
 	cartItems,

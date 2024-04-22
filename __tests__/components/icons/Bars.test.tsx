@@ -2,7 +2,7 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import BarsIcon from "@/components/icons/Bars";
+import BarsIcon from "@/components/icon/Bars";
 
 describe("BarsIcon", () => {
 	it("renders an icon", () => {

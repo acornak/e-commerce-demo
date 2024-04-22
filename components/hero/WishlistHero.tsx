@@ -13,7 +13,7 @@ import heroImage from "@/public/misc/wishlist.webp";
 // Components
 import { StyledHeroHeading } from "../styled/Heading";
 // Icons
-import ChevronRightIcon from "../icons/ChevronRight";
+import ChevronRightIcon from "../icon/ChevronRight";
 
 const WishlistHero = (): JSX.Element => {
 	return (

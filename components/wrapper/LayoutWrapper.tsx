@@ -5,7 +5,7 @@ import React, { FC, ReactNode } from "react";
 import { usePathname } from "next/navigation";
 // Components
 import Navbar from "../navbar/Navbar";
-import CookieConsent from "../cookie/CookieConsent";
+import CookieConsent from "../modal/CookieConsent";
 import Sitemap from "../footer/Sitemap";
 import Footer from "../footer/Footer";
 import NavbarAdmin from "../navbar/NavbarAdmin";

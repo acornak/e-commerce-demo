@@ -12,7 +12,7 @@ import colors from "@/lib/config/constants";
 // Components
 import { StyledSectionHeading } from "../styled/Heading";
 // Icons
-import PlaneIcon from "../icons/Plane";
+import PlaneIcon from "../icon/Plane";
 
 const Newsletter = (): JSX.Element => {
 	return (

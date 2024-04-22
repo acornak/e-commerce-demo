@@ -2,7 +2,7 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import HeartIcon from "@/components/icons/Heart";
+import HeartIcon from "@/components/icon/Heart";
 
 describe("HeartIcon", () => {
 	it("renders an icon", () => {

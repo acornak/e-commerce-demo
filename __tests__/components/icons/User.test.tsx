@@ -2,7 +2,7 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import UserIcon from "@/components/icons/User";
+import UserIcon from "@/components/icon/User";
 
 describe("UserIcon", () => {
 	it("renders an icon", () => {

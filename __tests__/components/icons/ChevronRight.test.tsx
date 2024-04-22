@@ -2,7 +2,7 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import ChevronRightIcon from "@/components/icons/ChevronRight";
+import ChevronRightIcon from "@/components/icon/ChevronRight";
 
 describe("ChevronRightIcon", () => {
 	it("renders an icon", () => {

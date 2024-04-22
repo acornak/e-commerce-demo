@@ -3,7 +3,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 // Components
-import LayoutWrapper from "@/components/wrappers/LayoutWrapper";
+import LayoutWrapper from "@/components/wrapper/LayoutWrapper";
 // Fonts
 import { montserrat } from "./fonts";
 // Styles

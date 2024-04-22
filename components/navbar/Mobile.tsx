@@ -7,11 +7,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { NavItem } from "@/lib/config/types";
 import colors from "@/lib/config/constants";
 // Components
-import { LoginForm, RegisterForm } from "./Login";
+import HandleLoginForm from "../common/LoginForm";
 // Icons
-import BarsIcon from "../icons/Bars";
-import ChevronRightIcon from "../icons/ChevronRight";
-import UserIcon from "../icons/User";
+import BarsIcon from "../icon/Bars";
+import ChevronRightIcon from "../icon/ChevronRight";
+import UserIcon from "../icon/User";
 
 type MobileItemsProps = {
 	drawerOpen: boolean;
@@ -30,13 +30,12 @@ const MobileItems: FC<MobileItemsProps> = ({
 
 	const handleContent = () => {
 		if (showLogin) {
-			return showRegister ? (
-				<div className="px-4 pt-4">
-					<RegisterForm setShowRegister={setShowRegister} />
-				</div>
-			) : (
-				<div className="px-4 pt-4">
-					<LoginForm setShowRegister={setShowRegister} />
+			return (
+				<div className="px-4 pt-4 text-lg">
+					<HandleLoginForm
+						showRegister={showRegister}
+						setShowRegister={setShowRegister}
+					/>
 				</div>
 			);
 		}

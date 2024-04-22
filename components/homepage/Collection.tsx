@@ -13,8 +13,8 @@ import round from "@/public/categories/round.png";
 import safety from "@/public/categories/safety.png";
 import stylish from "@/public/categories/stylish.png";
 // Icons
-import ChevronRightIcon from "../icons/ChevronRight";
-import ChevronLeftIcon from "../icons/ChevronLeft";
+import ChevronRightIcon from "../icon/ChevronRight";
+import ChevronLeftIcon from "../icon/ChevronLeft";
 // Components
 import { StyledSectionHeading } from "../styled/Heading";
 
