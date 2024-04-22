@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 // Types and constants
-import { Product } from "@/lib/models/product_1";
+import { Product } from "@/lib/models/product";
 // Components
 import ProductPreview from "./ProductPreview";
 import { StyledSectionHeading } from "../styled/Heading";

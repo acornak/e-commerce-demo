@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 // Types and constants
 import colors from "@/lib/config/constants";
-import { Product } from "@/lib/models/product_1";
+import { Product } from "@/lib/models/product";
 // Store
 import { CartItem, useCartStore } from "@/lib/stores/cart-store";
 // Icons

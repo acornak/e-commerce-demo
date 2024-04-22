@@ -1,5 +1,5 @@
 // Types and constants
-import { Product } from "@/lib/models/product_1";
+import { Product } from "@/lib/models/product";
 
 const products: Product[] = [
 	{

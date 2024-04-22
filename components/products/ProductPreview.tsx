@@ -7,7 +7,7 @@ import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
-import { Product } from "@/lib/models/product_1";
+import { Product } from "@/lib/models/product";
 import colors from "@/lib/config/constants";
 // Store
 import { useCartStore } from "@/lib/stores/cart-store";
