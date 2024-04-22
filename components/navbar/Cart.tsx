@@ -144,20 +144,16 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({ item }) => {
 };
 
 type ShoppingCartProps = {
-	cartOpen: boolean;
 	setCartOpen: (open: boolean) => void;
 	items: CartItem[];
 };
 
-const ShoppingCart: FC<ShoppingCartProps> = ({
-	cartOpen,
-	items,
-	setCartOpen,
-}) => {
+const ShoppingCart: FC<ShoppingCartProps> = ({ items, setCartOpen }) => {
 	return (
 		<motion.div
 			initial="closed"
-			animate={cartOpen ? "open" : "closed"}
+			animate="open"
+			exit="closed"
 			variants={{
 				open: { x: 0, opacity: 1 },
 				closed: { x: "100%", opacity: 0 },

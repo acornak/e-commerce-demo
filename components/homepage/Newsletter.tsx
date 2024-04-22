@@ -20,7 +20,12 @@ const Newsletter = (): JSX.Element => {
 			<StyledSectionHeading title="Let's stay in touch" />
 			<div className="flex justify-center items-center">
 				<div className="flex flex-row w-full justify-center">
-					<div className="hidden lg:flex md:w-1/2 justify-center items-center">
+					<motion.div
+						whileHover={{ scale: 1.1 }}
+						whileTap={{ scale: 1.1 }}
+						transition={{ duration: 2 }}
+						className="hidden lg:flex md:w-1/2 justify-center items-center"
+					>
 						<Image
 							src={newsletter.src}
 							alt="Newsletter"
@@ -31,7 +36,7 @@ const Newsletter = (): JSX.Element => {
 								width: "auto",
 							}}
 						/>
-					</div>
+					</motion.div>
 					<div className="w-full lg:w-1/3 mx-10 flex flex-col items-center border border-secondary py-20 lg:py-24 px-10">
 						<div className="text-2xl uppercase tracking-widest font-normal">
 							Get updates

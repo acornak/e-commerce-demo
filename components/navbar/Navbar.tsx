@@ -62,11 +62,11 @@ const Navbar = (): JSX.Element => {
 				setLoginModalOpen={setLoginModalOpen}
 			/>
 			<SearchBar searchOpen={searchOpen} />
-			<ShoppingCart
-				cartOpen={cartOpen}
-				setCartOpen={setCartOpen}
-				items={items}
-			/>
+			<AnimatePresence>
+				{cartOpen && (
+					<ShoppingCart setCartOpen={setCartOpen} items={items} />
+				)}
+			</AnimatePresence>
 			<MobileItems
 				drawerOpen={drawerOpen}
 				setDrawerOpen={setDrawerOpen}
