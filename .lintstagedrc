@@ -3,7 +3,8 @@
         "jest --bail --findRelatedTests --passWithNoTests",
         "prettier --write",
         "eslint --cache --fix",
-        "eslint"
+        "eslint",
+        "yarn build"
     ],
     "*/**/*.{json,css,md}": [
         "prettier --write"
