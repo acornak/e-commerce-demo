@@ -14,16 +14,13 @@ import LoginModal from "@/components/modal/LoginModal";
 import WishlistTable from "@/components/product/WIshlistTable";
 
 const Wishlist: NextPage = (): JSX.Element => {
-	const [loginOpen, setLoginOpen] = useState(false);
+	const [modalOpen, setModalOpen] = useState(false);
 
 	return (
 		<>
-			<LoginModal
-				loginModalOpen={loginOpen}
-				setLoginModalOpen={setLoginOpen}
-			/>
+			<LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
 			<AnimatePresence>
-				{loginOpen && (
+				{modalOpen && (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.7 }}
@@ -34,7 +31,7 @@ const Wishlist: NextPage = (): JSX.Element => {
 							zIndex: 20,
 						}}
 						onClick={() => {
-							setLoginOpen(false);
+							setModalOpen(false);
 						}}
 					/>
 				)}
@@ -49,7 +46,7 @@ const Wishlist: NextPage = (): JSX.Element => {
 							whileHover={{ color: colors.secondary }}
 							whileTap={{ color: colors.secondary }}
 							className="inline font-bold cursor-pointer"
-							onClick={() => setLoginOpen(true)}
+							onClick={() => setModalOpen(true)}
 						>
 							login
 						</motion.p>{" "}

@@ -25,7 +25,7 @@ const Footer = (): JSX.Element => {
 							</motion.span>
 						</Link>{" "}
 						| Inspired by{" "}
-						<Link href="https://pertic-store-demo.myshopify.com/">
+						<Link href="https://themeforest.net/item/pertic-modern-eyeglasses-responsive-shopify-20-theme/51637100/">
 							<motion.span
 								whileHover={{ color: colors.secondary }}
 								whileTap={{ color: colors.secondary }}

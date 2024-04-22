@@ -1,7 +1,4 @@
-// Types and constants
-import { Product } from "@/lib/models/product";
-
-const products: Product[] = [
+const dummyProducts = [
 	{
 		id: 1,
 		name: "Rectangular Prescription",
@@ -191,4 +188,4 @@ const products: Product[] = [
 	},
 ];
 
-export default products;
+export default dummyProducts;

@@ -5,36 +5,29 @@ import { motion, AnimatePresence } from "framer-motion";
 import { dancing } from "@/app/fonts";
 // Types and constants
 import colors from "@/lib/config/constants";
+import { ModalProps } from "@/lib/config/types";
 // Components
 import HandleLoginForm from "../common/LoginForm";
 // Icons
 import CloseIcon from "../icon/Close";
 
-type LoginModalProps = {
-	loginModalOpen: boolean;
-	setLoginModalOpen: (open: boolean) => void;
-};
-
-const LoginModal: FC<LoginModalProps> = ({
-	loginModalOpen,
-	setLoginModalOpen,
-}) => {
+const LoginModal: FC<ModalProps> = ({ modalOpen, setModalOpen }) => {
 	const [showRegister, setShowRegister] = useState<boolean>(false);
 
 	useEffect(() => {
 		setShowRegister(false);
-	}, [loginModalOpen]);
+	}, [modalOpen]);
 
 	return (
 		<AnimatePresence>
-			{loginModalOpen && (
+			{modalOpen && (
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
-					onClick={() => setLoginModalOpen(false)}
+					onClick={() => setModalOpen(false)}
 				>
 					<motion.div
 						initial={{ scale: 0.9 }}
@@ -56,7 +49,7 @@ const LoginModal: FC<LoginModalProps> = ({
 							}}
 							transition={{ duration: 0.2 }}
 							className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
-							onClick={() => setLoginModalOpen(false)}
+							onClick={() => setModalOpen(false)}
 						>
 							<CloseIcon />
 						</motion.button>

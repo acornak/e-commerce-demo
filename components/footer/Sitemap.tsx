@@ -75,13 +75,15 @@ const Sitemap = (): JSX.Element => {
 							<hr className="w-1/6 border-black mt-2" />
 						</h3>
 						<ul className="mt-4">
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								FAQ
-							</motion.li>
+							<Link href="/privacy-policy">
+								<motion.li
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="py-2 cursor-pointer"
+								>
+									FAQ
+								</motion.li>
+							</Link>
 							<Link href="/privacy-policy">
 								<motion.li
 									whileHover={{ color: colors.secondary }}
@@ -91,20 +93,24 @@ const Sitemap = (): JSX.Element => {
 									Privacy Policy
 								</motion.li>
 							</Link>
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Terms of Service
-							</motion.li>
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Accessibility
-							</motion.li>
+							<Link href="/privacy-policy">
+								<motion.li
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="py-2 cursor-pointer"
+								>
+									Terms of Service
+								</motion.li>
+							</Link>
+							<Link href="/privacy-policy">
+								<motion.li
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="py-2 cursor-pointer"
+								>
+									Accessibility
+								</motion.li>
+							</Link>
 						</ul>
 					</div>
 					<div className="text-xs tracking-widest text-center">
@@ -113,14 +119,16 @@ const Sitemap = (): JSX.Element => {
 							<hr className="w-1/6 border-black mt-2" />
 						</h3>
 						<ul className="mt-4">
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Facebook
-							</motion.li>
-							<Link href="/privacy-policy">
+							<Link href="https://facebook.com/">
+								<motion.li
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="py-2 cursor-pointer"
+								>
+									Facebook
+								</motion.li>
+							</Link>
+							<Link href="https://www.instagram.com/">
 								<motion.li
 									whileHover={{ color: colors.secondary }}
 									whileTap={{ color: colors.secondary }}

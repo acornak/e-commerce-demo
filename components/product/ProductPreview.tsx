@@ -24,6 +24,7 @@ import HeartIcon from "../icon/Heart";
 import BagIcon from "../icon/Bag";
 import MagnifierIcon from "../icon/Magnifier";
 import CloseIcon from "../icon/Close";
+import CheckmarkRoundIcon from "../icon/CheckmarkRound";
 
 type ProductButtonProps = {
 	children: ReactNode;
@@ -67,7 +68,7 @@ const ProductButton: FC<ProductButtonProps> = ({
 				onClick={() => {
 					setShowTooltip(false);
 				}}
-				className="bg-white rounded-full p-2 m-1 cursor-pointer"
+				className="bg-white rounded-full p-2 m-1"
 				type="button"
 				aria-label="Go to the product page"
 			>
@@ -89,11 +90,15 @@ const ProductButton: FC<ProductButtonProps> = ({
 type ProductModalProps = {
 	productId: number;
 	setModalOpen: (open: boolean) => void;
+	setProductAdded: (product: Product) => void;
+	setAddedModalOpen: (open: boolean) => void;
 };
 
 const ProductModal: FC<ProductModalProps> = ({
 	productId,
 	setModalOpen,
+	setProductAdded,
+	setAddedModalOpen,
 }): JSX.Element => {
 	const [product, setProduct] = useState<Product | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -123,6 +128,19 @@ const ProductModal: FC<ProductModalProps> = ({
 	) => {
 		if (event.target === event.currentTarget) {
 			setModalOpen(false);
+		}
+	};
+
+	const handleAddToCart = () => {
+		if (product) {
+			addItem({
+				productId: product.id,
+				price: product.price,
+				quantity,
+			});
+			setModalOpen(false);
+			setProductAdded(product);
+			setAddedModalOpen(true);
 		}
 	};
 
@@ -213,13 +231,7 @@ const ProductModal: FC<ProductModalProps> = ({
 										backgroundColor: colors.black,
 									}}
 									className="bg-secondary text-white px-4 py-2 uppercase tracking-widest font-semibold"
-									onClick={() =>
-										addItem({
-											productId,
-											price: product.price,
-											quantity,
-										})
-									}
+									onClick={handleAddToCart}
 								>
 									Add to cart
 								</motion.button>
@@ -247,14 +259,41 @@ const ProductModal: FC<ProductModalProps> = ({
 
 type ProductPreviewProps = {
 	product: Product;
+	setProductAdded: (product: Product) => void;
+	setAddedModalOpen: (open: boolean) => void;
 };
 
-const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
+const ProductPreview: FC<ProductPreviewProps> = ({
+	product,
+	setProductAdded,
+	setAddedModalOpen,
+}): JSX.Element => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [hovered, setHovered] = useState<boolean>(false);
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const addCartItem = useCartStore((state) => state.addItem);
+	const cartItems = useCartStore((state) => state.items);
 	const addWishlistItem = useWishlistStore((state) => state.addItem);
+
+	const hasHover = () => {
+		return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+	};
+
+	const handleAddToCart = () => {
+		if (product) {
+			addCartItem({
+				productId: product.id,
+				price: product.price,
+				quantity: 1,
+			});
+			setProductAdded(product);
+			setAddedModalOpen(true);
+		}
+	};
+
+	const itemAlreadyInCart = cartItems.some(
+		(item) => item.productId === product.id,
+	);
 
 	useEffect(() => {
 		fetchProductImage(product.id, setImageUrl);
@@ -267,19 +306,27 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 					<ProductModal
 						productId={product.id}
 						setModalOpen={setModalOpen}
+						setProductAdded={setProductAdded}
+						setAddedModalOpen={setAddedModalOpen}
 					/>
 				)}
 			</AnimatePresence>
+
 			<div className="flex flex-col items-center">
 				<div
 					className="relative flex justify-center items-center"
-					onMouseEnter={() => setHovered(true)}
-					onMouseLeave={() => setHovered(false)}
-					onTouchStart={() => setHovered((prev) => !prev)}
+					// eslint-disable-next-line react/jsx-props-no-spreading
+					{...(hasHover() && {
+						onMouseEnter: () => setHovered(true),
+						onMouseLeave: () => setHovered(false),
+					})}
 				>
 					{imageUrl && (
 						<>
-							<Link href={`/products/${product.slug}`}>
+							<Link
+								href={`/products/${product.slug}`}
+								className="cursor-pointer"
+							>
 								<Image
 									src={imageUrl}
 									alt={product.name}
@@ -313,16 +360,18 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 										</ProductButton>
 										<ProductButton
 											setHovered={setHovered}
-											tooltipText="Add to cart"
-											onClickEvent={() =>
-												addCartItem({
-													productId: product.id,
-													price: product.price,
-													quantity: 1,
-												})
+											tooltipText={
+												itemAlreadyInCart
+													? "Item added"
+													: "Add to cart"
 											}
+											onClickEvent={handleAddToCart}
 										>
-											<BagIcon />
+											{itemAlreadyInCart ? (
+												<CheckmarkRoundIcon />
+											) : (
+												<BagIcon />
+											)}
 										</ProductButton>
 
 										<ProductButton

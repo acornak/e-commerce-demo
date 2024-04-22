@@ -3,6 +3,7 @@
 import React, { FC, useEffect, useState } from "react";
 // Next
 import Link from "next/link";
+import Image from "next/image";
 // Animations
 import { motion } from "framer-motion";
 // Types and constants
@@ -14,18 +15,26 @@ import {
 	fetchProduct,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
-// Icons
 import { useCartStore } from "@/lib/stores/cart-store";
-import Image from "next/image";
+// Hooks
 import useHydration from "@/lib/hooks/use-hydratation";
+// Components
+import ProductAddedModal from "../modal/ProductAddedModal";
 import StyledLoading from "../styled/Loading";
+// Icons
 import TrashIcon from "../icon/Trash";
 
 type WishlistItemProps = {
 	productId: number;
+	setModalOpen: (open: boolean) => void;
+	setProductAdded: (product: Product) => void;
 };
 
-const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
+const WishlistItem: FC<WishlistItemProps> = ({
+	productId,
+	setProductAdded,
+	setModalOpen,
+}): JSX.Element => {
 	const [product, setProduct] = useState<Product | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const removeWishlistItem = useWishlistStore((state) => state.removeItem);
@@ -36,21 +45,36 @@ const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
 		fetchProductImage(productId, setImageUrl);
 	}, [productId]);
 
+	const handleAddToCart = () => {
+		if (product) {
+			addCartItem({
+				productId,
+				price: product.price,
+				quantity: 1,
+			});
+			setProductAdded(product);
+			setModalOpen(true);
+		}
+	};
+
 	return (
 		<>
-			<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-				<div className="flex items-center space-x-4">
+			<td className="px-6 py-4  text-sm font-medium text-gray-900">
+				<div className="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-4">
 					{product && imageUrl && (
-						<Link href={`/products/${product.slug}`}>
+						<Link
+							href={`/products/${product.slug}`}
+							className="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-2"
+						>
 							<Image
 								src={imageUrl}
 								width={100}
 								height={100}
 								alt={product?.name}
 							/>
+							<span>{product?.name}</span>
 						</Link>
 					)}
-					{product?.name}
 				</div>
 			</td>
 			<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">
@@ -71,14 +95,8 @@ const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
 							color: colors.white,
 							backgroundColor: colors.secondary,
 						}}
-						className="uppercase text-sm px-3 py-2 sm:tracking-widest"
-						onClick={() =>
-							addCartItem({
-								productId,
-								price: product?.price,
-								quantity: 1,
-							})
-						}
+						className="uppercase text-sm px-6 py-4 sm:tracking-widest"
+						onClick={handleAddToCart}
 					>
 						Add to cart
 					</motion.button>
@@ -102,6 +120,8 @@ const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
 };
 
 const WishlistTable = () => {
+	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	const [productAdded, setProductAdded] = useState<Product | null>(null);
 	const items = useWishlistStore((state) => state.items);
 	const hydrated = useHydration(useWishlistStore);
 
@@ -111,24 +131,31 @@ const WishlistTable = () => {
 
 	return (
 		<>
-			<table className="w-2/3 pb-6 mx-2">
+			{productAdded && (
+				<ProductAddedModal
+					modalOpen={modalOpen}
+					setModalOpen={setModalOpen}
+					product={productAdded}
+				/>
+			)}
+			<table className="max-w-[90%] pb-6 mx-2">
 				<thead className="border border-1 border-gray-300 w-full">
 					<tr>
 						<th
 							scope="col"
-							className="w-1/3 px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+							className="w-1/3 px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider border-r border-gray-300"
 						>
 							Product Name
 						</th>
 						<th
 							scope="col"
-							className="w-1/4 px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider border-l border-r border-gray-300 hidden sm:table-cell"
+							className="w-1/4 px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider hidden sm:table-cell"
 						>
 							Price
 						</th>
 						<th
 							scope="col"
-							className="w-1/4 px-6 py-3 text-right text-xs font-medium text-black uppercase tracking-wider"
+							className="w-1/4 px-6 py-3 text-right text-xs font-medium text-black uppercase tracking-wider border-gray-300 border-l"
 						>
 							Action
 						</th>
@@ -141,9 +168,20 @@ const WishlistTable = () => {
 					</tr>
 				</thead>
 				<tbody className="bg-white border border-1 border-gray-300">
-					{items.map((item) => (
-						<tr key={item.productId}>
-							<WishlistItem productId={item.productId} />
+					{items.map((item, index) => (
+						<tr
+							key={item.productId}
+							className={`border-b ${
+								index !== items.length - 1
+									? "border-gray-300"
+									: ""
+							}`}
+						>
+							<WishlistItem
+								productId={item.productId}
+								setModalOpen={setModalOpen}
+								setProductAdded={setProductAdded}
+							/>
 						</tr>
 					))}
 				</tbody>

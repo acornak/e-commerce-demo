@@ -13,9 +13,9 @@ import colors from "@/lib/config/constants";
 import { useCartStore } from "@/lib/stores/cart-store";
 // Components
 import DesktopItems from "./Desktop";
-import MobileItems from "./Mobile";
+import MobileItems from "./NavbarMobile";
 import { NavItems } from "./NavItems";
-import SearchBar from "./Search";
+import SearchBar from "./SearchBar";
 import LoginModal from "../modal/LoginModal";
 import ShoppingCart from "./Cart";
 import { NavIcons, menuIcons } from "./NavIcons";
@@ -58,8 +58,8 @@ const Navbar = (): JSX.Element => {
 	return (
 		<>
 			<LoginModal
-				loginModalOpen={loginModalOpen}
-				setLoginModalOpen={setLoginModalOpen}
+				modalOpen={loginModalOpen}
+				setModalOpen={setLoginModalOpen}
 			/>
 			<SearchBar searchOpen={searchOpen} />
 			<AnimatePresence>
@@ -95,7 +95,7 @@ const Navbar = (): JSX.Element => {
 				>
 					Glassify
 				</Link>
-				<ul className="flex justify-center items-center space-x-8">
+				<ul className="flex justify-center items-center text-center space-x-8">
 					<Link
 						className={`${dancing.className} text-3xl lg:hidden cursor-pointer select-none`}
 						href="/"

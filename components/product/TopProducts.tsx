@@ -8,9 +8,12 @@ import { fetchProductByCategory } from "@/lib/functions/product-fetcher";
 // Components
 import ProductPreview from "./ProductPreview";
 import { StyledSectionHeading } from "../styled/Heading";
+import ProductAddedModal from "../modal/ProductAddedModal";
 
 const TopProducts = (): JSX.Element => {
 	const [topProducts, setTopProducts] = useState<Product[]>([]);
+	const [addedModalOpen, setAddedModalOpen] = useState<boolean>(false);
+	const [productAdded, setProductAdded] = useState<Product | null>(null);
 
 	useEffect((): void => {
 		fetchProductByCategory("top", setTopProducts, 12);
@@ -18,6 +21,13 @@ const TopProducts = (): JSX.Element => {
 
 	return (
 		<>
+			{productAdded && (
+				<ProductAddedModal
+					modalOpen={addedModalOpen}
+					setModalOpen={setAddedModalOpen}
+					product={productAdded}
+				/>
+			)}
 			<div className="flex justify-center items-center text-center mt-6">
 				<div>
 					<StyledSectionHeading title="Pick your Winner" />
@@ -28,6 +38,8 @@ const TopProducts = (): JSX.Element => {
 									<ProductPreview
 										key={product.id}
 										product={product}
+										setProductAdded={setProductAdded}
+										setAddedModalOpen={setAddedModalOpen}
 									/>
 								),
 							)}
