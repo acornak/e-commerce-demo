@@ -10,12 +10,15 @@ import { motion } from "framer-motion";
 import { Product } from "@/lib/models/product";
 import colors from "@/lib/config/constants";
 // Store
-import { useWishlistStore } from "@/lib/stores/wishlist-store";
+import {
+	updateWishlistStore,
+	useWishlistStore,
+} from "@/lib/stores/wishlist-store";
 import {
 	fetchProduct,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
-import { useCartStore } from "@/lib/stores/cart-store";
+import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 // Hooks
 import useHydration from "@/lib/hooks/use-hydratation";
 // Components
@@ -39,6 +42,22 @@ const WishlistItem: FC<WishlistItemProps> = ({
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const removeWishlistItem = useWishlistStore((state) => state.removeItem);
 	const addCartItem = useCartStore((state) => state.addItem);
+
+	useEffect(() => {
+		document.addEventListener("visibilitychange", updateCartStore);
+		document.addEventListener("visibilitychange", updateWishlistStore);
+		window.addEventListener("focus", updateWishlistStore);
+		window.addEventListener("focus", updateCartStore);
+		return () => {
+			document.removeEventListener(
+				"visibilitychange",
+				updateWishlistStore,
+			);
+			document.removeEventListener("visibilitychange", updateCartStore);
+			window.removeEventListener("focus", updateWishlistStore);
+			window.removeEventListener("focus", updateCartStore);
+		};
+	}, []);
 
 	useEffect(() => {
 		fetchProduct(productId, setProduct);
@@ -124,6 +143,18 @@ const WishlistTable = () => {
 	const [productAdded, setProductAdded] = useState<Product | null>(null);
 	const items = useWishlistStore((state) => state.items);
 	const hydrated = useHydration(useWishlistStore);
+
+	useEffect(() => {
+		document.addEventListener("visibilitychange", updateWishlistStore);
+		window.addEventListener("focus", updateWishlistStore);
+		return () => {
+			document.removeEventListener(
+				"visibilitychange",
+				updateWishlistStore,
+			);
+			window.removeEventListener("focus", updateWishlistStore);
+		};
+	}, []);
 
 	if (!hydrated) {
 		return <StyledLoading />;

@@ -85,3 +85,7 @@ export const useCartStore = create<CartStore>()(
 		},
 	),
 );
+
+export const updateCartStore = () => {
+	useCartStore.persist.rehydrate();
+};

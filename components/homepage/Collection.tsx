@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 // Next
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
 // Images
@@ -21,32 +22,40 @@ import { StyledSectionHeading } from "../styled/Heading";
 type Category = {
 	image: StaticImageData;
 	title: string;
+	slug: string;
 };
 
+// TODO: add category type
 const categories: Category[] = [
 	{
 		image: aviator,
 		title: "Aviator",
+		slug: "aviator",
 	},
 	{
 		image: cateye,
 		title: "Cat Eye",
+		slug: "cat-eye",
 	},
 	{
 		image: rectangle,
 		title: "Rectangle",
+		slug: "rectangle",
 	},
 	{
 		image: round,
 		title: "Round",
+		slug: "round",
 	},
 	{
 		image: safety,
 		title: "Safety",
+		slug: "safety",
 	},
 	{
 		image: stylish,
 		title: "Stylish",
+		slug: "stylish",
 	},
 ];
 
@@ -90,7 +99,10 @@ const CategoriesCarousel = ({
 								key={category.title}
 								className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 py-2 px-5 lg:px-4 xl:px-10 flex-none"
 							>
-								<div className="relative">
+								<Link
+									href={`/products/categories/${category.slug}`}
+									className="relative"
+								>
 									<motion.div
 										whileHover={{ scale: 1.1 }}
 										whileTap={{ scale: 1.1 }}
@@ -119,7 +131,7 @@ const CategoriesCarousel = ({
 											}}
 										/>
 									</motion.div>
-								</div>
+								</Link>
 								<p className="uppercase tracking-widest text-sm text-center mt-6">
 									{category.title}
 								</p>

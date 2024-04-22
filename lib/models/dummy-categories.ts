@@ -49,6 +49,16 @@ const dummyCategories = [
 		name: "Prescription glasses",
 		slug: "prescription",
 	},
+	{
+		id: 11,
+		name: "Safety glasses",
+		slug: "safety",
+	},
+	{
+		id: 12,
+		name: "Stylish glasses",
+		slug: "stylish",
+	},
 ];
 
 export default dummyCategories;

@@ -45,3 +45,7 @@ export const useWishlistStore = create<WishlistStore>()(
 		},
 	),
 );
+
+export const updateWishlistStore = () => {
+	useWishlistStore.persist.rehydrate();
+};

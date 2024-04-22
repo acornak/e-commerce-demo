@@ -7,7 +7,11 @@ import { motion } from "framer-motion";
 import colors from "@/lib/config/constants";
 import { Product } from "@/lib/models/product";
 // Store
-import { CartItem, useCartStore } from "@/lib/stores/cart-store";
+import {
+	CartItem,
+	updateCartStore,
+	useCartStore,
+} from "@/lib/stores/cart-store";
 // Functions
 import {
 	fetchProduct,
@@ -61,6 +65,15 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({ item }) => {
 	const removeItem = useCartStore((state) => state.removeItem);
 	const addQuantity = useCartStore((state) => state.addQuantity);
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
+
+	useEffect(() => {
+		document.addEventListener("visibilitychange", updateCartStore);
+		window.addEventListener("focus", updateCartStore);
+		return () => {
+			document.removeEventListener("visibilitychange", updateCartStore);
+			window.removeEventListener("focus", updateCartStore);
+		};
+	}, []);
 
 	useEffect(() => {
 		fetchProduct(item.productId, setProduct);

@@ -10,8 +10,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Product } from "@/lib/models/product";
 import colors from "@/lib/config/constants";
 // Store
-import { useCartStore } from "@/lib/stores/cart-store";
-import { useWishlistStore } from "@/lib/stores/wishlist-store";
+import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
+import {
+	updateWishlistStore,
+	useWishlistStore,
+} from "@/lib/stores/wishlist-store";
 // Functions
 import {
 	fetchProduct,
@@ -105,6 +108,15 @@ const ProductModal: FC<ProductModalProps> = ({
 	const [loading, setLoading] = useState<boolean>(true);
 	const [quantity, setQuantity] = useState<number>(1);
 	const addItem = useCartStore((state) => state.addItem);
+
+	useEffect(() => {
+		document.addEventListener("visibilitychange", updateCartStore);
+		window.addEventListener("focus", updateCartStore);
+		return () => {
+			document.removeEventListener("visibilitychange", updateCartStore);
+			window.removeEventListener("focus", updateCartStore);
+		};
+	}, []);
 
 	useEffect(() => {
 		fetchProduct(productId, setProduct);
@@ -273,11 +285,37 @@ const ProductPreview: FC<ProductPreviewProps> = ({
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const addCartItem = useCartStore((state) => state.addItem);
 	const cartItems = useCartStore((state) => state.items);
+	const wishlistItems = useWishlistStore((state) => state.items);
 	const addWishlistItem = useWishlistStore((state) => state.addItem);
+	const removeWishlistItem = useWishlistStore((state) => state.removeItem);
+
+	useEffect(() => {
+		document.addEventListener("visibilitychange", updateCartStore);
+		document.addEventListener("visibilitychange", updateWishlistStore);
+		window.addEventListener("focus", updateWishlistStore);
+		window.addEventListener("focus", updateCartStore);
+		return () => {
+			document.removeEventListener(
+				"visibilitychange",
+				updateWishlistStore,
+			);
+			document.removeEventListener("visibilitychange", updateCartStore);
+			window.removeEventListener("focus", updateWishlistStore);
+			window.removeEventListener("focus", updateCartStore);
+		};
+	}, []);
 
 	const hasHover = () => {
 		return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 	};
+
+	const itemAlreadyInCart = cartItems.some(
+		(item) => item.productId === product.id,
+	);
+
+	const itemAlreadyInWishlist = wishlistItems.some(
+		(item) => item.productId === product.id,
+	);
 
 	const handleAddToCart = () => {
 		if (product) {
@@ -291,9 +329,19 @@ const ProductPreview: FC<ProductPreviewProps> = ({
 		}
 	};
 
-	const itemAlreadyInCart = cartItems.some(
-		(item) => item.productId === product.id,
-	);
+	const handleAddToWishlist = () => {
+		if (product) {
+			if (itemAlreadyInWishlist) {
+				removeWishlistItem({
+					productId: product.id,
+				});
+			} else {
+				addWishlistItem({
+					productId: product.id,
+				});
+			}
+		}
+	};
 
 	useEffect(() => {
 		fetchProductImage(product.id, setImageUrl);
@@ -349,20 +397,24 @@ const ProductPreview: FC<ProductPreviewProps> = ({
 									>
 										<ProductButton
 											setHovered={setHovered}
-											tooltipText="Add to wishlist"
-											onClickEvent={() =>
-												addWishlistItem({
-													productId: product.id,
-												})
+											tooltipText={
+												itemAlreadyInWishlist
+													? "Item added to wishlist"
+													: "Add to wishlist"
 											}
+											onClickEvent={handleAddToWishlist}
 										>
-											<HeartIcon />
+											{itemAlreadyInWishlist ? (
+												<CheckmarkRoundIcon />
+											) : (
+												<HeartIcon />
+											)}
 										</ProductButton>
 										<ProductButton
 											setHovered={setHovered}
 											tooltipText={
 												itemAlreadyInCart
-													? "Item added"
+													? "Item added to cart"
 													: "Add to cart"
 											}
 											onClickEvent={handleAddToCart}

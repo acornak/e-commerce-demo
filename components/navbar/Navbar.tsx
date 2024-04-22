@@ -10,7 +10,7 @@ import { dancing } from "@/app/fonts";
 // Types and constants
 import colors from "@/lib/config/constants";
 // Store
-import { useCartStore } from "@/lib/stores/cart-store";
+import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 // Components
 import DesktopItems from "./Desktop";
 import MobileItems from "./NavbarMobile";
@@ -32,6 +32,15 @@ const Navbar = (): JSX.Element => {
 	const cartItems = useCartStore((state) =>
 		state.items.reduce((total, item) => total + item.quantity, 0),
 	);
+
+	useEffect(() => {
+		document.addEventListener("visibilitychange", updateCartStore);
+		window.addEventListener("focus", updateCartStore);
+		return () => {
+			document.removeEventListener("visibilitychange", updateCartStore);
+			window.removeEventListener("focus", updateCartStore);
+		};
+	}, []);
 
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {

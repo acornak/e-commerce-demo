@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // Functions
 import { fetchProductImage } from "@/lib/functions/product-fetcher";
 // Store
-import { useCartStore } from "@/lib/stores/cart-store";
+import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 // Types and constants
 import colors from "@/lib/config/constants";
 import { Product } from "@/lib/models/product";
@@ -27,6 +27,15 @@ const ProductAddedModal: FC<ProductAddedModalProps> = ({
 }) => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const cartItems = useCartStore((state) => state.items);
+
+	useEffect(() => {
+		document.addEventListener("visibilitychange", updateCartStore);
+		window.addEventListener("focus", updateCartStore);
+		return () => {
+			document.removeEventListener("visibilitychange", updateCartStore);
+			window.removeEventListener("focus", updateCartStore);
+		};
+	}, []);
 
 	function getItemQty(productId: number): number {
 		const item = cartItems.filter((i) => i.productId === productId)[0];
