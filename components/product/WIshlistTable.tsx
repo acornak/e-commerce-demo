@@ -128,7 +128,7 @@ const WishlistTable = () => {
 						</th>
 						<th
 							scope="col"
-							className="w-1/4 px-6 py-3 text-center text-xs font-medium text-black uppercase tracking-wider"
+							className="w-1/4 px-6 py-3 text-right text-xs font-medium text-black uppercase tracking-wider"
 						>
 							Action
 						</th>
