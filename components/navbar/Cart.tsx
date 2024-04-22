@@ -8,6 +8,11 @@ import colors from "@/lib/config/constants";
 import { Product } from "@/lib/models/product";
 // Store
 import { CartItem, useCartStore } from "@/lib/stores/cart-store";
+// Functions
+import {
+	fetchProduct,
+	fetchProductImage,
+} from "@/lib/functions/product-fetcher";
 // Icons
 import Image from "next/image";
 import CloseIcon from "../icon/Close";
@@ -58,19 +63,8 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({ item }) => {
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
 
 	useEffect(() => {
-		fetch(`/api/products?id=${item.productId}`)
-			.then((response) => response.json())
-			.then((data) => setProduct(data.product))
-			.catch((error) => console.error("Fetching product failed:", error));
-
-		fetch(`/api/products/image?productId=${item.productId}`)
-			.then((response) => response.blob())
-			.then((blob) => {
-				const url = URL.createObjectURL(blob);
-				setImageUrl(url);
-				return () => URL.revokeObjectURL(url);
-			})
-			.catch((error) => console.error("Fetching image failed:", error));
+		fetchProduct(item.productId, setProduct);
+		fetchProductImage(item.productId, setImageUrl);
 	}, [item.productId]);
 
 	if (!product || !imageUrl) {

@@ -3,27 +3,17 @@
 import React, { useEffect, useState } from "react";
 // Types and constants
 import { Product } from "@/lib/models/product";
+// Functions
+import { fetchProductByCategory } from "@/lib/functions/product-fetcher";
 // Components
 import ProductPreview from "./ProductPreview";
 import { StyledSectionHeading } from "../styled/Heading";
 
 const TopProducts = (): JSX.Element => {
 	const [topProducts, setTopProducts] = useState<Product[]>([]);
-	// const [bestSellers, setBestSellers] = useState<Product[]>([]);
-	// const [topRates, setTopRates] = useState<Product[]>([]);
 
 	useEffect((): void => {
-		fetch("/api/products?category=top&limit=12")
-			.then((response) => response.json())
-			.then((data) => setTopProducts(data.products));
-
-		// fetch("/api/products?category=best-sellers&limit=12")
-		// 	.then((response) => response.json())
-		// 	.then((data) => setBestSellers(data.products));
-
-		// fetch("/api/products?category=top-rates&limit=12")
-		// 	.then((response) => response.json())
-		// 	.then((data) => setTopRates(data.products));
+		fetchProductByCategory("top", setTopProducts, 12);
 	}, []);
 
 	return (

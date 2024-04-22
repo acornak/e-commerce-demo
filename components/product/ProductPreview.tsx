@@ -11,6 +11,12 @@ import { Product } from "@/lib/models/product";
 import colors from "@/lib/config/constants";
 // Store
 import { useCartStore } from "@/lib/stores/cart-store";
+import { useWishlistStore } from "@/lib/stores/wishlist-store";
+// Functions
+import {
+	fetchProduct,
+	fetchProductImage,
+} from "@/lib/functions/product-fetcher";
 // Components
 import StyledLoading from "../styled/Loading";
 // Icons
@@ -96,20 +102,8 @@ const ProductModal: FC<ProductModalProps> = ({
 	const addItem = useCartStore((state) => state.addItem);
 
 	useEffect(() => {
-		fetch(`/api/products?id=${productId}`)
-			.then((response) => response.json())
-			.then((data) => setProduct(data.product))
-			.catch((error) => console.error("Fetching product failed:", error));
-
-		fetch(`/api/products/image?productId=${productId}`)
-			.then((response) => response.blob())
-			.then((blob) => {
-				const url = URL.createObjectURL(blob);
-				setImageUrl(url);
-				return () => URL.revokeObjectURL(url);
-			})
-			.catch((error) => console.error("Fetching image failed:", error));
-
+		fetchProduct(productId, setProduct);
+		fetchProductImage(productId, setImageUrl);
 		const timeout = setTimeout(() => setLoading(false), 400);
 		return () => clearTimeout(timeout);
 	}, [productId]);
@@ -259,17 +253,11 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [hovered, setHovered] = useState<boolean>(false);
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
-	const addItem = useCartStore((state) => state.addItem);
+	const addCartItem = useCartStore((state) => state.addItem);
+	const addWishlistItem = useWishlistStore((state) => state.addItem);
 
 	useEffect(() => {
-		fetch(`/api/products/image?productId=${product.id}`)
-			.then((response) => response.blob())
-			.then((blob) => {
-				const url = URL.createObjectURL(blob);
-				setImageUrl(url);
-				return () => URL.revokeObjectURL(url);
-			})
-			.catch((error) => console.error("Fetching image failed:", error));
+		fetchProductImage(product.id, setImageUrl);
 	}, [product.id]);
 
 	return (
@@ -312,19 +300,22 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 											ease: "easeInOut",
 										}}
 									>
-										<Link href="/wishlist">
-											<ProductButton
-												setHovered={setHovered}
-												tooltipText="Add to wishlist"
-											>
-												<HeartIcon />
-											</ProductButton>
-										</Link>
+										<ProductButton
+											setHovered={setHovered}
+											tooltipText="Add to wishlist"
+											onClickEvent={() =>
+												addWishlistItem({
+													productId: product.id,
+												})
+											}
+										>
+											<HeartIcon />
+										</ProductButton>
 										<ProductButton
 											setHovered={setHovered}
 											tooltipText="Add to cart"
 											onClickEvent={() =>
-												addItem({
+												addCartItem({
 													productId: product.id,
 													price: product.price,
 													quantity: 1,

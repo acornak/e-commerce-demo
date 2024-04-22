@@ -10,8 +10,8 @@ import colors from "@/lib/config/constants";
 // Components
 import { StyledSectionHeading } from "@/components/styled/Heading";
 import WishlistHero from "@/components/hero/WishlistHero";
-
 import LoginModal from "@/components/modal/LoginModal";
+import WishlistTable from "@/components/product/WIshlistTable";
 
 const Wishlist: NextPage = (): JSX.Element => {
 	const [loginOpen, setLoginOpen] = useState(false);
@@ -42,7 +42,7 @@ const Wishlist: NextPage = (): JSX.Element => {
 			<WishlistHero />
 			<div className="flex flex-col items-center justify-center text-center mt-6">
 				<div>
-					<StyledSectionHeading title="Product you love" />
+					<StyledSectionHeading title="Products you love" />
 					<h2 className="my-4 pb-6">
 						For better experience, please{" "}
 						<motion.p
@@ -56,6 +56,7 @@ const Wishlist: NextPage = (): JSX.Element => {
 						first.
 					</h2>
 				</div>
+				<WishlistTable />
 			</div>
 		</>
 	);
