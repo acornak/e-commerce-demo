@@ -25,6 +25,8 @@ const NavbarAdmin = (): JSX.Element => {
 	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
+	//
+
 	useOutsideAlerter(dropdownRef, () => {
 		if (dropdownOpen) setDropdownOpen(false);
 	});
