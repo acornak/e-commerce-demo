@@ -95,7 +95,6 @@ type ProductModalProps = {
 	setModalOpen: (open: boolean) => void;
 	setProductAdded: (product: Product) => void;
 	setAddedModalOpen: (open: boolean) => void;
-	setHovered: (open: boolean) => void;
 };
 
 const ProductModal: FC<ProductModalProps> = ({
@@ -103,7 +102,6 @@ const ProductModal: FC<ProductModalProps> = ({
 	setModalOpen,
 	setProductAdded,
 	setAddedModalOpen,
-	setHovered,
 }): JSX.Element => {
 	const [product, setProduct] = useState<Product | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -152,7 +150,6 @@ const ProductModal: FC<ProductModalProps> = ({
 				price: product.price,
 				quantity,
 			});
-			setHovered(false);
 			setModalOpen(false);
 			setProductAdded(product);
 			setAddedModalOpen(true);
@@ -329,6 +326,7 @@ const ProductPreview: FC<ProductPreviewProps> = ({
 			});
 			setProductAdded(product);
 			setAddedModalOpen(true);
+			setHovered(false);
 		}
 	};
 
@@ -359,7 +357,6 @@ const ProductPreview: FC<ProductPreviewProps> = ({
 						setModalOpen={setModalOpen}
 						setProductAdded={setProductAdded}
 						setAddedModalOpen={setAddedModalOpen}
-						setHovered={setHovered}
 					/>
 				)}
 			</AnimatePresence>
