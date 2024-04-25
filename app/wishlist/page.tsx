@@ -1,41 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 // Next
 import { NextPage } from "next";
 // Animations
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 // Types and Constants
 import colors from "@/lib/config/constants";
 // Components
 import { StyledSectionHeading } from "@/components/styled/Heading";
 import WishlistHero from "@/components/hero/WishlistHero";
-import LoginModal from "@/components/modal/LoginModal";
 import WishlistTable from "@/components/product/WIshlistTable";
+import { useModalsStore } from "@/lib/stores/modals-store";
 
 const Wishlist: NextPage = (): JSX.Element => {
-	const [modalOpen, setModalOpen] = useState(false);
+	const setLoginModalOpen = useModalsStore(
+		(state) => state.setLoginModalOpen,
+	);
 
 	return (
 		<>
-			<LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
-			<AnimatePresence>
-				{modalOpen && (
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 0.7 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.2 }}
-						className="fixed inset-0 bg-black bg-opacity-80"
-						style={{
-							zIndex: 20,
-						}}
-						onClick={() => {
-							setModalOpen(false);
-						}}
-					/>
-				)}
-			</AnimatePresence>
 			<WishlistHero />
 			<div className="flex flex-col items-center justify-center text-center mt-6">
 				<div>
@@ -46,7 +30,7 @@ const Wishlist: NextPage = (): JSX.Element => {
 							whileHover={{ color: colors.secondary }}
 							whileTap={{ color: colors.secondary }}
 							className="inline font-bold cursor-pointer"
-							onClick={() => setModalOpen(true)}
+							onClick={() => setLoginModalOpen(true)}
 						>
 							login
 						</motion.p>{" "}

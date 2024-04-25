@@ -7,6 +7,7 @@ import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 import { NavIcon, DesktopNavProps } from "@/lib/config/types";
 import colors from "@/lib/config/constants";
 // Components
+import { useModalsStore } from "@/lib/stores/modals-store";
 import { NavItems } from "./NavItems";
 // Icons
 import BagIcon from "../icon/Bag";
@@ -64,30 +65,35 @@ const LoginIcon = ({
 	</button>
 );
 
-const menuIcons = (
-	cartItems: number,
-	setSearchOpen: (open: boolean) => void,
-	setLoginModalOpen: (open: boolean) => void,
-	setCartOpen: (open: boolean) => void,
-): NavIcon[] => [
-	{
-		title: "Magnifier",
-		icon: <SearchIcon setSearchOpen={setSearchOpen} />,
-	},
-	{
-		title: "User",
-		icon: <LoginIcon setLoginModalOpen={setLoginModalOpen} />,
-	},
-	{
-		title: "Heart",
-		icon: <HeartIcon />,
-		url: "/wishlist",
-	},
-	{
-		title: "Cart",
-		icon: <CartIcon cartItems={cartItems} setCartOpen={setCartOpen} />,
-	},
-];
+const MenuIcons = (cartItems: number): NavIcon[] => {
+	const setSearchBarOpen = useModalsStore((state) => state.setSearchBarOpen);
+	const setLoginModalOpen = useModalsStore(
+		(state) => state.setLoginModalOpen,
+	);
+	const setCartBarOpen = useModalsStore((state) => state.setCartBarOpen);
+
+	return [
+		{
+			title: "Magnifier",
+			icon: <SearchIcon setSearchOpen={setSearchBarOpen} />,
+		},
+		{
+			title: "User",
+			icon: <LoginIcon setLoginModalOpen={setLoginModalOpen} />,
+		},
+		{
+			title: "Heart",
+			icon: <HeartIcon />,
+			url: "/wishlist",
+		},
+		{
+			title: "Cart",
+			icon: (
+				<CartIcon cartItems={cartItems} setCartOpen={setCartBarOpen} />
+			),
+		},
+	];
+};
 
 const AdminUserIcon = ({
 	dropdownOpen,
@@ -210,7 +216,7 @@ const NavIcons: FC<NavIconsProps> = ({
 						}
 						onMouseLeave={() => setSelected(null)}
 						transition={{ duration: 0.2 }}
-						className="cursor-pointer relative pb-1"
+						className="relative pb-1"
 						style={{ display: "flex" }}
 					>
 						{icon.url ? (
@@ -251,4 +257,4 @@ const NavIcons: FC<NavIconsProps> = ({
 	);
 };
 
-export { menuIcons, adminIcons, NavIcons };
+export { MenuIcons, adminIcons, NavIcons };

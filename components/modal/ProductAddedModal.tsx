@@ -8,25 +8,26 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fetchProductImage } from "@/lib/functions/product-fetcher";
 // Store
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
+import { useModalsStore } from "@/lib/stores/modals-store";
 // Types and constants
 import colors from "@/lib/config/constants";
 import { Product } from "@/lib/models/product";
-import { ModalProps } from "@/lib/config/types";
 // Icons
 import CloseIcon from "../icon/Close";
 import CheckmarkIcon from "../icon/Checkmark";
 
-interface ProductAddedModalProps extends ModalProps {
-	product: Product;
-}
-
-const ProductAddedModal: FC<ProductAddedModalProps> = ({
-	modalOpen,
-	setModalOpen,
-	product,
-}) => {
+const ProductAddedModal: FC = () => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
+	// Cart Store
 	const cartItems = useCartStore((state) => state.items);
+	// Modal Store
+	const productAddedModalOpen = useModalsStore(
+		(state) => state.productAddedModalOpen,
+	);
+	const setProductAddedModalOpen = useModalsStore(
+		(state) => state.setProductAddedModalOpen,
+	);
+	const cartProduct = useModalsStore((state) => state.cartProduct);
 
 	useEffect(() => {
 		document.addEventListener("visibilitychange", updateCartStore);
@@ -54,37 +55,20 @@ const ProductAddedModal: FC<ProductAddedModalProps> = ({
 	}
 
 	useEffect(() => {
-		fetchProductImage(product.id, setImageUrl);
-	}, [product]);
+		if (cartProduct) fetchProductImage(cartProduct.id, setImageUrl);
+	}, [cartProduct]);
 
 	return (
 		<div className="hidden sm:block">
 			<AnimatePresence>
-				{modalOpen && (
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 0.7 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.2 }}
-						className="fixed inset-0 bg-black bg-opacity-80"
-						style={{
-							zIndex: 20,
-						}}
-						onClick={() => {
-							setModalOpen(false);
-						}}
-					/>
-				)}
-			</AnimatePresence>
-			<AnimatePresence>
-				{modalOpen && (
+				{cartProduct && productAddedModalOpen && (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.3 }}
 						className="fixed inset-0 z-50 flex items-center justify-center"
-						onClick={() => setModalOpen(false)}
+						onClick={() => setProductAddedModalOpen(false)}
 					>
 						<motion.div
 							initial={{ scale: 0.9 }}
@@ -104,17 +88,17 @@ const ProductAddedModal: FC<ProductAddedModalProps> = ({
 										src={imageUrl}
 										width={150}
 										height={150}
-										alt={product.name}
+										alt={cartProduct.name}
 										className="my-4"
 									/>
 								)}
-								<p>{product.name}</p>
+								<p>{cartProduct.name}</p>
 								<p className="flex items-center m-1">
 									<span className="text-xs uppercase font-semibold">
 										Price:
 									</span>
 									<span className="pl-2 text-secondary">
-										${product.price.toFixed(2)}
+										${cartProduct.price.toFixed(2)}
 									</span>
 								</p>
 								<p className="flex items-center m-1">
@@ -122,7 +106,7 @@ const ProductAddedModal: FC<ProductAddedModalProps> = ({
 										QTY:
 									</span>
 									<span className="pl-2 text-secondary">
-										{getItemQty(product.id)}
+										{getItemQty(cartProduct.id)}
 									</span>
 								</p>
 								<p className="flex items-center m-1">
@@ -130,7 +114,8 @@ const ProductAddedModal: FC<ProductAddedModalProps> = ({
 										Total:
 									</span>
 									<span className="pl-2 text-secondary">
-										${totalItemPrice(product).toFixed(2)}
+										$
+										{totalItemPrice(cartProduct).toFixed(2)}
 									</span>
 								</p>
 							</div>
@@ -161,7 +146,9 @@ const ProductAddedModal: FC<ProductAddedModalProps> = ({
 										color: colors.white,
 									}}
 									className="w-full md:w-2/3 mt-6 py-4 border border-2 border-secondary text-black bg-white font-semibold uppercase text-sm tracking-widest"
-									onClick={() => setModalOpen(false)}
+									onClick={() =>
+										setProductAddedModalOpen(false)
+									}
 								>
 									Continue Shopping
 								</motion.button>
@@ -210,7 +197,7 @@ const ProductAddedModal: FC<ProductAddedModalProps> = ({
 								}}
 								transition={{ duration: 0.2 }}
 								className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
-								onClick={() => setModalOpen(false)}
+								onClick={() => setProductAddedModalOpen(false)}
 							>
 								<CloseIcon />
 							</motion.button>

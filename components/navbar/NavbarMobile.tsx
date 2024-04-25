@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { NavItem } from "@/lib/config/types";
 import colors from "@/lib/config/constants";
 // Components
+import { useModalsStore } from "@/lib/stores/modals-store";
 import HandleLoginForm from "../common/LoginForm";
 // Icons
 import BarsIcon from "../icon/Bars";
@@ -14,16 +15,15 @@ import ChevronRightIcon from "../icon/ChevronRight";
 import UserIcon from "../icon/User";
 
 type MobileItemsProps = {
-	drawerOpen: boolean;
-	setDrawerOpen: (open: boolean) => void;
 	items: NavItem[];
 };
 
-const MobileItems: FC<MobileItemsProps> = ({
-	drawerOpen,
-	setDrawerOpen,
-	items,
-}): JSX.Element => {
+const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
+	const drawerMenuOpen = useModalsStore((state) => state.drawerMenuOpen);
+	const setDrawerMenuOpen = useModalsStore(
+		(state) => state.setDrawerMenuOpen,
+	);
+
 	const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 	const [showLogin, setShowLogin] = useState<boolean>(false);
 	const [showRegister, setShowRegister] = useState<boolean>(false);
@@ -76,7 +76,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 
 	return (
 		<AnimatePresence>
-			{drawerOpen && (
+			{drawerMenuOpen && (
 				<motion.div
 					initial="closed"
 					animate="open"
@@ -105,7 +105,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 								onClick={() =>
 									showLogin
 										? setShowLogin(false)
-										: setDrawerOpen(false)
+										: setDrawerMenuOpen(false)
 								}
 							>
 								<BarsIcon />
@@ -120,7 +120,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 								} flex items-center justify-center w-1/2 md:hidden`}
 								onClick={() =>
 									showLogin
-										? setDrawerOpen(false)
+										? setDrawerMenuOpen(false)
 										: setShowLogin(true)
 								}
 							>
@@ -134,7 +134,7 @@ const MobileItems: FC<MobileItemsProps> = ({
 					</ul>
 					<button
 						type="button"
-						onClick={() => setDrawerOpen(false)}
+						onClick={() => setDrawerMenuOpen(false)}
 						className="absolute bottom-0 w-full p-4 text-white uppercase text-sm bg-secondary"
 					>
 						Close

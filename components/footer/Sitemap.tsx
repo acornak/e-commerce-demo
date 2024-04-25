@@ -39,34 +39,50 @@ const Sitemap = (): JSX.Element => {
 							<hr className="w-1/6 border-black mt-2" />
 						</h3>
 						<ul className="mt-4">
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Woman&apos;s glasses
-							</motion.li>
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Mens&apos;s glasses
-							</motion.li>
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Children&apos;s glasses
-							</motion.li>
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Designer eyeglasses
-							</motion.li>
+							<li className="py-2">
+								<motion.span
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="py-2"
+								>
+									<Link href="/products/categories/women">
+										Woman&apos;s glasses
+									</Link>
+								</motion.span>
+							</li>
+							<li className="py-2">
+								<motion.span
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="cursor-pointer"
+								>
+									<Link href="/products/categories/men">
+										Mens&apos;s glasses
+									</Link>
+								</motion.span>
+							</li>
+							<li className="py-2">
+								<motion.span
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="cursor-pointer"
+								>
+									<Link href="/products/categories/children">
+										Children&apos;s glasses
+									</Link>
+								</motion.span>
+							</li>
+							<li className="py-2">
+								<motion.span
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="cursor-pointer"
+								>
+									<Link href="/products/categories/stylish">
+										Designer eyeglasses
+									</Link>
+								</motion.span>
+							</li>
 						</ul>
 					</div>
 					<div className="text-xs tracking-widest text-center">

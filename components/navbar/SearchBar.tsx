@@ -2,16 +2,15 @@ import React, { FC } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Icons
+import { useModalsStore } from "@/lib/stores/modals-store";
 import MagnifierIcon from "../icon/Magnifier";
 
-type SearchBarProps = {
-	searchOpen: boolean;
-};
+const SearchBar: FC = () => {
+	const searchBarOpen = useModalsStore((state) => state.searchBarOpen);
 
-const SearchBar: FC<SearchBarProps> = ({ searchOpen }) => {
 	return (
 		<AnimatePresence>
-			{searchOpen && (
+			{searchBarOpen && (
 				<motion.div
 					initial="closed"
 					animate="open"

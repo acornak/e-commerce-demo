@@ -19,29 +19,29 @@ import {
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
+import { useModalsStore } from "@/lib/stores/modals-store";
 // Hooks
 import useHydration from "@/lib/hooks/use-hydratation";
-// Components
-import ProductAddedModal from "../modal/ProductAddedModal";
 import StyledLoading from "../styled/Loading";
 // Icons
 import TrashIcon from "../icon/Trash";
 
 type WishlistItemProps = {
 	productId: number;
-	setModalOpen: (open: boolean) => void;
-	setProductAdded: (product: Product) => void;
 };
 
-const WishlistItem: FC<WishlistItemProps> = ({
-	productId,
-	setProductAdded,
-	setModalOpen,
-}): JSX.Element => {
+const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
 	const [product, setProduct] = useState<Product | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
+	// Cart Store
 	const removeWishlistItem = useWishlistStore((state) => state.removeItem);
+	// Wishlist Store
 	const addCartItem = useCartStore((state) => state.addItem);
+	// Modal Store
+	const setProductAddedModalOpen = useModalsStore(
+		(state) => state.setProductAddedModalOpen,
+	);
+	const setCartProduct = useModalsStore((state) => state.setCartProduct);
 
 	useEffect(() => {
 		document.addEventListener("visibilitychange", updateCartStore);
@@ -71,14 +71,14 @@ const WishlistItem: FC<WishlistItemProps> = ({
 				price: product.price,
 				quantity: 1,
 			});
-			setProductAdded(product);
-			setModalOpen(true);
+			setCartProduct(product);
+			setProductAddedModalOpen(true);
 		}
 	};
 
 	return (
 		<>
-			<td className="px-6 py-4  text-sm font-medium text-gray-900">
+			<td className="px-6 py-4 text-sm font-medium text-gray-900">
 				<div className="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-4">
 					{product && imageUrl && (
 						<Link
@@ -139,8 +139,6 @@ const WishlistItem: FC<WishlistItemProps> = ({
 };
 
 const WishlistTable = () => {
-	const [modalOpen, setModalOpen] = useState<boolean>(false);
-	const [productAdded, setProductAdded] = useState<Product | null>(null);
 	const items = useWishlistStore((state) => state.items);
 	const hydrated = useHydration(useWishlistStore);
 
@@ -162,14 +160,7 @@ const WishlistTable = () => {
 
 	return (
 		<>
-			{productAdded && (
-				<ProductAddedModal
-					modalOpen={modalOpen}
-					setModalOpen={setModalOpen}
-					product={productAdded}
-				/>
-			)}
-			<table className="max-w-[90%] pb-6 mx-2">
+			<table className="w-[90%] pb-6 mx-2">
 				<thead className="border border-1 border-gray-300 w-full">
 					<tr>
 						<th
@@ -208,11 +199,7 @@ const WishlistTable = () => {
 									: ""
 							}`}
 						>
-							<WishlistItem
-								productId={item.productId}
-								setModalOpen={setModalOpen}
-								setProductAdded={setProductAdded}
-							/>
+							<WishlistItem productId={item.productId} />
 						</tr>
 					))}
 				</tbody>
