@@ -55,11 +55,7 @@ const NavbarAdmin = (): JSX.Element => {
 
 	return (
 		<>
-			<MobileItems
-				drawerOpen={drawerOpen}
-				setDrawerOpen={setDrawerOpen}
-				items={NavItemsAdmin}
-			/>
+			<MobileItems items={NavItemsAdmin} />
 			<nav
 				className="sticky top-0 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8 border border-b border-gray-300"
 				style={{
