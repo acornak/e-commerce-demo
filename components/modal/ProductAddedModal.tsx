@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 // Next
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Functions
@@ -17,6 +17,8 @@ import CloseIcon from "../icon/Close";
 import CheckmarkIcon from "../icon/Checkmark";
 
 const ProductAddedModal: FC = () => {
+	const router = useRouter();
+
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	// Cart Store
 	const cartItems = useCartStore((state) => state.items);
@@ -159,14 +161,13 @@ const ProductAddedModal: FC = () => {
 									whileTap={{
 										backgroundColor: colors.black,
 									}}
-									className="w-full md:w-2/3 mt-6 py-4 bg-secondary"
+									className="w-full md:w-2/3 py-4 text-white font-semibold uppercase text-sm tracking-widest mt-6 bg-secondary"
+									onClick={() => {
+										router.push("/cart");
+										setProductAddedModalOpen(false);
+									}}
 								>
-									<Link
-										href="/cart"
-										className="text-white font-semibold uppercase text-sm tracking-widest"
-									>
-										Go to cart
-									</Link>
+									Go to cart
 								</motion.button>
 								<motion.button
 									whileHover={{
@@ -175,14 +176,13 @@ const ProductAddedModal: FC = () => {
 									whileTap={{
 										backgroundColor: colors.black,
 									}}
-									className="w-full md:w-2/3 mt-6 py-4 bg-secondary"
+									className="w-full md:w-2/3 mt-6 py-4 bg-secondary text-white font-semibold uppercase text-sm tracking-widest"
+									onClick={() => {
+										router.push("/checkout");
+										setProductAddedModalOpen(false);
+									}}
 								>
-									<Link
-										href="/checkout"
-										className="text-white font-semibold uppercase text-sm tracking-widest"
-									>
-										Proceed to checkout
-									</Link>
+									Proceed to checkout
 								</motion.button>
 							</div>
 							<motion.button

@@ -111,8 +111,6 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 	);
 	const setCartProduct = useModalsStore((state) => state.setCartProduct);
 
-	setPreviewProductId(product.id);
-
 	useEffect(() => {
 		document.addEventListener("visibilitychange", updateCartStore);
 		document.addEventListener("visibilitychange", updateWishlistStore);
@@ -242,9 +240,10 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 									<ProductButton
 										setHovered={setHovered}
 										tooltipText="Quick preview"
-										onClickEvent={() =>
-											setProductPreviewModalOpen(true)
-										}
+										onClickEvent={() => {
+											setProductPreviewModalOpen(true);
+											setPreviewProductId(product.id);
+										}}
 									>
 										<MagnifierIcon />
 									</ProductButton>

@@ -103,7 +103,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 					</Link>
 					<div>
 						<h1 className="font-semibold">{product.name}</h1>
-						<p className="text-gray-500">
+						<p className="text-gray-500 text-lg md:text-base">
 							<motion.button
 								whileHover={{
 									scale: 1.5,
@@ -113,7 +113,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 									scale: 1.5,
 									color: colors.secondary,
 								}}
-								onClick={() => removeQuantity(item)}
+								onClick={() => removeQuantity(item.productId)}
 							>
 								-
 							</motion.button>{" "}
@@ -127,7 +127,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 									scale: 1.5,
 									color: colors.secondary,
 								}}
-								onClick={() => addQuantity(item)}
+								onClick={() => addQuantity(item.productId)}
 							>
 								+
 							</motion.button>
@@ -220,15 +220,13 @@ const ShoppingCart: FC = () => {
 						) : (
 							<div className="flex flex-col items-start justify-start text-center px-6">
 								{items.map((item, index) => (
-									<>
-										<CartItemPreview
-											key={item.productId}
-											item={item}
-											shouldRenderHr={
-												index !== items.length - 1
-											}
-										/>
-									</>
+									<CartItemPreview
+										key={item.productId}
+										item={item}
+										shouldRenderHr={
+											index !== items.length - 1
+										}
+									/>
 								))}
 							</div>
 						)}
@@ -246,7 +244,11 @@ const ShoppingCart: FC = () => {
 							</span>
 						</div>
 						<div className="flex justify-center items-center text-white tracking-widest">
-							<Link href="/cart" className="bg-gray-800 w-1/2 ">
+							<Link
+								href="/cart"
+								className="bg-gray-800 w-1/2"
+								onClick={() => setCartBarOpen(false)}
+							>
 								<motion.button
 									whileHover={{
 										backgroundColor: colors.secondary,
@@ -261,7 +263,11 @@ const ShoppingCart: FC = () => {
 									View Cart
 								</motion.button>
 							</Link>
-							<Link href="/checkout" className="bg-black w-1/2 ">
+							<Link
+								href="/checkout"
+								className="bg-black w-1/2 "
+								onClick={() => setCartBarOpen(false)}
+							>
 								<motion.button
 									whileHover={{
 										backgroundColor: colors.secondary,

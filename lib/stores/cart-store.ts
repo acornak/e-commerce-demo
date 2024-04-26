@@ -11,8 +11,8 @@ export interface CartStore {
 	items: CartItem[];
 	addItem: (item: CartItem) => void;
 	removeItem: (item: CartItem) => void;
-	addQuantity: (item: CartItem) => void;
-	removeQuantity: (item: CartItem) => void;
+	addQuantity: (productId: number, amount?: number) => void;
+	removeQuantity: (productId: number, amount?: number) => void;
 	clearCart: () => void;
 }
 
@@ -49,26 +49,27 @@ export const useCartStore = create<CartStore>()(
 					return { items: updatedItems };
 				});
 			},
-			addQuantity: (item: CartItem): void => {
+			addQuantity: (productId: number, amount?: number): void => {
 				const existingItems = get().items;
 				const updatedItems = existingItems.map((existingItem) =>
-					existingItem.productId === item.productId
+					existingItem.productId === productId
 						? {
 								...existingItem,
-								quantity: existingItem.quantity + 1,
+								quantity: amount || existingItem.quantity + 1,
 							}
 						: existingItem,
 				);
 				set({ items: updatedItems });
 			},
-			removeQuantity: (item: CartItem): void => {
+			removeQuantity: (productId: number, amount?: number): void => {
 				const existingItems = get().items;
 				const updatedItems = existingItems
 					.map((existingItem) =>
-						existingItem.productId === item.productId
+						existingItem.productId === productId
 							? {
 									...existingItem,
-									quantity: existingItem.quantity - 1,
+									quantity:
+										amount || existingItem.quantity - 1,
 								}
 							: existingItem,
 					)

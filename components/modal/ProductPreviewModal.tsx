@@ -52,6 +52,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
+		if (!productId) return () => {};
 		fetchProduct(productId, setProduct);
 		fetchProductImage(productId, setImageUrl);
 		const timeout = setTimeout(() => setLoading(false), 400);
@@ -78,6 +79,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 			setProductPreviewModalOpen(false);
 			setCartProduct(product);
 			setProductAddedModalOpen(true);
+			setQuantity(1);
 		}
 	};
 
@@ -93,7 +95,10 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
 				className="fixed inset-0 z-50 flex items-center justify-center"
-				onClick={() => setProductPreviewModalOpen(false)}
+				onClick={() => {
+					setProductPreviewModalOpen(false);
+					setQuantity(1);
+				}}
 			>
 				<motion.div
 					className="relative bg-white p-6 w-full lg:max-w-[60%] xl:max-w-[50%] m-4 max-h-[80%]"
@@ -123,9 +128,10 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 						<div className="relative flex justify-center items-center mb-4">
 							<Link
 								href={`/products/${product.slug}`}
-								onClick={() =>
-									setProductPreviewModalOpen(false)
-								}
+								onClick={() => {
+									setProductPreviewModalOpen(false);
+									setQuantity(1);
+								}}
 							>
 								<Image
 									src={imageUrl}
@@ -155,24 +161,38 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 							</div>
 							<hr />
 							<div className="py-4 grid grid-cols-3 gap-4">
-								<div className="col-span-1">
-									<input
-										type="number"
-										id="quantity"
-										name="quantity"
-										min="1"
-										max="10"
-										defaultValue="1"
-										className="w-20 p-2 border border-gray-300 text-center text-lg"
-										onChange={(event) =>
-											setQuantity(
-												parseInt(
-													event.target.value,
-													10,
-												),
-											)
-										}
-									/>
+								<div className="flex items-center justify-center relative">
+									<button
+										type="button"
+										className={`p-2 border ${
+											quantity === 1
+												? "border-gray-200 text-gray-300"
+												: "border-gray-300 text-black"
+										}`}
+										onClick={() => {
+											setQuantity((prev) => prev - 1);
+										}}
+										disabled={quantity === 1}
+									>
+										-
+									</button>
+									<div className="w-12 text-center select-none">
+										{quantity}
+									</div>
+									<button
+										type="button"
+										className={`p-2 border ${
+											quantity === 10
+												? "border-gray-200 text-gray-300"
+												: "border-gray-300 text-black"
+										}`}
+										onClick={() => {
+											setQuantity((prev) => prev + 1);
+										}}
+										disabled={quantity === 10}
+									>
+										+
+									</button>
 								</div>
 								<div className="col-span-2">
 									<motion.button

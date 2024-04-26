@@ -48,7 +48,20 @@ const WishlistHero = (): JSX.Element => {
 							</motion.p>
 						</Link>
 						<ChevronRightIcon />
-						Wishlist
+						<Link href="/wishlist">
+							<motion.p
+								whileHover={{
+									color: colors.secondary,
+								}}
+								whileTap={{
+									color: colors.secondary,
+								}}
+								transition={{ duration: 0.2 }}
+								className="inline"
+							>
+								Wishlist
+							</motion.p>
+						</Link>
 					</div>
 				</div>
 			</div>

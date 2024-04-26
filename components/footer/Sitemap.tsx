@@ -12,7 +12,7 @@ import colors from "@/lib/config/constants";
 
 const Sitemap = (): JSX.Element => {
 	return (
-		<footer className="bg-white text-black text-start mt-4 border-t border-gray-300">
+		<footer className="bg-white text-black text-start mt-4 border-t border-gray-300 mx-2">
 			<div className="container mx-auto">
 				<div className="grid grid-cols-3 md:grid-cols-4 gap-6 py-6 items-start">
 					<div className="text-xs hidden md:block">

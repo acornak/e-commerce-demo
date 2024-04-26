@@ -1,6 +1,9 @@
+"use client";
+
 import React, { FC } from "react";
 // Next
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 // Types and constants
@@ -21,19 +24,26 @@ const CartIcon = ({
 }: {
 	cartItems: number;
 	setCartOpen: (open: boolean) => void;
-}) => (
-	<button
-		type="button"
-		aria-label="Open shopping cart"
-		className="relative"
-		onClick={() => setCartOpen(true)}
-	>
-		<BagIcon />
-		<div className="absolute -top-2 -right-2 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs bg-secondary">
-			{cartItems}
-		</div>
-	</button>
-);
+}) => {
+	const pathname = usePathname();
+	const shouldRenderIcon = pathname !== "/cart" && pathname !== "/checkout";
+
+	if (!shouldRenderIcon) return <div className="w-5 h-5 lg:w-6 lg:h-6" />;
+
+	return (
+		<button
+			type="button"
+			aria-label="Open shopping cart"
+			className="relative"
+			onClick={() => setCartOpen(true)}
+		>
+			<BagIcon />
+			<div className="absolute -top-2 -right-2 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs bg-secondary">
+				{cartItems}
+			</div>
+		</button>
+	);
+};
 
 const SearchIcon = ({
 	setSearchOpen,
