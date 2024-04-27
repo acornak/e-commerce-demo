@@ -17,7 +17,7 @@ const Footer = (): JSX.Element => {
 					<div className="text-xs uppercase tracking-widest py-6 px-4">
 						©2024{" "}
 						<Link
-							href="www.antoncornak.com"
+							href="https://antoncornak.com"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
