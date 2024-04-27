@@ -4,7 +4,7 @@ import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 import { Product } from "@/lib/models/product";
 // Store
 import {

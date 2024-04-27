@@ -1,27 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { FC } from "react";
 // Next
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
 // Types and Constants
-import colors from "@/lib/config/constants";
-// Images
-import heroImage from "@/public/misc/privacy.webp";
+import { colors } from "@/lib/config/constants";
 // Components
 import { StyledHeroHeading } from "../styled/Heading";
 // Icons
 import ChevronRightIcon from "../icon/ChevronRight";
 
-const PrivacyHero = (): JSX.Element => {
+type StyledHeroProps = {
+	image: StaticImageData;
+	link: string;
+	title: string;
+	h?: string;
+};
+
+const StyledHero: FC<StyledHeroProps> = ({
+	image,
+	link,
+	title,
+	h = "h-[70%]",
+}): JSX.Element => {
 	return (
-		<section className="flex flex-col items-center justify-center h-[70%]">
+		<section className={`flex flex-col items-center justify-center ${h}`}>
 			<div className="flex justify-center items-center relative w-full h-full">
 				<Image
-					src={heroImage.src}
-					alt="Privacy Hero"
+					src={image.src}
+					alt="Hero image"
 					fill
 					style={{
 						objectFit: "cover",
@@ -30,7 +40,8 @@ const PrivacyHero = (): JSX.Element => {
 				/>
 				<div className="absolute inset-0 bg-black bg-opacity-50" />
 				<div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-					<StyledHeroHeading title="Privacy Policy" />
+					<StyledHeroHeading title={title} />
+
 					<div className="text-white flex items-center">
 						<Link href="/">
 							<motion.p
@@ -47,7 +58,20 @@ const PrivacyHero = (): JSX.Element => {
 							</motion.p>
 						</Link>
 						<ChevronRightIcon />
-						Privacy Policy
+						<Link href={`/${link}`}>
+							<motion.p
+								whileHover={{
+									color: colors.secondary,
+								}}
+								whileTap={{
+									color: colors.secondary,
+								}}
+								transition={{ duration: 0.2 }}
+								className="inline"
+							>
+								{title}
+							</motion.p>
+						</Link>
 					</div>
 				</div>
 			</div>
@@ -55,4 +79,4 @@ const PrivacyHero = (): JSX.Element => {
 	);
 };
 
-export default PrivacyHero;
+export default StyledHero;

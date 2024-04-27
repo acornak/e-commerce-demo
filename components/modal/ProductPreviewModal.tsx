@@ -8,7 +8,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
 import { Product } from "@/lib/models/product";
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 // Store
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";

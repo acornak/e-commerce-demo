@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 // Store
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Types and Constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 // Components
 import { StyledSectionHeading } from "@/components/styled/Heading";
 import CartTable from "@/components/product/CartTable";

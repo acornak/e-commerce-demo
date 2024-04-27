@@ -6,7 +6,7 @@ import Image from "next/image";
 // Animations
 import { motion } from "framer-motion";
 // Types and constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 // Images
 import googleIcon from "@/public/misc/google.svg";
 

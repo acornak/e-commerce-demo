@@ -1,7 +1,7 @@
 // Types and constants
 import { Color } from "./types";
 
-const colors: Color = {
+export const colors: Color = {
 	white: "#ffffff",
 	black: "#000000",
 	secondary: "#FF6347",
@@ -9,4 +9,8 @@ const colors: Color = {
 	secondaryBlue: "#1c2d49",
 };
 
-export default colors;
+export const location = {
+	address: "1600 Amphitheatre Parkway, Mountain View, california.",
+	lat: 37.42216,
+	lng: -122.08427,
+};

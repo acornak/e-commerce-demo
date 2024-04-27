@@ -15,7 +15,7 @@ import ig5 from "@/public/instagram/ig_5.jpeg";
 import ig6 from "@/public/instagram/ig_6.jpeg";
 import ig7 from "@/public/instagram/ig_7.webp";
 // Icons
-import InstagramIcon from "../icon/Instagram";
+import { InstagramIcon } from "../icon/Instagram";
 import ChevronLeftIcon from "../icon/ChevronLeft";
 import ChevronRightIcon from "../icon/ChevronRight";
 // Components
@@ -59,6 +59,7 @@ const InstagramImages: FC<InstagramImagesProps> = ({
 							<Link
 								href="https://www.instagram.com/"
 								target="_blank"
+								rel="noopener noreferrer"
 							>
 								<motion.div
 									className="absolute inset-0"

@@ -6,7 +6,7 @@ import {
 	getProductsByCategory,
 } from "@/lib/models/product";
 
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<Response> {
 	const { searchParams } = new URL(request.url);
 	const category = searchParams.get("category");
 	const productId = searchParams.get("id");

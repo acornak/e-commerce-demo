@@ -3,6 +3,8 @@
 import React, { FC, ReactNode, useEffect } from "react";
 // Next
 import { usePathname } from "next/navigation";
+// Captcha
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Store
@@ -99,18 +101,34 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 
 	if (pathname.includes("/admin")) {
 		return (
-			<>
+			<GoogleReCaptchaProvider
+				reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+				scriptProps={{
+					async: false,
+					defer: false,
+					appendTo: "head",
+					nonce: undefined,
+				}}
+			>
 				<NavbarAdmin />
 				{children}
 				<div className="sticky top-[100vh]">
 					<Footer />
 				</div>
-			</>
+			</GoogleReCaptchaProvider>
 		);
 	}
 
 	return (
-		<>
+		<GoogleReCaptchaProvider
+			reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+			scriptProps={{
+				async: false,
+				defer: false,
+				appendTo: "head",
+				nonce: undefined,
+			}}
+		>
 			<LoginModal />
 			<SearchBar />
 			<ShoppingCart />
@@ -145,7 +163,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 				<Sitemap />
 				<Footer />
 			</div>
-		</>
+		</GoogleReCaptchaProvider>
 	);
 };
 

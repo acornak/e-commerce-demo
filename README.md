@@ -18,3 +18,4 @@
 - https://blog.logrocket.com/guide-adding-google-login-react-app/
 - https://medium.com/@mak-dev/zustand-with-next-js-14-server-components-da9c191b73df
 - https://docs.pmnd.rs/zustand/guides/nextjs
+- https://blog.logrocket.com/integrating-google-maps-react/

@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Types and constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 // Store
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 // Components

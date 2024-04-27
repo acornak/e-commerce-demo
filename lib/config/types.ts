@@ -22,3 +22,8 @@ export type DesktopNavProps = {
 	setSelected: (index: number | null) => void;
 	items?: NavItem[];
 };
+
+export type IconProps = {
+	className?: string;
+	fill?: string;
+};

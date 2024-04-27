@@ -10,7 +10,7 @@ import { fetchProductImage } from "@/lib/functions/product-fetcher";
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Types and constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 import { Product } from "@/lib/models/product";
 // Icons
 import CloseIcon from "../icon/Close";

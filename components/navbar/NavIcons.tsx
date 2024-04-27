@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 // Types and constants
 import { NavIcon, DesktopNavProps } from "@/lib/config/types";
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 // Components
 import { useModalsStore } from "@/lib/stores/modals-store";
 import { NavItems } from "./NavItems";

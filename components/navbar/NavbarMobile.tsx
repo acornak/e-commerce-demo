@@ -5,7 +5,7 @@ import React, { FC, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 // Types and constants
 import { NavItem } from "@/lib/config/types";
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 // Components
 import { useModalsStore } from "@/lib/stores/modals-store";
 import HandleLoginForm from "../common/LoginForm";

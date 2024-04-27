@@ -8,13 +8,13 @@ import { motion } from "framer-motion";
 // Images
 import newsletter from "@/public/misc/newsletter.webp";
 // Types and constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 // Components
 import { StyledSectionHeading } from "../styled/Heading";
 // Icons
 import PlaneIcon from "../icon/Plane";
 
-const Newsletter = (): JSX.Element => {
+const HomepageNewsletter = (): JSX.Element => {
 	return (
 		<div className="my-12 items-center justify-center text-center">
 			<StyledSectionHeading title="Let's stay in touch" />
@@ -74,4 +74,4 @@ const Newsletter = (): JSX.Element => {
 	);
 };
 
-export default Newsletter;
+export default HomepageNewsletter;

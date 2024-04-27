@@ -7,16 +7,17 @@ const NavItems: NavItem[] = [
 		url: "/",
 	},
 	{
-		title: "Shop",
-		url: "/shop",
+		title: "Products",
+		url: "/products",
+	},
+
+	{
+		title: "About Us",
+		url: "/about",
 	},
 	{
-		title: "Features",
-		url: "/features",
-	},
-	{
-		title: "Pages",
-		url: "/pages",
+		title: "Contact",
+		url: "/contact",
 	},
 	{
 		title: "Blog",

@@ -7,16 +7,20 @@ import Image from "next/image";
 // Animations
 import { motion } from "framer-motion";
 // Types and constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 
 const Footer = (): JSX.Element => {
 	return (
-		<footer className="bg-white text-black text-start mt-4 border-t border-gray-300">
+		<footer className="bg-white text-black text-start border-t border-gray-300">
 			<div className="container mx-auto">
 				<div className="flex justify-between items-start">
 					<div className="text-xs uppercase tracking-widest py-6 px-4">
 						©2024{" "}
-						<Link href="www.antoncornak.com">
+						<Link
+							href="www.antoncornak.com"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							<motion.span
 								whileHover={{ color: colors.secondary }}
 								whileTap={{ color: colors.secondary }}
@@ -25,7 +29,11 @@ const Footer = (): JSX.Element => {
 							</motion.span>
 						</Link>{" "}
 						| Inspired by{" "}
-						<Link href="https://themeforest.net/item/pertic-modern-eyeglasses-responsive-shopify-20-theme/51637100/">
+						<Link
+							href="https://themeforest.net/item/pertic-modern-eyeglasses-responsive-shopify-20-theme/51637100/"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							<motion.span
 								whileHover={{ color: colors.secondary }}
 								whileTap={{ color: colors.secondary }}

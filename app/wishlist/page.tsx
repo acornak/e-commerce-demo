@@ -6,12 +6,15 @@ import { NextPage } from "next";
 // Animations
 import { motion } from "framer-motion";
 // Types and Constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
+// Store
+import { useModalsStore } from "@/lib/stores/modals-store";
 // Components
 import { StyledSectionHeading } from "@/components/styled/Heading";
-import WishlistHero from "@/components/hero/WishlistHero";
 import WishlistTable from "@/components/product/WIshlistTable";
-import { useModalsStore } from "@/lib/stores/modals-store";
+import StyledHero from "@/components/hero/StyledHero";
+// Images
+import wishlistHero from "@/public/misc/wishlist.webp";
 
 const Wishlist: NextPage = (): JSX.Element => {
 	const setLoginModalOpen = useModalsStore(
@@ -20,7 +23,7 @@ const Wishlist: NextPage = (): JSX.Element => {
 
 	return (
 		<>
-			<WishlistHero />
+			<StyledHero image={wishlistHero} link="wishlist" title="Wishlist" />
 			<div className="flex flex-col items-center justify-center text-center mt-6">
 				<div>
 					<StyledSectionHeading title="Products you love" />

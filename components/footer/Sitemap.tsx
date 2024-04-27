@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Types and constants
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 
 const Sitemap = (): JSX.Element => {
 	return (
@@ -72,17 +72,6 @@ const Sitemap = (): JSX.Element => {
 									</Link>
 								</motion.span>
 							</li>
-							<li className="py-2">
-								<motion.span
-									whileHover={{ color: colors.secondary }}
-									whileTap={{ color: colors.secondary }}
-									className="cursor-pointer"
-								>
-									<Link href="/products/categories/stylish">
-										Designer eyeglasses
-									</Link>
-								</motion.span>
-							</li>
 						</ul>
 					</div>
 					<div className="text-xs tracking-widest text-center">
@@ -91,42 +80,35 @@ const Sitemap = (): JSX.Element => {
 							<hr className="w-1/6 border-black mt-2" />
 						</h3>
 						<ul className="mt-4">
-							<Link href="/privacy-policy">
-								<motion.li
+							<li className="py-2">
+								<motion.span
 									whileHover={{ color: colors.secondary }}
 									whileTap={{ color: colors.secondary }}
 									className="py-2 cursor-pointer"
 								>
-									FAQ
-								</motion.li>
-							</Link>
-							<Link href="/privacy-policy">
-								<motion.li
+									<Link href="/faq">FAQ</Link>
+								</motion.span>
+							</li>
+							<li className="py-2">
+								<motion.span
 									whileHover={{ color: colors.secondary }}
 									whileTap={{ color: colors.secondary }}
 									className="py-2 cursor-pointer"
 								>
-									Privacy Policy
-								</motion.li>
-							</Link>
-							<Link href="/privacy-policy">
-								<motion.li
+									<Link href="/privacy-policy">
+										Privacy Policy
+									</Link>
+								</motion.span>
+							</li>
+							<li className="py-2">
+								<motion.span
 									whileHover={{ color: colors.secondary }}
 									whileTap={{ color: colors.secondary }}
 									className="py-2 cursor-pointer"
 								>
-									Terms of Service
-								</motion.li>
-							</Link>
-							<Link href="/privacy-policy">
-								<motion.li
-									whileHover={{ color: colors.secondary }}
-									whileTap={{ color: colors.secondary }}
-									className="py-2 cursor-pointer"
-								>
-									Accessibility
-								</motion.li>
-							</Link>
+									<Link href="/about">About Us</Link>
+								</motion.span>
+							</li>
 						</ul>
 					</div>
 					<div className="text-xs tracking-widest text-center">
@@ -135,38 +117,45 @@ const Sitemap = (): JSX.Element => {
 							<hr className="w-1/6 border-black mt-2" />
 						</h3>
 						<ul className="mt-4">
-							<Link href="https://facebook.com/">
-								<motion.li
+							<li className="py-2">
+								<motion.span
 									whileHover={{ color: colors.secondary }}
 									whileTap={{ color: colors.secondary }}
 									className="py-2 cursor-pointer"
 								>
-									Facebook
-								</motion.li>
-							</Link>
-							<Link href="https://www.instagram.com/">
-								<motion.li
+									<Link
+										href="https://facebook.com/"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										Facebook
+									</Link>
+								</motion.span>
+							</li>
+							<li className="py-2">
+								<motion.span
 									whileHover={{ color: colors.secondary }}
 									whileTap={{ color: colors.secondary }}
 									className="py-2 cursor-pointer"
 								>
-									Instagram
-								</motion.li>
-							</Link>
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Write us
-							</motion.li>
-							<motion.li
-								whileHover={{ color: colors.secondary }}
-								whileTap={{ color: colors.secondary }}
-								className="py-2 cursor-pointer"
-							>
-								Career
-							</motion.li>
+									<Link
+										href="https://www.instagram.com/"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										Instagram
+									</Link>
+								</motion.span>
+							</li>
+							<li className="py-2">
+								<motion.span
+									whileHover={{ color: colors.secondary }}
+									whileTap={{ color: colors.secondary }}
+									className="py-2 cursor-pointer"
+								>
+									<Link href="/contact">Contact</Link>
+								</motion.span>
+							</li>
 						</ul>
 					</div>
 				</div>

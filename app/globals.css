@@ -99,3 +99,7 @@ body {
 		margin: 0;
 	}
 }
+
+.grecaptcha-badge {
+	visibility: hidden;
+}

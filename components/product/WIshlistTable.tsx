@@ -8,7 +8,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 // Types and constants
 import { Product } from "@/lib/models/product";
-import colors from "@/lib/config/constants";
+import { colors } from "@/lib/config/constants";
 // Store
 import {
 	updateWishlistStore,
