@@ -105,8 +105,9 @@ const ProductInfo: FC<ProductInfoProps> = ({
 						}}
 						style={{ whiteSpace: "nowrap" }}
 					>
-						{itemAlreadyInWishlist ? "Remove from " : "Add to "}
-						your wishlist
+						{itemAlreadyInWishlist
+							? "Item added to wishlist"
+							: "Add to wishlist"}
 					</motion.span>
 				</button>
 			</div>
@@ -351,7 +352,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 	return (
 		<>
 			<div
-				className="text-start w-full px-4 flex items-center bg-gray-100 py-2"
+				className="text-start text-sm w-full px-4 flex items-center bg-gray-100 py-2"
 				id="product-overview"
 			>
 				<Link href="/">

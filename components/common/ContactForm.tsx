@@ -200,7 +200,7 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 	};
 
 	return (
-		<div className="flex items-center justify-center text-center p-6 px-10 lg:p-10">
+		<div className="flex items-center justify-center p-6 px-10 lg:p-10 text-start">
 			<div className={`w-full ${width}`}>{handleForm()}</div>
 		</div>
 	);

@@ -23,7 +23,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={montserrat.className}>
 				<Analytics />
-				<main className="h-full overflow-y-auto main overscroll-none">
+				<main className="min-h-screen h-full overflow-y-auto main overscroll-none">
 					<LayoutWrapper>{children}</LayoutWrapper>
 				</main>
 			</body>

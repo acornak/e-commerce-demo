@@ -19,11 +19,12 @@ export type Product = {
 	brand: string;
 	description: string;
 	categories: string[];
-	rating: number;
+	rating?: number;
 	countInStock?: number;
 	variants?: Variant[];
 	reviews?: string[];
 	tags: string[];
+	specialOffer?: boolean;
 };
 
 /**

@@ -22,5 +22,8 @@
 
 ## TODO:
 - Product variants
+- Product Image modal
 - Subscribe modal
 - Image Optimization
+- on addProduct update stripe products as well
+- getProductsByTags
