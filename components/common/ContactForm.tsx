@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Fragment, useState } from "react";
+import React, { FC, Fragment, useState } from "react";
 // Form
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -11,7 +11,11 @@ import StyledLoading from "../styled/Loading";
 import ErrorIcon from "../icon/Error";
 import SuccessIcon from "../icon/Success";
 
-const ContactForm = (): JSX.Element => {
+type ContactFormProps = {
+	width?: string;
+};
+
+const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 	const { executeRecaptcha } = useGoogleReCaptcha();
 
 	const [submitError, setSubmitError] = useState<boolean>(false);
@@ -197,7 +201,7 @@ const ContactForm = (): JSX.Element => {
 
 	return (
 		<div className="flex items-center justify-center text-center p-6 px-10 lg:p-10">
-			<div className="w-full lg:w-2/3">{handleForm()}</div>
+			<div className={`w-full ${width}`}>{handleForm()}</div>
 		</div>
 	);
 };

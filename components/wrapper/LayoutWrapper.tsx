@@ -20,6 +20,9 @@ import LoginModal from "../modal/LoginModal";
 import CookieConsent from "../modal/CookieConsent";
 import ProductPreviewModal from "../modal/ProductPreviewModal";
 import ProductAddedModal from "../modal/ProductAddedModal";
+import DeliveryInfoModal from "../modal/DeliveryInfoModal";
+import SizeGuideModal from "../modal/SizeGuideModal";
+import AskQuestionModal from "../modal/AskQuestionModal";
 
 type LayoutWrapperProps = {
 	children: ReactNode;
@@ -38,6 +41,15 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 	const cartBarOpen = useModalsStore((state) => state.cartBarOpen);
 	const searchBarOpen = useModalsStore((state) => state.searchBarOpen);
 	const drawerMenuOpen = useModalsStore((state) => state.drawerMenuOpen);
+	const deliveryModalOpen = useModalsStore(
+		(state) => state.deliveryInfoModalOpen,
+	);
+	const sizeGuideModalOpen = useModalsStore(
+		(state) => state.sizeGuideModalOpen,
+	);
+	const askQuestionModalOpen = useModalsStore(
+		(state) => state.askQuestionModalOpen,
+	);
 
 	const setLoginModalOpen = useModalsStore(
 		(state) => state.setLoginModalOpen,
@@ -53,6 +65,15 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 		(state) => state.setDrawerMenuOpen,
 	);
 	const setSearchBarOpen = useModalsStore((state) => state.setSearchBarOpen);
+	const setDeliveryInfoModalOpen = useModalsStore(
+		(state) => state.setDeliveryInfoModalOpen,
+	);
+	const setSizeGuideModalOpen = useModalsStore(
+		(state) => state.setSizeGuideModalOpen,
+	);
+	const setAskQuestionModalOpen = useModalsStore(
+		(state) => state.setAskQuestionModalOpen,
+	);
 
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
@@ -63,6 +84,9 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 				if (cartBarOpen) setCartBarOpen(false);
 				if (productAddedModalOpen) setProductAddedModalOpen(false);
 				if (productPreviewModalOpen) setProductPreviewModalOpen(false);
+				if (deliveryModalOpen) setDeliveryInfoModalOpen(false);
+				if (sizeGuideModalOpen) setSizeGuideModalOpen(false);
+				if (askQuestionModalOpen) setAskQuestionModalOpen(false);
 			}
 		};
 
@@ -78,12 +102,18 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 		cartBarOpen,
 		productAddedModalOpen,
 		productPreviewModalOpen,
+		deliveryModalOpen,
+		sizeGuideModalOpen,
+		askQuestionModalOpen,
 		setSearchBarOpen,
 		setDrawerMenuOpen,
 		setLoginModalOpen,
 		setCartBarOpen,
 		setProductAddedModalOpen,
 		setProductPreviewModalOpen,
+		setDeliveryInfoModalOpen,
+		setSizeGuideModalOpen,
+		setAskQuestionModalOpen,
 	]);
 
 	const showFade = (): boolean => {
@@ -93,7 +123,10 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			loginModalOpen ||
 			cartBarOpen ||
 			productAddedModalOpen ||
-			productPreviewModalOpen
+			productPreviewModalOpen ||
+			deliveryModalOpen ||
+			sizeGuideModalOpen ||
+			askQuestionModalOpen
 		)
 			return true;
 		return false;
@@ -135,6 +168,9 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			<ProductAddedModal />
 			<ProductPreviewModal />
 			<CookieConsent />
+			<DeliveryInfoModal />
+			<SizeGuideModal />
+			<AskQuestionModal />
 			<AnimatePresence>
 				{showFade() && (
 					<motion.div
@@ -153,6 +189,9 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 							setCartBarOpen(false);
 							setProductAddedModalOpen(false);
 							setProductPreviewModalOpen(false);
+							setDeliveryInfoModalOpen(false);
+							setSizeGuideModalOpen(false);
+							setAskQuestionModalOpen(false);
 						}}
 					/>
 				)}

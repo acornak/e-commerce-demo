@@ -30,6 +30,18 @@ export interface ModalsStore {
 	toggleProductPreviewModalOpen: () => void;
 	previewProductId: number;
 	setPreviewProductId: (productId: number) => void;
+	// Delivery Info Modal
+	deliveryInfoModalOpen: boolean;
+	setDeliveryInfoModalOpen: (open: boolean) => void;
+	toggleDeliveryInfoModalOpen: () => void;
+	// Size Guide Modal
+	sizeGuideModalOpen: boolean;
+	setSizeGuideModalOpen: (open: boolean) => void;
+	toggleSizeGuideModalOpen: () => void;
+	// Ask Question Modal
+	askQuestionModalOpen: boolean;
+	setAskQuestionModalOpen: (open: boolean) => void;
+	toggleAskQuestionModalOpen: () => void;
 }
 
 export const useModalsStore = create<ModalsStore>((set) => ({
@@ -83,4 +95,37 @@ export const useModalsStore = create<ModalsStore>((set) => ({
 	previewProductId: 0,
 	setPreviewProductId: (productId: number) =>
 		set(() => ({ previewProductId: productId })),
+
+	// Delivery Info Modal
+	deliveryInfoModalOpen: false,
+	setDeliveryInfoModalOpen: (open: boolean) =>
+		set(() => ({
+			deliveryInfoModalOpen: open,
+		})),
+	toggleDeliveryInfoModalOpen: () =>
+		set((state) => ({
+			deliveryInfoModalOpen: !state.deliveryInfoModalOpen,
+		})),
+
+	// Size Guide Modal
+	sizeGuideModalOpen: false,
+	setSizeGuideModalOpen: (open: boolean) =>
+		set(() => ({
+			sizeGuideModalOpen: open,
+		})),
+	toggleSizeGuideModalOpen: () =>
+		set((state) => ({
+			sizeGuideModalOpen: !state.sizeGuideModalOpen,
+		})),
+
+	// Ask Question Modal
+	askQuestionModalOpen: false,
+	setAskQuestionModalOpen: (open: boolean) =>
+		set(() => ({
+			askQuestionModalOpen: open,
+		})),
+	toggleAskQuestionModalOpen: () =>
+		set((state) => ({
+			askQuestionModalOpen: !state.askQuestionModalOpen,
+		})),
 }));

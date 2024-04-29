@@ -31,7 +31,7 @@ body {
 	overflow-y: auto;
 
 	scroll-behavior: smooth;
-	/* scrollbar-width: none; */
+	scrollbar-width: none;
 }
 
 /* scrollbar */
@@ -49,7 +49,18 @@ body {
 
 body::-webkit-scrollbar {
 	width: 0px;
-	background: transparent; /* Disable scrollbar Chrome/Safari/Webkit */
+	background: transparent;
+}
+
+.visible-scrollbar::-webkit-scrollbar {
+	width: 8px;
+	background: #ccc;
+}
+
+.visible-scrollbar {
+	scrollbar-width: auto;
+	scrollbar-color: #ccc transparent;
+	overflow: -moz-scrollbars-none;
 }
 
 body {

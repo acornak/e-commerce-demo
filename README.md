@@ -23,3 +23,4 @@
 ## TODO:
 - Product variants
 - Subscribe modal
+- Image Optimization

@@ -171,7 +171,7 @@ const ContactPage: NextPage = (): JSX.Element => {
 			/>
 			<ContactInfo />
 			<StyledSectionHeading title="Contact Form" />
-			<ContactForm />
+			<ContactForm width="lg:w-2/3" />
 			<NewsletterBanner />
 		</>
 	);
