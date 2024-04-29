@@ -168,7 +168,6 @@ const ContactPage: NextPage = (): JSX.Element => {
 				image={contactHero}
 				link="contact"
 				title="Contact Information"
-				h="h-96"
 			/>
 			<ContactInfo />
 			<StyledSectionHeading title="Contact Form" />

@@ -34,7 +34,7 @@ const ProductPage = async ({
 					image={aboutHero}
 					link={params.slug}
 					title={params.slug}
-					h="h-60"
+					h="h-48"
 					product
 				/>
 				<div className="mt-6">

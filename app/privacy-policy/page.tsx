@@ -15,7 +15,6 @@ const PrivacyPolicy: NextPage = (): JSX.Element => {
 				image={privacyImage}
 				link="privacy-policy"
 				title="Privacy Policy"
-				h="h-96"
 			/>
 			<div className="text-center my-6">
 				<StyledSectionHeading title="Terms and Conditions" />

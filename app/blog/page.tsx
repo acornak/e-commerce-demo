@@ -10,7 +10,7 @@ import blogHero from "@/public/blog/blog_hero.webp";
 const BlogPage: NextPage = (): JSX.Element => {
 	return (
 		<>
-			<StyledHero image={blogHero} link="blog" title="Blog" h="h-96" />
+			<StyledHero image={blogHero} link="blog" title="Blog" />
 			<NewsletterBanner />
 		</>
 	);

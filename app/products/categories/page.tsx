@@ -15,7 +15,6 @@ const CategoriesPage: NextPage = (): JSX.Element => {
 				image={productsHero}
 				link="categories"
 				title="Categories"
-				h="h-96"
 				product
 			/>
 			<NewsletterBanner />

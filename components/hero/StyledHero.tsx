@@ -26,13 +26,13 @@ const StyledHero: FC<StyledHeroProps> = ({
 	image,
 	link,
 	title,
-	h = "h-[70vh]",
+	h = "h-[40vh]",
 	product = false,
 	category = false,
 }): JSX.Element => {
 	return (
 		<section
-			className={`flex flex-col items-center justify-center min-h-[60vh] ${h}`}
+			className={`flex flex-col items-center justify-center min-h-[40vh] ${h}`}
 		>
 			<div className="flex justify-center items-center relative w-full h-full">
 				<Image

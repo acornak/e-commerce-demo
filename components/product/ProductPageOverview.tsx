@@ -42,7 +42,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 		fetchProductImage(productId, setImageUrl);
 
 		document.getElementById("product-overview")?.scrollIntoView();
-	}, []);
+	}, [productId]);
 
 	const itemAlreadyInWishlist = wishlistItems.some(
 		(item) => item.productId === productId,

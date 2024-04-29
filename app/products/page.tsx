@@ -11,12 +11,7 @@ import productsHero from "@/public/products/products_hero.webp";
 const ProductsPage: NextPage = (): JSX.Element => {
 	return (
 		<>
-			<StyledHero
-				image={productsHero}
-				link="products"
-				title="Products"
-				h="h-96"
-			/>
+			<StyledHero image={productsHero} link="products" title="Products" />
 			<NewsletterBanner />
 		</>
 	);

@@ -220,12 +220,7 @@ const OurCommitment = (): JSX.Element => (
 const AboutPage: NextPage = (): JSX.Element => {
 	return (
 		<>
-			<StyledHero
-				image={aboutHero}
-				link="about"
-				title="About Us"
-				h="h-96"
-			/>
+			<StyledHero image={aboutHero} link="about" title="About Us" />
 			<OurStory />
 			<OurBrand />
 			<OurCommitment />

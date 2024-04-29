@@ -24,7 +24,8 @@ const QuestionItem: FC<QuestionItemProps> = ({ question }): JSX.Element => {
 	return (
 		<AnimatePresence>
 			<div className="flex items-center">
-				<div
+				<button
+					type="button"
 					className="text-start py-4 cursor-pointer "
 					onClick={() => setIsOpen((prev) => !prev)}
 				>
@@ -47,7 +48,7 @@ const QuestionItem: FC<QuestionItemProps> = ({ question }): JSX.Element => {
 							{question.question}
 						</span>
 					</div>
-				</div>
+				</button>
 			</div>
 
 			{isOpen && (
@@ -71,7 +72,6 @@ const FAQPage: NextPage = (): JSX.Element => {
 				image={faqHero}
 				link="faq"
 				title="Frequently Asked Questions"
-				h="h-96"
 			/>
 			<div className="text-center my-6 pb-6 mx-10 border-b border-gray-300">
 				<StyledSectionHeading title="Frequently Asked Questions" />

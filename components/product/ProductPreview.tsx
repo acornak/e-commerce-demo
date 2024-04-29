@@ -45,7 +45,11 @@ const ProductButton: FC<ProductButtonProps> = ({
 	const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
 	return (
-		<div className="relative flex items-center" onClick={onClickEvent}>
+		<button
+			type="button"
+			className="relative flex items-center"
+			onClick={onClickEvent}
+		>
 			<motion.button
 				tabIndex={0}
 				whileHover={{
@@ -83,7 +87,7 @@ const ProductButton: FC<ProductButtonProps> = ({
 					{tooltipText}
 				</motion.span>
 			)}
-		</div>
+		</button>
 	);
 };
 
