@@ -45,11 +45,7 @@ const ProductButton: FC<ProductButtonProps> = ({
 	const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
 	return (
-		<button
-			type="button"
-			className="relative flex items-center"
-			onClick={onClickEvent}
-		>
+		<div className="relative flex items-center">
 			<motion.button
 				tabIndex={0}
 				whileHover={{
@@ -67,9 +63,7 @@ const ProductButton: FC<ProductButtonProps> = ({
 					setHovered(true);
 				}}
 				onMouseLeave={() => setShowTooltip(false)}
-				onClick={() => {
-					setShowTooltip(false);
-				}}
+				onClick={onClickEvent}
 				className="bg-white rounded-full p-2 m-1"
 				type="button"
 				aria-label="Go to the product page"
@@ -87,7 +81,7 @@ const ProductButton: FC<ProductButtonProps> = ({
 					{tooltipText}
 				</motion.span>
 			)}
-		</button>
+		</div>
 	);
 };
 

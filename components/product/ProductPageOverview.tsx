@@ -129,12 +129,19 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 							alt={product.name}
 							width={800}
 							height={800}
-							objectFit="cover"
+							style={{
+								objectFit: "cover",
+							}}
 							priority
 						/>
 					</div>
 				)}
-				<div className="flex-1 ">
+				<div
+					className="flex-1"
+					onTouchStart={() => {
+						setShowTooltip(false);
+					}}
+				>
 					<div className="xl:w-4/5">
 						<div className="flex justify-between items-center pb-4">
 							<p className="font-medium text-2xl tracking-widest">
@@ -146,6 +153,12 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 									setShowTooltip(true);
 								}}
 								onMouseLeave={() => setShowTooltip(false)}
+								onTouchStart={() => {
+									setShowTooltip(false);
+								}}
+								onTouchEnd={() => {
+									setShowTooltip(false);
+								}}
 								className="relative cursor-pointer hover:text-secondary transition-colors duration-200 ease-in-out"
 								onClick={handleAddToWishlist}
 							>

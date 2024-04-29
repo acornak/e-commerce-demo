@@ -23,4 +23,3 @@
 ## TODO:
 - Product variants
 - Subscribe modal
-- BUG - with productoverview icons tooltip

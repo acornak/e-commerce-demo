@@ -134,6 +134,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			<ShoppingCart />
 			<ProductAddedModal />
 			<ProductPreviewModal />
+			<CookieConsent />
 			<AnimatePresence>
 				{showFade() && (
 					<motion.div
@@ -157,7 +158,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 				)}
 			</AnimatePresence>
 			<Navbar />
-			<CookieConsent />
+
 			{children}
 			<div className="sticky top-[100vh]">
 				<Sitemap />
