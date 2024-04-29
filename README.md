@@ -19,3 +19,8 @@
 - https://medium.com/@mak-dev/zustand-with-next-js-14-server-components-da9c191b73df
 - https://docs.pmnd.rs/zustand/guides/nextjs
 - https://blog.logrocket.com/integrating-google-maps-react/
+
+## TODO:
+- Product variants
+- Subscribe modal
+- BUG - with productoverview icons tooltip

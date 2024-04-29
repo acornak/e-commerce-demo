@@ -8,18 +8,19 @@ import NewsletterBanner from "@/components/common/Newsletter";
 import productsHero from "@/public/products/products_hero.webp";
 
 // https://pertic-store-demo.myshopify.com/collections/all
-const ProductsPage: NextPage = (): JSX.Element => {
+const CategoriesPage: NextPage = (): JSX.Element => {
 	return (
 		<>
 			<StyledHero
 				image={productsHero}
-				link="products"
-				title="Products"
+				link="categories"
+				title="Categories"
 				h="h-96"
+				product
 			/>
 			<NewsletterBanner />
 		</>
 	);
 };
 
-export default ProductsPage;
+export default CategoriesPage;

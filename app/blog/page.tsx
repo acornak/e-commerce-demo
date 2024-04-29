@@ -1,12 +1,18 @@
 import React from "react";
 // Next
 import { NextPage } from "next";
+// Components
+import StyledHero from "@/components/hero/StyledHero";
+import NewsletterBanner from "@/components/common/Newsletter";
+// Images
+import blogHero from "@/public/blog/blog_hero.webp";
 
 const BlogPage: NextPage = (): JSX.Element => {
 	return (
-		<div>
-			<h1>Blog Page</h1>
-		</div>
+		<>
+			<StyledHero image={blogHero} link="blog" title="Blog" h="h-96" />
+			<NewsletterBanner />
+		</>
 	);
 };
 

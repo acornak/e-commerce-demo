@@ -92,7 +92,7 @@ const OurStory = (): JSX.Element => (
 );
 
 const OurBrand = (): JSX.Element => (
-	<div className="flex items-center justify-center h-full md:h-3/4">
+	<div className="flex items-center justify-center min-h-[60vh] h-[95vh] md:h-[70vh] lg:h-[80vh]">
 		<div className="relative w-full h-full ">
 			<Image
 				src={aboutBanner.src}
@@ -103,7 +103,7 @@ const OurBrand = (): JSX.Element => (
 				}}
 				priority
 			/>
-			<div className="absolute inset-0 flex items-center justify-center text-center md:mx-10 flex-col md:flex-row">
+			<div className="absolute inset-0 -top-10 flex items-center justify-center text-center md:mx-10 flex-col md:flex-row">
 				<div className="w-full md:w-1/2 xl:w-1/3 p-8 text-white text-start">
 					<h2 className="text-3xl lg:text-7xl font-semibold py-4">
 						Behind The Brand
@@ -217,11 +217,15 @@ const OurCommitment = (): JSX.Element => (
 	</div>
 );
 
-// https://pertic-store-demo.myshopify.com/pages/about-us-3
 const AboutPage: NextPage = (): JSX.Element => {
 	return (
 		<>
-			<StyledHero image={aboutHero} link="about" title="About Us" />
+			<StyledHero
+				image={aboutHero}
+				link="about"
+				title="About Us"
+				h="h-96"
+			/>
 			<OurStory />
 			<OurBrand />
 			<OurCommitment />

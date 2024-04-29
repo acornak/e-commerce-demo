@@ -15,7 +15,7 @@ import StyledHero from "@/components/hero/StyledHero";
 import ContactForm from "@/components/common/ContactForm";
 import { StyledSectionHeading } from "@/components/styled/Heading";
 // Image
-import contactHero from "@/public/about/about_hero.webp";
+import contactHero from "@/public/contact/contact_hero.webp";
 // Functions
 import verifyCaptcha from "@/lib/functions/verify-captcha";
 // Icons
@@ -168,7 +168,7 @@ const ContactPage: NextPage = (): JSX.Element => {
 				image={contactHero}
 				link="contact"
 				title="Contact Information"
-				h="h-[40%]"
+				h="h-96"
 			/>
 			<ContactInfo />
 			<StyledSectionHeading title="Contact Form" />

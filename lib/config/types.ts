@@ -27,3 +27,8 @@ export type IconProps = {
 	className?: string;
 	fill?: string;
 };
+
+export type FaqQuestion = {
+	question: string;
+	answer: string;
+};

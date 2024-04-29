@@ -72,15 +72,17 @@ const ProductButton: FC<ProductButtonProps> = ({
 			>
 				{children}
 			</motion.button>
-			<motion.span
-				className="absolute bottom-full mb-2 w-auto min-w-[160px] p-3 bg-black text-white text-xs rounded z-50 -translate-x-1/2 right-1/2"
-				initial="hidden"
-				animate={showTooltip ? "visible" : "hidden"}
-				variants={tooltipVariants}
-				style={{ whiteSpace: "nowrap" }}
-			>
-				{tooltipText}
-			</motion.span>
+			{showTooltip && (
+				<motion.span
+					className="absolute bottom-full mb-2 w-auto min-w-[160px] p-3 bg-black text-white text-xs rounded z-50 -translate-x-1/2 right-1/2"
+					initial="hidden"
+					animate="visible"
+					variants={tooltipVariants}
+					style={{ whiteSpace: "nowrap" }}
+				>
+					{tooltipText}
+				</motion.span>
+			)}
 		</div>
 	);
 };
