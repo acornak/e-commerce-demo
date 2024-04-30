@@ -7,9 +7,9 @@ import Image, { StaticImageData } from "next/image";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Images
-import heroWomen from "@/public/homepage/hero_1.jpeg";
+import heroWomen from "@/public/homepage/hero_1.webp";
 import heroMen from "@/public/homepage/hero_2.webp";
-import heroChildren from "@/public/homepage/hero_3.jpeg";
+import heroChildren from "@/public/homepage/hero_3.webp";
 // Types and constants
 import { colors } from "@/lib/config/constants";
 // Icons

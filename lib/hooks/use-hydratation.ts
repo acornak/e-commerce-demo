@@ -19,7 +19,7 @@ const useHydration = (useStore: UseBoundStore<any>) => {
 			unsubHydrate();
 			unsubFinishHydration();
 		};
-	}, []);
+	}, [useStore.persist]);
 
 	return hydrated;
 };

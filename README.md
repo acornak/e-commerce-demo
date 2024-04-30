@@ -29,3 +29,5 @@
 - getProductsByTags
 - tags as a separate table
 - reviews as a separate table
+- compress webp https://www.xconvert.com/compress-webp
+- resize webp https://www.simpleimageresizer.com/resize/webp

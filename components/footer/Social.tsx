@@ -11,8 +11,8 @@ import ig1 from "@/public/instagram/ig_1.webp";
 import ig2 from "@/public/instagram/ig_2.webp";
 import ig3 from "@/public/instagram/ig_3.webp";
 import ig4 from "@/public/instagram/ig_4.webp";
-import ig5 from "@/public/instagram/ig_5.jpeg";
-import ig6 from "@/public/instagram/ig_6.jpeg";
+import ig5 from "@/public/instagram/ig_5.webp";
+import ig6 from "@/public/instagram/ig_6.webp";
 import ig7 from "@/public/instagram/ig_7.webp";
 // Icons
 import { InstagramIcon } from "../icon/Instagram";

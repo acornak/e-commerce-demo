@@ -7,12 +7,12 @@ import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
 // Images
-import aviator from "@/public/categories/aviator.png";
-import cateye from "@/public/categories/cateye.png";
-import rectangle from "@/public/categories/rectangle.png";
-import round from "@/public/categories/round.png";
-import safety from "@/public/categories/safety.png";
-import stylish from "@/public/categories/stylish.png";
+import aviator from "@/public/categories/aviator.webp";
+import cateye from "@/public/categories/cateye.webp";
+import rectangle from "@/public/categories/rectangle.webp";
+import round from "@/public/categories/round.webp";
+import safety from "@/public/categories/safety.webp";
+import stylish from "@/public/categories/stylish.webp";
 // Icons
 import ChevronRightIcon from "../icon/ChevronRight";
 import ChevronLeftIcon from "../icon/ChevronLeft";

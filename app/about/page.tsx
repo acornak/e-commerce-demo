@@ -14,7 +14,7 @@ import aboutHero from "@/public/about/about_hero.webp";
 import storyImage from "@/public/about/about_story.webp";
 import aboutBanner from "@/public/about/about_banner.webp";
 import anna from "@/public/about/anna.webp";
-import maria from "@/public/about/maria.jpeg";
+import maria from "@/public/about/maria.webp";
 // Icons
 import DiamondIcon from "@/components/icon/Diamond";
 import ShippingIcon from "@/components/icon/Shipping";

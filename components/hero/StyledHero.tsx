@@ -37,7 +37,7 @@ const StyledHero: FC<StyledHeroProps> = ({
 			<div className="flex justify-center items-center relative w-full h-full">
 				<Image
 					src={image.src}
-					alt="Hero image"
+					alt={`${title} hero image`}
 					fill
 					style={{
 						objectFit: "cover",

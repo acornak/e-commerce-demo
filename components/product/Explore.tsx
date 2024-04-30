@@ -9,8 +9,8 @@ import { motion } from "framer-motion";
 // Types and constants
 import { colors } from "@/lib/config/constants";
 // Images
-import borat from "@/public/misc/borat.png";
-import woman from "@/public/misc/woman.png";
+import borat from "@/public/misc/borat.webp";
+import woman from "@/public/misc/woman.webp";
 // Components
 import { StyledSectionHeading } from "../styled/Heading";
 
