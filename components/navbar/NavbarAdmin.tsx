@@ -97,6 +97,7 @@ const NavbarAdmin = (): JSX.Element => {
 						selected={selected}
 						setSelected={setSelected}
 						icons={adminIcons(dropdownOpen, handleDropdown)}
+						navItems={NavItemsAdmin}
 					/>
 				</div>
 			</nav>
