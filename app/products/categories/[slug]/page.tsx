@@ -61,7 +61,7 @@ const CategoryPage = async ({
 				categoryId={category.id}
 				link={params.slug}
 				title={category.name}
-				h="h-[50vh]"
+				h="h-[65vh]"
 			/>
 			<div className="mt-6">
 				<StyledSectionHeading title={category.name} />

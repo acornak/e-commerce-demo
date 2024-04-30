@@ -12,7 +12,7 @@ const LoginPage: NextPage = (): JSX.Element => {
 
 	return (
 		<>
-			<div className="my-6">
+			<div className="my-3 pt-20 ">
 				<StyledSectionHeading title="Login or Register" />
 			</div>
 			<div className="flex items-center justify-center">

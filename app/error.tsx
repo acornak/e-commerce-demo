@@ -14,7 +14,7 @@ export default function Error({
 	}, [error]);
 
 	return (
-		<div className="flex items-center justify-center py-10 lg:py-20 px-8">
+		<div className="flex items-center justify-center py-10 lg:py-20 px-8 mt-20">
 			<div className="w-full">
 				<h2 className="mt-6 text-center text-4xl font-semibold">
 					Something went wrong!

@@ -22,9 +22,45 @@ import BarsIcon from "../icon/Bars";
 
 const Navbar = (): JSX.Element => {
 	const [selected, setSelected] = useState<number | null>(null);
+	const [shouldShowNavbar, setShouldShowNavbar] = useState<boolean>(true);
 	const toggleDrawerMenuOpen = useModalsStore(
 		(state) => state.toggleDrawerMenuOpen,
 	);
+
+	useEffect((): (() => void) => {
+		let lastScrollTop = 0;
+
+		const handleScroll = (): void => {
+			const currentScrollTop =
+				window.scrollY || document.documentElement.scrollTop;
+
+			if (currentScrollTop < lastScrollTop || currentScrollTop < 50) {
+				setShouldShowNavbar(true);
+			} else {
+				setShouldShowNavbar(false);
+			}
+			lastScrollTop = currentScrollTop;
+		};
+
+		const handleMouseMove = (e: MouseEvent) => {
+			const currentScrollTop =
+				window.scrollY || document.documentElement.scrollTop;
+
+			if (e.clientY < 50) {
+				setShouldShowNavbar(true);
+			} else if (e.clientY > 185 && currentScrollTop !== 0) {
+				setShouldShowNavbar(false);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		window.addEventListener("mousemove", handleMouseMove);
+
+		return (): void => {
+			window.removeEventListener("scroll", handleScroll);
+			window.removeEventListener("mousemove", handleMouseMove);
+		};
+	}, []);
 
 	const cartItems = useCartStore((state) =>
 		state.items.reduce((total, item) => total + item.quantity, 0),
@@ -39,11 +75,13 @@ const Navbar = (): JSX.Element => {
 		};
 	}, []);
 
+	const navClass = shouldShowNavbar ? "top-0" : "-top-full";
+
 	return (
 		<>
 			<MobileItems items={NavItems} />
 			<nav
-				className="sticky top-0 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8 border border-b border-gray-300"
+				className={`${navClass} fixed transition-all ease-in-out duration-300 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8 border border-b border-gray-300`}
 				style={{
 					zIndex: 20,
 				}}

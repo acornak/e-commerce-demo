@@ -18,7 +18,7 @@ const Admin: NextPage = (): JSX.Element => {
 
 	return (
 		<>
-			<div className="text-center mt-6">
+			<div className="text-center mt-6 pt-15">
 				<StyledSectionHeading title="Admin Dashboard" />
 			</div>
 		</>

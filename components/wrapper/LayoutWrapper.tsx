@@ -197,8 +197,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 				)}
 			</AnimatePresence>
 			<Navbar />
-
-			{children}
+			<div>{children}</div>
 			<div className="sticky top-[100vh]">
 				<Sitemap />
 				<Footer />
