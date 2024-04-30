@@ -27,3 +27,5 @@
 - Image Optimization
 - on addProduct update stripe products as well
 - getProductsByTags
+- tags as a separate table
+- reviews as a separate table

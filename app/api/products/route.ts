@@ -8,8 +8,8 @@ import {
 
 export async function GET(request: Request): Promise<Response> {
 	const { searchParams } = new URL(request.url);
-	const category = searchParams.get("category");
-	const productId = searchParams.get("id");
+	const categoryId = searchParams.get("categoryId");
+	const productId = searchParams.get("productId");
 
 	const products = getAllProducts();
 
@@ -19,9 +19,12 @@ export async function GET(request: Request): Promise<Response> {
 		limit = Number(searchParams.get("limit"));
 	}
 
-	if (category) {
+	if (categoryId) {
 		return Response.json({
-			products: getProductsByCategory(products, category).slice(0, limit),
+			products: getProductsByCategory(products, Number(categoryId)).slice(
+				0,
+				limit,
+			),
 		});
 	}
 

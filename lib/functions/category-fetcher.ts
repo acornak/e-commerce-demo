@@ -1,10 +1,20 @@
 import { Category } from "../models/category";
 
-export const fetchCategory = (
+export const fetchAllCategories = (
+	setCategories: (categories: Category[]) => void,
+) => {
+	fetch("/api/categories")
+		.then((response) => response.json())
+		.then((data) => setCategories(data.categories))
+		.catch((error) => console.error("Fetching categories failed:", error));
+};
+
+// TODO in API
+export const fetchCategoryById = (
 	categoryId: number,
 	setCategory: (category: Category) => void,
 ) => {
-	fetch(`/api/categories?id=${categoryId}`)
+	fetch(`/api/categories?categoryId=${categoryId}`)
 		.then((response) => response.json())
 		.then((data) => setCategory(data.category))
 		.catch((error) => console.error("Fetching category failed:", error));

@@ -5,7 +5,7 @@ export const fetchProduct = (
 	productId: number,
 	setProduct: (product: Product) => void,
 ) => {
-	fetch(`/api/products?id=${productId}`)
+	fetch(`/api/products?productId=${productId}`)
 		.then((response) => response.json())
 		.then((data) => setProduct(data.product))
 		.catch((error) => console.error("Fetching product failed:", error));
@@ -26,11 +26,11 @@ export const fetchProductImage = (
 };
 
 export const fetchProductByCategory = (
-	category: string,
+	categoryId: number,
 	setProducts: (products: Product[]) => void,
 	limit?: number,
 ) => {
-	fetch(`/api/products?category=${category}${limit && `&limit=${limit}`}`)
+	fetch(`/api/products?categoryId=${categoryId}${limit && `&limit=${limit}`}`)
 		.then((response) => response.json())
 		.then((data) => setProducts(data.products))
 		.catch((error) => console.error("Fetching products failed:", error));

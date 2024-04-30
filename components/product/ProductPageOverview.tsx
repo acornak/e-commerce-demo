@@ -5,28 +5,40 @@ import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 // Animations
-import { motion } from "framer-motion";
-// Types and Constants
-import { colors } from "@/lib/config/constants";
-import { Product } from "@/lib/models/product";
+import { AnimatePresence, motion } from "framer-motion";
 // Stores
 import { useWishlistStore } from "@/lib/stores/wishlist-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
-
 // Functions
 import {
 	fetchProduct,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
+import { fetchAllCategories } from "@/lib/functions/category-fetcher";
+// Types and Constants
+import { colors } from "@/lib/config/constants";
+import { Product } from "@/lib/models/product";
+import { Category } from "@/lib/models/category";
 // Images
 import fireImage from "@/public/misc/fire.webp";
 // Components
 import StyledLoading from "../styled/Loading";
+import { StyledSectionHeading } from "../styled/Heading";
+import ProductPageDescription from "./ProductPageDescription";
+import ProductPageAdditional from "./ProductPageAdditional";
+import ProductPageReviews from "./ProductPageReviews";
 // Icons
 import ChevronRightIcon from "../icon/ChevronRight";
 import HeartIcon from "../icon/Heart";
 import CheckmarkRoundIcon from "../icon/CheckmarkRound";
+import PlaneIcon from "../icon/Plane";
+import ReturnsPadIcon from "../icon/ReturnsPad";
+import WarrantyIcon from "../icon/Warranty";
+import ShieldIcon from "../icon/Shield";
+import FacebookIcon from "../icon/Facebook";
+import { InstagramIconFilled } from "../icon/Instagram";
+import LinkedInIcon from "../icon/LinkedIn";
 // Styles
 import "./candystripe.css";
 
@@ -322,6 +334,86 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 	);
 };
 
+type CategoriesProps = {
+	categories: number[];
+};
+
+const ProductCategories: FC<CategoriesProps> = ({
+	categories,
+}): JSX.Element => {
+	const [categoriesList, setCategoriesList] = useState<Category[]>([]);
+	const [filteredCategories, setFilteredCategories] = useState<Category[]>(
+		[],
+	);
+
+	useEffect(() => {
+		fetchAllCategories(setCategoriesList);
+	}, []);
+
+	useEffect(() => {
+		setFilteredCategories(
+			categoriesList.filter((category) =>
+				categories.includes(category.id),
+			),
+		);
+	}, [categories, categoriesList]);
+
+	return (
+		<div className="flex items-center text-sm uppercase font-medium">
+			<div className="inline-block pr-4">Categories:</div>
+			<div className="flex flex-wrap items-center py-2">
+				{filteredCategories &&
+					filteredCategories.map((category) => (
+						<Link
+							href={`/products/categories/${category.slug}`}
+							key={category.slug}
+						>
+							<motion.button
+								type="button"
+								whileHover={{
+									backgroundColor: colors.secondary,
+									color: colors.white,
+								}}
+								className="bg-gray-200 text-gray-500 px-2 py-1 mr-2 mb-2 inline-block"
+							>
+								{category.name}
+							</motion.button>
+						</Link>
+					))}
+			</div>
+		</div>
+	);
+};
+
+type TagsProps = {
+	tags: string[];
+};
+
+const ProductTags: FC<TagsProps> = ({ tags }): JSX.Element => {
+	return (
+		<div className="flex items-center text-sm uppercase font-medium">
+			<div className="inline-block pr-4">Tags:</div>
+			<div className="flex flex-wrap items-center py-2">
+				{tags.map((tag) => (
+					<Link href={`/products/tags/${tag}`} key={tag}>
+						<motion.button
+							type="button"
+							whileHover={{
+								backgroundColor: colors.secondary,
+								color: colors.white,
+							}}
+							key={tag}
+							className="bg-gray-200 text-gray-500 px-2 py-1 mr-2 mb-2 inline-block"
+						>
+							{tag}
+						</motion.button>
+					</Link>
+				))}
+			</div>
+		</div>
+	);
+};
+
 type ProductPageOverviewProps = {
 	productId: number;
 };
@@ -333,6 +425,8 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 
 	const [product, setProduct] = useState<Product>();
 	const [imageUrl, setImageUrl] = useState<string | null>();
+
+	const [productMenuSelected, setProductMenuSelected] = useState<number>(0);
 
 	useEffect(() => {
 		fetchProduct(productId, setProduct);
@@ -349,92 +443,358 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 		);
 	}
 
+	const handleContent = () => {
+		switch (productMenuSelected) {
+			case 0:
+				return (
+					<motion.div>
+						<ProductPageDescription product={product} />
+					</motion.div>
+				);
+			case 1:
+				return (
+					<motion.div>
+						<ProductPageAdditional imageUrl={imageUrl} />
+					</motion.div>
+				);
+			case 2:
+				return (
+					<motion.div>
+						<ProductPageReviews product={product} />
+					</motion.div>
+				);
+			default:
+				return <></>;
+		}
+	};
+
 	return (
 		<>
-			<div
-				className="text-start text-sm w-full px-4 flex items-center bg-gray-100 py-2"
-				id="product-overview"
-			>
-				<Link href="/">
-					<motion.p
-						whileHover={{
-							color: colors.secondary,
-						}}
-						whileTap={{
-							color: colors.secondary,
-						}}
-						transition={{ duration: 0.2 }}
-						className="inline"
-					>
-						Home
-					</motion.p>
-				</Link>
-				<ChevronRightIcon />
-				<Link href="/products">
-					<motion.p
-						whileHover={{
-							color: colors.secondary,
-						}}
-						whileTap={{
-							color: colors.secondary,
-						}}
-						transition={{ duration: 0.2 }}
-						className="inline"
-					>
-						Products
-					</motion.p>
-				</Link>
-				<ChevronRightIcon />
-				<Link href={`/products/${product.slug}`}>
-					<motion.p
-						whileHover={{
-							color: colors.secondary,
-						}}
-						whileTap={{
-							color: colors.secondary,
-						}}
-						transition={{ duration: 0.2 }}
-						className="inline"
-					>
-						{product.name}
-					</motion.p>
-				</Link>
-			</div>
-			<div className="flex flex-col md:flex-row my-10 mx-8 lg:mx-20">
-				{imageUrl && (
-					<div className="md:flex-2/3">
-						<Image
-							src={imageUrl}
-							alt={product.name}
-							width={800}
-							height={800}
-							style={{
-								objectFit: "cover",
-							}}
-							priority
-						/>
-					</div>
-				)}
+			<section id="header-url">
 				<div
-					className="md:flex-1"
-					onTouchStart={() => {
-						setShowTooltip(false);
-					}}
+					className="text-start text-sm w-full px-4 flex items-center bg-gray-100 py-2"
+					id="product-overview"
 				>
-					<div className="">
-						<ProductInfo
-							product={product}
-							showTooltip={showTooltip}
-							setShowTooltip={setShowTooltip}
-						/>
+					<Link href="/">
+						<motion.p
+							whileHover={{
+								color: colors.secondary,
+							}}
+							whileTap={{
+								color: colors.secondary,
+							}}
+							transition={{ duration: 0.2 }}
+							className="inline"
+						>
+							Home
+						</motion.p>
+					</Link>
+					<ChevronRightIcon />
+					<Link href="/products">
+						<motion.p
+							whileHover={{
+								color: colors.secondary,
+							}}
+							whileTap={{
+								color: colors.secondary,
+							}}
+							transition={{ duration: 0.2 }}
+							className="inline"
+						>
+							Products
+						</motion.p>
+					</Link>
+					<ChevronRightIcon />
+					<Link href={`/products/${product.slug}`}>
+						<motion.p
+							whileHover={{
+								color: colors.secondary,
+							}}
+							whileTap={{
+								color: colors.secondary,
+							}}
+							transition={{ duration: 0.2 }}
+							className="inline"
+						>
+							{product.name}
+						</motion.p>
+					</Link>
+				</div>
+			</section>
+			<section id="product-details">
+				<div className="flex flex-col md:flex-row my-10 mx-8 lg:mx-20">
+					{imageUrl && (
+						<div className="md:flex-2/3">
+							<Image
+								src={imageUrl}
+								alt={product.name}
+								width={800}
+								height={800}
+								style={{
+									objectFit: "cover",
+								}}
+								priority
+							/>
+						</div>
+					)}
+					{/* TODO: add variants here */}
+					<div
+						className="md:flex-1"
+						onTouchStart={() => {
+							setShowTooltip(false);
+						}}
+					>
+						<div className="">
+							<ProductInfo
+								product={product}
+								showTooltip={showTooltip}
+								setShowTooltip={setShowTooltip}
+							/>
 
-						<SpecialOffer />
-						<SellingInfo />
-						<ProductModals />
-						<BuyingSection product={product} />
+							<SpecialOffer />
+							<SellingInfo />
+							<ProductModals />
+							<BuyingSection product={product} />
+							<hr className="border-gray-300 my-4" />
+							<ProductCategories
+								categories={product.categories}
+							/>
+							<ProductTags tags={product.tags} />
+						</div>
 					</div>
 				</div>
-			</div>
+			</section>
+			<section id="product-features">
+				<div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pb-8">
+					<div className="mx-8 border border-gray-300 p-6 flex flex-col justify-center items-center text-center">
+						<p className="text-secondary">
+							<PlaneIcon />
+						</p>
+						<h3 className="text-xs pt-4 font-medium uppercase tracking-widest">
+							Worldwide shipping
+						</h3>
+					</div>
+					<div className="mx-8 border border-gray-300 p-6 flex flex-col justify-center items-center text-center">
+						<p className="text-secondary">
+							<ReturnsPadIcon />
+						</p>
+						<h3 className="text-xs pt-4 font-medium uppercase tracking-widest">
+							Free 60-day returns
+						</h3>
+					</div>
+					<div className="mx-8 border border-gray-300 p-6 flex flex-col justify-center items-center text-center">
+						<p className="text-secondary">
+							<WarrantyIcon />
+						</p>
+						<h3 className="text-xs pt-4 font-medium uppercase tracking-widest">
+							24 month warranty
+						</h3>
+					</div>
+					<div className="mx-8 border border-gray-300 p-6 flex flex-col justify-center items-center text-center">
+						<p className="text-secondary">
+							<ShieldIcon />
+						</p>
+						<h3 className="text-xs pt-4 font-medium uppercase tracking-widest">
+							100% secure checkout
+						</h3>
+					</div>
+				</div>
+			</section>
+
+			<section id="product-description">
+				<hr className="border-gray-300 my-4" />
+				<div className="flex items-center justify-center px-6">
+					<div className="text-xs sm:text-base w-full sm:w-3/4 lg:w-3/5 xl:w-2/5 flex justify-between uppercase">
+						<motion.button
+							className={`relative uppercase tracking-widest ${
+								productMenuSelected === 0 && "font-semibold"
+							}`}
+							onClick={() => setProductMenuSelected(0)}
+							whileHover={{
+								color:
+									productMenuSelected === 0
+										? colors.black
+										: colors.secondary,
+							}}
+							whileTap={{
+								color:
+									productMenuSelected === 0
+										? colors.black
+										: colors.secondary,
+							}}
+						>
+							Description
+							<AnimatePresence>
+								{productMenuSelected === 0 && (
+									<motion.div
+										className="absolute left-0 bottom-0 h-0.5 bg-secondary"
+										initial={{
+											width: 0,
+											x: 0,
+										}}
+										animate={{
+											width: "100%",
+											x: 0,
+										}}
+										exit={{
+											width: 0,
+											x: 0,
+											backgroundColor: "#333",
+										}}
+										transition={{
+											duration: 0.3,
+											ease: "easeInOut",
+										}}
+									/>
+								)}
+							</AnimatePresence>
+						</motion.button>
+						<motion.button
+							className={`relative uppercase tracking-widest ${
+								productMenuSelected === 1 && "font-semibold"
+							}`}
+							onClick={() => setProductMenuSelected(1)}
+							whileHover={{
+								color:
+									productMenuSelected === 1
+										? colors.black
+										: colors.secondary,
+							}}
+							whileTap={{
+								color:
+									productMenuSelected === 1
+										? colors.black
+										: colors.secondary,
+							}}
+						>
+							Additional Info
+							<AnimatePresence>
+								{productMenuSelected === 1 && (
+									<motion.div
+										className="absolute left-0 bottom-0 h-0.5 bg-secondary"
+										initial={{
+											width: 0,
+											x: 0,
+										}}
+										animate={{
+											width: "100%",
+											x: 0,
+										}}
+										exit={{
+											width: 0,
+											x: 0,
+											backgroundColor: "#333",
+										}}
+										transition={{
+											duration: 0.3,
+											ease: "easeInOut",
+										}}
+									/>
+								)}
+							</AnimatePresence>
+						</motion.button>
+						<motion.button
+							className={`relative uppercase tracking-widest ${
+								productMenuSelected === 2 && "font-semibold"
+							}`}
+							onClick={() => setProductMenuSelected(2)}
+							whileHover={{
+								color:
+									productMenuSelected === 2
+										? colors.black
+										: colors.secondary,
+							}}
+							whileTap={{
+								color:
+									productMenuSelected === 2
+										? colors.black
+										: colors.secondary,
+							}}
+						>
+							Reviews
+							<AnimatePresence>
+								{productMenuSelected === 2 && (
+									<motion.div
+										className="absolute left-0 bottom-0 h-0.5 bg-secondary"
+										initial={{
+											width: 0,
+											x: 0,
+										}}
+										animate={{
+											width: "100%",
+											x: 0,
+										}}
+										exit={{
+											width: 0,
+											x: 0,
+											backgroundColor: "#333",
+										}}
+										transition={{
+											duration: 0.3,
+											ease: "easeInOut",
+										}}
+									/>
+								)}
+							</AnimatePresence>
+						</motion.button>
+					</div>
+				</div>
+				<hr className="border-gray-300 my-4" />
+				<AnimatePresence>{handleContent()}</AnimatePresence>
+			</section>
+			<section id="product-social">
+				<hr className="border-gray-300 my-4" />
+				<div className="flex items-center justify-center">
+					<div className="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/5 pt-4 flex flex-row gap-4 justify-between text-gray-600">
+						<Link
+							href="https://www.facebook.com"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<motion.p
+								whileHover={{
+									scale: 1.1,
+									color: colors.secondary,
+								}}
+							>
+								<FacebookIcon />
+							</motion.p>
+						</Link>
+						<Link
+							href="https://www.instagram.com"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<motion.p
+								whileHover={{
+									scale: 1.1,
+									color: colors.secondary,
+								}}
+							>
+								<InstagramIconFilled />
+							</motion.p>
+						</Link>
+						<Link
+							href="https://www.linkedin.com"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<motion.p
+								whileHover={{
+									scale: 1.1,
+									color: colors.secondary,
+								}}
+							>
+								<LinkedInIcon />
+							</motion.p>
+						</Link>
+					</div>
+				</div>
+				<hr className="border-gray-300 my-4" />
+			</section>
+			<section id="related-products">
+				<StyledSectionHeading title="Related products" />
+			</section>
 		</>
 	);
 };

@@ -12,7 +12,7 @@ import { colors } from "@/lib/config/constants";
 // Components
 import { StyledSectionHeading } from "../styled/Heading";
 // Icons
-import PlaneIcon from "../icon/Plane";
+import PaperPlaneIcon from "../icon/PaperPlane";
 
 const HomepageNewsletter = (): JSX.Element => {
 	return (
@@ -64,7 +64,7 @@ const HomepageNewsletter = (): JSX.Element => {
 								transition={{ duration: 0.3 }}
 								className="px-4 py-2 bg-secondary text-white cursor-pointer border border-secondary"
 							>
-								<PlaneIcon />
+								<PaperPlaneIcon />
 							</motion.button>
 						</div>
 					</div>

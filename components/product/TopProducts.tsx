@@ -12,7 +12,7 @@ import { StyledSectionHeading } from "../styled/Heading";
 const TopProducts = (): JSX.Element => {
 	const [topProducts, setTopProducts] = useState<Product[]>([]);
 	useEffect((): void => {
-		fetchProductByCategory("top", setTopProducts, 12);
+		fetchProductByCategory(1, setTopProducts, 12);
 	}, []);
 
 	return (

@@ -11,5 +11,5 @@ export async function GET(request: Request) {
 
 	const categories = getAllCategories();
 
-	return Response.json({ products: categories.slice(0, limit) });
+	return Response.json({ categories: categories.slice(0, limit) });
 }

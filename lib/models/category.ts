@@ -14,3 +14,12 @@ export type Category = {
 export function getAllCategories(): Category[] {
 	return dummyCategories;
 }
+
+/**
+ * Get category by id
+ * @param id
+ * @returns category
+ */
+export function getCategoryById(id: number): Category | undefined {
+	return dummyCategories.find((category) => category.id === id);
+}

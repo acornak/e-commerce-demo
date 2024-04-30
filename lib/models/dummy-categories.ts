@@ -1,24 +1,25 @@
 const dummyCategories = [
 	{
 		id: 1,
+		name: "Top products",
+		slug: "top",
+	},
+	{
+		id: 2,
 		name: "Women's glasses",
 		slug: "women",
 	},
 	{
-		id: 2,
+		id: 3,
 		name: "Men's glasses",
 		slug: "men",
 	},
 	{
-		id: 3,
+		id: 4,
 		name: "Children's glasses",
 		slug: "children",
 	},
-	{
-		id: 4,
-		name: "Top products",
-		slug: "top",
-	},
+
 	{
 		id: 5,
 		name: "Rectangular glasses",
@@ -31,7 +32,7 @@ const dummyCategories = [
 	},
 	{
 		id: 7,
-		name: "Sunglasses glasses",
+		name: "Sunglasses",
 		slug: "sunglasses",
 	},
 	{
@@ -58,6 +59,11 @@ const dummyCategories = [
 		id: 12,
 		name: "Stylish glasses",
 		slug: "stylish",
+	},
+	{
+		id: 13,
+		name: "Square glasses",
+		slug: "square",
 	},
 ];
 

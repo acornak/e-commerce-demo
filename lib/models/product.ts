@@ -18,7 +18,7 @@ export type Product = {
 	previousPrice?: number;
 	brand: string;
 	description: string;
-	categories: string[];
+	categories: number[];
 	rating?: number;
 	countInStock?: number;
 	variants?: Variant[];
@@ -51,14 +51,15 @@ export function getProductsById(
 /**
  * Get products by category
  * @param products - array of products
- * @param category - category to filter by (e.g. "top")
+ * @param categoryId - category id to filter by
  * @returns array of products
  */
 export function getProductsByCategory(
 	products: Product[],
-	category: string,
+	categoryId: number,
 ): Product[] {
+	console.log(categoryId);
 	return products.filter((product) =>
-		product.categories.includes(category.toLowerCase()),
+		product.categories.includes(categoryId),
 	);
 }
