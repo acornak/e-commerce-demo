@@ -157,7 +157,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 							</div>
 							<hr />
 							<div className="text-sm py-4 text-justify">
-								{product.description.slice(0, 200)}...
+								{product.perex.slice(0, 200)}...
 							</div>
 							<hr />
 							<div className="py-4 grid grid-cols-3 gap-4">

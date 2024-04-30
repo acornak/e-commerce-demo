@@ -4,12 +4,14 @@ import {
 	getAllProducts,
 	getProductsById,
 	getProductsByCategory,
+	getProductsByTag,
 } from "@/lib/models/product";
 
 export async function GET(request: Request): Promise<Response> {
 	const { searchParams } = new URL(request.url);
 	const categoryId = searchParams.get("categoryId");
 	const productId = searchParams.get("productId");
+	const tags = searchParams.getAll("tags");
 
 	const products = getAllProducts();
 
@@ -25,6 +27,12 @@ export async function GET(request: Request): Promise<Response> {
 				0,
 				limit,
 			),
+		});
+	}
+
+	if (tags.length) {
+		return Response.json({
+			products: getProductsByTag(products, tags).slice(0, limit),
 		});
 	}
 

@@ -6,8 +6,7 @@ const dummyProducts = [
 		price: 52.0,
 		previousPrice: 100.0,
 		brand: "Rectangular",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [5, 1, 10],
 		rating: 4.5,
 		countInStock: 5,
@@ -22,8 +21,7 @@ const dummyProducts = [
 		price: 325,
 		previousPrice: 300,
 		brand: "Round",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [6, 1, 7],
 		rating: 4.9,
 		countInStock: 5,
@@ -37,8 +35,7 @@ const dummyProducts = [
 		slug: "aviator-sunglasses",
 		price: 160,
 		brand: "Aviator",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [8, 1, 7],
 		rating: 4.9,
 		countInStock: 5,
@@ -53,8 +50,7 @@ const dummyProducts = [
 		price: 96,
 		previousPrice: 90,
 		brand: "Cat Eye",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [1, 7, 9],
 		rating: 4.9,
 		countInStock: 5,
@@ -69,8 +65,7 @@ const dummyProducts = [
 		price: 212,
 		previousPrice: 200,
 		brand: "Gradient",
-		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, purus sit amet volutpat.",
+		perex: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, purus sit amet volutpat.",
 		categories: [8, 7, 1],
 		rating: 4.5,
 		countInStock: 5,
@@ -85,8 +80,7 @@ const dummyProducts = [
 		price: 100,
 		previousPrice: 120,
 		brand: "Square",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [13, 1, 10],
 		rating: 4.9,
 		countInStock: 5,
@@ -101,8 +95,7 @@ const dummyProducts = [
 		price: 368,
 		previousPrice: 375,
 		brand: "Round",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [6, 1, 7],
 		rating: 4.9,
 		countInStock: 5,
@@ -116,8 +109,7 @@ const dummyProducts = [
 		slug: "clubmaster-square-prescription",
 		price: 212,
 		brand: "Round",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [10, 1],
 		rating: 4.9,
 		countInStock: 5,
@@ -131,8 +123,7 @@ const dummyProducts = [
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
 		brand: "Round",
-		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, purus sit amet volutpat.",
+		perex: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, purus sit amet volutpat.",
 		categories: [6, 1, 10],
 		rating: 4.5,
 		countInStock: 5,
@@ -147,8 +138,7 @@ const dummyProducts = [
 		price: 100,
 		previousPrice: 120,
 		brand: "Clubround",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [6, 1, 7],
 		rating: 4.9,
 		countInStock: 5,
@@ -162,8 +152,7 @@ const dummyProducts = [
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
 		brand: "Round",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [6, 1, 10],
 		rating: 4.9,
 		countInStock: 5,
@@ -177,8 +166,7 @@ const dummyProducts = [
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
 		brand: "Clubmaster",
-		description:
-			"Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
+		perex: "Black Transparent UV Protection Classic sunglasses combine usefulness with the design. The perfect design will complement your face and top off any outfit. In combination with high-quality lenses, an excellent protection from harmful UV-rays is guaranteed. If you're searching forspecial protection, then polarized sunglasses are the right option for you....",
 		categories: [7, 1, 13],
 		rating: 4.9,
 		countInStock: 5,

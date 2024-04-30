@@ -22,7 +22,7 @@ const Cart: NextPage = (): JSX.Element => {
 	);
 
 	return (
-		<div className="flex flex-col items-center justify-center text-center pt-24">
+		<div className="flex flex-col items-center justify-center text-center pt-14 lg:pt-24">
 			<div className="text-start w-full px-4 flex items-center bg-gray-100 py-2 pt-4">
 				<Link href="/">
 					<motion.p

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 // Types and constants
 import { Product } from "@/lib/models/product";
 // Functions
-import { fetchProductByCategory } from "@/lib/functions/product-fetcher";
+import { fetchProductsByCategory } from "@/lib/functions/product-fetcher";
 // Components
 import ProductPreview from "./ProductPreview";
 import { StyledSectionHeading } from "../styled/Heading";
@@ -12,7 +12,7 @@ import { StyledSectionHeading } from "../styled/Heading";
 const TopProducts = (): JSX.Element => {
 	const [topProducts, setTopProducts] = useState<Product[]>([]);
 	useEffect((): void => {
-		fetchProductByCategory(1, setTopProducts, 12);
+		fetchProductsByCategory(1, setTopProducts, 12);
 	}, []);
 
 	return (

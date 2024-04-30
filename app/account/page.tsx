@@ -18,7 +18,7 @@ const AccountPage: NextPage = (): JSX.Element => {
 
 	return (
 		<>
-			<div className="pt-15">
+			<div className="pt-20">
 				<StyledSectionHeading title="Account Page" />
 			</div>
 		</>

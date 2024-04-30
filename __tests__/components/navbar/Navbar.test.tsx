@@ -3,14 +3,14 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 // Components
 import Navbar from "@/components/navbar/Navbar";
-import { NavItems } from "@/components/navbar/NavItems";
+import { NavItemsDesktop } from "@/components/navbar/NavItems";
 // Types and constants
 import { NavItem } from "@/lib/config/types";
 
 describe("Navbar", () => {
 	it("renders the navigation items", () => {
 		render(<Navbar />);
-		NavItems.forEach((item: NavItem) => {
+		NavItemsDesktop.forEach((item: NavItem) => {
 			const navItem = screen.getByText(item.title);
 			expect(navItem).toBeInTheDocument();
 		});
@@ -31,8 +31,8 @@ describe("Navbar", () => {
 
 	it("changes text color on mouse enter - navitem", async () => {
 		render(<Navbar />);
-		const hoveredNavItem = screen.getByText(NavItems[0].title);
-		const notHoveredNavItem = screen.getByText(NavItems[1].title);
+		const hoveredNavItem = screen.getByText(NavItemsDesktop[0].title);
+		const notHoveredNavItem = screen.getByText(NavItemsDesktop[1].title);
 
 		fireEvent.mouseEnter(hoveredNavItem);
 		await waitFor(() => {
@@ -48,12 +48,12 @@ describe("Navbar", () => {
 
 	it("changes text color on mouse enter - icon", async () => {
 		render(<Navbar />);
-		const hoveredNavIcon = screen.queryAllByTestId("Magnifiericon")[1];
+		const hoveredNavIcon = screen.queryAllByTestId("Magnifiericon")[0];
 
 		fireEvent.mouseEnter(hoveredNavIcon);
 		await waitFor(() => {
 			const hoveredNavIconUnderline =
-				screen.queryAllByTestId("MagnifierUnderline")[1];
+				screen.getByTestId("MagnifierUnderline");
 			expect(hoveredNavIconUnderline).not.toHaveClass("hidden");
 		});
 	});

@@ -1,7 +1,7 @@
 // Types and constants
 import { NavItem } from "@/lib/config/types";
 
-const NavItems: NavItem[] = [
+const NavItemsMobile: NavItem[] = [
 	{
 		title: "Home",
 		url: "/",
@@ -10,7 +10,37 @@ const NavItems: NavItem[] = [
 		title: "Products",
 		url: "/products",
 	},
+	{
+		title: "Wishlist",
+		url: "/wishlist",
+	},
+	{
+		title: "About Us",
+		url: "/about",
+	},
+	{
+		title: "Contact",
+		url: "/contact",
+	},
+	{
+		title: "Blog",
+		url: "/blog",
+	},
+	{
+		title: "Your Account",
+		url: "/account",
+	},
+];
 
+const NavItemsDesktop: NavItem[] = [
+	{
+		title: "Home",
+		url: "/",
+	},
+	{
+		title: "Products",
+		url: "/products",
+	},
 	{
 		title: "About Us",
 		url: "/about",
@@ -48,4 +78,4 @@ const NavItemsAdmin: NavItem[] = [
 	},
 ];
 
-export { NavItems, NavItemsAdmin };
+export { NavItemsMobile, NavItemsDesktop, NavItemsAdmin };

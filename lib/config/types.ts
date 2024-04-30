@@ -5,6 +5,7 @@ export type Color = {
 export type NavItem = {
 	title: string;
 	url: string;
+	children?: NavItem[];
 };
 
 export type NavIcon = {

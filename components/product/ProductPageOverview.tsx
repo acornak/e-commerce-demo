@@ -41,6 +41,7 @@ import { InstagramIconFilled } from "../icon/Instagram";
 import LinkedInIcon from "../icon/LinkedIn";
 // Styles
 import "./candystripe.css";
+import RelatedProduct from "./RelatedProducts";
 
 type ProductInfoProps = {
 	product: Product;
@@ -136,7 +137,7 @@ const ProductInfo: FC<ProductInfoProps> = ({
 			</div>
 			<div className="pb-4">
 				<p className="text-sm leading-7 text-justify text-gray-500">
-					{product.description}
+					{product.perex}
 				</p>
 			</div>
 		</>
@@ -472,7 +473,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 		<>
 			<section id="header-url">
 				<div
-					className="text-start text-sm w-full px-4 flex items-center bg-gray-100 py-2 pt-28"
+					className="text-start text-xs sm:text-sm w-full px-4 flex items-center bg-gray-100 py-2 mt-16 lg:mt-24 lg:pt-4"
 					id="product-overview"
 				>
 					<Link href="/">
@@ -743,7 +744,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 				<AnimatePresence>{handleContent()}</AnimatePresence>
 			</section>
 			<section id="product-social">
-				<hr className="border-gray-300 my-4" />
+				<hr className="border-gray-300 mt-6" />
 				<div className="flex items-center justify-center">
 					<div className="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/5 pt-4 flex flex-row gap-4 justify-between text-gray-600">
 						<Link
@@ -793,7 +794,11 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 				<hr className="border-gray-300 my-4" />
 			</section>
 			<section id="related-products">
-				<StyledSectionHeading title="Related products" />
+				<StyledSectionHeading
+					title="Related products"
+					className="pt-4"
+				/>
+				<RelatedProduct tags={product.tags} />
 			</section>
 		</>
 	);

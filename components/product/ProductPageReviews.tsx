@@ -1,6 +1,5 @@
 import { Product } from "@/lib/models/product";
 import React, { FC } from "react";
-import { StyledSectionHeading } from "../styled/Heading";
 
 type ProductPageReviewsProps = {
 	product: Product;
@@ -12,7 +11,9 @@ const ProductPageReviews: FC<ProductPageReviewsProps> = ({
 	if (!product.reviews) {
 		return (
 			<div className="text-center">
-				<StyledSectionHeading title="No reviews yet" />
+				<h1 className="text-lg font-semibold tracking-widest my-20">
+					No reviews yet
+				</h1>
 			</div>
 		);
 	}
@@ -20,7 +21,9 @@ const ProductPageReviews: FC<ProductPageReviewsProps> = ({
 	// TODO
 	return (
 		<div className="text-center">
-			<StyledSectionHeading title="No reviews yet" />
+			<h1 className="text-lg font-semibold tracking-widest my-20">
+				No reviews yet
+			</h1>
 		</div>
 	);
 };

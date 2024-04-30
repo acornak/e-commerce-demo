@@ -17,7 +17,7 @@ export type Product = {
 	price: number;
 	previousPrice?: number;
 	brand: string;
-	description: string;
+	perex: string;
 	categories: number[];
 	rating?: number;
 	countInStock?: number;
@@ -25,6 +25,7 @@ export type Product = {
 	reviews?: string[];
 	tags: string[];
 	specialOffer?: boolean;
+	description?: string;
 };
 
 /**
@@ -61,5 +62,20 @@ export function getProductsByCategory(
 	console.log(categoryId);
 	return products.filter((product) =>
 		product.categories.includes(categoryId),
+	);
+}
+
+/**
+ * Get products by tag
+ * @param products - array of products
+ * @param tags - array of tags to filter by
+ * @returns array of products
+ */
+export function getProductsByTag(
+	products: Product[],
+	tags: string[],
+): Product[] {
+	return products.filter((product) =>
+		tags.some((tag) => product.tags.includes(tag)),
 	);
 }

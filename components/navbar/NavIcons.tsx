@@ -7,11 +7,10 @@ import { usePathname } from "next/navigation";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 // Types and constants
-import { NavIcon, DesktopNavProps } from "@/lib/config/types";
+import { NavIcon, DesktopNavProps, NavItem } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
 // Components
 import { useModalsStore } from "@/lib/stores/modals-store";
-import { NavItems } from "./NavItems";
 // Icons
 import BagIcon from "../icon/Bag";
 import MagnifierIcon from "../icon/Magnifier";
@@ -200,14 +199,15 @@ const adminIcons = (
 
 interface NavIconsProps extends DesktopNavProps {
 	icons: NavIcon[];
+	navItems: NavItem[];
 	mobile?: boolean;
 }
 
 const NavIcons: FC<NavIconsProps> = ({
 	selected,
 	setSelected,
-
 	icons,
+	navItems,
 	mobile,
 }) => {
 	return (
@@ -222,7 +222,7 @@ const NavIcons: FC<NavIconsProps> = ({
 						whileHover={{ color: colors.secondary }}
 						whileTap={{ color: colors.secondary }}
 						onMouseEnter={() =>
-							setSelected(index + NavItems.length)
+							setSelected(index + navItems.length)
 						}
 						onMouseLeave={() => setSelected(null)}
 						transition={{ duration: 0.2 }}
@@ -235,7 +235,7 @@ const NavIcons: FC<NavIconsProps> = ({
 							icon.icon
 						)}
 						<AnimatePresence>
-							{selected === index + NavItems.length && (
+							{selected === index + navItems.length && (
 								<motion.div
 									className="absolute left-0 bottom-0 h-0.5 bg-secondary"
 									data-testid={`${icon.title}Underline`}

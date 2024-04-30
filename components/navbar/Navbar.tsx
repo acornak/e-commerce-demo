@@ -15,7 +15,7 @@ import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 import DesktopItems from "./Desktop";
 import MobileItems from "./NavbarMobile";
-import { NavItems } from "./NavItems";
+import { NavItemsDesktop, NavItemsMobile } from "./NavItems";
 import { NavIcons, MenuIcons } from "./NavIcons";
 // Icons
 import BarsIcon from "../icon/Bars";
@@ -79,7 +79,7 @@ const Navbar = (): JSX.Element => {
 
 	return (
 		<>
-			<MobileItems items={NavItems} />
+			<MobileItems items={NavItemsMobile} />
 			<nav
 				className={`${navClass} fixed transition-all ease-in-out duration-300 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8 border border-b border-gray-300`}
 				style={{
@@ -113,7 +113,7 @@ const Navbar = (): JSX.Element => {
 					<DesktopItems
 						selected={selected}
 						setSelected={setSelected}
-						items={NavItems}
+						items={NavItemsDesktop}
 					/>
 				</ul>
 				<div className="space-x-4 hidden md:flex">
@@ -121,6 +121,7 @@ const Navbar = (): JSX.Element => {
 						selected={selected}
 						setSelected={setSelected}
 						icons={MenuIcons(cartItems)}
+						navItems={NavItemsDesktop}
 					/>
 				</div>
 				<div className="flex space-x-4 md:hidden">
@@ -128,6 +129,7 @@ const Navbar = (): JSX.Element => {
 						selected={selected}
 						setSelected={setSelected}
 						icons={MenuIcons(cartItems)}
+						navItems={NavItemsMobile}
 						mobile
 					/>
 				</div>

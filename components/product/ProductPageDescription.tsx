@@ -9,8 +9,10 @@ const ProductPageDescription: FC<ProductPageDescriptionProps> = ({
 	product,
 }): JSX.Element => {
 	return (
-		<div>
-			<h1>{product.description}</h1>
+		<div className="flex items-center justify-center text-center">
+			<div className="flex w-2/3">
+				<h1>{product.perex}</h1>
+			</div>
 		</div>
 	);
 };
