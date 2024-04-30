@@ -525,7 +525,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 			<section id="product-details">
 				<div className="flex flex-col md:flex-row my-10 mx-8 lg:mx-20">
 					{imageUrl && (
-						<div className="md:flex-2/3">
+						<div className="md:flex-2/3 md:pr-10 pb-10 max-h-screen">
 							<Image
 								src={imageUrl}
 								alt={product.name}
@@ -533,6 +533,8 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 								height={800}
 								style={{
 									objectFit: "cover",
+									objectPosition: "center",
+									maxHeight: "90vh",
 								}}
 								priority
 							/>

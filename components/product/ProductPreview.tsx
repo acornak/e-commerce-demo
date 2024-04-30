@@ -173,7 +173,7 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 	return (
 		<div className="flex flex-col items-center">
 			<div
-				className="relative flex justify-center items-center"
+				className="relative flex justify-center items-center w-full"
 				// eslint-disable-next-line react/jsx-props-no-spreading
 				{...(hasHover() && {
 					onMouseEnter: () => setHovered(true),
@@ -184,14 +184,31 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 					<>
 						<Link
 							href={`/products/${product.slug}`}
-							className="cursor-pointer"
+							className="cursor-pointer w-[100vh]"
 						>
-							<Image
-								src={imageUrl}
-								alt={product.name}
-								width={500}
-								height={500}
-							/>
+							<div
+								style={{
+									width: "100%",
+									paddingTop: "100%",
+									position: "relative",
+									overflow: "hidden",
+								}}
+							>
+								<Image
+									src={imageUrl}
+									alt={product.name}
+									fill
+									style={{
+										position: "absolute",
+										top: 0,
+										left: 0,
+										width: "100%",
+										height: "100%",
+										objectFit: "cover",
+										objectPosition: "center",
+									}}
+								/>
+							</div>
 						</Link>
 						<AnimatePresence>
 							{hovered && (
