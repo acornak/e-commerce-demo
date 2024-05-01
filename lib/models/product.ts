@@ -1,5 +1,4 @@
-// dummy data
-import dummyProducts from "./dummy-products";
+import mockProducts from "../../__mocks__/products/mock-products";
 
 export type Variant = {
 	id: number;
@@ -33,7 +32,7 @@ export type Product = {
  * @returns array of products
  */
 export function getAllProducts(): Product[] {
-	return dummyProducts;
+	return mockProducts;
 }
 
 /**
@@ -42,7 +41,7 @@ export function getAllProducts(): Product[] {
  * @param id - product ID
  * @returns product object
  */
-export function getProductsById(
+export function getProductById(
 	products: Product[],
 	id: number,
 ): Product | undefined {
@@ -59,7 +58,6 @@ export function getProductsByCategory(
 	products: Product[],
 	categoryId: number,
 ): Product[] {
-	console.log(categoryId);
 	return products.filter((product) =>
 		product.categories.includes(categoryId),
 	);

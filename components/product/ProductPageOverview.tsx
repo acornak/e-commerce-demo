@@ -423,6 +423,12 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 	productId,
 }): JSX.Element => {
 	const [showTooltip, setShowTooltip] = useState<boolean>(false);
+	const setProductImageModalOpen = useModalsStore(
+		(state) => state.setProductImageModalOpen,
+	);
+	const setProductImageModalUrl = useModalsStore(
+		(state) => state.setProductImageModalUrl,
+	);
 
 	const [product, setProduct] = useState<Product>();
 	const [imageUrl, setImageUrl] = useState<string | null>();
@@ -431,7 +437,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 
 	useEffect(() => {
 		fetchProduct(productId, setProduct);
-		fetchProductImage(productId, setImageUrl);
+		fetchProductImage(productId, setImageUrl, setProductImageModalUrl);
 
 		document.getElementById("product-overview")?.scrollIntoView();
 	}, [productId]);
@@ -525,7 +531,12 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 			<section id="product-details">
 				<div className="flex flex-col md:flex-row my-10 mx-8 lg:mx-20">
 					{imageUrl && (
-						<div className="md:flex-2/3 md:pr-10 pb-10 max-h-screen">
+						<button
+							type="button"
+							aria-label="Product image"
+							className="md:flex-2/3 md:pr-10 pb-10 max-h-screen"
+							onClick={() => setProductImageModalOpen(true)}
+						>
 							<Image
 								src={imageUrl}
 								alt={product.name}
@@ -538,7 +549,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 								}}
 								priority
 							/>
-						</div>
+						</button>
 					)}
 					{/* TODO: add variants here */}
 					<div

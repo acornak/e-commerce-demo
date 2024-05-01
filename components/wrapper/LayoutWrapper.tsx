@@ -23,6 +23,7 @@ import ProductAddedModal from "../modal/ProductAddedModal";
 import DeliveryInfoModal from "../modal/DeliveryInfoModal";
 import SizeGuideModal from "../modal/SizeGuideModal";
 import AskQuestionModal from "../modal/AskQuestionModal";
+import ProductImageModal from "../modal/ProductImageModal";
 
 type LayoutWrapperProps = {
 	children: ReactNode;
@@ -50,6 +51,9 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 	const askQuestionModalOpen = useModalsStore(
 		(state) => state.askQuestionModalOpen,
 	);
+	const productImageModalOpen = useModalsStore(
+		(state) => state.productImageModalOpen,
+	);
 
 	const setLoginModalOpen = useModalsStore(
 		(state) => state.setLoginModalOpen,
@@ -74,6 +78,9 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 	const setAskQuestionModalOpen = useModalsStore(
 		(state) => state.setAskQuestionModalOpen,
 	);
+	const setProductImageModalOpen = useModalsStore(
+		(state) => state.setProductImageModalOpen,
+	);
 
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
@@ -87,6 +94,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 				if (deliveryModalOpen) setDeliveryInfoModalOpen(false);
 				if (sizeGuideModalOpen) setSizeGuideModalOpen(false);
 				if (askQuestionModalOpen) setAskQuestionModalOpen(false);
+				if (productImageModalOpen) setProductImageModalOpen(false);
 			}
 		};
 
@@ -105,6 +113,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 		deliveryModalOpen,
 		sizeGuideModalOpen,
 		askQuestionModalOpen,
+		productImageModalOpen,
 		setSearchBarOpen,
 		setDrawerMenuOpen,
 		setLoginModalOpen,
@@ -114,6 +123,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 		setDeliveryInfoModalOpen,
 		setSizeGuideModalOpen,
 		setAskQuestionModalOpen,
+		setProductImageModalOpen,
 	]);
 
 	const showFade = (): boolean => {
@@ -126,7 +136,8 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			productPreviewModalOpen ||
 			deliveryModalOpen ||
 			sizeGuideModalOpen ||
-			askQuestionModalOpen
+			askQuestionModalOpen ||
+			productImageModalOpen
 		)
 			return true;
 		return false;
@@ -171,6 +182,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			<DeliveryInfoModal />
 			<SizeGuideModal />
 			<AskQuestionModal />
+			<ProductImageModal />
 			<AnimatePresence>
 				{showFade() && (
 					<motion.div
@@ -192,6 +204,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 							setDeliveryInfoModalOpen(false);
 							setSizeGuideModalOpen(false);
 							setAskQuestionModalOpen(false);
+							setProductImageModalOpen(false);
 						}}
 					/>
 				)}

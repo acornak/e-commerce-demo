@@ -29,5 +29,6 @@
 - getProductsByTags
 - tags as a separate table
 - reviews as a separate table
+- ProductPage Overview split
 - compress webp https://www.xconvert.com/compress-webp
 - resize webp https://www.simpleimageresizer.com/resize/webp

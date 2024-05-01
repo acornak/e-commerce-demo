@@ -116,6 +116,9 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 		document.addEventListener("visibilitychange", updateWishlistStore);
 		window.addEventListener("focus", updateWishlistStore);
 		window.addEventListener("focus", updateCartStore);
+
+		console.log(product.id);
+
 		return () => {
 			document.removeEventListener(
 				"visibilitychange",
@@ -186,14 +189,7 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 							href={`/products/${product.slug}`}
 							className="cursor-pointer w-[100vh]"
 						>
-							<div
-								style={{
-									width: "100%",
-									paddingTop: "100%",
-									position: "relative",
-									overflow: "hidden",
-								}}
-							>
+							<div className="relative w-[100%] pt-[100%] overflow-hidden">
 								<Image
 									src={imageUrl}
 									alt={product.name}

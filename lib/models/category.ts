@@ -1,4 +1,4 @@
-import dummyCategories from "./dummy-categories";
+import mockCategories from "../../__mocks__/categories/mock-categories";
 
 export type Category = {
 	id: number;
@@ -12,7 +12,7 @@ export type Category = {
  * @returns array of categories
  */
 export function getAllCategories(): Category[] {
-	return dummyCategories;
+	return mockCategories;
 }
 
 /**
@@ -21,5 +21,5 @@ export function getAllCategories(): Category[] {
  * @returns category
  */
 export function getCategoryById(id: number): Category | undefined {
-	return dummyCategories.find((category) => category.id === id);
+	return mockCategories.find((category) => category.id === id);
 }

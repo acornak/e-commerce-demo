@@ -20,7 +20,7 @@ const TopProducts = (): JSX.Element => {
 			<div>
 				<StyledSectionHeading title="Pick your Winner" />
 				<div className="container mx-auto">
-					<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-4">
+					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-4">
 						{topProducts.map(
 							(product: Product): JSX.Element => (
 								<ProductPreview

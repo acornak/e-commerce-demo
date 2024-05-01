@@ -2,7 +2,7 @@
 // Types and constants
 import {
 	getAllProducts,
-	getProductsById,
+	getProductById,
 	getProductsByCategory,
 	getProductsByTag,
 } from "@/lib/models/product";
@@ -12,37 +12,44 @@ export async function GET(request: Request): Promise<Response> {
 	const categoryId = searchParams.get("categoryId");
 	const productId = searchParams.get("productId");
 	const tags = searchParams.getAll("tags");
+	const page = parseInt(searchParams.get("page") || "1", 10);
+
+	let limit: number;
 
 	const products = getAllProducts();
-
-	let limit = 100;
+	let filteredProducts = products;
 
 	if (Number(searchParams.get("limit"))) {
-		limit = Number(searchParams.get("limit"));
+		limit = parseInt(searchParams.get("limit") || "12", 10);
+	} else {
+		limit = 100;
 	}
 
 	if (categoryId) {
-		return Response.json({
-			products: getProductsByCategory(products, Number(categoryId)).slice(
-				0,
-				limit,
-			),
-		});
-	}
-
-	if (tags.length) {
-		return Response.json({
-			products: getProductsByTag(products, tags).slice(0, limit),
-		});
-	}
-
-	if (productId) {
-		const product = getProductsById(products, Number(productId));
+		filteredProducts = getProductsByCategory(products, Number(categoryId));
+	} else if (tags.length) {
+		filteredProducts = getProductsByTag(products, tags);
+	} else if (productId) {
+		const product = getProductById(products, Number(productId));
 		if (product) {
-			return Response.json({ product });
+			return new Response(JSON.stringify({ product }), { status: 200 });
 		}
-		return Response.json({ message: "Product not found" }, { status: 404 });
+		return new Response(JSON.stringify({ message: "Product not found" }), {
+			status: 404,
+		});
 	}
 
-	return Response.json({ products: products.slice(0, limit) });
+	const startIndex = (page - 1) * limit;
+	const paginatedProducts = filteredProducts.slice(
+		startIndex,
+		startIndex + limit,
+	);
+	const totalPages = Math.ceil(filteredProducts.length / limit);
+
+	return new Response(
+		JSON.stringify({ products: paginatedProducts, totalPages }),
+		{
+			status: 200,
+		},
+	);
 }

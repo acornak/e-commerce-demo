@@ -42,6 +42,12 @@ export interface ModalsStore {
 	askQuestionModalOpen: boolean;
 	setAskQuestionModalOpen: (open: boolean) => void;
 	toggleAskQuestionModalOpen: () => void;
+	// Product Image Modal
+	productImageModalOpen: boolean;
+	productImageModalUrl: string;
+	setProductImageModalUrl: (url: string) => void;
+	setProductImageModalOpen: (open: boolean) => void;
+	toggleProductImageModalOpen: () => void;
 }
 
 export const useModalsStore = create<ModalsStore>((set) => ({
@@ -127,5 +133,21 @@ export const useModalsStore = create<ModalsStore>((set) => ({
 	toggleAskQuestionModalOpen: () =>
 		set((state) => ({
 			askQuestionModalOpen: !state.askQuestionModalOpen,
+		})),
+
+	// Product Image Modal
+	productImageModalOpen: false,
+	productImageModalUrl: "",
+	setProductImageModalOpen: (open: boolean) =>
+		set(() => ({
+			productImageModalOpen: open,
+		})),
+	setProductImageModalUrl: (url: string) =>
+		set(() => ({
+			productImageModalUrl: url,
+		})),
+	toggleProductImageModalOpen: () =>
+		set((state) => ({
+			productImageModalOpen: !state.productImageModalOpen,
 		})),
 }));
