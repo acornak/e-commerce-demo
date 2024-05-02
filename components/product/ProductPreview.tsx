@@ -18,6 +18,8 @@ import {
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Functions
 import { fetchProductImage } from "@/lib/functions/product-fetcher";
+// Components
+import StyledLoading from "../styled/Loading";
 // Icons
 import HeartIcon from "../icon/Heart";
 import BagIcon from "../icon/Bag";
@@ -117,8 +119,6 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 		window.addEventListener("focus", updateWishlistStore);
 		window.addEventListener("focus", updateCartStore);
 
-		console.log(product.id);
-
 		return () => {
 			document.removeEventListener(
 				"visibilitychange",
@@ -183,88 +183,90 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 					onMouseLeave: () => setHovered(false),
 				})}
 			>
-				{imageUrl && (
-					<>
-						<Link
-							href={`/products/${product.slug}`}
-							className="cursor-pointer w-[100vh]"
-						>
-							<div className="relative w-[100%] pt-[100%] overflow-hidden">
-								<Image
-									src={imageUrl}
-									alt={product.name}
-									fill
-									style={{
-										position: "absolute",
-										top: 0,
-										left: 0,
-										width: "100%",
-										height: "100%",
-										objectFit: "cover",
-										objectPosition: "center",
-									}}
-								/>
-							</div>
-						</Link>
-						<AnimatePresence>
-							{hovered && (
-								<motion.div
-									className="flex flex-col absolute right-10 top-0 h-full justify-center items-center space-y-2 p-2"
-									initial={{ opacity: 0, x: 50 }}
-									animate={{ opacity: 1, x: 0 }}
-									exit={{ opacity: 0, x: 50 }}
-									transition={{
-										duration: 0.3,
-										type: "tween",
-										ease: "easeInOut",
-									}}
-								>
-									<ProductButton
-										setHovered={setHovered}
-										tooltipText={
-											itemAlreadyInWishlist
-												? "Item added to wishlist"
-												: "Add to wishlist"
-										}
-										onClickEvent={handleAddToWishlist}
-									>
-										{itemAlreadyInWishlist ? (
-											<CheckmarkRoundIcon />
-										) : (
-											<HeartIcon />
-										)}
-									</ProductButton>
-									<ProductButton
-										setHovered={setHovered}
-										tooltipText={
-											itemAlreadyInCart
-												? "Item added to cart"
-												: "Add to cart"
-										}
-										onClickEvent={handleAddToCart}
-									>
-										{itemAlreadyInCart ? (
-											<CheckmarkRoundIcon />
-										) : (
-											<BagIcon />
-										)}
-									</ProductButton>
-
-									<ProductButton
-										setHovered={setHovered}
-										tooltipText="Quick preview"
-										onClickEvent={() => {
-											setProductPreviewModalOpen(true);
-											setPreviewProductId(product.id);
-										}}
-									>
-										<MagnifierIcon />
-									</ProductButton>
-								</motion.div>
-							)}
-						</AnimatePresence>
-					</>
+				{imageUrl ? (
+					<Link
+						href={`/products/${product.slug}`}
+						className="cursor-pointer w-[100vh]"
+					>
+						<div className="relative w-[100%] pt-[100%] overflow-hidden">
+							<Image
+								src={imageUrl}
+								alt={product.name}
+								fill
+								style={{
+									position: "absolute",
+									top: 0,
+									left: 0,
+									width: "100%",
+									height: "100%",
+									objectFit: "cover",
+									objectPosition: "center",
+								}}
+							/>
+						</div>
+					</Link>
+				) : (
+					<div className="flex flex-col items-center">
+						<StyledLoading />
+					</div>
 				)}
+				<AnimatePresence>
+					{hovered && (
+						<motion.div
+							className="flex flex-col absolute right-10 top-0 h-full justify-center items-center space-y-2 p-2"
+							initial={{ opacity: 0, x: 50 }}
+							animate={{ opacity: 1, x: 0 }}
+							exit={{ opacity: 0, x: 50 }}
+							transition={{
+								duration: 0.3,
+								type: "tween",
+								ease: "easeInOut",
+							}}
+						>
+							<ProductButton
+								setHovered={setHovered}
+								tooltipText={
+									itemAlreadyInWishlist
+										? "Item added to wishlist"
+										: "Add to wishlist"
+								}
+								onClickEvent={handleAddToWishlist}
+							>
+								{itemAlreadyInWishlist ? (
+									<CheckmarkRoundIcon />
+								) : (
+									<HeartIcon />
+								)}
+							</ProductButton>
+							<ProductButton
+								setHovered={setHovered}
+								tooltipText={
+									itemAlreadyInCart
+										? "Item added to cart"
+										: "Add to cart"
+								}
+								onClickEvent={handleAddToCart}
+							>
+								{itemAlreadyInCart ? (
+									<CheckmarkRoundIcon />
+								) : (
+									<BagIcon />
+								)}
+							</ProductButton>
+
+							<ProductButton
+								setHovered={setHovered}
+								tooltipText="Quick preview"
+								onClickEvent={() => {
+									setProductPreviewModalOpen(true);
+									setPreviewProductId(product.id);
+								}}
+							>
+								<MagnifierIcon />
+							</ProductButton>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</div>
 			<div className="text-sm flex flex-col items-center min-h-12 text-center mt-4">
 				{product.name}

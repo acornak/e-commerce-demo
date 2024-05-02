@@ -15,6 +15,8 @@ export type Product = {
 	slug: string;
 	price: number;
 	previousPrice?: number;
+	previewImage?: string;
+	images?: string[];
 	brand: string;
 	perex: string;
 	categories: number[];

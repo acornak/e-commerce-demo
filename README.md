@@ -32,3 +32,4 @@
 - ProductPage Overview split
 - compress webp https://www.xconvert.com/compress-webp
 - resize webp https://www.simpleimageresizer.com/resize/webp
+- imageUrl as part of Product type
