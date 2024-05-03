@@ -171,7 +171,7 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 
 	useEffect(() => {
 		fetchProductImage(product.id, setImageUrl);
-	}, [product.id]);
+	}, []);
 
 	return (
 		<div className="flex flex-col items-center">
@@ -183,12 +183,12 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 					onMouseLeave: () => setHovered(false),
 				})}
 			>
-				{imageUrl ? (
-					<Link
-						href={`/products/${product.slug}`}
-						className="cursor-pointer w-[100vh]"
-					>
-						<div className="relative w-[100%] pt-[100%] overflow-hidden">
+				<Link
+					href={`/products/${product.slug}`}
+					className="cursor-pointer w-[100vh]"
+				>
+					<div className="relative w-[100%] pt-[100%] overflow-hidden">
+						{imageUrl ? (
 							<Image
 								src={imageUrl}
 								alt={product.name}
@@ -203,13 +203,19 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 									objectPosition: "center",
 								}}
 							/>
-						</div>
-					</Link>
-				) : (
-					<div className="flex flex-col items-center">
-						<StyledLoading />
+						) : (
+							<StyledLoading
+								className="top-1/4 left-1/4"
+								style={{
+									position: "absolute",
+									width: "50%",
+									height: "50%",
+									objectFit: "cover",
+								}}
+							/>
+						)}
 					</div>
-				)}
+				</Link>
 				<AnimatePresence>
 					{hovered && (
 						<motion.div

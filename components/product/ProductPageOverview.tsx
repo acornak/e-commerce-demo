@@ -366,7 +366,7 @@ const ProductCategories: FC<CategoriesProps> = ({
 				{filteredCategories &&
 					filteredCategories.map((category) => (
 						<Link
-							href={`/products/categories/${category.slug}`}
+							href={`/products?category=${category.id}`}
 							key={category.slug}
 						>
 							<motion.button

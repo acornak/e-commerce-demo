@@ -1,4 +1,4 @@
-const dummyCategories = [
+const mockCategories = [
 	{
 		id: 1,
 		name: "Top products",
@@ -67,4 +67,4 @@ const dummyCategories = [
 	},
 ];
 
-export default dummyCategories;
+export default mockCategories;

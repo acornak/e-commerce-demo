@@ -17,7 +17,9 @@ export const fetchCategoryById = (
 	fetch(`/api/categories?categoryId=${categoryId}`)
 		.then((response) => response.json())
 		.then((data) => setCategory(data.category))
-		.catch((error) => console.error("Fetching category failed:", error));
+		.catch((error) =>
+			console.error("Fetching category by id failed:", error),
+		);
 };
 
 export const fetchCategoryImage = (

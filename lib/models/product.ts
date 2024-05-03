@@ -17,7 +17,7 @@ export type Product = {
 	previousPrice?: number;
 	previewImage?: string;
 	images?: string[];
-	brand: string;
+	brandId: number;
 	perex: string;
 	categories: number[];
 	rating?: number;
@@ -78,4 +78,17 @@ export function getProductsByTag(
 	return products.filter((product) =>
 		tags.some((tag) => product.tags.includes(tag)),
 	);
+}
+
+/**
+ * Get product by brand
+ * @param products - array of products
+ * @param brandId - brand id to filter by
+ * @returns array of products
+ */
+export function getProductsByBrand(
+	products: Product[],
+	brandId: number,
+): Product[] {
+	return products.filter((product) => product.brandId === brandId);
 }

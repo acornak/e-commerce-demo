@@ -30,32 +30,32 @@ const categories: Category[] = [
 	{
 		image: aviator,
 		title: "Aviator",
-		slug: "aviator",
+		slug: "?category=8",
 	},
 	{
 		image: cateye,
 		title: "Cat Eye",
-		slug: "cat-eye",
+		slug: "?category=9",
 	},
 	{
 		image: rectangle,
 		title: "Rectangle",
-		slug: "rectangle",
+		slug: "?category=5",
 	},
 	{
 		image: round,
 		title: "Round",
-		slug: "round",
+		slug: "?category=6",
 	},
 	{
 		image: safety,
 		title: "Safety",
-		slug: "safety",
+		slug: "?category=11",
 	},
 	{
 		image: stylish,
 		title: "Stylish",
-		slug: "stylish",
+		slug: "?category=12",
 	},
 ];
 
@@ -100,7 +100,7 @@ const CategoriesCarousel = ({
 								className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 py-2 px-5 lg:px-4 xl:px-10 flex-none"
 							>
 								<Link
-									href={`/products/categories/${category.slug}`}
+									href={`/products${category.slug}`}
 									className="relative"
 								>
 									<motion.div

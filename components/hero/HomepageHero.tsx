@@ -106,7 +106,7 @@ const heroes: Heroes[] = [
 			<HeroContent
 				text="Sunglasses for the brightest stars under the sun."
 				buttonText="Shop Now"
-				href="/products/categories/women"
+				href="/products?category=2"
 			/>
 		),
 	},
@@ -122,7 +122,7 @@ const heroes: Heroes[] = [
 			<HeroContent
 				text="Be prepared for the unexpected."
 				buttonText="Shop Now"
-				href="/products/categories/men"
+				href="/products?category=3"
 			/>
 		),
 	},
@@ -138,7 +138,7 @@ const heroes: Heroes[] = [
 			<HeroContent
 				text="Protect your child's eyes from the sun."
 				buttonText="Shop Now"
-				href="/products/categories/children"
+				href="/products?category=4"
 			/>
 		),
 	},

@@ -2,14 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 // Next
-import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 // Animations
 import { motion } from "framer-motion";
 // Functions
 import { fetchAllCategories } from "@/lib/functions/category-fetcher";
+import { fetchAllBrands } from "@/lib/functions/brand-fetcher";
+import useFilterChange from "@/lib/hooks/url-params";
 // Types and constants
 import { Category } from "@/lib/models/category";
+import { Brand } from "@/lib/models/brand";
 import { colors } from "@/lib/config/constants";
+// Icons
 import ChevronRightIcon from "../icon/ChevronRight";
 
 const HeadingWithHr = ({ title }: { title: string }): JSX.Element => (
@@ -21,34 +25,75 @@ const HeadingWithHr = ({ title }: { title: string }): JSX.Element => (
 	</div>
 );
 
-const CategoryFilter = ({ category }: { category: Category }): JSX.Element => {
-	const [isHovered, setIsHovered] = useState<boolean>(false);
+const CategoryFilter = (): JSX.Element => {
+	const searchParams = useSearchParams();
+	const initialCategory = Number(searchParams.get("category")) || null;
+
+	const handleFilterChange = useFilterChange();
+
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [selectedCategory, setSelectedCategory] = useState<number | null>(
+		initialCategory,
+	);
+	const [isHovered, setIsHovered] = useState<number | null>();
+
+	useEffect(() => {
+		fetchAllCategories(setCategories);
+	}, []);
+
+	useEffect(() => {
+		setSelectedCategory(Number(searchParams.get("category")) || null);
+	}, [searchParams]);
+
+	const handleCategoryChange = (categoryId: number) => {
+		if (selectedCategory === categoryId) {
+			setSelectedCategory(null);
+			handleFilterChange("category", null, true);
+		} else {
+			setSelectedCategory(categoryId);
+			handleFilterChange("category", String(categoryId), true);
+		}
+	};
 
 	return (
-		<div
-			key={category.id}
-			className="flex items-center text-sm py-1 tracking-wider"
-			style={{
-				color: isHovered ? colors.secondary : "initial",
-			}}
-		>
-			<motion.div
-				initial={{ opacity: 0, x: -10 }}
-				animate={
-					isHovered ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }
-				}
-				transition={{ duration: 0.2 }}
-			>
-				<ChevronRightIcon size="1.5em" />
-			</motion.div>
-			<Link
-				href={`/products/categories/${category.slug}`}
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
-			>
-				{category.name}
-			</Link>
-		</div>
+		<>
+			{categories &&
+				categories.map((category: Category) => (
+					<div
+						key={category.id}
+						className="flex items-center text-sm py-1 tracking-wider"
+						style={{
+							color:
+								isHovered === category.id ||
+								selectedCategory === category.id
+									? colors.secondary
+									: "initial",
+						}}
+					>
+						<motion.div
+							initial={{ opacity: 0, x: -10 }}
+							animate={
+								isHovered === category.id ||
+								selectedCategory === category.id
+									? { opacity: 1, x: 0 }
+									: { opacity: 0, x: -10 }
+							}
+							transition={{ duration: 0.2 }}
+						>
+							<ChevronRightIcon size="1.5em" />
+						</motion.div>
+						<button
+							type="button"
+							className="cursor-pointer"
+							onMouseEnter={() => setIsHovered(category.id)}
+							onMouseLeave={() => setIsHovered(null)}
+							onClick={() => handleCategoryChange(category.id)}
+						>
+							{category.name}
+						</button>
+					</div>
+				))}
+		</>
 	);
 };
 
@@ -160,80 +205,94 @@ const SizeFilter = (): JSX.Element => {
 	);
 };
 
-const BrandsFilter = ({ brand }: { brand: string }): JSX.Element => {
-	const [isHovered, setIsHovered] = useState<boolean>(false);
+const BrandsFilter = (): JSX.Element => {
+	const [isHovered, setIsHovered] = useState<number | null>(null);
+	const [brands, setBrands] = useState<Brand[]>([]);
+
+	const searchParams = useSearchParams();
+	const initialBrand = Number(searchParams.get("brand")) || null;
+
+	const [selectedBrand, setSelectedBrand] = useState<number | null>(
+		initialBrand,
+	);
+
+	const handleFilterChange = useFilterChange();
+
+	useEffect(() => {
+		fetchAllBrands(setBrands);
+	}, []);
+
+	useEffect(() => {
+		setSelectedBrand(Number(searchParams.get("brand") || null));
+	}, [searchParams]);
+
+	const handleCategoryChange = (brandId: number) => {
+		if (selectedBrand === brandId) {
+			setSelectedBrand(null);
+			handleFilterChange("brand", null, true);
+		} else {
+			setSelectedBrand(brandId);
+			handleFilterChange("brand", brandId.toString(), true);
+		}
+	};
 
 	return (
-		<div
-			key={brand}
-			className="flex items-center text-sm py-1 tracking-wider"
-			style={{
-				color: isHovered ? colors.secondary : "initial",
-			}}
-		>
-			<motion.div
-				initial={{ opacity: 0, x: -10 }}
-				animate={
-					isHovered ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }
-				}
-				transition={{ duration: 0.2 }}
-			>
-				<ChevronRightIcon size="1.5em" />
-			</motion.div>
-			<p
-				className="cursor-pointer"
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
-			>
-				{brand}
-			</p>
-		</div>
+		<>
+			{brands.map((brand) => (
+				<button
+					type="button"
+					key={brand.id}
+					className="flex items-center text-sm py-1 tracking-wider"
+					style={{
+						color:
+							isHovered === brand.id || selectedBrand === brand.id
+								? colors.secondary
+								: "initial",
+					}}
+					onClick={() => handleCategoryChange(brand.id)}
+				>
+					<motion.div
+						initial={{ opacity: 0, x: -10 }}
+						animate={
+							isHovered === brand.id || selectedBrand === brand.id
+								? { opacity: 1, x: 0 }
+								: { opacity: 0, x: -10 }
+						}
+						transition={{ duration: 0.2 }}
+					>
+						<ChevronRightIcon size="1.5em" />
+					</motion.div>
+					<p
+						className="cursor-pointer"
+						onMouseEnter={() => setIsHovered(brand.id)}
+						onMouseLeave={() => setIsHovered(null)}
+					>
+						{brand.name}
+					</p>
+				</button>
+			))}
+		</>
 	);
 };
 
-const ProductsFilter = (): JSX.Element => {
-	const [categories, setCategories] = useState<Category[]>([]);
-	const [brands, setBrands] = useState<string[]>([]);
+const ProductsFilter = (): JSX.Element => (
+	<div className="pl-6 pr-4 flex flex-col justify-start mt-10 py-6">
+		<HeadingWithHr title="Categories" />
+		<CategoryFilter />
 
-	useEffect(() => {
-		fetchAllCategories(setCategories);
-	}, []);
+		<HeadingWithHr title="Price" />
+		<PriceFilter />
 
-	// TODO
-	useEffect(() => {
-		setBrands([
-			"Nike",
-			"Adidas",
-			"Reebok",
-			"Puma",
-			"Under Armour",
-			"New Balance",
-		]);
-	}, []);
+		<HeadingWithHr title="Size" />
+		<SizeFilter />
 
-	return (
-		<div className="pl-6 pr-4 flex flex-col justify-start mt-10">
-			<HeadingWithHr title="Categories" />
-			{categories.map((category) => (
-				<CategoryFilter category={category} key={category.id} />
-			))}
-
-			<HeadingWithHr title="Price" />
-			<PriceFilter />
-
-			<HeadingWithHr title="Size" />
-			<SizeFilter />
-
-			{/* <HeadingWithHr title="Colors" />
+		{/* <HeadingWithHr title="Colors" />
 
 			<HeadingWithHr title="Tags" /> */}
 
-			<HeadingWithHr title="Brand" />
-			{brands.map((brand) => (
-				<BrandsFilter brand={brand} key={brand} />
-			))}
-		</div>
-	);
-};
+		<HeadingWithHr title="Brand" />
+		<BrandsFilter />
+	</div>
+);
 
 export default ProductsFilter;

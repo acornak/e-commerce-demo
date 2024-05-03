@@ -19,7 +19,6 @@ type StyledHeroProps = {
 	title: string;
 	h?: string;
 	product?: boolean;
-	category?: boolean;
 };
 
 const StyledHero: FC<StyledHeroProps> = ({
@@ -28,7 +27,6 @@ const StyledHero: FC<StyledHeroProps> = ({
 	title,
 	h = "h-[65vh]",
 	product = false,
-	category = false,
 }): JSX.Element => {
 	return (
 		<section
@@ -83,30 +81,7 @@ const StyledHero: FC<StyledHeroProps> = ({
 								<ChevronRightIcon />
 							</>
 						)}
-						{category && (
-							<>
-								<Link href="/products/categories">
-									<motion.p
-										whileHover={{
-											color: colors.secondary,
-										}}
-										whileTap={{
-											color: colors.secondary,
-										}}
-										transition={{ duration: 0.2 }}
-										className="inline"
-									>
-										Categories
-									</motion.p>
-								</Link>
-								<ChevronRightIcon />
-							</>
-						)}
-						<Link
-							href={`/${product ? "products/" : ""}${
-								category ? "categories/" : ""
-							}${link}`}
-						>
+						<Link href={`/${product ? "products/" : ""}${link}`}>
 							<motion.p
 								whileHover={{
 									color: colors.secondary,

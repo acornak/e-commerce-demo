@@ -45,7 +45,7 @@ const Sitemap = (): JSX.Element => {
 									whileTap={{ color: colors.secondary }}
 									className="py-2"
 								>
-									<Link href="/products/categories/women">
+									<Link href="/products?category=2">
 										Woman&apos;s glasses
 									</Link>
 								</motion.span>
@@ -56,7 +56,7 @@ const Sitemap = (): JSX.Element => {
 									whileTap={{ color: colors.secondary }}
 									className="cursor-pointer"
 								>
-									<Link href="/products/categories/men">
+									<Link href="/products?category=3">
 										Mens&apos;s glasses
 									</Link>
 								</motion.span>
@@ -67,7 +67,7 @@ const Sitemap = (): JSX.Element => {
 									whileTap={{ color: colors.secondary }}
 									className="cursor-pointer"
 								>
-									<Link href="/products/categories/children">
+									<Link href="/products?category=4">
 										Children&apos;s glasses
 									</Link>
 								</motion.span>

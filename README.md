@@ -34,3 +34,4 @@
 - resize webp https://www.simpleimageresizer.com/resize/webp
 - related products carousel
 - code splitting
+- investigate multiple rerenders

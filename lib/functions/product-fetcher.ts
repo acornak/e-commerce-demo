@@ -8,21 +8,37 @@ export const fetchProduct = (
 	fetch(`/api/products?productId=${productId}`)
 		.then((response) => response.json())
 		.then((data) => setProduct(data.product))
-		.catch((error) => console.error("Fetching product failed:", error));
+		.catch((error) =>
+			console.error("Fetching product by id failed:", error),
+		);
 };
 
-export const fetchAllProductsPaginated = (
+export const fetchProductsPaginated = (
 	setProducts: (products: Product[]) => void,
 	setTotalPages: (totalPages: number) => void,
 	page: number,
+	categoryId: number | null,
+	brandId: number | null,
+	setLoading?: (loading: boolean) => void,
 	limit: number = 10000,
 ) => {
+	if (setLoading) {
+		setLoading(true);
+	}
 	setProducts([]);
-	fetch(`/api/products?&page=${page}${limit && `&limit=${limit}`}`)
+	fetch(
+		`/api/products?&page=${page}${
+			categoryId ? `&categoryId=${categoryId}` : ""
+		}${brandId ? `&brandId=${brandId}` : ""}
+		${limit ? `&limit=${limit}` : ""}`,
+	)
 		.then((response) => response.json())
 		.then((data) => {
 			setProducts(data.products);
 			setTotalPages(data.totalPages);
+			if (setLoading) {
+				setLoading(false);
+			}
 		})
 		.catch((error) => console.error("Fetching products failed:", error));
 };
