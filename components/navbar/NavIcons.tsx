@@ -3,7 +3,7 @@
 import React, { FC } from "react";
 // Next
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 // Types and constants
@@ -17,62 +17,21 @@ import MagnifierIcon from "../icon/Magnifier";
 import UserIcon from "../icon/User";
 import HeartIcon from "../icon/Heart";
 
-const CartIcon = ({
-	cartItems,
-	setCartOpen,
-}: {
-	cartItems: number;
-	setCartOpen: (open: boolean) => void;
-}) => {
+const CartIcon = ({ cartItems }: { cartItems: number }) => {
 	const pathname = usePathname();
 	const shouldRenderIcon = pathname !== "/cart" && pathname !== "/checkout";
 
 	if (!shouldRenderIcon) return <div className="w-5 h-5 lg:w-6 lg:h-6" />;
 
 	return (
-		<button
-			type="button"
-			aria-label="Open shopping cart"
-			className="relative"
-			onClick={() => setCartOpen(true)}
-		>
+		<>
 			<BagIcon />
 			<div className="absolute -top-2 -right-2 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs bg-secondary">
 				{cartItems}
 			</div>
-		</button>
+		</>
 	);
 };
-
-const SearchIcon = ({
-	setSearchOpen,
-}: {
-	setSearchOpen: (open: boolean) => void;
-}) => (
-	<button
-		type="button"
-		aria-label="Search for products"
-		className="relative"
-		onClick={() => setSearchOpen(true)}
-	>
-		<MagnifierIcon />
-	</button>
-);
-
-const LoginIcon = ({
-	setLoginModalOpen,
-}: {
-	setLoginModalOpen: (open: boolean) => void;
-}) => (
-	<button
-		type="button"
-		aria-label="Search for products"
-		className="relative"
-		onClick={() => setLoginModalOpen(true)}
-	>
-		<UserIcon />
-	</button>
-);
 
 const MenuIcons = (cartItems: number): NavIcon[] => {
 	const setSearchBarOpen = useModalsStore((state) => state.setSearchBarOpen);
@@ -84,11 +43,13 @@ const MenuIcons = (cartItems: number): NavIcon[] => {
 	return [
 		{
 			title: "Magnifier",
-			icon: <SearchIcon setSearchOpen={setSearchBarOpen} />,
+			icon: <MagnifierIcon />,
+			onClick: () => setSearchBarOpen(true),
 		},
 		{
 			title: "User",
-			icon: <LoginIcon setLoginModalOpen={setLoginModalOpen} />,
+			icon: <UserIcon />,
+			onClick: () => setLoginModalOpen(true),
 		},
 		{
 			title: "Heart",
@@ -97,9 +58,8 @@ const MenuIcons = (cartItems: number): NavIcon[] => {
 		},
 		{
 			title: "Cart",
-			icon: (
-				<CartIcon cartItems={cartItems} setCartOpen={setCartBarOpen} />
-			),
+			icon: <CartIcon cartItems={cartItems} />,
+			onClick: () => setCartBarOpen(true),
 		},
 	];
 };
@@ -210,6 +170,8 @@ const NavIcons: FC<NavIconsProps> = ({
 	navItems,
 	mobile,
 }) => {
+	const router = useRouter();
+
 	return (
 		<LayoutGroup id="nav-icons">
 			{icons.map((icon: NavIcon, index: number): JSX.Element | null => {
@@ -226,14 +188,13 @@ const NavIcons: FC<NavIconsProps> = ({
 						}
 						onMouseLeave={() => setSelected(null)}
 						transition={{ duration: 0.2 }}
-						className="relative pb-1"
+						className="relative pb-1 cursor-pointer"
 						style={{ display: "flex" }}
+						onClick={() =>
+							icon.url ? router.push(icon.url) : icon.onClick?.()
+						}
 					>
-						{icon.url ? (
-							<Link href={icon.url}>{icon.icon}</Link>
-						) : (
-							icon.icon
-						)}
+						{icon.icon}
 						<AnimatePresence>
 							{selected === index + navItems.length && (
 								<motion.div

@@ -27,8 +27,8 @@
 - Image Optimization
 - on addProduct update stripe products as well
 - getProductsByTags
-- tags as a separate table
-- reviews as a separate table
+- tags as a separate sql table
+- reviews as a separate sql table
 - ProductPage Overview split
 - compress webp https://www.xconvert.com/compress-webp
 - resize webp https://www.simpleimageresizer.com/resize/webp

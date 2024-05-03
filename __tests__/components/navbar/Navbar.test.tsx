@@ -7,6 +7,17 @@ import { NavItemsDesktop } from "@/components/navbar/NavItems";
 // Types and constants
 import { NavItem } from "@/lib/config/types";
 
+jest.mock("next/navigation", () => ({
+	useRouter() {
+		return {
+			prefetch: () => null,
+		};
+	},
+	usePathname() {
+		return "/";
+	},
+}));
+
 describe("Navbar", () => {
 	it("renders the navigation items", () => {
 		render(<Navbar />);
@@ -36,14 +47,10 @@ describe("Navbar", () => {
 
 		fireEvent.mouseEnter(hoveredNavItem);
 		await waitFor(() => {
-			expect(hoveredNavItem.parentElement).toHaveStyle(
-				"color: rgb(255, 99, 71);",
-			);
+			expect(hoveredNavItem).toHaveStyle("color: rgb(255, 99, 71);");
 		});
 
-		expect(notHoveredNavItem.parentElement).toHaveStyle(
-			"color: rgb(51, 51, 51);",
-		);
+		expect(notHoveredNavItem).toHaveStyle("color: rgb(51, 51, 51);");
 	});
 
 	it("changes text color on mouse enter - icon", async () => {

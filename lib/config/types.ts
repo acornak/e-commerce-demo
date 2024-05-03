@@ -12,6 +12,7 @@ export type NavIcon = {
 	title: string;
 	icon: JSX.Element;
 	url?: string;
+	onClick?: () => void;
 };
 
 export type ChevronProps = {

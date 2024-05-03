@@ -116,7 +116,7 @@ const AllProducts = (): JSX.Element => {
 						<button
 							type="button"
 							aria-label={`Go to page ${totalPages - 2}`}
-							className={`mx-1 w-8 h-8 sm:w-14 sm:h-14 border flex items-center justify-center ${
+							className={`mx-1 w-8 h-8 sm:w-14 sm:h-14 border flex items-center justify-center hover:bg-secondary hover:text-white ${
 								currentPage === totalPages ? "" : "hidden"
 							}`}
 							onClick={() => setCurrentPage(totalPages - 2)}
@@ -134,7 +134,7 @@ const AllProducts = (): JSX.Element => {
 									key={page}
 									type="button"
 									aria-label={`Go to page ${page}`}
-									className={`mx-1 w-8 h-8 sm:w-14 sm:h-14 border flex items-center justify-center ${
+									className={`mx-1 w-8 h-8 sm:w-14 sm:h-14 border flex items-center justify-center hover:bg-secondary hover:text-white ${
 										currentPage === page
 											? "bg-secondary text-white border-secondary"
 											: "border-gray-300"
@@ -147,7 +147,7 @@ const AllProducts = (): JSX.Element => {
 						<button
 							type="button"
 							aria-label="Go to page 1"
-							className={`mx-1 w-8 h-8 sm:w-14 sm:h-14 border flex items-center justify-center ${
+							className={`mx-1 w-8 h-8 sm:w-14 sm:h-14 border flex items-center justify-center hover:bg-secondary hover:text-white ${
 								currentPage === 1 ? "" : "hidden"
 							}`}
 							onClick={() => setCurrentPage(3)}

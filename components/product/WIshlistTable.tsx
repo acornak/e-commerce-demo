@@ -206,7 +206,7 @@ const WishlistTable = () => {
 			</table>
 			{items.length === 0 ? (
 				<div className="py-6">
-					<div className="text-lg pb-6">
+					<div className="text-lg pb-6 px-4 text-sm">
 						Looks like you haven&apos;t added any items to your
 						Wishlist.
 					</div>
