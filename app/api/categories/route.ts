@@ -3,7 +3,7 @@ import { getAllCategories } from "@/lib/models/category";
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
-	let limit = 100;
+	let limit = 1000;
 
 	if (Number(searchParams.get("limit"))) {
 		limit = Number(searchParams.get("limit"));

@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 // Types and constants
 import { Product } from "@/lib/models/product";
 // Functions
-import { fetchAllProducts } from "@/lib/functions/product-fetcher";
+import { fetchAllProductsPaginated } from "@/lib/functions/product-fetcher";
 // Components
 import ProductPreview from "./ProductPreview";
 import StyledLoading from "../styled/Loading";
@@ -21,7 +21,6 @@ const AllProducts = (): JSX.Element => {
 	const initialPage = Number(searchParams.get("page")) || 1;
 	const [currentPage, setCurrentPage] = useState(initialPage);
 	const [totalPages, setTotalPages] = useState(0);
-	const [allProducts, setAllProducts] = useState<Product[]>([]);
 	const [pageProducts, setPageProducts] = useState<Product[]>([]);
 	const router = useRouter();
 
@@ -40,26 +39,22 @@ const AllProducts = (): JSX.Element => {
 	};
 
 	useEffect(() => {
-		fetchAllProducts(setAllProducts);
-	}, []);
-
-	useEffect(() => {
-		setTotalPages(Math.ceil(allProducts.length / 12));
-	}, [allProducts]);
-
-	useEffect(() => {
-		if (allProducts && allProducts.length > 0) {
-			const start = (currentPage - 1) * 12;
-			let end = currentPage * 12;
-			end = end > allProducts.length ? allProducts.length : end;
-			setPageProducts(allProducts.slice(start, end));
-		}
-	}, [allProducts, currentPage]);
+		fetchAllProductsPaginated(
+			setPageProducts,
+			setTotalPages,
+			currentPage,
+			16,
+		);
+	}, [currentPage]);
 
 	useEffect((): void => {
-		router.push(`?page=${currentPage}`, { scroll: false });
-		scrollToAboveElement();
-	}, [currentPage]);
+		if (totalPages > 0 && currentPage <= totalPages) {
+			router.push(`?page=${currentPage}`, { scroll: false });
+			scrollToAboveElement();
+		} else if (currentPage > totalPages && totalPages > 0) {
+			setCurrentPage(totalPages);
+		}
+	}, [currentPage, totalPages]);
 
 	if (!pageProducts.length) {
 		return (
