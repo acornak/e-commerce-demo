@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 // Next
 import { useSearchParams } from "next/navigation";
+// Animations
+import { motion } from "framer-motion";
 // Types and constants
 import { Product } from "@/lib/models/product";
 // Functions
@@ -10,6 +12,7 @@ import { fetchProductsPaginated } from "@/lib/functions/product-fetcher";
 import useFilterChange from "@/lib/hooks/url-params";
 import scrollToAboveElement from "@/lib/functions/scroll";
 // Components
+import { colors } from "@/lib/config/constants";
 import ProductPreview from "./ProductPreview";
 import StyledLoading from "../styled/Loading";
 // Icons
@@ -28,9 +31,40 @@ const ProductGrid = (): JSX.Element => {
 	const [selectedCategory, setSelectedCategory] = useState<number | null>(
 		null,
 	);
+	const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
 	const [selectedBrand, setSelectedBrand] = useState<number | null>(null);
 	const [totalPages, setTotalPages] = useState(0);
 	const [pageProducts, setPageProducts] = useState<Product[]>([]);
+
+	useEffect((): void => {
+		setCurrentPage(Number(searchParams.get("page")) || 1);
+		setSelectedCategory(Number(searchParams.get("category")) || null);
+		setSelectedBrand(Number(searchParams.get("brand")) || null);
+
+		const sizes = searchParams.get("size");
+		if (sizes) {
+			setSelectedSizes(sizes.split(" ").map(Number));
+		} else {
+			setSelectedSizes([]);
+		}
+	}, [searchParams]);
+
+	const handleClearAllFilters = (): void => {
+		handleFilterChange({
+			page: "1",
+			category: null,
+			brand: null,
+			size: null,
+		});
+	};
+
+	const showClearAllFilters = (): boolean => {
+		return (
+			selectedCategory !== null ||
+			selectedBrand !== null ||
+			selectedSizes.length > 0
+		);
+	};
 
 	useEffect(() => {
 		fetchProductsPaginated(
@@ -39,10 +73,11 @@ const ProductGrid = (): JSX.Element => {
 			currentPage,
 			selectedCategory,
 			selectedBrand,
+			selectedSizes.length > 0 ? selectedSizes : null,
 			setLoading,
 			16,
 		);
-	}, [currentPage, selectedCategory, selectedBrand]);
+	}, [currentPage, selectedCategory, selectedBrand, selectedSizes]);
 
 	useEffect((): void => {
 		if (totalPages > 0 && currentPage <= totalPages) {
@@ -52,36 +87,62 @@ const ProductGrid = (): JSX.Element => {
 		}
 	}, [currentPage, totalPages]);
 
-	useEffect((): void => {
-		setCurrentPage(Number(searchParams.get("page")) || 1);
-		setSelectedCategory(Number(searchParams.get("category")) || null);
-		setSelectedBrand(Number(searchParams.get("brand")) || null);
-	}, [searchParams]);
-
 	useEffect(() => {
 		if (!loading) scrollToAboveElement("product-overview");
 	}, [currentPage, loading]);
 
 	if (loading) {
 		return (
-			<div className="flex items-center justify-center h-screen">
-				<StyledLoading />
+			<div className="my-6 px-10" id="product-overview">
+				{showClearAllFilters() && (
+					<motion.button
+						whileHover={{
+							backgroundColor: colors.secondary,
+							color: colors.white,
+							border: `1px solid ${colors.secondary}`,
+						}}
+						type="button"
+						className="border border-black text-sm px-2 py-1"
+						onClick={handleClearAllFilters}
+					>
+						Clear all filters
+					</motion.button>
+				)}
+				<div className="flex items-center justify-center h-screen">
+					<StyledLoading />
+				</div>
 			</div>
 		);
 	}
 
 	if (totalPages === 0 && !loading) {
 		return (
-			<div
-				className="flex flex-col items-center justify-center py-10 lg:pt-32"
-				id="product-overview"
-			>
-				<h1 className="text-xl uppercase tracking-widest">
-					No products found
-				</h1>
-				<p className="text-gray-400 pt-6">
-					Try different filter settings.
-				</p>
+			<div className="my-6" id="product-overview">
+				<div className="flex px-10">
+					<motion.button
+						whileHover={{
+							backgroundColor: colors.secondary,
+							color: colors.white,
+							border: `1px solid ${colors.secondary}`,
+						}}
+						type="button"
+						className="border border-black text-sm px-2 py-1"
+						onClick={handleClearAllFilters}
+					>
+						Clear all filters
+					</motion.button>
+				</div>
+				<div
+					className="flex flex-col items-center justify-center py-10 lg:pt-32"
+					id="product-overview"
+				>
+					<h1 className="text-xl uppercase tracking-widest">
+						No products found
+					</h1>
+					<p className="text-gray-400 pt-6">
+						Try different filter settings.
+					</p>
+				</div>
 			</div>
 		);
 	}
@@ -92,6 +153,22 @@ const ProductGrid = (): JSX.Element => {
 			id="product-overview"
 		>
 			<div className="container mx-auto">
+				<div className="flex px-10">
+					{showClearAllFilters() && (
+						<motion.button
+							whileHover={{
+								backgroundColor: colors.secondary,
+								color: colors.white,
+								border: `1px solid ${colors.secondary}`,
+							}}
+							type="button"
+							className="border border-black text-sm px-2 py-1"
+							onClick={handleClearAllFilters}
+						>
+							Clear all filters
+						</motion.button>
+					)}
+				</div>
 				<div className="grid grid-cols-2 md:grid-cols-4 mx-4">
 					{pageProducts.map((product: Product) => (
 						<ProductPreview

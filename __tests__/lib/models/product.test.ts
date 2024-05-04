@@ -3,6 +3,7 @@ import {
 	getProductById,
 	getProductsByBrand,
 	getProductsByCategory,
+	getProductsBySizes,
 	getProductsByTags,
 } from "@/lib/models/product";
 import mockProducts from "@/__mocks__/products/products.mock";
@@ -65,6 +66,22 @@ describe("getProductsByBrand", () => {
 
 	it("should return empty array", () => {
 		const products = getProductsByBrand(mockProducts, 999);
+		expect(products).toEqual([]);
+	});
+});
+
+describe("getProductsBySizes", () => {
+	it("should return products by sizes", () => {
+		const products = getProductsBySizes(mockProducts.slice(0, 4), [1, 2]);
+		expect(products).toEqual([
+			mockProducts[0],
+			mockProducts[1],
+			mockProducts[2],
+		]);
+	});
+
+	it("should return empty array", () => {
+		const products = getProductsBySizes(mockProducts, [999]);
 		expect(products).toEqual([]);
 	});
 });

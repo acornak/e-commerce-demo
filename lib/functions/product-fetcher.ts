@@ -19,6 +19,7 @@ export const fetchProductsPaginated = async (
 	page: number,
 	categoryId: number | null,
 	brandId: number | null,
+	sizes: number[] | null,
 	setLoading?: (loading: boolean) => void,
 	limit: number = 10000,
 ) => {
@@ -29,7 +30,9 @@ export const fetchProductsPaginated = async (
 	await fetch(
 		`/api/products?&page=${page}${
 			categoryId ? `&categoryId=${categoryId}` : ""
-		}${brandId ? `&brandId=${brandId}` : ""}&limit=${limit}`,
+		}${brandId ? `&brandId=${brandId}` : ""}${
+			sizes ? `&sizeIds=${encodeURIComponent(sizes.join(","))}` : ""
+		}&limit=${limit}`,
 	)
 		.then((response) => response.json())
 		.then((data) => {

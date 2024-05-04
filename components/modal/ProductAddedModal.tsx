@@ -6,12 +6,17 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 // Functions
 import { fetchProductImage } from "@/lib/functions/product-fetcher";
+import {
+	getCartItemQty,
+	totalCartItemPrice,
+	totalCartPrice,
+} from "@/lib/functions/cart-helpers";
 // Store
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Types and constants
 import { colors } from "@/lib/config/constants";
-import { Product } from "@/lib/models/product";
+
 // Icons
 import CloseIcon from "../icon/Close";
 import CheckmarkIcon from "../icon/Checkmark";
@@ -39,22 +44,6 @@ const ProductAddedModal: FC = () => {
 			window.removeEventListener("focus", updateCartStore);
 		};
 	}, []);
-
-	function getItemQty(productId: number): number {
-		const item = cartItems.filter((i) => i.productId === productId)[0];
-		return item.quantity;
-	}
-
-	function totalItemPrice(p: Product): number {
-		const qty = getItemQty(p.id);
-		return qty * p.price;
-	}
-
-	function totalCartPrice(): number {
-		return cartItems
-			.map((item) => item.quantity * item.price)
-			.reduce((a, b) => a + b, 0);
-	}
 
 	useEffect(() => {
 		if (cartProduct) fetchProductImage(cartProduct.id, setImageUrl);
@@ -105,10 +94,21 @@ const ProductAddedModal: FC = () => {
 								</p>
 								<p className="flex items-center m-1">
 									<span className="text-xs uppercase font-semibold">
+										Size:
+									</span>
+									<span className="pl-2 text-secondary">
+										{cartProduct.selectedSize.name}
+									</span>
+								</p>
+								<p className="flex items-center m-1">
+									<span className="text-xs uppercase font-semibold">
 										QTY:
 									</span>
 									<span className="pl-2 text-secondary">
-										{getItemQty(cartProduct.id)}
+										{getCartItemQty(
+											cartItems,
+											cartProduct.id,
+										)}
 									</span>
 								</p>
 								<p className="flex items-center m-1">
@@ -117,7 +117,10 @@ const ProductAddedModal: FC = () => {
 									</span>
 									<span className="pl-2 text-secondary">
 										$
-										{totalItemPrice(cartProduct).toFixed(2)}
+										{totalCartItemPrice(
+											cartItems,
+											cartProduct,
+										).toFixed(2)}
 									</span>
 								</p>
 							</div>
@@ -135,7 +138,7 @@ const ProductAddedModal: FC = () => {
 										Total price:
 									</span>
 									<span className="pl-2 text-secondary text-4xl">
-										${totalCartPrice().toFixed(2)}
+										${totalCartPrice(cartItems).toFixed(2)}
 									</span>
 								</p>
 								<motion.button

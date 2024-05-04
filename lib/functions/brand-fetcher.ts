@@ -10,10 +10,10 @@ export const fetchAllBrands = async (setBrands: (brands: Brand[]) => void) => {
 // TODO in API
 export const fetchBrandById = async (
 	brandId: number,
-	setBrands: (brand: Brand) => void,
+	setBrand: (brand: Brand) => void,
 ) => {
 	await fetch(`/api/brands?brandId=${brandId}`)
 		.then((response) => response.json())
-		.then((data) => setBrands(data.brand))
+		.then((data) => setBrand(data.brand))
 		.catch((error) => console.error("Fetching brand by id failed:", error));
 };

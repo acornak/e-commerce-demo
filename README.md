@@ -35,3 +35,4 @@
 - related products carousel
 - code splitting
 - investigate multiple rerenders
+- set default state for modals 

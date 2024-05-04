@@ -3,6 +3,7 @@ import { Color, FaqQuestion } from "./types";
 
 export const colors: Color = {
 	white: "#ffffff",
+	gray300: "#d1d5db",
 	black: "#000000",
 	secondary: "#FF6347",
 	secondaryRed: "#df393a",

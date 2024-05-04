@@ -10,6 +10,7 @@ describe("useCartStore", () => {
 		productId: 1,
 		price: 100,
 		quantity: 1,
+		sizeId: 1,
 	};
 
 	beforeEach(() => {
@@ -70,7 +71,7 @@ describe("useCartStore", () => {
 
 		act(() => {
 			result.current.addItem(mockCartItem);
-			result.current.addQuantity(1);
+			result.current.addQuantity(1, 1);
 		});
 
 		expect(result.current.items).toHaveLength(1);
@@ -78,7 +79,7 @@ describe("useCartStore", () => {
 
 		act(() => {
 			result.current.addItem({ ...mockCartItem, productId: 2 });
-			result.current.addQuantity(1);
+			result.current.addQuantity(1, 1);
 		});
 
 		expect(result.current.items).toHaveLength(2);
@@ -95,7 +96,7 @@ describe("useCartStore", () => {
 
 		act(() => {
 			result.current.addItem({ ...mockCartItem, quantity: 3 });
-			result.current.removeQuantity(1);
+			result.current.removeQuantity(1, 1);
 		});
 
 		expect(result.current.items).toHaveLength(1);
@@ -103,7 +104,7 @@ describe("useCartStore", () => {
 
 		act(() => {
 			result.current.addItem({ ...mockCartItem, productId: 2 });
-			result.current.removeQuantity(1);
+			result.current.removeQuantity(1, 1);
 		});
 
 		expect(result.current.items).toHaveLength(2);

@@ -1,5 +1,10 @@
 import { create } from "zustand";
 import { Product } from "../models/product";
+import { Size } from "../models/size";
+
+interface CartProduct extends Product {
+	selectedSize: Size;
+}
 
 export interface ModalsStore {
 	// Login Modal
@@ -22,8 +27,8 @@ export interface ModalsStore {
 	productAddedModalOpen: boolean;
 	setProductAddedModalOpen: (open: boolean) => void;
 	toggleProductAddedModalOpen: () => void;
-	cartProduct: Product | null;
-	setCartProduct: (product: Product) => void;
+	cartProduct: CartProduct | null;
+	setCartProduct: (product: Product, selectedSize: Size) => void;
 	// Product Preview Modal
 	productPreviewModalOpen: boolean;
 	setProductPreviewModalOpen: (open: boolean) => void;
@@ -86,7 +91,8 @@ export const useModalsStore = create<ModalsStore>((set) => ({
 			productAddedModalOpen: !state.productAddedModalOpen,
 		})),
 	cartProduct: null,
-	setCartProduct: (product: Product) => set(() => ({ cartProduct: product })),
+	setCartProduct: (product: Product, selectedSize: Size) =>
+		set(() => ({ cartProduct: { ...product, selectedSize } })),
 
 	// Product Preview Modal
 	productPreviewModalOpen: false,

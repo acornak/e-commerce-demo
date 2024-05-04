@@ -1,6 +1,7 @@
 const mockProducts = [
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -16,6 +17,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -31,6 +33,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -45,6 +48,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -60,6 +64,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -75,6 +80,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -90,6 +96,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -105,6 +112,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -119,6 +127,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -133,6 +142,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -148,6 +158,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -162,6 +173,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -176,6 +188,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -190,6 +203,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -205,6 +219,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -220,6 +235,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -236,6 +252,7 @@ const mockProducts = [
 
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -250,6 +267,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -265,6 +283,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -279,6 +298,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -294,6 +314,7 @@ const mockProducts = [
 
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -309,6 +330,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -323,6 +345,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -338,6 +361,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -354,6 +378,7 @@ const mockProducts = [
 
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -369,6 +394,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -383,6 +409,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -397,6 +424,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -412,6 +440,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -427,6 +456,7 @@ const mockProducts = [
 
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -441,6 +471,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -456,6 +487,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -471,6 +503,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -486,6 +519,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -501,6 +535,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -515,6 +550,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -529,6 +565,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -543,6 +580,7 @@ const mockProducts = [
 	},
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -558,6 +596,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -573,6 +612,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -587,6 +627,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -602,6 +643,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -617,6 +659,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -632,6 +675,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -647,6 +691,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -661,6 +706,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -675,6 +721,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -690,6 +737,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -704,6 +752,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -719,6 +768,7 @@ const mockProducts = [
 
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -734,6 +784,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -749,6 +800,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -763,6 +815,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -778,6 +831,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -793,6 +847,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -808,6 +863,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -823,6 +879,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -837,6 +894,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -851,6 +909,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -866,6 +925,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -880,6 +940,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -895,6 +956,7 @@ const mockProducts = [
 
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -910,6 +972,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -925,6 +988,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -939,6 +1003,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -954,6 +1019,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -969,6 +1035,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -984,6 +1051,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -999,6 +1067,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -1013,6 +1082,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -1027,6 +1097,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -1042,6 +1113,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -1056,6 +1128,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -1071,6 +1144,7 @@ const mockProducts = [
 
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -1086,6 +1160,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -1101,6 +1176,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -1115,6 +1191,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -1130,6 +1207,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -1145,6 +1223,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -1160,6 +1239,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -1175,6 +1255,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -1189,6 +1270,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -1203,6 +1285,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -1218,6 +1301,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -1232,6 +1316,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -1247,6 +1332,7 @@ const mockProducts = [
 
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -1262,6 +1348,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -1277,6 +1364,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -1291,6 +1379,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -1306,6 +1395,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -1321,6 +1411,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -1336,6 +1427,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -1351,6 +1443,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -1365,6 +1458,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -1379,6 +1473,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -1394,6 +1489,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -1408,6 +1504,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -1423,6 +1520,7 @@ const mockProducts = [
 
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -1438,6 +1536,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -1453,6 +1552,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -1467,6 +1567,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -1482,6 +1583,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -1497,6 +1599,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -1512,6 +1615,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -1527,6 +1631,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -1541,6 +1646,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -1555,6 +1661,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -1570,6 +1677,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -1584,6 +1692,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -1599,6 +1708,7 @@ const mockProducts = [
 
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -1614,6 +1724,7 @@ const mockProducts = [
 
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -1629,6 +1740,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -1644,6 +1756,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -1658,6 +1771,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -1673,6 +1787,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -1688,6 +1803,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -1703,6 +1819,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -1718,6 +1835,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -1732,6 +1850,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -1746,6 +1865,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -1761,6 +1881,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -1775,6 +1896,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -1789,6 +1911,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -1803,6 +1926,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -1818,6 +1942,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -1832,6 +1957,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -1847,6 +1973,7 @@ const mockProducts = [
 
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -1862,6 +1989,7 @@ const mockProducts = [
 
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -1877,6 +2005,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -1892,6 +2021,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -1906,6 +2036,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -1921,6 +2052,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -1936,6 +2068,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -1951,6 +2084,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -1966,6 +2100,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -1980,6 +2115,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -1994,6 +2130,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -2009,6 +2146,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -2023,6 +2161,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -2037,6 +2176,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -2051,6 +2191,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -2066,6 +2207,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -2080,6 +2222,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -2095,6 +2238,7 @@ const mockProducts = [
 
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,
@@ -2110,6 +2254,7 @@ const mockProducts = [
 
 	{
 		id: 1,
+		sizeIds: [1, 2, 3, 4],
 		name: "Rectangular Prescription",
 		slug: "rectangular-prescription",
 		price: 52.0,
@@ -2125,6 +2270,7 @@ const mockProducts = [
 	},
 	{
 		id: 2,
+		sizeIds: [2, 3, 4],
 		name: "Double Round Sunglasses",
 		slug: "double-round-sunglasses",
 		price: 325,
@@ -2140,6 +2286,7 @@ const mockProducts = [
 	},
 	{
 		id: 3,
+		sizeIds: [1, 2, 3, 4],
 		name: "Aviator Sunglasses",
 		slug: "aviator-sunglasses",
 		price: 160,
@@ -2154,6 +2301,7 @@ const mockProducts = [
 	},
 	{
 		id: 4,
+		sizeIds: [3, 4, 5],
 		name: "Cat Eye Sunglasses",
 		slug: "cat-eye-sunglasses",
 		price: 96,
@@ -2169,6 +2317,7 @@ const mockProducts = [
 	},
 	{
 		id: 5,
+		sizeIds: [3, 4, 5],
 		name: "Gradient Aviator Sunglasses",
 		slug: "gradient-aviator-sunglasses",
 		price: 212,
@@ -2184,6 +2333,7 @@ const mockProducts = [
 	},
 	{
 		id: 6,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Square Prescription Eyeglass Frames",
 		slug: "square-prescription-eyeglass-frames",
 		price: 100,
@@ -2199,6 +2349,7 @@ const mockProducts = [
 	},
 	{
 		id: 7,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Round Flat Lens Sunglasses",
 		slug: "round-flat-lens-sunglasses",
 		price: 368,
@@ -2214,6 +2365,7 @@ const mockProducts = [
 	},
 	{
 		id: 8,
+		sizeIds: [1, 2, 3, 4, 5, 6],
 		name: "Clubmaster Square Prescription",
 		slug: "clubmaster-square-prescription",
 		price: 212,
@@ -2228,6 +2380,7 @@ const mockProducts = [
 	},
 	{
 		id: 9,
+		sizeIds: [3, 4],
 		name: "Round Prescription Eyewear Frames",
 		slug: "round-prescription-eyewear-frames",
 		price: 48,
@@ -2242,6 +2395,7 @@ const mockProducts = [
 	},
 	{
 		id: 10,
+		sizeIds: [2, 3, 4],
 		name: "Clubround Round Sunglasses",
 		slug: "clubround-round-sunglasses",
 		price: 100,
@@ -2257,6 +2411,7 @@ const mockProducts = [
 	},
 	{
 		id: 11,
+		sizeIds: [2, 3, 4, 5],
 		name: "Round Prescription Eyeglass Frames",
 		slug: "round-prescription-eyeglass-frames",
 		price: 410,
@@ -2271,6 +2426,7 @@ const mockProducts = [
 	},
 	{
 		id: 12,
+		sizeIds: [2, 3, 4, 5],
 		name: "Clubmaster Square Sunglasses",
 		slug: "clubmaster-square-sunglasses",
 		price: 430,

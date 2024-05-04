@@ -18,6 +18,7 @@ import {
 import { fetchAllCategories } from "@/lib/functions/category-fetcher";
 // Types and Constants
 import { colors } from "@/lib/config/constants";
+import { Size } from "@/lib/models/size";
 import { Product } from "@/lib/models/product";
 import { Category } from "@/lib/models/category";
 // Images
@@ -28,6 +29,8 @@ import { StyledSectionHeading } from "../styled/Heading";
 import ProductPageDescription from "./ProductPageDescription";
 import ProductPageAdditional from "./ProductPageAdditional";
 import ProductPageReviews from "./ProductPageReviews";
+import RelatedProduct from "./RelatedProducts";
+import SizePicker from "../common/SizePicker";
 // Icons
 import ChevronRightIcon from "../icon/ChevronRight";
 import HeartIcon from "../icon/Heart";
@@ -41,7 +44,6 @@ import { InstagramIconFilled } from "../icon/Instagram";
 import LinkedInIcon from "../icon/LinkedIn";
 // Styles
 import "./candystripe.css";
-import RelatedProduct from "./RelatedProducts";
 
 type ProductInfoProps = {
 	product: Product;
@@ -235,6 +237,7 @@ type BuyingSectionProps = {
 
 const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 	const [quantity, setQuantity] = useState<number>(1);
+	const [selectedSize, setSelectedSize] = useState<Size | null>(null);
 	const addItem = useCartStore((state) => state.addItem);
 	const setProductAddedModalOpen = useModalsStore(
 		(state) => state.setProductAddedModalOpen,
@@ -250,21 +253,28 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 		};
 	}, []);
 
-	const handleAddToCart = () => {
-		if (product) {
+	const handleAddToCart = (showModal: boolean) => {
+		if (product && selectedSize) {
 			addItem({
 				productId: product.id,
 				price: product.price,
 				quantity,
+				sizeId: selectedSize.id,
 			});
-			setCartProduct(product);
-			setProductAddedModalOpen(true);
+			setCartProduct(product, selectedSize);
+			if (showModal) setProductAddedModalOpen(true);
 			setQuantity(1);
 		}
 	};
 
 	return (
 		<>
+			<hr className="border-t border-gray-300" />
+			<SizePicker
+				product={product}
+				selectedSize={selectedSize}
+				setSelectedSize={setSelectedSize}
+			/>
 			<div className="py-4 grid grid-cols-3 gap-4 w-full">
 				<div className="flex items-center justify-start">
 					<button
@@ -300,36 +310,33 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 					</button>
 				</div>
 				<div className="flex flex-col col-span-2">
-					<motion.button
-						whileHover={{
-							color: colors.white,
-							backgroundColor: colors.black,
-						}}
-						whileTap={{
-							color: colors.white,
-							backgroundColor: colors.black,
-						}}
-						className="bg-secondary text-white px-4 py-2 uppercase tracking-widest font-semibold"
-						onClick={handleAddToCart}
+					<button
+						type="button"
+						className={`bg-black px-4 py-2 uppercase tracking-widest font-semibold ${
+							selectedSize != null
+								? "hover:bg-secondary text-white"
+								: "bg-white text-gray-300 border border-gray-300"
+						}`}
+						onClick={() => handleAddToCart(true)}
+						disabled={selectedSize === null}
 					>
 						Add to cart
-					</motion.button>
+					</button>
 				</div>
 			</div>
 			<Link href="/checkout" className="flex flex-col col-span-2">
-				<motion.button
-					whileHover={{
-						color: colors.white,
-						backgroundColor: colors.secondary,
-					}}
-					whileTap={{
-						color: colors.white,
-						backgroundColor: colors.black,
-					}}
-					className="bg-black text-white px-4 py-2 uppercase tracking-widest font-semibold"
+				<button
+					type="button"
+					className={`bg-black px-4 py-2 uppercase tracking-widest font-semibold ${
+						selectedSize != null
+							? "hover:bg-secondary text-white"
+							: "bg-white text-gray-300 border border-gray-300"
+					}`}
+					onClick={() => handleAddToCart(false)}
+					disabled={selectedSize === null}
 				>
 					Buy it now
-				</motion.button>
+				</button>
 			</Link>
 		</>
 	);

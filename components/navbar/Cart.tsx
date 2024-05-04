@@ -20,9 +20,12 @@ import {
 // Icons
 import Image from "next/image";
 import { useModalsStore } from "@/lib/stores/modals-store";
-import CloseIcon from "../icon/Close";
 // Components
+import { getCartItemSize } from "@/lib/functions/cart-helpers";
+import { Size } from "@/lib/models/size";
+import { fetchAllSizes } from "@/lib/functions/size-fetcher";
 import TrashIcon from "../icon/Trash";
+import CloseIcon from "../icon/Close";
 
 const EmptyCart = () => (
 	<>
@@ -67,11 +70,14 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 }) => {
 	const [product, setProduct] = useState<Product | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
+	const [sizes, setSizes] = useState<Size[]>([]);
 	const removeItem = useCartStore((state) => state.removeItem);
 	const addQuantity = useCartStore((state) => state.addQuantity);
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
 
 	useEffect(() => {
+		fetchAllSizes(setSizes);
+
 		document.addEventListener("visibilitychange", updateCartStore);
 		window.addEventListener("focus", updateCartStore);
 		return () => {
@@ -103,6 +109,10 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 					</Link>
 					<div>
 						<h1 className="font-semibold">{product.name}</h1>
+						<p className="text-gray-500 text-lg md:text-base px-3">
+							Size:{" "}
+							{sizes && getCartItemSize(sizes, item.sizeId)?.name}
+						</p>
 						<p className="text-gray-500 text-lg md:text-base">
 							<motion.button
 								whileHover={{
@@ -113,7 +123,10 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 									scale: 1.5,
 									color: colors.secondary,
 								}}
-								onClick={() => removeQuantity(item.productId)}
+								onClick={() =>
+									removeQuantity(item.productId, item.sizeId)
+								}
+								className="w-3"
 							>
 								-
 							</motion.button>{" "}
@@ -127,7 +140,10 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 									scale: 1.5,
 									color: colors.secondary,
 								}}
-								onClick={() => addQuantity(item.productId)}
+								onClick={() =>
+									addQuantity(item.productId, item.sizeId)
+								}
+								className="w-3"
 							>
 								+
 							</motion.button>

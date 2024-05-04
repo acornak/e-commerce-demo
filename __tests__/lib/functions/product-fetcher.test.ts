@@ -79,12 +79,13 @@ describe("fetchProductsPaginated function", () => {
 			1,
 			1,
 			1,
+			[1, 2],
 			mockSetLoading,
 			16,
 		);
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`/api/products?&page=1&categoryId=1&brandId=1&limit=16`,
+			`/api/products?&page=1&categoryId=1&brandId=1&sizeIds=1%2C2&limit=16`,
 		);
 		expect(mockSetProducts).toHaveBeenCalledTimes(2);
 		expect(mockSetProducts).toHaveBeenCalledWith([]);
@@ -104,6 +105,7 @@ describe("fetchProductsPaginated function", () => {
 			mockSetProducts,
 			mockSetTotalPages,
 			1,
+			null,
 			null,
 			null,
 			mockSetLoading,
@@ -134,6 +136,7 @@ describe("fetchProductsPaginated function", () => {
 			1,
 			1,
 			1,
+			[1, 2],
 			mockSetLoading,
 			10,
 		);

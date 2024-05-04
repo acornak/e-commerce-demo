@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Product } from "@/lib/models/product";
 import { colors } from "@/lib/config/constants";
 // Store
-import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
+import { updateCartStore } from "@/lib/stores/cart-store";
 import {
 	updateWishlistStore,
 	useWishlistStore,
@@ -22,7 +22,6 @@ import { fetchProductImage } from "@/lib/functions/product-fetcher";
 import StyledLoading from "../styled/Loading";
 // Icons
 import HeartIcon from "../icon/Heart";
-import BagIcon from "../icon/Bag";
 import MagnifierIcon from "../icon/Magnifier";
 import CheckmarkRoundIcon from "../icon/CheckmarkRound";
 
@@ -94,24 +93,17 @@ type ProductPreviewProps = {
 const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [hovered, setHovered] = useState<boolean>(false);
-	// Cart store
-	const addCartItem = useCartStore((state) => state.addItem);
-	const cartItems = useCartStore((state) => state.items);
 	// Wishlist store
 	const wishlistItems = useWishlistStore((state) => state.items);
 	const addWishlistItem = useWishlistStore((state) => state.addItem);
 	const removeWishlistItem = useWishlistStore((state) => state.removeItem);
 	// Modals store
-	const setProductAddedModalOpen = useModalsStore(
-		(state) => state.setProductAddedModalOpen,
-	);
 	const setProductPreviewModalOpen = useModalsStore(
 		(state) => state.setProductPreviewModalOpen,
 	);
 	const setPreviewProductId = useModalsStore(
 		(state) => state.setPreviewProductId,
 	);
-	const setCartProduct = useModalsStore((state) => state.setCartProduct);
 
 	useEffect(() => {
 		document.addEventListener("visibilitychange", updateCartStore);
@@ -134,26 +126,9 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 		return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 	};
 
-	const itemAlreadyInCart = cartItems.some(
-		(item) => item.productId === product.id,
-	);
-
 	const itemAlreadyInWishlist = wishlistItems.some(
 		(item) => item.productId === product.id,
 	);
-
-	const handleAddToCart = () => {
-		if (product) {
-			addCartItem({
-				productId: product.id,
-				price: product.price,
-				quantity: 1,
-			});
-			setCartProduct(product);
-			setProductAddedModalOpen(true);
-			setHovered(false);
-		}
-	};
 
 	const handleAddToWishlist = () => {
 		if (product) {
@@ -244,22 +219,6 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 									<HeartIcon />
 								)}
 							</ProductButton>
-							<ProductButton
-								setHovered={setHovered}
-								tooltipText={
-									itemAlreadyInCart
-										? "Item added to cart"
-										: "Add to cart"
-								}
-								onClickEvent={handleAddToCart}
-							>
-								{itemAlreadyInCart ? (
-									<CheckmarkRoundIcon />
-								) : (
-									<BagIcon />
-								)}
-							</ProductButton>
-
 							<ProductButton
 								setHovered={setHovered}
 								tooltipText="Quick preview"

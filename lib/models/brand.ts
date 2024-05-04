@@ -8,17 +8,17 @@ export type Brand = {
 };
 
 /**
- * Get all categories
- * @returns array of categories
+ * Get all brands
+ * @returns array of brands
  */
 export function getAllBrands(): Brand[] {
 	return mockBrands;
 }
 
 /**
- * Get category by id
+ * Get brand by id
  * @param id
- * @returns category
+ * @returns brand
  */
 export function getBrandById(id: number): Brand | undefined {
 	return mockBrands.find((brand) => brand.id === id);

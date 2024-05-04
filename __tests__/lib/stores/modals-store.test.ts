@@ -77,7 +77,7 @@ describe("useModalsStore", () => {
 		expect(result.current.cartBarOpen).not.toBeTruthy();
 	});
 
-	it("should handle cart bar state change", () => {
+	it("should handle product added modal state change", () => {
 		const { result } = renderHook(() => useModalsStore());
 
 		expect(result.current.productAddedModalOpen).not.toBeTruthy();
@@ -90,12 +90,15 @@ describe("useModalsStore", () => {
 		expect(result.current.productAddedModalOpen).toBeTruthy();
 
 		act(() => {
-			result.current.setCartProduct(mockedProduct);
+			result.current.setCartProduct(mockedProduct, { id: 1, name: "S" });
 			result.current.toggleProductAddedModalOpen();
 		});
 
 		expect(result.current.productAddedModalOpen).not.toBeTruthy();
-		expect(result.current.cartProduct).toEqual(mockedProduct);
+		expect(result.current.cartProduct).toEqual({
+			...mockedProduct,
+			selectedSize: { id: 1, name: "S" },
+		});
 	});
 
 	it("should handle product preview modal state change", () => {

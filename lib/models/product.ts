@@ -19,6 +19,7 @@ export type Product = {
 	images?: string[];
 	brandId: number;
 	perex: string;
+	sizeIds: number[];
 	categories: number[];
 	rating?: number;
 	countInStock?: number;
@@ -49,6 +50,7 @@ export function getProductById(
 ): Product | undefined {
 	return products.find((product) => product.id === id);
 }
+
 /**
  * Get products by category
  * @param products - array of products
@@ -90,4 +92,19 @@ export function getProductsByBrand(
 	brandId: number,
 ): Product[] {
 	return products.filter((product) => product.brandId === brandId);
+}
+
+/**
+ * Get product by sizes
+ * @param products - array of products
+ * @param sizeIds - array of size ids to filter by
+ * @returns array of products
+ */
+export function getProductsBySizes(
+	products: Product[],
+	sizeIds: number[],
+): Product[] {
+	return products.filter((product) =>
+		sizeIds.some((sizeId) => product.sizeIds.includes(sizeId)),
+	);
 }

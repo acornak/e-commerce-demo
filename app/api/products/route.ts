@@ -5,6 +5,7 @@ import {
 	getProductById,
 	getProductsByBrand,
 	getProductsByCategory,
+	getProductsBySizes,
 	getProductsByTags,
 } from "@/lib/models/product";
 
@@ -13,7 +14,11 @@ export async function GET(request: Request): Promise<Response> {
 	const categoryId = searchParams.get("categoryId");
 	const brandId = searchParams.get("brandId");
 	const productId = searchParams.get("productId");
-	const tags = searchParams.getAll("tags");
+	const sizeIds = searchParams
+		.getAll("sizeIds")
+		.map((sizeId) => sizeId.split(",").map(Number))
+		.flat();
+	const tags = searchParams.getAll("tags").map(decodeURIComponent);
 	const page = parseInt(searchParams.get("page") || "1", 10);
 
 	let limit: number;
@@ -38,6 +43,10 @@ export async function GET(request: Request): Promise<Response> {
 
 	if (categoryId) {
 		products = getProductsByCategory(products, Number(categoryId));
+	}
+
+	if (sizeIds.length) {
+		products = getProductsBySizes(products, sizeIds);
 	}
 
 	if (tags.length) {

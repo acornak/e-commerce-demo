@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 // Next
 import { useSearchParams } from "next/navigation";
 // Animations
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 // Functions
 import { fetchAllCategories } from "@/lib/functions/category-fetcher";
 import { fetchAllBrands } from "@/lib/functions/brand-fetcher";
@@ -14,32 +14,59 @@ import { Category } from "@/lib/models/category";
 import { Brand } from "@/lib/models/brand";
 import { colors } from "@/lib/config/constants";
 // Icons
+import { Size } from "@/lib/models/size";
+import { fetchAllSizes } from "@/lib/functions/size-fetcher";
 import ChevronRightIcon from "../icon/ChevronRight";
 
-const HeadingWithHr = ({ title }: { title: string }): JSX.Element => (
-	<div className="flex items-center flex-row w-full py-2">
-		<h1 className="tracking-widest uppercase border-l-4 border-black px-4 py-2">
-			{title}
-		</h1>
-		<hr className="flex-grow border-t border-gray-300 my-auto" />
-	</div>
-);
+type HeadingWithHrProps = {
+	title: string;
+	onClick: () => void;
+};
 
-const CategoryFilter = (): JSX.Element => {
+const HeadingWithHr: FC<HeadingWithHrProps> = ({
+	title,
+	onClick,
+}): JSX.Element => {
+	const [hovered, setHovered] = useState<boolean>(false);
+
+	return (
+		<button
+			type="button"
+			className="flex items-center flex-row w-full py-2 cursor-pointer hover:text-secondary background-white "
+			onMouseEnter={() => setHovered(true)}
+			onMouseLeave={() => setHovered(false)}
+			onClick={onClick}
+		>
+			<h1
+				className={`tracking-widest uppercase border-l-4 px-4 py-2 ${
+					hovered ? "border-secondary" : "border-black"
+				}`}
+			>
+				{title}
+			</h1>
+			<hr
+				className={`flex-grow border-t my-auto ${
+					hovered ? "border-secondary" : "border-gray-300"
+				}`}
+			/>
+		</button>
+	);
+};
+
+const CategoryFilter = ({
+	categories,
+}: {
+	categories: Category[];
+}): JSX.Element => {
 	const searchParams = useSearchParams();
 	const initialCategory = Number(searchParams.get("category")) || null;
 
 	const handleFilterChange = useFilterChange();
 
-	const [categories, setCategories] = useState<Category[]>([]);
 	const [selectedCategory, setSelectedCategory] = useState<number | null>(
 		initialCategory,
 	);
 	const [isHovered, setIsHovered] = useState<number | null>();
-
-	useEffect(() => {
-		fetchAllCategories(setCategories);
-	}, []);
 
 	useEffect(() => {
 		setSelectedCategory(Number(searchParams.get("category")) || null);
@@ -133,7 +160,6 @@ const PriceFilter = (): JSX.Element => {
 							);
 						}}
 					/>
-
 					<motion.label
 						className="text-sm tracking-widest px-3 cursor-pointer"
 						whileHover={{
@@ -156,20 +182,62 @@ const PriceFilter = (): JSX.Element => {
 					)} - $${priceRange.max.toFixed(2)}`}</motion.label>
 				</div>
 			))}
+			{selectedPriceRanges.length > 0 && (
+				<motion.button
+					whileHover={{
+						backgroundColor: colors.secondary,
+						border: `1px solid ${colors.secondary}`,
+						color: colors.white,
+					}}
+					whileTap={{
+						backgroundColor: colors.secondary,
+						border: `1px solid ${colors.secondary}`,
+						color: colors.white,
+					}}
+					type="button"
+					onClick={() => setSelectedPriceRanges([])}
+					className="text-sm mt-2 px-2 py-1 border border-black"
+				>
+					Clear filters
+				</motion.button>
+			)}
 		</div>
 	);
 };
 
-const SizeFilter = (): JSX.Element => {
-	const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-	const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+const SizeFilter = ({ sizes }: { sizes: Size[] }): JSX.Element => {
+	const searchParams = useSearchParams();
+	const handleFilterChange = useFilterChange();
 
-	const handleSizeClick = (size: string) => {
-		if (selectedSizes.includes(size)) {
-			setSelectedSizes(selectedSizes.filter((s) => s !== size));
-		} else {
-			setSelectedSizes([...selectedSizes, size]);
+	const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
+
+	useEffect(() => {
+		const s = searchParams.get("size");
+		if (s) {
+			setSelectedSizes(s.split(" ").map(Number));
 		}
+	}, [searchParams]);
+
+	const handleSizeClick = (size: number) => {
+		const updatedSizes = selectedSizes.includes(size)
+			? selectedSizes.filter((s) => s !== size)
+			: [...selectedSizes, size];
+		setSelectedSizes(updatedSizes);
+		handleFilterChange(
+			{
+				page: "1",
+				size:
+					updatedSizes.length > 0
+						? updatedSizes.sort().join(" ")
+						: null,
+			},
+			true,
+		);
+	};
+
+	const handleClearFilters = () => {
+		setSelectedSizes([]);
+		handleFilterChange({ page: "1", size: null }, true);
 	};
 
 	return (
@@ -177,53 +245,63 @@ const SizeFilter = (): JSX.Element => {
 			<div className="grid grid-cols-6 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 				{sizes.map((size) => (
 					<motion.div
-						key={size}
-						initial={{
-							backgroundColor: selectedSizes.includes(size)
-								? colors.secondary
-								: colors.white,
-							color: selectedSizes.includes(size)
-								? colors.white
-								: colors.black,
-						}}
+						key={size.id}
 						whileHover={{
 							backgroundColor: colors.secondary,
 							color: colors.white,
 						}}
 						className="cursor-pointer p-2 text-sm tracking-widest text-center"
-						onClick={() => handleSizeClick(size)}
+						onClick={() => handleSizeClick(size.id)}
 						style={{
-							border: selectedSizes.includes(size)
+							border: selectedSizes.includes(size.id)
 								? "1px solid #FF6347"
 								: "1px solid black",
+							backgroundColor: selectedSizes.includes(size.id)
+								? colors.secondary
+								: colors.white,
+							color: selectedSizes.includes(size.id)
+								? colors.white
+								: colors.black,
 						}}
 					>
 						<div className="h-full flex items-center justify-center">
-							{size}
+							{size.name}
 						</div>
 					</motion.div>
 				))}
 			</div>
+			{selectedSizes.length > 0 && (
+				<motion.button
+					whileHover={{
+						backgroundColor: colors.secondary,
+						border: `1px solid ${colors.secondary}`,
+						color: colors.white,
+					}}
+					whileTap={{
+						backgroundColor: colors.secondary,
+						border: `1px solid ${colors.secondary}`,
+						color: colors.white,
+					}}
+					type="button"
+					onClick={handleClearFilters}
+					className="text-sm mt-2 px-2 py-1 border border-black"
+				>
+					Clear filters
+				</motion.button>
+			)}
 		</div>
 	);
 };
 
-const BrandsFilter = (): JSX.Element => {
+const BrandsFilter = ({ brands }: { brands: Brand[] }): JSX.Element => {
 	const [isHovered, setIsHovered] = useState<number | null>(null);
-	const [brands, setBrands] = useState<Brand[]>([]);
-
 	const searchParams = useSearchParams();
 	const initialBrand = Number(searchParams.get("brand")) || null;
-
 	const [selectedBrand, setSelectedBrand] = useState<number | null>(
 		initialBrand,
 	);
 
 	const handleFilterChange = useFilterChange();
-
-	useEffect(() => {
-		fetchAllBrands(setBrands);
-	}, []);
 
 	useEffect(() => {
 		setSelectedBrand(Number(searchParams.get("brand") || null));
@@ -278,24 +356,91 @@ const BrandsFilter = (): JSX.Element => {
 	);
 };
 
-const ProductsFilter = (): JSX.Element => (
-	<div className="pl-6 pr-4 flex flex-col justify-start mt-10 py-6">
-		<HeadingWithHr title="Categories" />
-		<CategoryFilter />
+const ProductsFilter = (): JSX.Element => {
+	const searchParams = useSearchParams();
+	const initialCategory = Number(searchParams.get("category")) || null;
+	const initialPrice = searchParams.get("price") || null;
+	const initialSizes = searchParams.get("size") || null;
+	const initialBrand = Number(searchParams.get("brand")) || null;
 
-		<HeadingWithHr title="Price" />
-		<PriceFilter />
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [brands, setBrands] = useState<Brand[]>([]);
+	const [sizes, setSizes] = useState<Size[]>([]);
 
-		<HeadingWithHr title="Size" />
-		<SizeFilter />
+	useEffect(() => {
+		fetchAllCategories(setCategories);
+		fetchAllBrands(setBrands);
+		fetchAllSizes(setSizes);
+	}, []);
 
-		{/* <HeadingWithHr title="Colors" />
+	const filters = [
+		{
+			title: "Categories",
+			component: <CategoryFilter categories={categories} />,
+			initial: initialCategory,
+		},
+		{
+			title: "Price",
+			component: <PriceFilter />,
+			initial: initialPrice,
+		},
+		{
+			title: "Size",
+			component: <SizeFilter sizes={sizes} />,
+			initial: initialSizes,
+		},
+		{
+			title: "Brand",
+			component: <BrandsFilter brands={brands} />,
+			initial: initialBrand,
+		},
+	];
 
-			<HeadingWithHr title="Tags" /> */}
+	const [openedFilters, setOpenedFilters] = useState<number[]>([]);
 
-		<HeadingWithHr title="Brand" />
-		<BrandsFilter />
-	</div>
-);
+	useEffect(() => {
+		const initialFilters = filters
+			.map((filter, index) => (filter.initial ? index : null))
+			.filter((index) => index !== null) as number[];
+		setOpenedFilters(initialFilters);
+	}, [filters]);
+
+	const handleOpenedFilters = (index: number) => {
+		setOpenedFilters((prev) =>
+			prev.includes(index)
+				? prev.filter((i) => i !== index)
+				: [...prev, index],
+		);
+	};
+
+	if (!brands || !sizes || !categories) return <></>;
+
+	return (
+		<div className="pl-6 pr-4 flex flex-col justify-start mt-10 py-6">
+			{filters.map((filter, index) => (
+				<div key={filter.title}>
+					<HeadingWithHr
+						title={filter.title}
+						onClick={() => handleOpenedFilters(index)}
+					/>
+
+					<AnimatePresence>
+						{openedFilters.includes(index) && (
+							<motion.div
+								initial={{ opacity: 0, height: 0 }}
+								animate={{ opacity: 1, height: "auto" }}
+								exit={{ opacity: 0, height: 0 }}
+								transition={{ duration: 0.5 }}
+								className="overflow-hidden"
+							>
+								{filter.component}
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</div>
+			))}
+		</div>
+	);
+};
 
 export default ProductsFilter;

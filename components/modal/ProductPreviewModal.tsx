@@ -6,9 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
-// Types and constants
-import { Product } from "@/lib/models/product";
-import { colors } from "@/lib/config/constants";
 // Store
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
@@ -17,15 +14,22 @@ import {
 	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
+// Types and constants
+import { Product } from "@/lib/models/product";
+import { colors } from "@/lib/config/constants";
+import { Size } from "@/lib/models/size";
 // Components
 import StyledLoading from "../styled/Loading";
 // Icons
 import CloseIcon from "../icon/Close";
+import SizePicker from "../common/SizePicker";
 
 const ProductPreviewModal: FC = (): JSX.Element => {
 	const productPreviewModalOpen = useModalsStore(
 		(state) => state.productPreviewModalOpen,
 	);
+
+	const [selectedSize, setSelectedSize] = useState<Size | null>(null);
 	const [product, setProduct] = useState<Product | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -51,6 +55,8 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 		};
 	}, []);
 
+	useEffect(() => setSelectedSize(null), [productPreviewModalOpen]);
+
 	useEffect(() => {
 		if (!productId) return () => {};
 		fetchProductById(productId, setProduct);
@@ -70,14 +76,15 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	}, [setProductPreviewModalOpen]);
 
 	const handleAddToCart = () => {
-		if (product) {
+		if (product && selectedSize) {
 			addItem({
 				productId: product.id,
 				price: product.price,
 				quantity,
+				sizeId: selectedSize.id,
 			});
 			setProductPreviewModalOpen(false);
-			setCartProduct(product);
+			setCartProduct(product, selectedSize);
 			setProductAddedModalOpen(true);
 			setQuantity(1);
 		}
@@ -101,7 +108,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 				}}
 			>
 				<motion.div
-					className="relative bg-white p-6 w-full lg:max-w-[60%] xl:max-w-[50%] m-4 max-h-[80%]"
+					className="relative bg-white p-6 w-full lg:max-w-[60%] xl:max-w-[50%] m-4 max-h-[90%]"
 					initial={{ scale: 0.9 }}
 					animate={{ scale: 1 }}
 					exit={{ scale: 0.9 }}
@@ -160,6 +167,14 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 								{product.perex.slice(0, 200)}...
 							</div>
 							<hr />
+
+							<SizePicker
+								product={product}
+								selectedSize={selectedSize}
+								setSelectedSize={setSelectedSize}
+							/>
+
+							<hr />
 							<div className="py-4 grid grid-cols-3 gap-4">
 								<div className="flex items-center justify-center relative">
 									<button
@@ -195,20 +210,18 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 									</button>
 								</div>
 								<div className="col-span-2">
-									<motion.button
-										whileHover={{
-											color: colors.white,
-											backgroundColor: colors.black,
-										}}
-										whileTap={{
-											color: colors.white,
-											backgroundColor: colors.black,
-										}}
-										className="bg-secondary text-white px-4 py-2 uppercase tracking-widest font-semibold"
+									<button
+										type="button"
+										className={`px-4 py-2 uppercase tracking-widest font-semibold ${
+											selectedSize != null
+												? "bg-secondary text-white hover:bg-black"
+												: "bg-white text-gray-300 border border-gray-300"
+										}`}
 										onClick={handleAddToCart}
+										disabled={selectedSize === null}
 									>
 										Add to cart
-									</motion.button>
+									</button>
 								</div>
 							</div>
 						</div>

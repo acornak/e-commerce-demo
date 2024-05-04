@@ -6,14 +6,15 @@ import Link from "next/link";
 import Image from "next/image";
 // Animations
 import { motion } from "framer-motion";
-// Types and constants
-import { Product } from "@/lib/models/product";
-import { colors } from "@/lib/config/constants";
-// Store
+
+// Functions
 import {
 	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
+import { getCartItemSize } from "@/lib/functions/cart-helpers";
+import { fetchAllSizes } from "@/lib/functions/size-fetcher";
+// Store
 import {
 	CartItem,
 	updateCartStore,
@@ -21,6 +22,10 @@ import {
 } from "@/lib/stores/cart-store";
 // Hooks
 import useHydration from "@/lib/hooks/use-hydration";
+// Types and constants
+import { Product } from "@/lib/models/product";
+import { colors } from "@/lib/config/constants";
+import { Size } from "@/lib/models/size";
 // Components
 import StyledLoading from "../styled/Loading";
 // Icons
@@ -91,7 +96,10 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 											: "border-gray-300 text-black"
 									}`}
 									onClick={() => {
-										removeQuantity(item.productId);
+										removeQuantity(
+											item.productId,
+											item.sizeId,
+										);
 									}}
 									disabled={item.quantity === 1}
 								>
@@ -108,7 +116,10 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 											: "border-gray-300 text-black"
 									}`}
 									onClick={() => {
-										addQuantity(item.productId);
+										addQuantity(
+											item.productId,
+											item.sizeId,
+										);
 									}}
 									disabled={item.quantity === 10}
 								>
@@ -162,12 +173,16 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 	const [product, setProduct] = useState<Product | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
+	const [sizes, setSizes] = useState<Size[] | null>(null);
+	const [selectedSize, setSelectedSize] = useState<Size | null>(null);
 	// Cart Store
 	const removeItem = useCartStore((state) => state.removeItem);
 	const addQuantity = useCartStore((state) => state.addQuantity);
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
 
 	useEffect(() => {
+		fetchAllSizes(setSizes);
+
 		document.addEventListener("visibilitychange", updateCartStore);
 		window.addEventListener("focus", updateCartStore);
 		return () => {
@@ -175,6 +190,10 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 			window.removeEventListener("focus", updateCartStore);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (sizes) setSelectedSize(getCartItemSize(sizes, item.sizeId));
+	}, [item, sizes]);
 
 	useEffect(() => {
 		fetchProductById(item.productId, setProduct);
@@ -186,18 +205,27 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 			<td className="px-6 text-sm font-medium text-gray-900">
 				<div className="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-4">
 					{product && imageUrl && (
-						<Link
-							href={`/products/${product.slug}`}
-							className="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-2"
-						>
-							<Image
-								src={imageUrl}
-								width={100}
-								height={100}
-								alt={product?.name}
-							/>
-							<span>{product?.name}</span>
-						</Link>
+						<div className="flex-col">
+							<Link
+								href={`/products/${product.slug}`}
+								className="flex flex-col sm:flex-row items-center space-x-0 sm:space-x-2"
+							>
+								<Image
+									src={imageUrl}
+									width={100}
+									height={100}
+									alt={product?.name}
+								/>
+								<div>
+									<p>{product?.name}</p>
+									{sizes && selectedSize && (
+										<p className="text-gray-500 text-start">
+											Size: {selectedSize.name}
+										</p>
+									)}
+								</div>
+							</Link>
+						</div>
 					)}
 				</div>
 			</td>
@@ -214,7 +242,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 								: "border-gray-300 text-black"
 						}`}
 						onClick={() => {
-							removeQuantity(item.productId);
+							removeQuantity(item.productId, item.sizeId);
 						}}
 						disabled={item.quantity === 1}
 					>
@@ -231,7 +259,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 								: "border-gray-300 text-black"
 						}`}
 						onClick={() => {
-							addQuantity(item.productId);
+							addQuantity(item.productId, item.sizeId);
 						}}
 						disabled={item.quantity === 10}
 					>

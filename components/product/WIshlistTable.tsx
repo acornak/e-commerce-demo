@@ -18,7 +18,7 @@ import {
 	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
-import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
+import { updateCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Hooks
 import useHydration from "@/lib/hooks/use-hydration";
@@ -33,15 +33,15 @@ type WishlistItemProps = {
 const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
 	const [product, setProduct] = useState<Product | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
-	// Cart Store
-	const removeWishlistItem = useWishlistStore((state) => state.removeItem);
 	// Wishlist Store
-	const addCartItem = useCartStore((state) => state.addItem);
+	const removeWishlistItem = useWishlistStore((state) => state.removeItem);
 	// Modal Store
-	const setProductAddedModalOpen = useModalsStore(
-		(state) => state.setProductAddedModalOpen,
+	const setProductPreviewModalOpen = useModalsStore(
+		(state) => state.setProductPreviewModalOpen,
 	);
-	const setCartProduct = useModalsStore((state) => state.setCartProduct);
+	const setPreviewProductId = useModalsStore(
+		(state) => state.setPreviewProductId,
+	);
 
 	useEffect(() => {
 		document.addEventListener("visibilitychange", updateCartStore);
@@ -66,13 +66,8 @@ const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
 
 	const handleAddToCart = () => {
 		if (product) {
-			addCartItem({
-				productId,
-				price: product.price,
-				quantity: 1,
-			});
-			setCartProduct(product);
-			setProductAddedModalOpen(true);
+			setProductPreviewModalOpen(true);
+			setPreviewProductId(productId);
 		}
 	};
 
