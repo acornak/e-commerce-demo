@@ -7,7 +7,8 @@ import { useSearchParams } from "next/navigation";
 import { Product } from "@/lib/models/product";
 // Functions
 import { fetchProductsPaginated } from "@/lib/functions/product-fetcher";
-import useFilterChange, { scrollToAboveElement } from "@/lib/hooks/url-params";
+import useFilterChange from "@/lib/hooks/url-params";
+import scrollToAboveElement from "@/lib/functions/scroll";
 // Components
 import ProductPreview from "./ProductPreview";
 import StyledLoading from "../styled/Loading";
@@ -19,20 +20,15 @@ import ChevronRightDoubleIcon from "../icon/ChevronRightDouble";
 
 const ProductGrid = (): JSX.Element => {
 	const searchParams = useSearchParams();
-	const initialPage = Number(searchParams.get("page")) || 1;
-	const initialCategory = Number(searchParams.get("category")) || null;
-	const initialBrand = Number(searchParams.get("brand")) || null;
 
 	const [loading, setLoading] = useState<boolean>(true);
 	const handleFilterChange = useFilterChange();
 
-	const [currentPage, setCurrentPage] = useState(initialPage);
+	const [currentPage, setCurrentPage] = useState(1);
 	const [selectedCategory, setSelectedCategory] = useState<number | null>(
-		initialCategory,
+		null,
 	);
-	const [selectedBrand, setSelectedBrand] = useState<number | null>(
-		initialBrand,
-	);
+	const [selectedBrand, setSelectedBrand] = useState<number | null>(null);
 	const [totalPages, setTotalPages] = useState(0);
 	const [pageProducts, setPageProducts] = useState<Product[]>([]);
 
@@ -48,25 +44,22 @@ const ProductGrid = (): JSX.Element => {
 		);
 	}, [currentPage, selectedCategory, selectedBrand]);
 
-	useEffect(() => {
-		setCurrentPage(1);
-	}, [selectedCategory, selectedBrand]);
-
 	useEffect((): void => {
 		if (totalPages > 0 && currentPage <= totalPages) {
-			handleFilterChange("page", String(currentPage));
+			handleFilterChange({ page: String(currentPage) });
 		} else if (currentPage > totalPages && totalPages > 0) {
 			setCurrentPage(totalPages);
 		}
 	}, [currentPage, totalPages]);
 
 	useEffect((): void => {
+		setCurrentPage(Number(searchParams.get("page")) || 1);
 		setSelectedCategory(Number(searchParams.get("category")) || null);
 		setSelectedBrand(Number(searchParams.get("brand")) || null);
 	}, [searchParams]);
 
 	useEffect(() => {
-		if (!loading) scrollToAboveElement();
+		if (!loading) scrollToAboveElement("product-overview");
 	}, [currentPage, loading]);
 
 	if (loading) {

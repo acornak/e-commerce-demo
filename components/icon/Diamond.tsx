@@ -9,6 +9,7 @@ const DiamondIcon = (): JSX.Element => (
 		height="10em"
 		width="10em"
 		viewBox="0 0 512 512"
+		data-testid="Diamondicon"
 	>
 		<g>
 			<g>

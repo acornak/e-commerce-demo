@@ -1,4 +1,4 @@
-import mockProducts from "../../__mocks__/products/mock-products";
+import mockProducts from "../../__mocks__/products/products.mock";
 
 export type Variant = {
 	id: number;
@@ -49,7 +49,6 @@ export function getProductById(
 ): Product | undefined {
 	return products.find((product) => product.id === id);
 }
-
 /**
  * Get products by category
  * @param products - array of products
@@ -71,7 +70,7 @@ export function getProductsByCategory(
  * @param tags - array of tags to filter by
  * @returns array of products
  */
-export function getProductsByTag(
+export function getProductsByTags(
 	products: Product[],
 	tags: string[],
 ): Product[] {

@@ -20,7 +20,7 @@ import {
 	useCartStore,
 } from "@/lib/stores/cart-store";
 // Hooks
-import useHydration from "@/lib/hooks/use-hydratation";
+import useHydration from "@/lib/hooks/use-hydration";
 // Components
 import StyledLoading from "../styled/Loading";
 // Icons

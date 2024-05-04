@@ -1,4 +1,4 @@
-import mockBrands from "../../__mocks__/brands/mock-brands";
+import mockBrands from "../../__mocks__/brands/brands.mock";
 
 export type Brand = {
 	id: number;

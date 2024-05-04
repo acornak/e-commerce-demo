@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { UseBoundStore } from "zustand";
 
 const useHydration = (useStore: UseBoundStore<any>) => {
-	const [hydrated, setHydrated] = useState(false);
+	const [hydrated, setHydrated] = useState<boolean>(false);
 
 	useEffect(() => {
 		const unsubHydrate = useStore.persist.onHydrate(() =>

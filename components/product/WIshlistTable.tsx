@@ -21,7 +21,7 @@ import {
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Hooks
-import useHydration from "@/lib/hooks/use-hydratation";
+import useHydration from "@/lib/hooks/use-hydration";
 import StyledLoading from "../styled/Loading";
 // Icons
 import TrashIcon from "../icon/Trash";

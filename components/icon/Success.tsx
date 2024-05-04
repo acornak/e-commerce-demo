@@ -11,6 +11,7 @@ const SuccessIcon: FC<IconProps> = ({ className }): JSX.Element => {
 			strokeWidth={1.5}
 			stroke="currentColor"
 			className={className}
+			data-testid="Successicon"
 		>
 			<path
 				strokeLinecap="round"

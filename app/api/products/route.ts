@@ -5,7 +5,7 @@ import {
 	getProductById,
 	getProductsByBrand,
 	getProductsByCategory,
-	getProductsByTag,
+	getProductsByTags,
 } from "@/lib/models/product";
 
 export async function GET(request: Request): Promise<Response> {
@@ -41,7 +41,7 @@ export async function GET(request: Request): Promise<Response> {
 	}
 
 	if (tags.length) {
-		products = getProductsByTag(products, tags);
+		products = getProductsByTags(products, tags);
 	}
 
 	if (brandId) {

@@ -2,13 +2,13 @@ import React from "react";
 // Testing
 import { render, screen } from "@testing-library/react";
 // Components
-import PaperPlaneIcon from "@/components/icon/PaperPlane";
+import PlaneIcon from "@/components/icon/Plane";
 
 describe("PlaneIcon", () => {
 	it("renders an icon", () => {
-		render(<PaperPlaneIcon />);
+		render(<PlaneIcon />);
 
-		const icon = screen.getByTestId("Paperplaneicon");
+		const icon = screen.getByTestId("Planeicon");
 
 		expect(icon).toBeInTheDocument();
 	});

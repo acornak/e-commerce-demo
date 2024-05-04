@@ -7,6 +7,7 @@ const PaymentsIcon = (): JSX.Element => (
 		fill="currentColor"
 		height="5em"
 		width="5em"
+		data-testid="Paymentsicon"
 	>
 		<g>
 			<g>

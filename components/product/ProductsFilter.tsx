@@ -48,10 +48,13 @@ const CategoryFilter = (): JSX.Element => {
 	const handleCategoryChange = (categoryId: number) => {
 		if (selectedCategory === categoryId) {
 			setSelectedCategory(null);
-			handleFilterChange("category", null, true);
+			handleFilterChange({ page: "1", category: null }, true);
 		} else {
 			setSelectedCategory(categoryId);
-			handleFilterChange("category", String(categoryId), true);
+			handleFilterChange(
+				{ page: "1", category: String(categoryId) },
+				true,
+			);
 		}
 	};
 
@@ -226,13 +229,13 @@ const BrandsFilter = (): JSX.Element => {
 		setSelectedBrand(Number(searchParams.get("brand") || null));
 	}, [searchParams]);
 
-	const handleCategoryChange = (brandId: number) => {
+	const handleBrandChange = (brandId: number) => {
 		if (selectedBrand === brandId) {
 			setSelectedBrand(null);
-			handleFilterChange("brand", null, true);
+			handleFilterChange({ page: "1", brand: null }, true);
 		} else {
 			setSelectedBrand(brandId);
-			handleFilterChange("brand", brandId.toString(), true);
+			handleFilterChange({ page: "1", brand: brandId.toString() }, true);
 		}
 	};
 
@@ -249,7 +252,7 @@ const BrandsFilter = (): JSX.Element => {
 								? colors.secondary
 								: "initial",
 					}}
-					onClick={() => handleCategoryChange(brand.id)}
+					onClick={() => handleBrandChange(brand.id)}
 				>
 					<motion.div
 						initial={{ opacity: 0, x: -10 }}

@@ -1,4 +1,4 @@
-import mockCategories from "../../__mocks__/categories/mock-categories";
+import mockCategories from "../../__mocks__/categories/categories.mock";
 
 export type Category = {
 	id: number;

@@ -1,26 +1,10 @@
 import { useCallback } from "react";
 // Next
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
-export const scrollToAboveElement = () => {
-	setTimeout(() => {
-		const element = document.getElementById("product-overview");
-		if (element) {
-			const offset = 150;
-			const elementPosition = element.getBoundingClientRect().top;
-			const offsetPosition = elementPosition + window.scrollY - offset;
-
-			window.scrollTo({
-				top: offsetPosition,
-				behavior: "smooth",
-			});
-		}
-	}, 300);
-};
+import scrollToAboveElement from "../functions/scroll";
 
 const useFilterChange = (): ((
-	filterName: string,
-	value: string | null,
+	changes: Record<string, string | null>,
 	scroll?: boolean,
 ) => void) => {
 	const searchParams = useSearchParams();
@@ -28,18 +12,23 @@ const useFilterChange = (): ((
 	const router = useRouter();
 
 	const handleFilterChange = useCallback(
-		(filterName: string, value: string | null, scroll?: boolean) => {
+		(changes: Record<string, string | null>, scroll?: boolean) => {
 			const params = new URLSearchParams(searchParams.toString());
 
-			if (value === null) {
-				params.delete(filterName);
-			} else {
-				params.set(filterName, value);
-			}
+			// Apply changes to the URL parameters
+			Object.entries(changes).forEach(([param, value]) => {
+				if (value === null) {
+					params.delete(param);
+				} else {
+					params.set(param, value);
+				}
+			});
+
+			// Update the URL and scroll if necessary
 			router.push(`${pathname}?${params.toString()}`, { scroll: false });
 
 			if (scroll) {
-				scrollToAboveElement();
+				scrollToAboveElement("product-overview");
 			}
 		},
 		[searchParams, pathname, router],

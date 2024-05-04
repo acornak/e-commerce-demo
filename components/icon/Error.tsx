@@ -11,6 +11,7 @@ const ErrorIcon: FC<IconProps> = ({ className }): JSX.Element => {
 			strokeWidth={1.5}
 			stroke="currentColor"
 			className={className}
+			data-testid="Erroricon"
 		>
 			<path
 				strokeLinecap="round"

@@ -1,7 +1,13 @@
 import React from "react";
 
 const PlaneIcon = (): JSX.Element => (
-	<svg fill="currentColor" height="3em" width="3em" viewBox="0 0 512 512">
+	<svg
+		fill="currentColor"
+		height="3em"
+		width="3em"
+		viewBox="0 0 512 512"
+		data-testid="Planeicon"
+	>
 		<path
 			d="M501.905,10.593C489.743-1.57,468.721-2.766,441.099,7.133c-18.995,6.81-38.919,18.222-48.451,27.754l-76.55,76.55
 			L64.116,71.859L0,135.975l209.501,82.059l-67.266,67.266l-95.472,5.591L0.984,336.67l103.609,49.994L75.567,415.69l21.24,21.24

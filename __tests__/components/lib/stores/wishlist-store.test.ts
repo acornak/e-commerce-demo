@@ -1,12 +1,13 @@
+import { act, renderHook } from "@testing-library/react";
 import {
 	updateWishlistStore,
 	useWishlistStore,
 } from "@/lib/stores/wishlist-store";
-import { act, renderHook } from "@testing-library/react";
 
 describe("useWishlistStore", () => {
 	beforeEach(() => {
-		localStorage.clear(); // Clear localStorage before each test
+		localStorage.clear();
+		updateWishlistStore();
 	});
 
 	it("should add an item to the wishlist", () => {
@@ -18,17 +19,25 @@ describe("useWishlistStore", () => {
 
 		expect(result.current.items).toHaveLength(1);
 		expect(result.current.items[0].productId).toBe(1);
+
+		act(() => {
+			result.current.clearWishlist();
+		});
 	});
 
 	it("should remove an item from the wishlist", () => {
 		const { result } = renderHook(() => useWishlistStore());
 
 		act(() => {
-			result.current.addItem({ productId: 1 });
-			result.current.removeItem({ productId: 1 });
+			result.current.addItem({ productId: 2 });
+			result.current.removeItem({ productId: 2 });
 		});
 
 		expect(result.current.items).toHaveLength(0);
+
+		act(() => {
+			result.current.clearWishlist();
+		});
 	});
 
 	it("should clear the wishlist", () => {

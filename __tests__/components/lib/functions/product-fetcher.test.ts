@@ -1,9 +1,13 @@
-import mockProducts from "@/__mocks__/products/mock-products";
 import {
+	fetchAllProducts,
 	fetchProductById,
+	fetchProductImage,
+	fetchProductsByCategory,
+	fetchProductsByTag,
 	fetchProductsPaginated,
 } from "@/lib/functions/product-fetcher";
 import { Product } from "@/lib/models/product";
+import mockProducts from "@/__mocks__/products/products.mock";
 
 describe("fetchProduct function", () => {
 	let mockSetProduct: jest.Mock<void, [Product]>;
@@ -23,7 +27,7 @@ describe("fetchProduct function", () => {
 		jest.clearAllMocks();
 	});
 
-	it("should fetch product and set ot using setProduct", async () => {
+	it("should fetch product and set it using setProduct", async () => {
 		await fetchProductById(1, mockSetProduct);
 
 		expect(global.fetch).toHaveBeenCalledWith("/api/products?productId=1");
@@ -68,7 +72,7 @@ describe("fetchProductsPaginated function", () => {
 		jest.clearAllMocks();
 	});
 
-	it("should fetch products and set ot using setProducts, setTotalPages and setLoading", async () => {
+	it("should fetch filtered products and set it using setProducts, setTotalPages and setLoading", async () => {
 		await fetchProductsPaginated(
 			mockSetProducts,
 			mockSetTotalPages,
@@ -80,8 +84,33 @@ describe("fetchProductsPaginated function", () => {
 		);
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`/api/products?&page=1&categoryId=1&brandId=1
-		&limit=16`,
+			`/api/products?&page=1&categoryId=1&brandId=1&limit=16`,
+		);
+		expect(mockSetProducts).toHaveBeenCalledTimes(2);
+		expect(mockSetProducts).toHaveBeenCalledWith([]);
+		expect(mockSetProducts).toHaveBeenLastCalledWith(
+			mockProducts.slice(0, 20),
+		);
+
+		expect(mockSetTotalPages).toHaveBeenCalledWith(2);
+
+		expect(mockSetLoading).toHaveBeenCalledTimes(2);
+		expect(mockSetLoading).toHaveBeenCalledWith(true);
+		expect(mockSetLoading).toHaveBeenLastCalledWith(false);
+	});
+
+	it("should fetch products without filters and set it using setProducts, setTotalPages and setLoading", async () => {
+		await fetchProductsPaginated(
+			mockSetProducts,
+			mockSetTotalPages,
+			1,
+			null,
+			null,
+			mockSetLoading,
+		);
+
+		expect(global.fetch).toHaveBeenCalledWith(
+			`/api/products?&page=1&limit=10000`,
 		);
 		expect(mockSetProducts).toHaveBeenCalledTimes(2);
 		expect(mockSetProducts).toHaveBeenCalledWith([]);
@@ -111,6 +140,177 @@ describe("fetchProductsPaginated function", () => {
 
 		expect(console.error).toHaveBeenCalledWith(
 			"Fetching products failed:",
+			"Fetch failed",
+		);
+	});
+});
+
+describe("fetchAllProducts function", () => {
+	let mockSetProducts: jest.Mock<void, [Product[]]>;
+
+	beforeEach(() => {
+		mockSetProducts = jest.fn();
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () =>
+					Promise.resolve({ products: mockProducts.slice(0, 20) }),
+				status: 200,
+			}),
+		) as jest.Mock;
+		console.error = jest.fn();
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it("should fetch products and set it using setProducts", async () => {
+		await fetchAllProducts(mockSetProducts, 100);
+
+		expect(global.fetch).toHaveBeenCalledWith("/api/products?limit=100");
+		expect(mockSetProducts).toHaveBeenCalledWith(mockProducts.slice(0, 20));
+	});
+
+	it("should log error if fetching products fails", async () => {
+		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
+
+		await fetchAllProducts(mockSetProducts);
+
+		expect(console.error).toHaveBeenCalledWith(
+			"Fetching products failed:",
+			"Fetch failed",
+		);
+	});
+});
+
+describe("fetchProductImage function", () => {
+	let mockSetImageUrl: jest.Mock<void, [string]>;
+	let mockSetProductImageModalUrl: jest.Mock<void, [string]>;
+
+	const mockBlob = new Blob(["test data"], { type: "image/png" });
+
+	beforeEach(() => {
+		mockSetImageUrl = jest.fn();
+		mockSetProductImageModalUrl = jest.fn();
+		global.fetch = jest.fn().mockResolvedValue({
+			blob: () => Promise.resolve(mockBlob),
+		}) as jest.Mock;
+		URL.createObjectURL = jest.fn(() => "image-url");
+		console.error = jest.fn();
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it("should fetch product image and set it using setImageUrl and setProductImageModalUrl", async () => {
+		await fetchProductImage(
+			1,
+			mockSetImageUrl,
+			mockSetProductImageModalUrl,
+		);
+
+		expect(global.fetch).toHaveBeenCalledWith(
+			"/api/products/image?productId=1",
+		);
+
+		expect(URL.createObjectURL).toHaveBeenCalledWith(mockBlob);
+
+		expect(mockSetImageUrl).toHaveBeenCalledWith("image-url");
+		expect(mockSetProductImageModalUrl).toHaveBeenCalledWith("image-url");
+	});
+	it("should log error if fetching product image fails", async () => {
+		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
+
+		await fetchProductImage(
+			1,
+			mockSetImageUrl,
+			mockSetProductImageModalUrl,
+		);
+
+		expect(console.error).toHaveBeenCalledWith(
+			"Fetching image failed:",
+			"Fetch failed",
+		);
+	});
+});
+
+describe("fetchProductsByCategory function", () => {
+	let mockSetProducts: jest.Mock<void, [Product[]]>;
+
+	beforeEach(() => {
+		mockSetProducts = jest.fn();
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () =>
+					Promise.resolve({ products: mockProducts.slice(0, 20) }),
+				status: 200,
+			}),
+		) as jest.Mock;
+		console.error = jest.fn();
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it("should fetch products by category and set it using setProducts", async () => {
+		await fetchProductsByCategory(1, mockSetProducts, 100);
+
+		expect(global.fetch).toHaveBeenCalledWith(
+			"/api/products?categoryId=1&limit=100",
+		);
+		expect(mockSetProducts).toHaveBeenCalledWith(mockProducts.slice(0, 20));
+	});
+
+	it("should log error if fetching products by category fails", async () => {
+		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
+
+		await fetchProductsByCategory(1, mockSetProducts);
+
+		expect(console.error).toHaveBeenCalledWith(
+			"Fetching products by category failed:",
+			"Fetch failed",
+		);
+	});
+});
+
+describe("fetchProductsByTag function", () => {
+	let mockSetProducts: jest.Mock<void, [Product[]]>;
+	const mockTags = ["tag1", "tag2"];
+
+	beforeEach(() => {
+		mockSetProducts = jest.fn();
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () =>
+					Promise.resolve({ products: mockProducts.slice(0, 20) }),
+				status: 200,
+			}),
+		) as jest.Mock;
+		console.error = jest.fn();
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it("should fetch products by category and set it using setProducts", async () => {
+		await fetchProductsByTag(mockTags, mockSetProducts, 100);
+
+		expect(global.fetch).toHaveBeenCalledWith(
+			"/api/products?tags=tag1&tags=tag2&limit=100",
+		);
+		expect(mockSetProducts).toHaveBeenCalledWith(mockProducts.slice(0, 20));
+	});
+
+	it("should log error if fetching products by category fails", async () => {
+		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
+
+		await fetchProductsByTag(mockTags, mockSetProducts);
+
+		expect(console.error).toHaveBeenCalledWith(
+			"Fetching products by tag failed:",
 			"Fetch failed",
 		);
 	});

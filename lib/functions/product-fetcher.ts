@@ -29,8 +29,7 @@ export const fetchProductsPaginated = async (
 	await fetch(
 		`/api/products?&page=${page}${
 			categoryId ? `&categoryId=${categoryId}` : ""
-		}${brandId ? `&brandId=${brandId}` : ""}
-		${limit ? `&limit=${limit}` : ""}`,
+		}${brandId ? `&brandId=${brandId}` : ""}&limit=${limit}`,
 	)
 		.then((response) => response.json())
 		.then((data) => {
@@ -43,22 +42,22 @@ export const fetchProductsPaginated = async (
 		.catch((error) => console.error("Fetching products failed:", error));
 };
 
-export const fetchAllProducts = (
+export const fetchAllProducts = async (
 	setProducts: (products: Product[]) => void,
 	limit: number = 10000,
 ) => {
-	fetch(`/api/products?limit=${limit}`)
+	await fetch(`/api/products?limit=${limit}`)
 		.then((response) => response.json())
 		.then((data) => setProducts(data.products))
 		.catch((error) => console.error("Fetching products failed:", error));
 };
 
-export const fetchProductImage = (
+export const fetchProductImage = async (
 	productId: number,
 	setImageUrl: (url: string) => void,
 	setProductImageModalUrl?: (url: string) => void,
 ) => {
-	fetch(`/api/products/image?productId=${productId}`)
+	await fetch(`/api/products/image?productId=${productId}`)
 		.then((response) => response.blob())
 		.then((blob) => {
 			const url = URL.createObjectURL(blob);
@@ -71,18 +70,22 @@ export const fetchProductImage = (
 		.catch((error) => console.error("Fetching image failed:", error));
 };
 
-export const fetchProductsByCategory = (
+export const fetchProductsByCategory = async (
 	categoryId: number,
 	setProducts: (products: Product[]) => void,
 	limit?: number,
 ) => {
-	fetch(`/api/products?categoryId=${categoryId}${limit && `&limit=${limit}`}`)
+	await fetch(
+		`/api/products?categoryId=${categoryId}${limit && `&limit=${limit}`}`,
+	)
 		.then((response) => response.json())
 		.then((data) => setProducts(data.products))
-		.catch((error) => console.error("Fetching products failed:", error));
+		.catch((error) =>
+			console.error("Fetching products by category failed:", error),
+		);
 };
 
-export const fetchProductsByTag = (
+export const fetchProductsByTag = async (
 	tags: string[],
 	setProducts: (products: Product[]) => void,
 	limit?: number,
@@ -91,8 +94,10 @@ export const fetchProductsByTag = (
 		.map((tag) => `tags=${encodeURIComponent(tag)}`)
 		.join("&");
 
-	fetch(`/api/products?${queryParams}${limit && `&limit=${limit}`}`)
+	await fetch(`/api/products?${queryParams}${limit && `&limit=${limit}`}`)
 		.then((response) => response.json())
 		.then((data) => setProducts(data.products))
-		.catch((error) => console.error("Fetching products failed:", error));
+		.catch((error) =>
+			console.error("Fetching products by tag failed:", error),
+		);
 };
