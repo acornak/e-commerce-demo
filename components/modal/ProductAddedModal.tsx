@@ -108,6 +108,7 @@ const ProductAddedModal: FC = () => {
 										{getCartItemQty(
 											cartItems,
 											cartProduct.id,
+											cartProduct.selectedSize.id,
 										)}
 									</span>
 								</p>
@@ -120,6 +121,7 @@ const ProductAddedModal: FC = () => {
 										{totalCartItemPrice(
 											cartItems,
 											cartProduct,
+											cartProduct.selectedSize.id,
 										).toFixed(2)}
 									</span>
 								</p>

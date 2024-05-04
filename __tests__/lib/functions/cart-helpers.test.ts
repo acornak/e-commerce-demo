@@ -29,21 +29,21 @@ describe("getCartItemSize", () => {
 describe("getCartItemQty", () => {
 	const cartItems: CartItem[] = [
 		{ productId: 1, quantity: 5, sizeId: 1, price: 100 },
-		{ productId: 2, quantity: 3, sizeId: 2, price: 200 },
-		{ productId: 3, quantity: 7, sizeId: 3, price: 300 },
+		{ productId: 2, quantity: 3, sizeId: 1, price: 200 },
+		{ productId: 3, quantity: 7, sizeId: 1, price: 300 },
 	];
 
 	it("should return the correct quantity when the productId exists", () => {
 		const productId = 2;
 		const expectedQty = 3;
 
-		expect(getCartItemQty(cartItems, productId)).toEqual(expectedQty);
+		expect(getCartItemQty(cartItems, productId, 1)).toEqual(expectedQty);
 	});
 
 	it("should throw an error when the productId does not exist", () => {
 		const productId = 4;
 
-		expect(() => getCartItemQty(cartItems, productId)).toThrow();
+		expect(() => getCartItemQty(cartItems, productId, 1)).toThrow();
 	});
 });
 
@@ -55,11 +55,13 @@ describe("totalCartItemPrice", () => {
 	];
 
 	it("should return the correct total price when the product exists in the cart", () => {
-		expect(totalCartItemPrice(cartItems, mockProducts[0])).toEqual(260);
+		expect(totalCartItemPrice(cartItems, mockProducts[0], 1)).toEqual(260);
 	});
 
 	it("should return 0 when the product does not exist in the cart", () => {
-		expect(() => totalCartItemPrice(cartItems, mockProducts[4])).toThrow();
+		expect(() =>
+			totalCartItemPrice(cartItems, mockProducts[4], 1),
+		).toThrow();
 	});
 });
 

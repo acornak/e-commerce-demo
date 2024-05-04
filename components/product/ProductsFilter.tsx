@@ -403,7 +403,7 @@ const ProductsFilter = (): JSX.Element => {
 			.map((filter, index) => (filter.initial ? index : null))
 			.filter((index) => index !== null) as number[];
 		setOpenedFilters(initialFilters);
-	}, [filters]);
+	}, []);
 
 	const handleOpenedFilters = (index: number) => {
 		setOpenedFilters((prev) =>
