@@ -48,6 +48,9 @@ describe("Navbar", () => {
 		fireEvent.mouseEnter(hoveredNavItem);
 		await waitFor(() => {
 			expect(hoveredNavItem).toHaveStyle("color: rgb(255, 99, 71);");
+			expect(hoveredNavItem.childNodes[1]).toHaveClass(
+				"absolute left-0 bottom-0 h-0.5 bg-secondary",
+			);
 		});
 
 		expect(notHoveredNavItem).toHaveStyle("color: rgb(51, 51, 51);");

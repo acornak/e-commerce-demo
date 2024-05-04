@@ -15,7 +15,7 @@ import {
 	useWishlistStore,
 } from "@/lib/stores/wishlist-store";
 import {
-	fetchProduct,
+	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
@@ -60,7 +60,7 @@ const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
-		fetchProduct(productId, setProduct);
+		fetchProductById(productId, setProduct);
 		fetchProductImage(productId, setImageUrl);
 	}, [productId]);
 

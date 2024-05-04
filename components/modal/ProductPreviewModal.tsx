@@ -14,7 +14,7 @@ import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Functions
 import {
-	fetchProduct,
+	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
 // Components
@@ -53,7 +53,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 
 	useEffect(() => {
 		if (!productId) return () => {};
-		fetchProduct(productId, setProduct);
+		fetchProductById(productId, setProduct);
 		fetchProductImage(productId, setImageUrl);
 		const timeout = setTimeout(() => setLoading(false), 400);
 		return () => clearTimeout(timeout);

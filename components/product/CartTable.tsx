@@ -11,7 +11,7 @@ import { Product } from "@/lib/models/product";
 import { colors } from "@/lib/config/constants";
 // Store
 import {
-	fetchProduct,
+	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
 import {
@@ -55,7 +55,7 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 	}, []);
 
 	useEffect(() => {
-		fetchProduct(item.productId, setProduct);
+		fetchProductById(item.productId, setProduct);
 		fetchProductImage(item.productId, setImageUrl);
 	}, [item.productId]);
 
@@ -177,7 +177,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
-		fetchProduct(item.productId, setProduct);
+		fetchProductById(item.productId, setProduct);
 		fetchProductImage(item.productId, setImageUrl);
 	}, [item.productId]);
 

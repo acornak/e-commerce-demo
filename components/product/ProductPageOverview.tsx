@@ -12,7 +12,7 @@ import { useModalsStore } from "@/lib/stores/modals-store";
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 // Functions
 import {
-	fetchProduct,
+	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
 import { fetchAllCategories } from "@/lib/functions/category-fetcher";
@@ -436,7 +436,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 	const [productMenuSelected, setProductMenuSelected] = useState<number>(0);
 
 	useEffect(() => {
-		fetchProduct(productId, setProduct);
+		fetchProductById(productId, setProduct);
 		fetchProductImage(productId, setImageUrl, setProductImageModalUrl);
 
 		document.getElementById("product-overview")?.scrollIntoView();

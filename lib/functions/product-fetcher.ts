@@ -1,11 +1,11 @@
 // Types and constants
 import { Product } from "../models/product";
 
-export const fetchProduct = (
+export const fetchProductById = async (
 	productId: number,
 	setProduct: (product: Product) => void,
 ) => {
-	fetch(`/api/products?productId=${productId}`)
+	await fetch(`/api/products?productId=${productId}`)
 		.then((response) => response.json())
 		.then((data) => setProduct(data.product))
 		.catch((error) =>
@@ -13,7 +13,7 @@ export const fetchProduct = (
 		);
 };
 
-export const fetchProductsPaginated = (
+export const fetchProductsPaginated = async (
 	setProducts: (products: Product[]) => void,
 	setTotalPages: (totalPages: number) => void,
 	page: number,
@@ -26,7 +26,7 @@ export const fetchProductsPaginated = (
 		setLoading(true);
 	}
 	setProducts([]);
-	fetch(
+	await fetch(
 		`/api/products?&page=${page}${
 			categoryId ? `&categoryId=${categoryId}` : ""
 		}${brandId ? `&brandId=${brandId}` : ""}

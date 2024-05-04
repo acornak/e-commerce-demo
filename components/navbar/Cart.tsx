@@ -14,7 +14,7 @@ import {
 } from "@/lib/stores/cart-store";
 // Functions
 import {
-	fetchProduct,
+	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
 // Icons
@@ -81,7 +81,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 	}, []);
 
 	useEffect(() => {
-		fetchProduct(item.productId, setProduct);
+		fetchProductById(item.productId, setProduct);
 		fetchProductImage(item.productId, setImageUrl);
 	}, [item.productId]);
 

@@ -1,8 +1,8 @@
-const verifyCaptcha = (
+const verifyCaptcha = async (
 	token: string,
 	setVerified: (verified: boolean) => void,
 ) => {
-	fetch("/api/captcha", {
+	await fetch("/api/captcha", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -14,7 +14,7 @@ const verifyCaptcha = (
 		.then((response) =>
 			response.status === 200 ? setVerified(true) : setVerified(false),
 		)
-		.catch((error) => console.error("Fetching products failed:", error));
+		.catch((error) => console.error("Verifying captcha failed:", error));
 };
 
 export default verifyCaptcha;
