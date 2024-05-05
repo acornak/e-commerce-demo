@@ -205,7 +205,7 @@ const WishlistTable = () => {
 						Looks like you haven&apos;t added any items to your
 						Wishlist.
 					</div>
-					<Link href="/products">
+					<Link href="/products?page=1">
 						<motion.button
 							initial={{
 								color: colors.white,
@@ -226,7 +226,7 @@ const WishlistTable = () => {
 					</Link>
 				</div>
 			) : (
-				<Link href="/products">
+				<Link href="/products?page=1">
 					<motion.button
 						initial={{
 							color: colors.white,

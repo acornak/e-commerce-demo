@@ -8,7 +8,7 @@ const NavItemsMobile: NavItem[] = [
 	},
 	{
 		title: "Products",
-		url: "/products",
+		url: "/products?page=1",
 	},
 	{
 		title: "Wishlist",
@@ -39,7 +39,7 @@ const NavItemsDesktop: NavItem[] = [
 	},
 	{
 		title: "Products",
-		url: "/products",
+		url: "/products?page=1",
 	},
 	{
 		title: "About Us",

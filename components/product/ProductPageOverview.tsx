@@ -373,7 +373,7 @@ const ProductCategories: FC<CategoriesProps> = ({
 				{filteredCategories &&
 					filteredCategories.map((category) => (
 						<Link
-							href={`/products?category=${category.id}`}
+							href={`/products?page=1&category=${category.id}`}
 							key={category.slug}
 						>
 							<motion.button
@@ -403,7 +403,7 @@ const ProductTags: FC<TagsProps> = ({ tags }): JSX.Element => {
 			<div className="inline-block pr-4">Tags:</div>
 			<div className="flex flex-wrap items-center py-2">
 				{tags.map((tag) => (
-					<Link href={`/products/tags/${tag}`} key={tag}>
+					<Link href={`/products?page=1&tags=${tag}`} key={tag}>
 						<motion.button
 							type="button"
 							whileHover={{
@@ -504,7 +504,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 						</motion.p>
 					</Link>
 					<ChevronRightIcon />
-					<Link href="/products">
+					<Link href="/products?page=1">
 						<motion.p
 							whileHover={{
 								color: colors.secondary,

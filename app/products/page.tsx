@@ -20,7 +20,11 @@ const ProductsPage: NextPage = (): JSX.Element => {
 				</div>
 			}
 		>
-			<StyledHero image={productsHero} link="products" title="Products" />
+			<StyledHero
+				image={productsHero}
+				link="products?page=1"
+				title="Products"
+			/>
 			<div className="flex flex-col lg:flex-row">
 				<div className="lg:w-1/4 w-full">
 					<ProductsFilter />
