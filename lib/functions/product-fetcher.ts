@@ -22,7 +22,7 @@ export const fetchProductsPaginated = async (
 	brandId: number | null,
 	sizes: number[] | null,
 	priceRange: [number, number] | null,
-	sort?: SortOption,
+	sort: SortOption | null,
 	setLoading?: (loading: boolean) => void,
 	limit: number = 10000,
 ) => {

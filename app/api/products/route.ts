@@ -74,8 +74,7 @@ export async function GET(request: Request): Promise<Response> {
 			(option: SortOption) => option.value === sortBy,
 		)?.sortFunc;
 
-		const sortedProducts = sortFunc ? sortFunc(products) : products;
-		products = sortedProducts;
+		products = sortFunc ? sortFunc(products) : products;
 	}
 
 	const startIndex = (page - 1) * limit;

@@ -113,12 +113,12 @@ describe("fetchProductsPaginated function", () => {
 			null,
 			null,
 			null,
-			sortOptions[0],
+			null,
 			mockSetLoading,
 		);
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`/api/products?&page=1&sortBy=default&limit=10000`,
+			`/api/products?&page=1&limit=10000`,
 		);
 		expect(mockSetProducts).toHaveBeenCalledTimes(2);
 		expect(mockSetProducts).toHaveBeenCalledWith([]);
