@@ -1,3 +1,5 @@
+import { Product } from "../models/product";
+
 export type Color = {
 	[key: string]: string;
 };
@@ -33,4 +35,10 @@ export type IconProps = {
 export type FaqQuestion = {
 	question: string;
 	answer: string;
+};
+
+export type SortOption = {
+	label: string;
+	value: string;
+	sortFunc: (products: Product[]) => Product[];
 };

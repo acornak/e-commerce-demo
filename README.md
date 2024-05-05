@@ -36,3 +36,4 @@
 - code splitting
 - investigate multiple rerenders
 - set default state for modals 
+- product filters into zustand

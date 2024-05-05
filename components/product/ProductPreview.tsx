@@ -146,7 +146,7 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 
 	useEffect(() => {
 		fetchProductImage(product.id, setImageUrl);
-	}, [product.id]);
+	}, []);
 
 	return (
 		<div className="flex flex-col items-center">

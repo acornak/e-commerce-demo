@@ -3,18 +3,22 @@
 import React, { useEffect, useState } from "react";
 // Next
 import { useSearchParams } from "next/navigation";
-// Animations
-import { motion } from "framer-motion";
 // Types and constants
+import { sortOptions } from "@/lib/config/constants";
 import { Product } from "@/lib/models/product";
+import { SortOption } from "@/lib/config/types";
 // Functions
-import { fetchProductsPaginated } from "@/lib/functions/product-fetcher";
+import {
+	fetchProductsMaxPrice,
+	fetchProductsPaginated,
+} from "@/lib/functions/product-fetcher";
 import useFilterChange from "@/lib/hooks/url-params";
 import scrollToAboveElement from "@/lib/functions/scroll";
 // Components
-import { colors } from "@/lib/config/constants";
 import ProductPreview from "./ProductPreview";
 import StyledLoading from "../styled/Loading";
+import SortButton from "../styled/SortButton";
+import ClearFiltersButton from "../styled/ClearFiltersButton";
 // Icons
 import ChevronRightIcon from "../icon/ChevronRight";
 import ChevronLeftIcon from "../icon/ChevronLeft";
@@ -25,18 +29,62 @@ const ProductGrid = (): JSX.Element => {
 	const searchParams = useSearchParams();
 
 	const [loading, setLoading] = useState<boolean>(true);
+	const [urlParamsHandled, setUrlParamsHandled] = useState<boolean>(false);
 	const handleFilterChange = useFilterChange();
 
+	const [maxPrice, setMaxPrice] = useState<number>(0);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [selectedCategory, setSelectedCategory] = useState<number | null>(
 		null,
 	);
 	const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
 	const [selectedBrand, setSelectedBrand] = useState<number | null>(null);
+	const [selectedPriceRange, setSelectedPriceRange] = useState<
+		[number, number] | null
+	>(null);
 	const [totalPages, setTotalPages] = useState(0);
 	const [pageProducts, setPageProducts] = useState<Product[]>([]);
+	const [selectedSort, setSelectedSort] = useState<SortOption>(
+		sortOptions[0],
+	);
+
+	useEffect(() => {
+		fetchProductsMaxPrice(setMaxPrice);
+	}, []);
+
+	useEffect(() => {
+		if (maxPrice > 0 && urlParamsHandled) {
+			fetchProductsPaginated(
+				setPageProducts,
+				setTotalPages,
+				currentPage,
+				selectedCategory,
+				selectedBrand,
+				selectedSizes.length > 0 ? selectedSizes : null,
+				selectedPriceRange,
+				selectedSort,
+				setLoading,
+				16,
+			);
+		}
+	}, [
+		currentPage,
+		selectedCategory,
+		selectedBrand,
+		selectedSizes,
+		selectedPriceRange,
+		selectedSort,
+		maxPrice,
+		urlParamsHandled,
+	]);
+
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [selectedSort]);
 
 	useEffect((): void => {
+		if (maxPrice === 0) return;
+
 		setCurrentPage(Number(searchParams.get("page")) || 1);
 		setSelectedCategory(Number(searchParams.get("category")) || null);
 		setSelectedBrand(Number(searchParams.get("brand")) || null);
@@ -47,7 +95,60 @@ const ProductGrid = (): JSX.Element => {
 		} else {
 			setSelectedSizes([]);
 		}
-	}, [searchParams]);
+
+		const price = searchParams.get("price");
+		if (price) {
+			const splittedPrice = price.split("-");
+			if (splittedPrice.length !== 2) {
+				setSelectedPriceRange(null);
+				return;
+			}
+			const min = Number(splittedPrice[0]);
+			const max = Number(splittedPrice[1]);
+			if (Number.isNaN(min) || Number.isNaN(max)) {
+				console.log(min, max);
+				setSelectedPriceRange(null);
+			} else if (min > max || min === max) {
+				setSelectedPriceRange(null);
+			} else if (max > maxPrice) {
+				setSelectedPriceRange([min, maxPrice]);
+			} else {
+				setSelectedPriceRange([min, max]);
+			}
+		} else {
+			setSelectedPriceRange(null);
+		}
+
+		setUrlParamsHandled(true);
+	}, [searchParams, maxPrice]);
+
+	useEffect((): void => {
+		if (totalPages > 0 && currentPage <= totalPages) {
+			handleFilterChange({
+				page: String(currentPage),
+				category: selectedCategory ? String(selectedCategory) : null,
+				brand: selectedBrand ? String(selectedBrand) : null,
+				size:
+					selectedSizes
+						.filter((size) => !Number.isNaN(size))
+						.join(" ") || null,
+				price: selectedPriceRange ? selectedPriceRange.join("-") : null,
+			});
+		} else if (currentPage > totalPages && totalPages > 0) {
+			setCurrentPage(totalPages);
+		}
+	}, [
+		currentPage,
+		totalPages,
+		selectedCategory,
+		selectedBrand,
+		selectedSizes,
+		selectedPriceRange,
+	]);
+
+	useEffect(() => {
+		if (!loading) scrollToAboveElement("product-overview");
+	}, [currentPage, loading]);
 
 	const handleClearAllFilters = (): void => {
 		handleFilterChange({
@@ -55,6 +156,7 @@ const ProductGrid = (): JSX.Element => {
 			category: null,
 			brand: null,
 			size: null,
+			price: null,
 		});
 	};
 
@@ -62,51 +164,19 @@ const ProductGrid = (): JSX.Element => {
 		return (
 			selectedCategory !== null ||
 			selectedBrand !== null ||
-			selectedSizes.length > 0
+			selectedSizes.length > 0 ||
+			selectedPriceRange !== null
 		);
 	};
-
-	useEffect(() => {
-		fetchProductsPaginated(
-			setPageProducts,
-			setTotalPages,
-			currentPage,
-			selectedCategory,
-			selectedBrand,
-			selectedSizes.length > 0 ? selectedSizes : null,
-			setLoading,
-			16,
-		);
-	}, [currentPage, selectedCategory, selectedBrand, selectedSizes]);
-
-	useEffect((): void => {
-		if (totalPages > 0 && currentPage <= totalPages) {
-			handleFilterChange({ page: String(currentPage) });
-		} else if (currentPage > totalPages && totalPages > 0) {
-			setCurrentPage(totalPages);
-		}
-	}, [currentPage, totalPages]);
-
-	useEffect(() => {
-		if (!loading) scrollToAboveElement("product-overview");
-	}, [currentPage, loading]);
 
 	if (loading) {
 		return (
 			<div className="my-6 px-10" id="product-overview">
 				{showClearAllFilters() && (
-					<motion.button
-						whileHover={{
-							backgroundColor: colors.secondary,
-							color: colors.white,
-							border: `1px solid ${colors.secondary}`,
-						}}
-						type="button"
-						className="border border-black text-sm px-2 py-1"
-						onClick={handleClearAllFilters}
-					>
-						Clear all filters
-					</motion.button>
+					<ClearFiltersButton
+						handleClearFilter={handleClearAllFilters}
+						text="Clear all filters"
+					/>
 				)}
 				<div className="flex items-center justify-center h-screen">
 					<StyledLoading />
@@ -119,18 +189,10 @@ const ProductGrid = (): JSX.Element => {
 		return (
 			<div className="my-6" id="product-overview">
 				<div className="flex px-10">
-					<motion.button
-						whileHover={{
-							backgroundColor: colors.secondary,
-							color: colors.white,
-							border: `1px solid ${colors.secondary}`,
-						}}
-						type="button"
-						className="border border-black text-sm px-2 py-1"
-						onClick={handleClearAllFilters}
-					>
-						Clear all filters
-					</motion.button>
+					<ClearFiltersButton
+						handleClearFilter={handleClearAllFilters}
+						text="Clear all filters"
+					/>
 				</div>
 				<div
 					className="flex flex-col items-center justify-center py-10 lg:pt-32"
@@ -153,21 +215,22 @@ const ProductGrid = (): JSX.Element => {
 			id="product-overview"
 		>
 			<div className="container mx-auto">
-				<div className="flex px-10">
-					{showClearAllFilters() && (
-						<motion.button
-							whileHover={{
-								backgroundColor: colors.secondary,
-								color: colors.white,
-								border: `1px solid ${colors.secondary}`,
-							}}
-							type="button"
-							className="border border-black text-sm px-2 py-1"
-							onClick={handleClearAllFilters}
-						>
-							Clear all filters
-						</motion.button>
-					)}
+				<div className="flex w-full px-16 items-center">
+					<div style={{ flex: showClearAllFilters() ? "none" : "1" }}>
+						{showClearAllFilters() && (
+							<ClearFiltersButton
+								handleClearFilter={handleClearAllFilters}
+								text="Clear all filters"
+							/>
+						)}
+					</div>
+					<div className="flex-grow">
+						<SortButton
+							sortOptions={sortOptions}
+							selectedOption={selectedSort}
+							setSelectedOption={setSelectedSort}
+						/>
+					</div>
 				</div>
 				<div className="grid grid-cols-2 md:grid-cols-4 mx-4">
 					{pageProducts.map((product: Product) => (

@@ -12,6 +12,7 @@ const StyledLoading: FC<StyledLoadingProps> = ({
 	<div
 		className={`animate-spin rounded-full border-t-4 border-b-4 border-secondary ${className}`}
 		style={style}
+		data-testid="StyledLoading"
 	/>
 );
 

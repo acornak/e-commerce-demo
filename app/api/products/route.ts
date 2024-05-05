@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 // Types and constants
+import { sortOptions } from "@/lib/config/constants";
+import { SortOption } from "@/lib/config/types";
 import {
 	getAllProducts,
 	getProductById,
@@ -18,7 +20,10 @@ export async function GET(request: Request): Promise<Response> {
 		.getAll("sizeIds")
 		.map((sizeId) => sizeId.split(",").map(Number))
 		.flat();
+
+	const priceRange = searchParams.get("priceRange");
 	const tags = searchParams.getAll("tags").map(decodeURIComponent);
+	const sortBy = searchParams.get("sortBy");
 	const page = parseInt(searchParams.get("page") || "1", 10);
 
 	let limit: number;
@@ -55,6 +60,22 @@ export async function GET(request: Request): Promise<Response> {
 
 	if (brandId) {
 		products = getProductsByBrand(products, Number(brandId));
+	}
+
+	if (priceRange) {
+		const [minPrice, maxPrice] = priceRange.split("-").map(Number);
+		products = products.filter(
+			(product) => product.price >= minPrice && product.price <= maxPrice,
+		);
+	}
+
+	if (sortBy) {
+		const sortFunc = sortOptions.find(
+			(option: SortOption) => option.value === sortBy,
+		)?.sortFunc;
+
+		const sortedProducts = sortFunc ? sortFunc(products) : products;
+		products = sortedProducts;
 	}
 
 	const startIndex = (page - 1) * limit;

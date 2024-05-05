@@ -1,4 +1,5 @@
 // Types and constants
+import { SortOption } from "../config/types";
 import { Product } from "../models/product";
 
 export const fetchProductById = async (
@@ -20,6 +21,8 @@ export const fetchProductsPaginated = async (
 	categoryId: number | null,
 	brandId: number | null,
 	sizes: number[] | null,
+	priceRange: [number, number] | null,
+	sort?: SortOption,
 	setLoading?: (loading: boolean) => void,
 	limit: number = 10000,
 ) => {
@@ -32,6 +35,8 @@ export const fetchProductsPaginated = async (
 			categoryId ? `&categoryId=${categoryId}` : ""
 		}${brandId ? `&brandId=${brandId}` : ""}${
 			sizes ? `&sizeIds=${encodeURIComponent(sizes.join(","))}` : ""
+		}${priceRange ? `&priceRange=${priceRange[0]}-${priceRange[1]}` : ""}${
+			sort ? `&sortBy=${sort.value}` : ""
 		}&limit=${limit}`,
 	)
 		.then((response) => response.json())
@@ -103,4 +108,19 @@ export const fetchProductsByTag = async (
 		.catch((error) =>
 			console.error("Fetching products by tag failed:", error),
 		);
+};
+
+export const fetchProductsMaxPrice = async (
+	setMaxPrice: (maxPrice: number) => void,
+	setPriceRange?: (priceRange: [number, number]) => void,
+	setMax?: (max: number) => void,
+) => {
+	await fetch(`/api/products/max-price`)
+		.then((response) => response.json())
+		.then((data) => {
+			setMaxPrice(data.maxPrice);
+			if (setPriceRange) setPriceRange([0, data.maxPrice]);
+			if (setMax) setMax(data.maxPrice);
+		})
+		.catch((error) => console.error("Fetching max price failed:", error));
 };

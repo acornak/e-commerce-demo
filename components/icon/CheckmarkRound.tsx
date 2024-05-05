@@ -4,8 +4,8 @@ const CheckmarkRoundIcon = (): JSX.Element => (
 	<svg
 		viewBox="0 0 512 512"
 		fill="currentColor"
-		height="1.5em"
-		width="1.5em"
+		height="1.25em"
+		width="1.25em"
 		data-testid="CheckmarkRoundicon"
 	>
 		<path

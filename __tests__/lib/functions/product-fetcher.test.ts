@@ -4,10 +4,12 @@ import {
 	fetchProductImage,
 	fetchProductsByCategory,
 	fetchProductsByTag,
+	fetchProductsMaxPrice,
 	fetchProductsPaginated,
 } from "@/lib/functions/product-fetcher";
 import { Product } from "@/lib/models/product";
 import mockProducts from "@/__mocks__/products/products.mock";
+import { sortOptions } from "@/lib/config/constants";
 
 describe("fetchProduct function", () => {
 	let mockSetProduct: jest.Mock<void, [Product]>;
@@ -80,12 +82,14 @@ describe("fetchProductsPaginated function", () => {
 			1,
 			1,
 			[1, 2],
+			[0, 500],
+			sortOptions[0],
 			mockSetLoading,
 			16,
 		);
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`/api/products?&page=1&categoryId=1&brandId=1&sizeIds=1%2C2&limit=16`,
+			`/api/products?&page=1&categoryId=1&brandId=1&sizeIds=1%2C2&priceRange=0-500&sortBy=default&limit=16`,
 		);
 		expect(mockSetProducts).toHaveBeenCalledTimes(2);
 		expect(mockSetProducts).toHaveBeenCalledWith([]);
@@ -108,11 +112,13 @@ describe("fetchProductsPaginated function", () => {
 			null,
 			null,
 			null,
+			null,
+			sortOptions[0],
 			mockSetLoading,
 		);
 
 		expect(global.fetch).toHaveBeenCalledWith(
-			`/api/products?&page=1&limit=10000`,
+			`/api/products?&page=1&sortBy=default&limit=10000`,
 		);
 		expect(mockSetProducts).toHaveBeenCalledTimes(2);
 		expect(mockSetProducts).toHaveBeenCalledWith([]);
@@ -137,6 +143,8 @@ describe("fetchProductsPaginated function", () => {
 			1,
 			1,
 			[1, 2],
+			[0, 500],
+			sortOptions[0],
 			mockSetLoading,
 			10,
 		);
@@ -314,6 +322,57 @@ describe("fetchProductsByTag function", () => {
 
 		expect(console.error).toHaveBeenCalledWith(
 			"Fetching products by tag failed:",
+			"Fetch failed",
+		);
+	});
+});
+
+describe("fetchProductsMaxPrice function", () => {
+	let mockSetMaxPrice: jest.Mock<void, [number]>;
+	let mockSetPriceRange: jest.Mock<void, [[number, number]]>;
+	let mockSetMax: jest.Mock<void, [number]>;
+
+	beforeEach(() => {
+		mockSetMaxPrice = jest.fn();
+		mockSetPriceRange = jest.fn();
+		mockSetMax = jest.fn();
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () => Promise.resolve({ maxPrice: 500 }),
+				status: 200,
+			}),
+		) as jest.Mock;
+		console.error = jest.fn();
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it("should fetch products by category and set it using setProducts", async () => {
+		await fetchProductsMaxPrice(
+			mockSetMaxPrice,
+			mockSetPriceRange,
+			mockSetMax,
+		);
+
+		expect(global.fetch).toHaveBeenCalledWith("/api/products/max-price");
+		expect(mockSetMaxPrice).toHaveBeenCalledWith(500);
+		expect(mockSetPriceRange).toHaveBeenCalledWith([0, 500]);
+		expect(mockSetMax).toHaveBeenCalledWith(500);
+	});
+
+	it("should log error if fetching products by category fails", async () => {
+		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
+
+		await fetchProductsMaxPrice(
+			mockSetMaxPrice,
+			mockSetPriceRange,
+			mockSetMax,
+		);
+
+		expect(console.error).toHaveBeenCalledWith(
+			"Fetching max price failed:",
 			"Fetch failed",
 		);
 	});

@@ -1,9 +1,18 @@
 // Types and constants
-import { Color, FaqQuestion } from "./types";
+import {
+	sortProductsByNameAsc,
+	sortProductsByNameDesc,
+	sortProductsByPriceAsc,
+	sortProductsByPriceDesc,
+} from "../functions/sort-products";
+import { Product } from "../models/product";
+import { Color, FaqQuestion, SortOption } from "./types";
 
 export const colors: Color = {
 	white: "#ffffff",
-	gray300: "#d1d5db",
+	gray300: "#E0E0E0",
+	gray400: "#BDBDBD",
+	gray500: "#9E9E9E",
 	black: "#000000",
 	secondary: "#FF6347",
 	secondaryRed: "#df393a",
@@ -15,6 +24,34 @@ export const location = {
 	lat: 37.42216,
 	lng: -122.08427,
 };
+
+export const sortOptions: SortOption[] = [
+	{
+		label: "Default Sorting",
+		value: "default",
+		sortFunc: (products: Product[]): Product[] => products,
+	},
+	{
+		label: "Alphabetical, A-Z",
+		value: "az",
+		sortFunc: sortProductsByNameAsc,
+	},
+	{
+		label: "Alphabetical, Z-A",
+		value: "za",
+		sortFunc: sortProductsByNameDesc,
+	},
+	{
+		label: "Price, low - high",
+		value: "price_asc",
+		sortFunc: sortProductsByPriceAsc,
+	},
+	{
+		label: "Price, high - low",
+		value: "price_desc",
+		sortFunc: sortProductsByPriceDesc,
+	},
+];
 
 export const faqQuestions: FaqQuestion[] = [
 	{

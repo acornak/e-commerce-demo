@@ -15,7 +15,6 @@ const useFilterChange = (): ((
 		(changes: Record<string, string | null>, scroll?: boolean) => {
 			const params = new URLSearchParams(searchParams.toString());
 
-			// Apply changes to the URL parameters
 			Object.entries(changes).forEach(([param, value]) => {
 				if (value === null) {
 					params.delete(param);
@@ -24,7 +23,6 @@ const useFilterChange = (): ((
 				}
 			});
 
-			// Update the URL and scroll if necessary
 			router.push(`${pathname}?${params.toString()}`, { scroll: false });
 
 			if (scroll) {
