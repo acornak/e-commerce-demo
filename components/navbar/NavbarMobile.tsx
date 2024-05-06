@@ -29,10 +29,11 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 	const [showLogin, setShowLogin] = useState<boolean>(false);
 	const [showRegister, setShowRegister] = useState<boolean>(false);
 	const user = useAuthStore((state) => state.user);
+	const initialLoading = useAuthStore((state) => state.initialLoading);
 
 	const handleContent = () => {
 		if (showLogin) {
-			if (user) {
+			if (!initialLoading && user) {
 				return (
 					<>
 						<div className="px-4 pt-4 text-lg flex flex-col items-center justify-center">

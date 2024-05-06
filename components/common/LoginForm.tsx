@@ -100,6 +100,8 @@ type FormProps = {
 const LoginForm: FC<FormProps> = ({ setShowRegister }) => {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [email, setEmail] = useState<string>("");
+	const [emailError, setEmailError] = useState<string>("");
+	const [passwordError, setPasswordError] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const loading = useAuthStore((state) => state.loading);
 	const loginError = useAuthStore((state) => state.error);
@@ -108,15 +110,114 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => {
 
 	if (loading) {
 		return (
-			<div className="p-10 items-center justify-center">
+			<div className="p-10 items-center justify-center flex">
 				<StyledLoading />
 			</div>
 		);
 	}
 
+	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		setPassword(value);
+		if (!value) {
+			setPasswordError("Please enter your password");
+		} else {
+			setPasswordError("");
+		}
+	};
+
+	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		setEmail(value);
+
+		if (!value) {
+			setEmailError("Please enter an email address");
+		} else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+			setEmailError("Please enter a valid email address");
+		} else {
+			setEmailError("");
+		}
+	};
+
+	const handleLogin = () => {
+		if (!emailError && !passwordError) {
+			signInWithEmail(email, password);
+		}
+	};
+
+	const handleResetPassword = () => {
+		if (!emailError) {
+			resetPassword(email);
+		}
+	};
+
 	return (
 		<div className="flex flex-col space-y-6 mb-6">
 			{/* TODO: reset password */}
+			<input
+				type="email"
+				placeholder="Email address"
+				className="md:text-xs border border-gray-300 p-4"
+				value={email}
+				onChange={handleEmailChange}
+				required
+			/>
+			{emailError && <p className="text-red-500 text-xs">{emailError}</p>}
+			<input
+				type={showPassword ? "text" : "password"}
+				placeholder="Password"
+				value={password}
+				className="md:text-xs border border-gray-300 p-4"
+				onChange={handlePasswordChange}
+			/>
+			{passwordError && (
+				<p className="text-red-500 text-xs">{passwordError}</p>
+			)}
+			<p className="inline text-start text-xs">
+				<motion.button
+					type="button"
+					initial={{ color: colors.black }}
+					whileHover={{ color: colors.secondary }}
+					whileTap={{ color: colors.secondary }}
+					className="inline text-start text-xs"
+					onClick={() => {
+						setShowPassword(!showPassword);
+					}}
+				>
+					{showPassword ? "Hide" : "Show"} password
+				</motion.button>
+			</p>
+			<motion.button
+				initial={{ color: colors.black }}
+				whileHover={{ color: colors.secondary }}
+				whileTap={{ color: colors.secondary }}
+				className="inline text-start text-xs"
+				onClick={handleResetPassword}
+			>
+				Forgot your password?
+			</motion.button>
+			{loginError && <p className="text-red-500 text-xs">{loginError}</p>}
+			<LoginButton onClick={handleLogin}>Login</LoginButton>
+			<GoogleButton text="Log in with Google" />
+			<ToggleButton onClick={() => setShowRegister(true)}>
+				<p className="text-xs p-4">
+					Don&apos;t have an account?{" "}
+					<span className="inline">Register now!</span>
+				</p>
+			</ToggleButton>
+		</div>
+	);
+};
+
+const RegisterForm: FC<FormProps> = ({ setShowRegister }) => {
+	const signUpWithEmail = useAuthStore((state) => state.signUpWithEmail);
+	const registerError = useAuthStore((state) => state.error);
+	const [showPassword, setShowPassword] = useState<boolean>(false);
+	const [email, setEmail] = useState<string>("");
+	const [password, setPassword] = useState<string>("");
+
+	return (
+		<div className="flex flex-col space-y-6 mb-6">
 			<input
 				type="text"
 				placeholder="Email address"
@@ -127,8 +228,8 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => {
 			<input
 				type={showPassword ? "text" : "password"}
 				placeholder="Password"
-				value={password}
 				className="md:text-xs border border-gray-300 p-4"
+				value={password}
 				onChange={(e) => setPassword(e.target.value)}
 			/>
 			<p className="inline text-start text-xs">
@@ -144,62 +245,9 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => {
 				>
 					{showPassword ? "Hide" : "Show"} password
 				</motion.button>
-				{loginError && (
-					<p className="text-red-500 text-xs">{loginError}</p>
+				{registerError && (
+					<p className="text-red-500 text-xs">{registerError}</p>
 				)}
-			</p>
-			<motion.button
-				initial={{ color: colors.black }}
-				whileHover={{ color: colors.secondary }}
-				whileTap={{ color: colors.secondary }}
-				className="inline text-start text-xs"
-				onClick={() => resetPassword(email)}
-			>
-				Forgot your password?
-			</motion.button>
-			<LoginButton onClick={() => signInWithEmail(email, password)}>
-				Login
-			</LoginButton>
-			<GoogleButton text="Log in with Google" />
-			<ToggleButton onClick={() => setShowRegister(true)}>
-				<p className="text-xs p-4">
-					Don&apos;t have an account?{" "}
-					<span className="inline">Register now!</span>
-				</p>
-			</ToggleButton>
-		</div>
-	);
-};
-
-const RegisterForm: FC<FormProps> = ({ setShowRegister }) => {
-	const signUpWithEmail = useAuthStore((state) => state.signUpWithEmail);
-	const [email, setEmail] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
-
-	return (
-		<div className="flex flex-col space-y-6 mb-6">
-			<input
-				type="text"
-				placeholder="Email address"
-				className="md:text-xs border border-gray-300 p-4"
-				value={email}
-				onChange={(e) => setEmail(e.target.value)}
-			/>
-			<input
-				type="password"
-				placeholder="Password"
-				className="md:text-xs border border-gray-300 p-4"
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-			/>
-			<p className="inline text-start text-xs">
-				<motion.button
-					initial={{ color: colors.black }}
-					whileHover={{ color: colors.secondary }}
-					whileTap={{ color: colors.secondary }}
-					className="inline text-start text-xs"
-					onClick={() => {}}
-				/>
 			</p>
 			<LoginButton onClick={() => signUpWithEmail(email, password)}>
 				Register

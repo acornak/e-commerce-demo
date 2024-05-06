@@ -2,13 +2,13 @@ import {
 	User,
 	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
-	signInWithRedirect,
 	signInWithEmailAndPassword,
 	setPersistence,
 	browserLocalPersistence,
 	sendPasswordResetEmail,
 	signOut,
 	onAuthStateChanged,
+	signInWithPopup,
 } from "firebase/auth";
 import { create } from "zustand";
 import { auth } from "../config/firebase";
@@ -71,7 +71,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
 			set({ loading: true, error: null });
 			await setPersistence(auth, browserLocalPersistence);
 			const provider = new GoogleAuthProvider();
-			await signInWithRedirect(auth, provider);
+			const result = await signInWithPopup(auth, provider);
+			set({ user: result.user });
 		} catch (error: any) {
 			set({ error: error.message });
 		} finally {
