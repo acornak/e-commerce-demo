@@ -26,10 +26,6 @@ const NavItemsMobile: NavItem[] = [
 		title: "Blog",
 		url: "/blog",
 	},
-	{
-		title: "Your Account",
-		url: "/account",
-	},
 ];
 
 const NavItemsDesktop: NavItem[] = [

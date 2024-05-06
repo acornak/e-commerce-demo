@@ -8,6 +8,7 @@ import { NavItem } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
 // Components
 import { useModalsStore } from "@/lib/stores/modals-store";
+import { useAuthStore } from "@/lib/stores/auth-store";
 import HandleLoginForm from "../common/LoginForm";
 // Icons
 import BarsIcon from "../icon/Bars";
@@ -27,9 +28,108 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 	const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 	const [showLogin, setShowLogin] = useState<boolean>(false);
 	const [showRegister, setShowRegister] = useState<boolean>(false);
+	const user = useAuthStore((state) => state.user);
 
 	const handleContent = () => {
 		if (showLogin) {
+			if (user) {
+				return (
+					<>
+						<div className="px-4 pt-4 text-lg flex flex-col items-center justify-center">
+							<p className="text-center text-sm pb-6">
+								Logged in as {user.email}
+							</p>
+						</div>
+						<motion.li
+							className="border-b border-t border-gray-300"
+							onHoverStart={() => setHoverIndex(items.length + 1)}
+							onHoverEnd={() => setHoverIndex(null)}
+							initial={{ color: "#333" }}
+							animate={{
+								color:
+									hoverIndex === items.length + 1
+										? colors.secondary
+										: "#333",
+							}}
+						>
+							<a
+								href="/account"
+								className="flex justify-between items-center px-4"
+							>
+								Your Account
+								<span className="flex items-center">
+									<div className="mx-2 h-14 w-px bg-gray-300" />{" "}
+									<motion.div
+										animate={{
+											scale:
+												hoverIndex === items.length + 1
+													? 1.5
+													: 1,
+										}}
+										transition={{
+											type: "spring",
+											stiffness: 300,
+										}}
+									>
+										<ChevronRightIcon />
+									</motion.div>
+								</span>
+							</a>
+						</motion.li>
+						<motion.li
+							className="border-b border-gray-300"
+							onHoverStart={() => setHoverIndex(items.length + 2)}
+							onHoverEnd={() => setHoverIndex(null)}
+							initial={{ color: "#333" }}
+							animate={{
+								color:
+									hoverIndex === items.length + 2
+										? colors.secondary
+										: "#333",
+							}}
+						>
+							<a
+								href="/settings"
+								className="flex justify-between items-center px-4"
+							>
+								Account Settings
+								<span className="flex items-center">
+									<div className="mx-2 h-14 w-px bg-gray-300" />{" "}
+									<motion.div
+										animate={{
+											scale:
+												hoverIndex === items.length + 2
+													? 1.5
+													: 1,
+										}}
+										transition={{
+											type: "spring",
+											stiffness: 300,
+										}}
+									>
+										<ChevronRightIcon />
+									</motion.div>
+								</span>
+							</a>
+						</motion.li>
+						<div className="flex items-center justify-center">
+							<motion.button
+								type="button"
+								whileHover={{
+									backgroundColor: colors.black,
+								}}
+								whileTap={{
+									backgroundColor: colors.black,
+								}}
+								onClick={() => useAuthStore.getState().logOut()}
+								className="w-2/3 p-4 mt-4 text-white uppercase bg-secondary"
+							>
+								Logout
+							</motion.button>
+						</div>
+					</>
+				);
+			}
 			return (
 				<div className="px-4 pt-4 text-lg">
 					<HandleLoginForm
@@ -127,18 +227,22 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 								<div className="w-5 h-5">
 									<UserIcon />
 								</div>
-								<span className="pl-4">Login</span>
+								<span className="pl-4">
+									{user ? "Logged in" : "Login"}
+								</span>
 							</button>
 						</div>
 						{handleContent()}
 					</ul>
-					<button
+					<motion.button
+						whileHover={{ backgroundColor: colors.black }}
+						whileTap={{ backgroundColor: colors.black }}
 						type="button"
 						onClick={() => setDrawerMenuOpen(false)}
 						className="absolute bottom-0 w-full p-4 text-white uppercase text-sm bg-secondary"
 					>
 						Close
-					</button>
+					</motion.button>
 				</motion.div>
 			)}
 		</AnimatePresence>
