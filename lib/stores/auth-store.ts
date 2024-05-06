@@ -2,7 +2,7 @@ import {
 	User,
 	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
-	signInWithPopup,
+	signInWithRedirect,
 	signInWithEmailAndPassword,
 	setPersistence,
 	browserLocalPersistence,
@@ -71,8 +71,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
 			set({ loading: true, error: null });
 			await setPersistence(auth, browserLocalPersistence);
 			const provider = new GoogleAuthProvider();
-			const result = await signInWithPopup(auth, provider);
-			set({ user: result.user });
+			await signInWithRedirect(auth, provider);
 		} catch (error: any) {
 			set({ error: error.message });
 		} finally {

@@ -7,7 +7,7 @@ import {
 	setPersistence,
 	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
-	signInWithPopup,
+	signInWithRedirect,
 	GoogleAuthProvider,
 	sendPasswordResetEmail,
 	signOut,
@@ -23,7 +23,7 @@ jest.mock("firebase/auth", () => {
 		signInWithEmailAndPassword: jest.fn(),
 		onAuthStateChanged: jest.fn(),
 		createUserWithEmailAndPassword: jest.fn(),
-		signInWithPopup: jest.fn(),
+		signInWithRedirect: jest.fn(),
 		GoogleAuthProvider: jest.fn(),
 		sendPasswordResetEmail: jest.fn(),
 		signOut: jest.fn(),
@@ -198,22 +198,23 @@ describe("signInWithGoogle", () => {
 		(setPersistence as jest.Mock).mockResolvedValueOnce(
 			browserLocalPersistence,
 		);
-		(signInWithPopup as jest.Mock).mockResolvedValueOnce({
+		(signInWithRedirect as jest.Mock).mockResolvedValueOnce({
 			user: mockUser,
 		});
 
 		result.current.signInWithGoogle();
 
-		await waitFor(() => expect(result.current.user).toEqual(mockUser));
+		// sign in with redirect does not return user
+		// the change is handled by onAuthStateChanged
+		await waitFor(() => expect(result.current.loading).toBeFalsy());
 
 		expect(GoogleAuthProvider).toHaveBeenCalled();
 		expect(setPersistence).toHaveBeenCalledWith(
 			auth,
 			browserLocalPersistence,
 		);
-		expect(signInWithPopup).toHaveBeenCalledWith(auth, {});
+		expect(signInWithRedirect).toHaveBeenCalledWith(auth, {});
 		expect(result.current.error).toBeNull();
-		expect(result.current.loading).toBeFalsy();
 	});
 
 	it("handles an error during sign up with Google", async () => {
@@ -223,7 +224,7 @@ describe("signInWithGoogle", () => {
 		(setPersistence as jest.Mock).mockResolvedValueOnce(
 			browserLocalPersistence,
 		);
-		(signInWithPopup as jest.Mock).mockRejectedValue(
+		(signInWithRedirect as jest.Mock).mockRejectedValue(
 			new Error(errorMessage),
 		);
 
@@ -236,7 +237,7 @@ describe("signInWithGoogle", () => {
 			auth,
 			browserLocalPersistence,
 		);
-		expect(signInWithPopup).toHaveBeenCalledWith(auth, {});
+		expect(signInWithRedirect).toHaveBeenCalledWith(auth, {});
 		expect(result.current.user).toBeNull();
 		expect(result.current.error).toBe(errorMessage);
 		expect(result.current.loading).toBeFalsy();
