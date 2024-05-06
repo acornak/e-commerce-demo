@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 // Next
 import { NextPage } from "next";
 import { redirect, useSearchParams } from "next/navigation";
@@ -11,19 +11,10 @@ import { StyledSectionHeading } from "@/components/styled/Heading";
 import HandleLoginForm from "@/components/common/LoginForm";
 import StyledLoading from "@/components/styled/Loading";
 
-const LoginPage: NextPage = (): JSX.Element => {
+const RedirectHandler: React.FC = () => {
 	const searchParams = useSearchParams();
 	const redirectPath = searchParams.get("redirect");
-	const [showRegister, setShowRegister] = useState(false);
-	const initialLoading = useAuthStore((state) => state.initialLoading);
 	const user = useAuthStore((state) => state.user);
-
-	if (initialLoading)
-		return (
-			<div className="flex items-center justify-center mt-32 p-10">
-				<StyledLoading />
-			</div>
-		);
 
 	if (user) {
 		if (redirectPath) {
@@ -33,9 +24,29 @@ const LoginPage: NextPage = (): JSX.Element => {
 		}
 	}
 
+	return null;
+};
+
+const LoginPage: NextPage = (): JSX.Element => {
+	const [showRegister, setShowRegister] = useState(false);
+	const initialLoading = useAuthStore((state) => state.initialLoading);
+
+	if (initialLoading)
+		return (
+			<div className="flex items-center justify-center mt-32 p-10">
+				<StyledLoading />
+			</div>
+		);
+
 	return (
-		<>
-			<div className="my-3 pt-20 ">
+		<Suspense
+			fallback={
+				<div className="flex items-center justify-center h-screen">
+					<StyledLoading />
+				</div>
+			}
+		>
+			<div className="my-3 pt-20">
 				<StyledSectionHeading title="Login or Register" />
 			</div>
 			<div className="flex items-center justify-center">
@@ -46,7 +57,8 @@ const LoginPage: NextPage = (): JSX.Element => {
 					/>
 				</div>
 			</div>
-		</>
+			<RedirectHandler />
+		</Suspense>
 	);
 };
 
