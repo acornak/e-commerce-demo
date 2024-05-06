@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Types and constants
@@ -6,6 +6,7 @@ import { colors } from "@/lib/config/constants";
 // Store
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Icons
+import useOutsideAlerter from "@/lib/hooks/outside-click";
 import CloseIcon from "../icon/Close";
 
 const DressesTable = (): JSX.Element => {
@@ -494,6 +495,7 @@ const ShoesTable = (): JSX.Element => {
 };
 
 const SizeGuideModal: FC = () => {
+	const modalRef = useRef<HTMLDivElement>(null);
 	const [currentTab, setCurrentTab] = useState<
 		"dresses" | "swimwear" | "shoes"
 	>("dresses");
@@ -519,6 +521,10 @@ const SizeGuideModal: FC = () => {
 		return <></>;
 	};
 
+	useOutsideAlerter(modalRef, () => {
+		if (sizeGuideModalOpen) setSizeGuideModalOpen(false);
+	});
+
 	return (
 		<AnimatePresence>
 			{sizeGuideModalOpen && (
@@ -528,15 +534,14 @@ const SizeGuideModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
-					onClick={() => setSizeGuideModalOpen(false)}
 				>
 					<motion.div
+						ref={modalRef}
 						initial={{ scale: 0.9 }}
 						animate={{ scale: 1 }}
 						exit={{ scale: 0.9 }}
 						transition={{ duration: 0.3 }}
 						className="relative bg-white px-6 md:px-20 py-6 w-[95%] md:w-3/4 text-black h-3/4 overflow-y-auto visible-scrollbar"
-						onClick={(e) => e.stopPropagation()}
 					>
 						<div className="flex">
 							<button

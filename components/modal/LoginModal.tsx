@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Fonts
@@ -8,20 +8,32 @@ import { colors } from "@/lib/config/constants";
 // Store
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Components
+import useOutsideAlerter from "@/lib/hooks/outside-click";
+import { useAuthStore } from "@/lib/stores/auth-store";
 import HandleLoginForm from "../common/LoginForm";
 // Icons
 import CloseIcon from "../icon/Close";
 
 const LoginModal: FC = () => {
+	const modalRef = useRef<HTMLDivElement>(null);
 	const [showRegister, setShowRegister] = useState<boolean>(false);
 	const loginModalOpen = useModalsStore((state) => state.loginModalOpen);
 	const setLoginModalOpen = useModalsStore(
 		(state) => state.setLoginModalOpen,
 	);
+	const user = useAuthStore((state) => state.user);
+
+	useOutsideAlerter(modalRef, () => {
+		if (loginModalOpen) setLoginModalOpen(false);
+	});
 
 	useEffect(() => {
 		setShowRegister(false);
 	}, [loginModalOpen]);
+
+	useEffect(() => {
+		if (user) setLoginModalOpen(false);
+	}, [user]);
 
 	return (
 		<AnimatePresence>
@@ -32,15 +44,14 @@ const LoginModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
-					onClick={() => setLoginModalOpen(false)}
 				>
 					<motion.div
+						ref={modalRef}
 						initial={{ scale: 0.9 }}
 						animate={{ scale: 1 }}
 						exit={{ scale: 0.9 }}
 						transition={{ duration: 0.3 }}
 						className="relative bg-white px-20 py-6 text-center"
-						onClick={(e) => e.stopPropagation()}
 					>
 						<motion.button
 							initial={{ rotate: 0, color: colors.white }}

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Next
 import Link from "next/link";
 // Animations
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Types and constants
@@ -13,6 +13,8 @@ import { colors } from "@/lib/config/constants";
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 // Components
 import { useModalsStore } from "@/lib/stores/modals-store";
+import useOutsideAlerter from "@/lib/hooks/outside-click";
+import { useAuthStore } from "@/lib/stores/auth-store";
 import DesktopItems from "./Desktop";
 import MobileItems from "./NavbarMobile";
 import { NavItemsDesktop, NavItemsMobile } from "./NavItems";
@@ -21,11 +23,47 @@ import { NavIcons, MenuIcons } from "./NavIcons";
 import BarsIcon from "../icon/Bars";
 
 const Navbar = (): JSX.Element => {
+	const dropdownRef = useRef<HTMLDivElement>(null);
 	const [selected, setSelected] = useState<number | null>(null);
 	const [shouldShowNavbar, setShouldShowNavbar] = useState<boolean>(true);
 	const toggleDrawerMenuOpen = useModalsStore(
 		(state) => state.toggleDrawerMenuOpen,
 	);
+	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+	const [loggedIn, setLoggedIn] = useState<boolean>(false);
+	const user = useAuthStore((state) => state.user);
+	const initialLoading = useAuthStore((state) => state.initialLoading);
+	const logOut = useAuthStore((state) => state.logOut);
+
+	useEffect(() => {
+		if (!initialLoading && user) {
+			setLoggedIn(true);
+		} else if (!user) {
+			setLoggedIn(false);
+		}
+	}, [initialLoading, user]);
+
+	useOutsideAlerter(dropdownRef, () => {
+		if (dropdownOpen) setDropdownOpen(false);
+	});
+
+	const handleDropdown = () => {
+		setDropdownOpen((prev) => !prev);
+	};
+
+	useEffect(() => {
+		const handleEsc = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				if (dropdownOpen) setDropdownOpen(false);
+			}
+		};
+
+		window.addEventListener("keydown", handleEsc);
+
+		return () => {
+			window.removeEventListener("keydown", handleEsc);
+		};
+	}, [dropdownOpen]);
 
 	useEffect((): (() => void) => {
 		let lastScrollTop = 0;
@@ -116,19 +154,71 @@ const Navbar = (): JSX.Element => {
 						items={NavItemsDesktop}
 					/>
 				</ul>
-				<div className="space-x-4 hidden md:flex">
+				<div className="space-x-4 hidden md:flex relative">
 					<NavIcons
 						selected={selected}
 						setSelected={setSelected}
-						icons={MenuIcons(cartItems)}
+						icons={MenuIcons(cartItems, loggedIn, handleDropdown)}
 						navItems={NavItemsDesktop}
 					/>
+
+					<AnimatePresence>
+						{dropdownOpen && (
+							<motion.div
+								initial={{ opacity: 0, scale: 0.95 }}
+								animate={{ opacity: 1, scale: 1 }}
+								exit={{ opacity: 0, scale: 0.95 }}
+								transition={{ duration: 0.2 }}
+								className="absolute right-20 top-5 mt-2 py-2 w-48 bg-white shadow-xl z-20 border border-gray-200"
+								ref={dropdownRef}
+							>
+								<ul className="uppercase tracking-widest">
+									<Link
+										href="/account"
+										onClick={() => setDropdownOpen(false)}
+									>
+										<motion.li
+											whileHover={{
+												scale: 1.05,
+												color: colors.secondary,
+											}}
+											whileTap={{
+												scale: 1.05,
+												color: colors.secondary,
+											}}
+											className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+										>
+											Profile
+										</motion.li>
+									</Link>
+									<motion.button
+										type="button"
+										whileHover={{
+											scale: 1.05,
+											color: colors.secondary,
+										}}
+										whileTap={{
+											scale: 1.05,
+											color: colors.secondary,
+										}}
+										className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 uppercase tracking-widest w-full text-start"
+										onClick={() => {
+											logOut();
+											setDropdownOpen(false);
+										}}
+									>
+										Logout
+									</motion.button>
+								</ul>
+							</motion.div>
+						)}
+					</AnimatePresence>
 				</div>
 				<div className="flex space-x-4 md:hidden">
 					<NavIcons
 						selected={selected}
 						setSelected={setSelected}
-						icons={MenuIcons(cartItems)}
+						icons={MenuIcons(cartItems, loggedIn, handleDropdown)}
 						navItems={NavItemsMobile}
 						mobile
 					/>

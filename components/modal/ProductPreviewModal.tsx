@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 // Next
 import Image from "next/image";
 import Link from "next/link";
@@ -19,12 +19,14 @@ import { Product } from "@/lib/models/product";
 import { colors } from "@/lib/config/constants";
 import { Size } from "@/lib/models/size";
 // Components
+import useOutsideAlerter from "@/lib/hooks/outside-click";
 import StyledLoading from "../styled/Loading";
 // Icons
 import CloseIcon from "../icon/Close";
 import SizePicker from "../common/SizePicker";
 
 const ProductPreviewModal: FC = (): JSX.Element => {
+	const modalRef = useRef<HTMLDivElement>(null);
 	const productPreviewModalOpen = useModalsStore(
 		(state) => state.productPreviewModalOpen,
 	);
@@ -90,6 +92,10 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 		}
 	};
 
+	useOutsideAlerter(modalRef, () => {
+		if (productPreviewModalOpen) setProductPreviewModalOpen(false);
+	});
+
 	const handleContent = () => {
 		if (loading || !product || !imageUrl) {
 			return <StyledLoading />;
@@ -103,11 +109,11 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 				transition={{ duration: 0.3 }}
 				className="fixed inset-0 z-50 flex items-center justify-center"
 				onClick={() => {
-					setProductPreviewModalOpen(false);
 					setQuantity(1);
 				}}
 			>
 				<motion.div
+					ref={modalRef}
 					className="relative bg-white p-6 w-full lg:max-w-[60%] xl:max-w-[50%] m-4 max-h-[90%]"
 					initial={{ scale: 0.9 }}
 					animate={{ scale: 1 }}

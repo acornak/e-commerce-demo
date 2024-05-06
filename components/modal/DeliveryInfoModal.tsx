@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 // Animations
 import { motion, AnimatePresence } from "framer-motion";
 // Types and constants
@@ -6,15 +6,21 @@ import { colors } from "@/lib/config/constants";
 // Store
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Icons
+import useOutsideAlerter from "@/lib/hooks/outside-click";
 import CloseIcon from "../icon/Close";
 
 const DeliveryInfoModal: FC = () => {
+	const modalRef = useRef<HTMLDivElement>(null);
 	const deliveryInfoModalOpen = useModalsStore(
 		(state) => state.deliveryInfoModalOpen,
 	);
 	const setDeliveryInfoModalOpen = useModalsStore(
 		(state) => state.setDeliveryInfoModalOpen,
 	);
+
+	useOutsideAlerter(modalRef, () => {
+		if (deliveryInfoModalOpen) setDeliveryInfoModalOpen(false);
+	});
 
 	return (
 		<AnimatePresence>
@@ -25,15 +31,14 @@ const DeliveryInfoModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
-					onClick={() => setDeliveryInfoModalOpen(false)}
 				>
 					<motion.div
+						ref={modalRef}
 						initial={{ scale: 0.9 }}
 						animate={{ scale: 1 }}
 						exit={{ scale: 0.9 }}
 						transition={{ duration: 0.3 }}
 						className="relative bg-white px-4 md:px-20 py-6 w-[95%] md:w-3/4"
-						onClick={(e) => e.stopPropagation()}
 					>
 						<motion.button
 							initial={{ rotate: 0, color: colors.white }}

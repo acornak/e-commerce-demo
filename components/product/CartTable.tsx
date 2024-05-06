@@ -338,7 +338,7 @@ const CartTable = () => {
 					<div className="w-[95%] lg:w-[90%] pb-6 md:hidden border border-gray-300">
 						{items.map((item, index) => (
 							<CartItemMobile
-								key={item.productId}
+								key={item.productId + item.sizeId}
 								item={item}
 								shouldRenderHr={index !== items.length - 1}
 							/>
@@ -382,7 +382,7 @@ const CartTable = () => {
 						<tbody className="bg-white border border-1 border-gray-300">
 							{items.map((item, index) => (
 								<tr
-									key={item.productId}
+									key={item.productId + item.sizeId}
 									className={`border-b ${
 										index !== items.length - 1
 											? "border-gray-300"

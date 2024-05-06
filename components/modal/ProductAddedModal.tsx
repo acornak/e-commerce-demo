@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 // Next
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -18,10 +18,13 @@ import { useModalsStore } from "@/lib/stores/modals-store";
 import { colors } from "@/lib/config/constants";
 
 // Icons
+import useOutsideAlerter from "@/lib/hooks/outside-click";
 import CloseIcon from "../icon/Close";
 import CheckmarkIcon from "../icon/Checkmark";
 
 const ProductAddedModal: FC = () => {
+	const modalRef = useRef<HTMLDivElement>(null);
+
 	const router = useRouter();
 
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -35,6 +38,10 @@ const ProductAddedModal: FC = () => {
 		(state) => state.setProductAddedModalOpen,
 	);
 	const cartProduct = useModalsStore((state) => state.cartProduct);
+
+	useOutsideAlerter(modalRef, () => {
+		if (productAddedModalOpen) setProductAddedModalOpen(false);
+	});
 
 	useEffect(() => {
 		document.addEventListener("visibilitychange", updateCartStore);
@@ -59,15 +66,14 @@ const ProductAddedModal: FC = () => {
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.3 }}
 						className="fixed inset-0 z-50 flex items-center justify-center"
-						onClick={() => setProductAddedModalOpen(false)}
 					>
 						<motion.div
+							ref={modalRef}
 							initial={{ scale: 0.9 }}
 							animate={{ scale: 1 }}
 							exit={{ scale: 0.9 }}
 							transition={{ duration: 0.3 }}
 							className="relative bg-white w-full max-w-4xl px-10 py-6 text-center flex"
-							onClick={(e) => e.stopPropagation()}
 						>
 							<div className="w-1/2 p-4 flex flex-col items-center">
 								<h3 className="text-secondary flex items-center">

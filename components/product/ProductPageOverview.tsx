@@ -85,26 +85,28 @@ const ProductInfo: FC<ProductInfoProps> = ({
 				<p className="font-medium text-xl tracking-widest">
 					{product.name}
 				</p>
-				<button
-					type="button"
-					onMouseEnter={() => {
-						setShowTooltip(true);
-					}}
-					onMouseLeave={() => setShowTooltip(false)}
-					onTouchStart={() => {
-						setShowTooltip(false);
-					}}
-					onTouchEnd={() => {
-						setShowTooltip(false);
-					}}
-					className="relative cursor-pointer hover:text-secondary transition-colors duration-200 ease-in-out"
-					onClick={handleAddToWishlist}
-				>
-					{itemAlreadyInWishlist ? (
-						<CheckmarkRoundIcon />
-					) : (
-						<HeartIcon />
-					)}
+				<div className="relative">
+					<button
+						type="button"
+						onMouseEnter={() => {
+							setShowTooltip(true);
+						}}
+						onMouseLeave={() => setShowTooltip(false)}
+						onTouchStart={() => {
+							setShowTooltip(false);
+						}}
+						onTouchEnd={() => {
+							setShowTooltip(false);
+						}}
+						className="hover:text-secondary transition-colors duration-200 ease-in-out"
+						onClick={handleAddToWishlist}
+					>
+						{itemAlreadyInWishlist ? (
+							<CheckmarkRoundIcon />
+						) : (
+							<HeartIcon />
+						)}
+					</button>
 
 					<motion.span
 						className="absolute bottom-full mb-2 w-auto min-w-[160px] p-3 bg-black text-white text-xs rounded z-50 -translate-x-1/2 right-1/2 text-center"
@@ -124,7 +126,7 @@ const ProductInfo: FC<ProductInfoProps> = ({
 							? "Item added to wishlist"
 							: "Add to wishlist"}
 					</motion.span>
-				</button>
+				</div>
 			</div>
 			<div className="flex items-center border-b border-gray-300 pb-6 mb-4">
 				<p className="font-medium text-lg tracking-widest text-secondary">

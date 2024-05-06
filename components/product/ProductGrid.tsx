@@ -171,7 +171,7 @@ const ProductGrid = (): JSX.Element => {
 
 	if (loading) {
 		return (
-			<div className="my-6 px-10" id="product-overview">
+			<div className="my-6 px-2 lg:px-10" id="product-overview">
 				{showClearAllFilters() && (
 					<ClearFiltersButton
 						handleClearFilter={handleClearAllFilters}
@@ -188,7 +188,7 @@ const ProductGrid = (): JSX.Element => {
 	if (totalPages === 0 && !loading) {
 		return (
 			<div className="my-6" id="product-overview">
-				<div className="flex px-10">
+				<div className="flex px-2 lg:px-10">
 					<ClearFiltersButton
 						handleClearFilter={handleClearAllFilters}
 						text="Clear all filters"
@@ -215,7 +215,7 @@ const ProductGrid = (): JSX.Element => {
 			id="product-overview"
 		>
 			<div className="container mx-auto">
-				<div className="flex w-full px-16 items-center">
+				<div className="flex w-full px-2 lg:px-10 items-center">
 					<div style={{ flex: showClearAllFilters() ? "none" : "1" }}>
 						{showClearAllFilters() && (
 							<ClearFiltersButton

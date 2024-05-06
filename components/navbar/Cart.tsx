@@ -237,7 +237,7 @@ const ShoppingCart: FC = () => {
 							<div className="flex flex-col items-start justify-start text-center px-6">
 								{items.map((item, index) => (
 									<CartItemPreview
-										key={item.productId}
+										key={item.productId + item.sizeId}
 										item={item}
 										shouldRenderHr={
 											index !== items.length - 1

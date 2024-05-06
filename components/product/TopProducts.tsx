@@ -24,7 +24,7 @@ const TopProducts = (): JSX.Element => {
 						{topProducts.map(
 							(product: Product): JSX.Element => (
 								<ProductPreview
-									key={product.id}
+									key={product.id + Math.random() * 6547}
 									product={product}
 								/>
 							),

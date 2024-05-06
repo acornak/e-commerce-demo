@@ -1,11 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
 
-const CheckmarkRoundIcon = (): JSX.Element => (
+type CheckmarkRoundIconProps = {
+	size?: string;
+};
+
+const CheckmarkRoundIcon: FC<CheckmarkRoundIconProps> = ({
+	size = "1.5em",
+}): JSX.Element => (
 	<svg
 		viewBox="0 0 512 512"
 		fill="currentColor"
-		height="1.25em"
-		width="1.25em"
+		height={size}
+		width={size}
 		data-testid="CheckmarkRoundicon"
 	>
 		<path

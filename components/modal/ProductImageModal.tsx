@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 // Next
 import Image from "next/image";
 // Animations
@@ -8,9 +8,11 @@ import { colors } from "@/lib/config/constants";
 // Store
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Icons
+import useOutsideAlerter from "@/lib/hooks/outside-click";
 import CloseIcon from "../icon/Close";
 
 const ProductImageModal: FC = () => {
+	const modalRef = useRef<HTMLDivElement>(null);
 	const productImageModalUrl = useModalsStore(
 		(state) => state.productImageModalUrl,
 	);
@@ -21,6 +23,10 @@ const ProductImageModal: FC = () => {
 		(state) => state.setProductImageModalOpen,
 	);
 
+	useOutsideAlerter(modalRef, () => {
+		if (productImageModalOpen) setProductImageModalOpen(false);
+	});
+
 	return (
 		<AnimatePresence>
 			{productImageModalOpen && productImageModalUrl && (
@@ -30,15 +36,14 @@ const ProductImageModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
-					onClick={() => setProductImageModalOpen(false)}
 				>
 					<motion.div
+						ref={modalRef}
 						initial={{ scale: 0.9 }}
 						animate={{ scale: 1 }}
 						exit={{ scale: 0.9 }}
 						transition={{ duration: 0.3 }}
 						className="relative bg-white px-4 w-[90%] h-[90%] md:px-20 py-6 flex items-center justify-center"
-						onClick={(e) => e.stopPropagation()}
 					>
 						<motion.button
 							initial={{ rotate: 0, color: colors.white }}

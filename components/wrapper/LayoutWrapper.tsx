@@ -2,7 +2,7 @@
 
 import React, { FC, ReactNode, useEffect } from "react";
 // Next
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 // Captcha
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 // Animations
@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // Store
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Components
+import { useAuthStore } from "@/lib/stores/auth-store";
 import Navbar from "../navbar/Navbar";
 import SearchBar from "../navbar/SearchBar";
 import ShoppingCart from "../navbar/Cart";
@@ -24,6 +25,7 @@ import DeliveryInfoModal from "../modal/DeliveryInfoModal";
 import SizeGuideModal from "../modal/SizeGuideModal";
 import AskQuestionModal from "../modal/AskQuestionModal";
 import ProductImageModal from "../modal/ProductImageModal";
+import StyledLoading from "../styled/Loading";
 
 type LayoutWrapperProps = {
 	children: ReactNode;
@@ -81,6 +83,8 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 	const setProductImageModalOpen = useModalsStore(
 		(state) => state.setProductImageModalOpen,
 	);
+	const user = useAuthStore((state) => state.user);
+	const initialLoading = useAuthStore((state) => state.initialLoading);
 
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
@@ -144,6 +148,10 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 	};
 
 	if (pathname.includes("/admin")) {
+		if (!initialLoading && !user) {
+			redirect(`/login?redirect=${pathname.replace("/", "")}`);
+		}
+
 		return (
 			<GoogleReCaptchaProvider
 				reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
@@ -154,11 +162,20 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 					nonce: undefined,
 				}}
 			>
-				<NavbarAdmin />
-				{children}
-				<div className="sticky top-[100vh]">
-					<Footer />
-				</div>
+				{initialLoading && (
+					<div className="flex h-screen items-center justify-center p-10">
+						<StyledLoading />
+					</div>
+				)}
+				{user && (
+					<>
+						<NavbarAdmin />
+						{children}
+						<div className="sticky top-[100vh]">
+							<Footer />
+						</div>
+					</>
+				)}
 			</GoogleReCaptchaProvider>
 		);
 	}

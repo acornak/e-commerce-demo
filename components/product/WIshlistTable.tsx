@@ -187,7 +187,7 @@ const WishlistTable = () => {
 				<tbody className="bg-white border border-1 border-gray-300">
 					{items.map((item, index) => (
 						<tr
-							key={item.productId}
+							key={item.productId + Math.random() * 46656}
 							className={`border-b ${
 								index !== items.length - 1
 									? "border-gray-300"

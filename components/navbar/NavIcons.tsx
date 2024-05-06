@@ -6,6 +6,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 // Animations
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
+// Stores
+import { useAuthStore } from "@/lib/stores/auth-store";
 // Types and constants
 import { NavIcon, DesktopNavProps, NavItem } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
@@ -33,7 +35,11 @@ const CartIcon = ({ cartItems }: { cartItems: number }) => {
 	);
 };
 
-const MenuIcons = (cartItems: number): NavIcon[] => {
+const MenuIcons = (
+	cartItems: number,
+	loggedIn: boolean,
+	handleDropdown: () => void,
+): NavIcon[] => {
 	const setSearchBarOpen = useModalsStore((state) => state.setSearchBarOpen);
 	const setLoginModalOpen = useModalsStore(
 		(state) => state.setLoginModalOpen,
@@ -49,7 +55,8 @@ const MenuIcons = (cartItems: number): NavIcon[] => {
 		{
 			title: "User",
 			icon: <UserIcon />,
-			onClick: () => setLoginModalOpen(true),
+			onClick: () =>
+				loggedIn ? handleDropdown() : setLoginModalOpen(true),
 		},
 		{
 			title: "Heart",
@@ -64,34 +71,67 @@ const MenuIcons = (cartItems: number): NavIcon[] => {
 	];
 };
 
-const AdminUserIcon = ({
+const AdminUserDropdown = ({
 	dropdownOpen,
 	handleDropdown,
 }: {
 	dropdownOpen: boolean;
 	handleDropdown: () => void;
-}) => (
-	<div className="relative">
-		<button
-			type="button"
-			aria-label="Toggle user menu"
-			className="relative"
-			onClick={() => handleDropdown()}
-		>
-			<UserIcon />
-		</button>
-		<AnimatePresence>
-			{dropdownOpen && (
-				<motion.div
-					initial={{ opacity: 0, scale: 0.95 }}
-					animate={{ opacity: 1, scale: 1 }}
-					exit={{ opacity: 0, scale: 0.95 }}
-					transition={{ duration: 0.2 }}
-					className="absolute right-0 mt-2 py-2 w-48 bg-white shadow-xl z-20 border border-gray-200"
-				>
-					<ul className="uppercase tracking-widest">
-						<Link href="/admin/settings">
-							<motion.li
+}) => {
+	const logOut = useAuthStore((state) => state.logOut);
+
+	return (
+		<div className="relative">
+			<button
+				type="button"
+				aria-label="Toggle user menu"
+				className="relative"
+				onClick={() => handleDropdown()}
+			>
+				<UserIcon />
+			</button>
+			<AnimatePresence>
+				{dropdownOpen && (
+					<motion.div
+						initial={{ opacity: 0, scale: 0.95 }}
+						animate={{ opacity: 1, scale: 1 }}
+						exit={{ opacity: 0, scale: 0.95 }}
+						transition={{ duration: 0.2 }}
+						className="absolute right-0 mt-2 py-2 w-48 bg-white shadow-xl z-20 border border-gray-200"
+					>
+						<ul className="uppercase tracking-widest">
+							<Link href="/admin/settings">
+								<motion.li
+									whileHover={{
+										scale: 1.05,
+										color: colors.secondary,
+									}}
+									whileTap={{
+										scale: 1.05,
+										color: colors.secondary,
+									}}
+									className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+								>
+									Settings
+								</motion.li>
+							</Link>
+							<Link href="/admin/profile">
+								<motion.li
+									whileHover={{
+										scale: 1.05,
+										color: colors.secondary,
+									}}
+									whileTap={{
+										scale: 1.05,
+										color: colors.secondary,
+									}}
+									className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+								>
+									Profile
+								</motion.li>
+							</Link>
+							<motion.button
+								type="button"
 								whileHover={{
 									scale: 1.05,
 									color: colors.secondary,
@@ -100,47 +140,18 @@ const AdminUserIcon = ({
 									scale: 1.05,
 									color: colors.secondary,
 								}}
-								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-							>
-								Settings
-							</motion.li>
-						</Link>
-						<Link href="/admin/profile">
-							<motion.li
-								whileHover={{
-									scale: 1.05,
-									color: colors.secondary,
-								}}
-								whileTap={{
-									scale: 1.05,
-									color: colors.secondary,
-								}}
-								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-							>
-								Profile
-							</motion.li>
-						</Link>
-						<Link href="/logout">
-							<motion.li
-								whileHover={{
-									scale: 1.05,
-									color: colors.secondary,
-								}}
-								whileTap={{
-									scale: 1.05,
-									color: colors.secondary,
-								}}
-								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 uppercase tracking-widest w-full text-start"
+								onClick={logOut}
 							>
 								Logout
-							</motion.li>
-						</Link>
-					</ul>
-				</motion.div>
-			)}
-		</AnimatePresence>
-	</div>
-);
+							</motion.button>
+						</ul>
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</div>
+	);
+};
 
 const adminIcons = (
 	dropdownOpen: boolean,
@@ -149,7 +160,7 @@ const adminIcons = (
 	{
 		title: "User",
 		icon: (
-			<AdminUserIcon
+			<AdminUserDropdown
 				dropdownOpen={dropdownOpen}
 				handleDropdown={handleDropdown}
 			/>
