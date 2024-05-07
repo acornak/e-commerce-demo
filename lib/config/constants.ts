@@ -25,6 +25,8 @@ export const location = {
 	lng: -122.08427,
 };
 
+export const usersColl = "users";
+
 export const sortOptions: SortOption[] = [
 	{
 		label: "Default Sorting",

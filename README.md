@@ -38,3 +38,7 @@
 - set default state for modals 
 - product filters into zustand
 - reset password
+
+## Account Pages:
+- https://thesusoutdoors.com/account/addresses - Pass123
+- 

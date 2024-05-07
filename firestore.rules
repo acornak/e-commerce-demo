@@ -1,0 +1,19 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    
+    match /users/{userId} {
+      // Allow read and write if the authenticated user's ID (email) matches the document ID
+      allow read, write: if request.auth != null && request.auth.token.email == userId && !("admin" in request.resource.data);
+    }
+
+
+    match /{document=**} {
+      // Admin overwrite for everything
+      allow read, write: if get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.admin
+      allow read, write: if false;
+    }
+  }
+}

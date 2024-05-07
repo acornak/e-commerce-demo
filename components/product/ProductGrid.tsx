@@ -106,7 +106,6 @@ const ProductGrid = (): JSX.Element => {
 			const min = Number(splittedPrice[0]);
 			const max = Number(splittedPrice[1]);
 			if (Number.isNaN(min) || Number.isNaN(max)) {
-				console.log(min, max);
 				setSelectedPriceRange(null);
 			} else if (min > max || min === max) {
 				setSelectedPriceRange(null);
