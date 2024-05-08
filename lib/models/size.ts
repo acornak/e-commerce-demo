@@ -1,9 +1,5 @@
 import mockSizes from "../../__mocks__/sizes/sizes.mock";
-
-export type Size = {
-	id: number;
-	name: string;
-};
+import { Size } from "../config/types";
 
 /**
  * Get all sizes

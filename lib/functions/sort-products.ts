@@ -1,4 +1,4 @@
-import { Product } from "../models/product";
+import { Product } from "../config/types";
 
 export function sortProductsByPriceAsc(products: Product[]): Product[] {
 	return [...products].sort((a, b) => a.price - b.price);

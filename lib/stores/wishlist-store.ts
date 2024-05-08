@@ -1,12 +1,13 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-export type WishlistItem = {
-	productId: number;
-};
+import { getUser, updateUser } from "../models/user";
+import { auth } from "../config/firebase";
+import { User, WishlistItem } from "../config/types";
 
 export interface WishlistStore {
 	items: WishlistItem[];
+	syncWithFirestore: () => void;
 	addItem: (item: WishlistItem) => void;
 	removeItem: (item: WishlistItem) => void;
 	clearWishlist: () => void;
@@ -16,6 +17,13 @@ export const useWishlistStore = create<WishlistStore>()(
 	persist(
 		(set, get) => ({
 			items: [],
+			syncWithFirestore: async (): Promise<void> => {
+				if (auth.currentUser) {
+					await updateUser({
+						wishlistItems: get().items,
+					} as User);
+				}
+			},
 			addItem: (item: WishlistItem): void => {
 				const existingItems = get().items;
 				const existingIndex = existingItems.findIndex(
@@ -24,19 +32,20 @@ export const useWishlistStore = create<WishlistStore>()(
 				if (existingIndex === -1) {
 					set({ items: [...existingItems, item] });
 				}
+				get().syncWithFirestore();
 			},
 			removeItem: (item: WishlistItem): void => {
-				set((state) => {
-					const updatedItems = state.items.filter(
-						(existingItem) =>
-							existingItem.productId !== item.productId,
-					);
-					return { items: updatedItems };
-				});
+				const updatedItems = get().items.filter(
+					(existingItem) => existingItem.productId !== item.productId,
+				);
+
+				set({ items: updatedItems });
+				get().syncWithFirestore();
 			},
 
 			clearWishlist: (): void => {
 				set({ items: [] });
+				get().syncWithFirestore();
 			},
 		}),
 		{
@@ -49,3 +58,14 @@ export const useWishlistStore = create<WishlistStore>()(
 export const updateWishlistStore = () => {
 	useWishlistStore.persist.rehydrate();
 };
+
+onAuthStateChanged(auth, async (user) => {
+	if (user) {
+		const currentUser = await getUser();
+		if (currentUser?.fsUser?.wishlistItems) {
+			useWishlistStore.setState({
+				items: currentUser.fsUser.wishlistItems,
+			});
+		}
+	}
+});

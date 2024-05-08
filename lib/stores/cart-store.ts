@@ -1,15 +1,13 @@
 import { create } from "zustand";
+import { onAuthStateChanged } from "firebase/auth";
 import { persist, createJSONStorage } from "zustand/middleware";
-
-export type CartItem = {
-	productId: number;
-	sizeId: number;
-	price: number;
-	quantity: number;
-};
+import { getUser, updateUser } from "../models/user";
+import { auth } from "../config/firebase";
+import { CartItem, User } from "../config/types";
 
 export interface CartStore {
 	items: CartItem[];
+	syncWithFirestore: () => void;
 	addItem: (item: CartItem) => void;
 	removeItem: (item: CartItem) => void;
 	addQuantity: (productId: number, sizeId: number, amount?: number) => void;
@@ -25,6 +23,14 @@ export const useCartStore = create<CartStore>()(
 	persist(
 		(set, get) => ({
 			items: [],
+			syncWithFirestore: async (): Promise<void> => {
+				if (auth.currentUser) {
+					await updateUser({
+						cartItems: get().items,
+					} as User);
+				}
+			},
+
 			addItem: (item: CartItem): void => {
 				const existingItems = get().items;
 				const existingItem = existingItems.find(
@@ -46,17 +52,17 @@ export const useCartStore = create<CartStore>()(
 				} else {
 					set({ items: [...existingItems, item] });
 				}
+				get().syncWithFirestore();
 			},
 
 			removeItem: (item: CartItem): void => {
-				set((state) => {
-					const updatedItems = state.items.filter(
-						(existingItem) =>
-							existingItem.productId !== item.productId ||
-							existingItem.sizeId !== item.sizeId,
-					);
-					return { items: updatedItems };
-				});
+				const updatedItems = get().items.filter(
+					(existingItem) =>
+						existingItem.productId !== item.productId ||
+						existingItem.sizeId !== item.sizeId,
+				);
+				set({ items: updatedItems });
+				get().syncWithFirestore();
 			},
 
 			addQuantity: (
@@ -75,6 +81,7 @@ export const useCartStore = create<CartStore>()(
 						: existingItem,
 				);
 				set({ items: updatedItems });
+				get().syncWithFirestore();
 			},
 
 			removeQuantity: (
@@ -96,9 +103,11 @@ export const useCartStore = create<CartStore>()(
 					)
 					.filter((existingItem) => existingItem.quantity > 0);
 				set({ items: updatedItems });
+				get().syncWithFirestore();
 			},
 			clearCart: (): void => {
 				set({ items: [] });
+				get().syncWithFirestore();
 			},
 		}),
 		{
@@ -111,3 +120,12 @@ export const useCartStore = create<CartStore>()(
 export const updateCartStore = () => {
 	useCartStore.persist.rehydrate();
 };
+
+onAuthStateChanged(auth, async (user) => {
+	if (user) {
+		const currentUser = await getUser();
+		if (currentUser?.fsUser?.cartItems) {
+			useCartStore.setState({ items: currentUser.fsUser.cartItems });
+		}
+	}
+});

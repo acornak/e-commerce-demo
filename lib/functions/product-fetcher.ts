@@ -1,6 +1,5 @@
 // Types and constants
-import { SortOption } from "../config/types";
-import { Product } from "../models/product";
+import { SortOption, Product } from "../config/types";
 
 export const fetchProductById = async (
 	productId: number,

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 // Types and constants
-import { Product } from "@/lib/models/product";
+import { Product } from "@/lib/config/types";
 // Functions
 import { fetchProductsByCategory } from "@/lib/functions/product-fetcher";
 // Components

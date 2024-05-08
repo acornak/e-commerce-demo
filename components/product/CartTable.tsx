@@ -15,17 +15,13 @@ import {
 import { getCartItemSize } from "@/lib/functions/cart-helpers";
 import { fetchAllSizes } from "@/lib/functions/size-fetcher";
 // Store
-import {
-	CartItem,
-	updateCartStore,
-	useCartStore,
-} from "@/lib/stores/cart-store";
+import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 // Hooks
 import useHydration from "@/lib/hooks/use-hydration";
 // Types and constants
-import { Product } from "@/lib/models/product";
+import { Product, Size } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
-import { Size } from "@/lib/models/size";
+import { CartItem } from "@/lib/config/types";
 // Components
 import StyledLoading from "../styled/Loading";
 // Icons

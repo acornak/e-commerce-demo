@@ -1,4 +1,4 @@
-import { Brand } from "../models/brand";
+import { Brand } from "../config/types";
 
 export const fetchAllBrands = async (setBrands: (brands: Brand[]) => void) => {
 	await fetch("/api/brands")

@@ -1,23 +1,7 @@
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
-import { usersColl } from "../config/constants";
-
-export type Address = {
-	street: string;
-	city: string;
-	state?: string;
-	zipCode: string;
-	country: string;
-};
-
-export type User = {
-	firstName: string;
-	lastName: string;
-	phoneNumber?: string;
-	address?: Address;
-	createdAt?: Date;
-	updatedAt?: Date;
-};
+import { usersCollName } from "../config/constants";
+import { User } from "../config/types";
 
 export async function getUser(): Promise<{
 	fsUser?: User | null;
@@ -28,7 +12,7 @@ export async function getUser(): Promise<{
 		return { error: "No user logged in" };
 	}
 
-	const userRef = doc(db, usersColl, email);
+	const userRef = doc(db, usersCollName, email);
 
 	try {
 		const docSnapshot = await getDoc(userRef);
@@ -47,7 +31,7 @@ export async function updateUser(user: User): Promise<{ error?: string }> {
 		return { error: "No user logged in" };
 	}
 
-	const userRef = doc(db, usersColl, email);
+	const userRef = doc(db, usersCollName, email);
 
 	try {
 		const docSnapshot = await getDoc(userRef);
@@ -55,12 +39,14 @@ export async function updateUser(user: User): Promise<{ error?: string }> {
 			try {
 				await setDoc(userRef, { ...user, createdAt: new Date() });
 			} catch (e: any) {
+				console.error(e.message);
 				return { error: e.message };
 			}
 		} else {
 			try {
 				await updateDoc(userRef, { ...user, updatedAt: new Date() });
 			} catch (e: any) {
+				console.error(e.message);
 				return { error: e.message };
 			}
 		}

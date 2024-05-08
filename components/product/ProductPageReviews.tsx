@@ -1,4 +1,4 @@
-import { Product } from "@/lib/models/product";
+import { Product } from "@/lib/config/types";
 import React, { FC } from "react";
 
 type ProductPageReviewsProps = {

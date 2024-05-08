@@ -7,7 +7,7 @@ import {
 	fetchProductsMaxPrice,
 	fetchProductsPaginated,
 } from "@/lib/functions/product-fetcher";
-import { Product } from "@/lib/models/product";
+import { Product } from "@/lib/config/types";
 import mockProducts from "@/__mocks__/products/products.mock";
 import { sortOptions } from "@/lib/config/constants";
 

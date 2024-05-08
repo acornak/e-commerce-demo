@@ -12,11 +12,9 @@ import { fetchAllCategories } from "@/lib/functions/category-fetcher";
 import { fetchAllBrands } from "@/lib/functions/brand-fetcher";
 import useFilterChange from "@/lib/hooks/url-params";
 // Types and constants
-import { Category } from "@/lib/models/category";
-import { Brand } from "@/lib/models/brand";
+import { Size, Brand, Category } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
 // Icons
-import { Size } from "@/lib/models/size";
 import { fetchAllSizes } from "@/lib/functions/size-fetcher";
 import { fetchProductsMaxPrice } from "@/lib/functions/product-fetcher";
 import ChevronRightIcon from "../icon/ChevronRight";

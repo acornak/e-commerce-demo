@@ -1,6 +1,4 @@
-import { Product } from "../models/product";
-import { Size } from "../models/size";
-import { CartItem } from "../stores/cart-store";
+import { CartItem, Product, Size } from "../config/types";
 
 export function getCartItemSize(sizes: Size[], sizeId: number): Size {
 	return sizes.filter((s) => s.id === sizeId)[0];

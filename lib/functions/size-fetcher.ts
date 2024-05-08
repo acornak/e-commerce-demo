@@ -1,4 +1,4 @@
-import { Size } from "../models/size";
+import { Size } from "../config/types";
 
 export const fetchAllSizes = async (setSizes: (sizes: Size[]) => void) => {
 	await fetch("/api/sizes")
@@ -7,7 +7,6 @@ export const fetchAllSizes = async (setSizes: (sizes: Size[]) => void) => {
 		.catch((error) => console.error("Fetching sizes failed:", error));
 };
 
-// TODO in API
 export const fetchSizeById = async (
 	sizeId: number,
 	setSize: (size: Size) => void,

@@ -15,9 +15,8 @@ import {
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
 // Types and constants
-import { Product } from "@/lib/models/product";
+import { Product, Size } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
-import { Size } from "@/lib/models/size";
 // Components
 import useOutsideAlerter from "@/lib/hooks/outside-click";
 import StyledLoading from "../styled/Loading";

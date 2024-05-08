@@ -1,29 +1,23 @@
 import React, { FC, useEffect, useState } from "react";
 // Next
 import Link from "next/link";
+import Image from "next/image";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
 import { colors } from "@/lib/config/constants";
-import { Product } from "@/lib/models/product";
+import { CartItem, Product, Size } from "@/lib/config/types";
 // Store
-import {
-	CartItem,
-	updateCartStore,
-	useCartStore,
-} from "@/lib/stores/cart-store";
+import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
+import { useModalsStore } from "@/lib/stores/modals-store";
 // Functions
 import {
 	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
-// Icons
-import Image from "next/image";
-import { useModalsStore } from "@/lib/stores/modals-store";
-// Components
 import { getCartItemSize } from "@/lib/functions/cart-helpers";
-import { Size } from "@/lib/models/size";
 import { fetchAllSizes } from "@/lib/functions/size-fetcher";
+// Icons
 import TrashIcon from "../icon/Trash";
 import CloseIcon from "../icon/Close";
 

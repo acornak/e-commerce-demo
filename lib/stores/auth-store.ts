@@ -12,6 +12,8 @@ import {
 } from "firebase/auth";
 import { create } from "zustand";
 import { auth } from "../config/firebase";
+import { useCartStore } from "./cart-store";
+import { useWishlistStore } from "./wishlist-store";
 
 export interface AuthStore {
 	user: User | null;
@@ -103,6 +105,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
 			set({ error: error.message });
 		} finally {
 			set({ loading: false });
+			useCartStore.getState().clearCart();
+			useWishlistStore.getState().clearWishlist();
 		}
 	},
 }));

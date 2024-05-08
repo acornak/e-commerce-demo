@@ -1,12 +1,13 @@
 // Types and constants
+import { collection } from "firebase/firestore";
 import {
 	sortProductsByNameAsc,
 	sortProductsByNameDesc,
 	sortProductsByPriceAsc,
 	sortProductsByPriceDesc,
 } from "../functions/sort-products";
-import { Product } from "../models/product";
-import { Color, FaqQuestion, SortOption } from "./types";
+import { Color, FaqQuestion, Product, SortOption } from "./types";
+import { db } from "./firebase";
 
 export const colors: Color = {
 	white: "#ffffff",
@@ -25,7 +26,10 @@ export const location = {
 	lng: -122.08427,
 };
 
-export const usersColl = "users";
+export const usersCollName = "users";
+export const usersColl = collection(db, usersCollName);
+export const ordersCollName = "orders";
+export const ordersColl = collection(db, ordersCollName);
 
 export const sortOptions: SortOption[] = [
 	{

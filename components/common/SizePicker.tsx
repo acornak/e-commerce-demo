@@ -6,9 +6,8 @@ import { motion } from "framer-motion";
 // Functions
 import { fetchAllSizes } from "@/lib/functions/size-fetcher";
 // Types and constants
-import { Size } from "@/lib/models/size";
 import { colors } from "@/lib/config/constants";
-import { Product } from "@/lib/models/product";
+import { Product, Size } from "@/lib/config/types";
 
 type SizePickerProps = {
 	product: Product;

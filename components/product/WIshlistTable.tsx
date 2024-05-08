@@ -7,7 +7,7 @@ import Image from "next/image";
 // Animations
 import { motion } from "framer-motion";
 // Types and constants
-import { Product } from "@/lib/models/product";
+import { Product } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
 // Store
 import {

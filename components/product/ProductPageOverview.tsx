@@ -18,9 +18,7 @@ import {
 import { fetchAllCategories } from "@/lib/functions/category-fetcher";
 // Types and Constants
 import { colors } from "@/lib/config/constants";
-import { Size } from "@/lib/models/size";
-import { Product } from "@/lib/models/product";
-import { Category } from "@/lib/models/category";
+import { Product, Size, Category } from "@/lib/config/types";
 // Images
 import fireImage from "@/public/misc/fire.webp";
 // Components

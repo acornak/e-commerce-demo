@@ -12,6 +12,15 @@ import {
 	signOut,
 	signInWithPopup,
 } from "firebase/auth";
+import { act } from "react-dom/test-utils";
+
+jest.mock("firebase/firestore", () => ({
+	getDoc: jest.fn(),
+	setDoc: jest.fn(),
+	updateDoc: jest.fn(),
+	doc: jest.fn(),
+	collection: jest.fn(),
+}));
 
 jest.mock("firebase/auth", () => {
 	const originalModule = jest.requireActual("firebase/auth");
@@ -32,6 +41,7 @@ jest.mock("firebase/auth", () => {
 
 jest.mock("@/lib/config/firebase", () => ({
 	auth: {},
+	db: {},
 }));
 
 describe("signInWithEmail", () => {
@@ -57,7 +67,9 @@ describe("signInWithEmail", () => {
 			user: mockUser,
 		});
 
-		result.current.signInWithEmail(email, password);
+		act(() => {
+			result.current.signInWithEmail(email, password);
+		});
 
 		await waitFor(() => expect(result.current.user).toEqual(mockUser));
 
@@ -88,7 +100,9 @@ describe("signInWithEmail", () => {
 			new Error(errorMessage),
 		);
 
-		result.current.signInWithEmail(email, password);
+		act(() => {
+			result.current.signInWithEmail(email, password);
+		});
 
 		await waitFor(() => expect(result.current.error).toBe(errorMessage));
 
@@ -130,7 +144,9 @@ describe("signUpWithEmail", () => {
 			user: mockUser,
 		});
 
-		result.current.signUpWithEmail(email, password);
+		act(() => {
+			result.current.signUpWithEmail(email, password);
+		});
 
 		await waitFor(() => expect(result.current.user).toEqual(mockUser));
 
@@ -161,7 +177,9 @@ describe("signUpWithEmail", () => {
 			new Error(errorMessage),
 		);
 
-		result.current.signUpWithEmail(email, password);
+		act(() => {
+			result.current.signUpWithEmail(email, password);
+		});
 
 		await waitFor(() => expect(result.current.error).toBe(errorMessage));
 
@@ -202,7 +220,9 @@ describe("signInWithGoogle", () => {
 			user: mockUser,
 		});
 
-		result.current.signInWithGoogle();
+		act(() => {
+			result.current.signInWithGoogle();
+		});
 
 		await waitFor(() => expect(result.current.user).toEqual(mockUser));
 
@@ -227,7 +247,9 @@ describe("signInWithGoogle", () => {
 			new Error(errorMessage),
 		);
 
-		result.current.signInWithGoogle();
+		act(() => {
+			result.current.signInWithGoogle();
+		});
 
 		await waitFor(() => expect(result.current.user).toBeNull());
 
@@ -261,7 +283,9 @@ describe("resetPassword", () => {
 			browserLocalPersistence,
 		);
 
-		result.current.resetPassword(email);
+		act(() => {
+			result.current.resetPassword(email);
+		});
 
 		await waitFor(() => expect(result.current.loading).toBeFalsy());
 
@@ -286,7 +310,9 @@ describe("resetPassword", () => {
 			new Error(errorMessage),
 		);
 
-		result.current.resetPassword(email);
+		act(() => {
+			result.current.resetPassword(email);
+		});
 
 		await waitFor(() => expect(result.current.error).toBe(errorMessage));
 
@@ -322,7 +348,9 @@ describe("logOut", () => {
 			browserLocalPersistence,
 		);
 
-		result.current.logOut();
+		act(() => {
+			result.current.logOut();
+		});
 
 		await waitFor(() => expect(result.current.loading).toBeFalsy());
 
@@ -345,7 +373,9 @@ describe("logOut", () => {
 
 		(signOut as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
-		result.current.logOut();
+		act(() => {
+			result.current.logOut();
+		});
 
 		await waitFor(() => expect(result.current.error).toBe(errorMessage));
 

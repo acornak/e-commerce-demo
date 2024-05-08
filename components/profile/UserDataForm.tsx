@@ -7,7 +7,8 @@ import {
 	StyledTextInput,
 } from "@/components/styled/Inputs";
 // Types and constants
-import { User, updateUser } from "@/lib/models/user";
+import { updateUser } from "@/lib/models/user";
+import { User } from "@/lib/config/types";
 
 type UserDataFormProps = {
 	userData: User | null;

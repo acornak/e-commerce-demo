@@ -1,4 +1,4 @@
-import { Category } from "../models/category";
+import { Category } from "../config/types";
 
 export const fetchAllCategories = async (
 	setCategories: (categories: Category[]) => void,

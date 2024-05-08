@@ -6,7 +6,8 @@ import { StyledSectionHeading } from "@/components/styled/Heading";
 import StyledHero from "@/components/hero/StyledHero";
 import NewsletterBanner from "@/components/common/Newsletter";
 // Types and constants
-import { Product, getAllProducts } from "@/lib/models/product";
+import { getAllProducts } from "@/lib/models/product";
+import { Product } from "@/lib/config/types";
 // Images
 import aboutHero from "@/public/about/about_hero.webp";
 import ProductPageOverview from "@/components/product/ProductPageOverview";

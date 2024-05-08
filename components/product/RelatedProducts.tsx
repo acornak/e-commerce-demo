@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 // Functions
 import { fetchProductsByTag } from "@/lib/functions/product-fetcher";
 // Types and constants
-import { Product } from "@/lib/models/product";
+import { Product } from "@/lib/config/types";
 import ProductPreview from "./ProductPreview";
 
 type RelatedProductsProps = {

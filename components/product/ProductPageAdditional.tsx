@@ -87,7 +87,7 @@ const ProductPageAdditional: FC<ProductPageAdditionalProps> = ({
 							<p className="py-1">
 								<Link
 									className="text-gray-600 hover:text-secondary"
-									href="/account"
+									href="/orders"
 								>
 									Your Orders
 								</Link>

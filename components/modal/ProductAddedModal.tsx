@@ -11,14 +11,13 @@ import {
 	totalCartItemPrice,
 	totalCartPrice,
 } from "@/lib/functions/cart-helpers";
+import useOutsideAlerter from "@/lib/hooks/outside-click";
 // Store
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Types and constants
 import { colors } from "@/lib/config/constants";
-
 // Icons
-import useOutsideAlerter from "@/lib/hooks/outside-click";
 import CloseIcon from "../icon/Close";
 import CheckmarkIcon from "../icon/Checkmark";
 

@@ -1,11 +1,5 @@
 import mockCategories from "../../__mocks__/categories/categories.mock";
-
-export type Category = {
-	id: number;
-	name: string;
-	slug: string;
-	image?: string;
-};
+import { Category } from "../config/types";
 
 /**
  * Get all categories

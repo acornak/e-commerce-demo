@@ -5,8 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 // Types and constants
 import { sortOptions } from "@/lib/config/constants";
-import { Product } from "@/lib/models/product";
-import { SortOption } from "@/lib/config/types";
+import { Product, SortOption } from "@/lib/config/types";
 // Functions
 import {
 	fetchProductsMaxPrice,

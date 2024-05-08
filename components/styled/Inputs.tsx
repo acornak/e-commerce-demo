@@ -29,7 +29,7 @@ export const StyledTextInput: FC<TextInputProps> = ({
 	<div className="flex items-center justify-between">
 		<label
 			htmlFor={id}
-			className="block text-sm font-medium text-gray-700 w-1/3"
+			className="block text-sm font-medium text-gray-700 w-1/5 text-end"
 		>
 			{label}
 		</label>

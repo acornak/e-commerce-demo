@@ -1,34 +1,6 @@
 import mockProducts from "../../__mocks__/products/products.mock";
-
-export type Variant = {
-	id: number;
-	name: string;
-	image: string;
-	price: number;
-	previousPrice?: number;
-	countInStock: number;
-};
-
-export type Product = {
-	id: number;
-	name: string;
-	slug: string;
-	price: number;
-	previousPrice?: number;
-	previewImage?: string;
-	images?: string[];
-	brandId: number;
-	perex: string;
-	sizeIds: number[];
-	categories: number[];
-	rating?: number;
-	countInStock?: number;
-	variants?: Variant[];
-	reviews?: string[];
-	tags: string[];
-	specialOffer?: boolean;
-	description?: string;
-};
+// Types and constants
+import { Product } from "../config/types";
 
 /**
  * Get all products

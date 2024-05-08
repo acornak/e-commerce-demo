@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { Product } from "../models/product";
-import { Size } from "../models/size";
+import { Product, Size } from "../config/types";
 
 interface CartProduct extends Product {
 	selectedSize: Size;

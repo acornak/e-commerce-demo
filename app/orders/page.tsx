@@ -9,26 +9,26 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 // Stores
 import { useAuthStore } from "@/lib/stores/auth-store";
+// Types and constants
+import { getOrders } from "@/lib/models/orders";
+import { colors } from "@/lib/config/constants";
+import { User, Order } from "@/lib/config/types";
 import { getUser } from "@/lib/models/user";
 // Components
 import { StyledSectionHeading } from "@/components/styled/Heading";
 import StyledLoading from "@/components/styled/Loading";
-import UserDataForm from "@/components/profile/UserDataForm";
-import PasswordForm from "@/components/profile/PasswordForm";
-import AddressForm from "@/components/profile/AddressForm";
-import ProfileWrapper from "@/components/profile/ProfileWrapper";
+import OrdersTable from "@/components/profile/OrdersTable";
 import NewsletterBanner from "@/components/common/Newsletter";
+// Icons
 import ChevronRightIcon from "@/components/icon/ChevronRight";
-// Types and constants
-import { colors } from "@/lib/config/constants";
-import { User } from "@/lib/config/types";
 
-const AccountPage: NextPage = (): JSX.Element => {
+const OrdersPage: NextPage = (): JSX.Element => {
 	const user = useAuthStore((state) => state.user);
 	const initialLoading = useAuthStore((state) => state.initialLoading);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [userData, setUserData] = useState<User | null>(null);
+	const [orders, setOrders] = useState<Order[]>([]);
 
 	useEffect(() => {
 		const fetchUserData = async () => {
@@ -42,7 +42,20 @@ const AccountPage: NextPage = (): JSX.Element => {
 				}
 			}
 		};
+		const fetchOrders = async () => {
+			if (user && user.email) {
+				const data = await getOrders();
+				if (data.error) {
+					setError(data.error);
+				}
+				if (data.orders) {
+					setOrders(data.orders);
+				}
+			}
+		};
+
 		fetchUserData();
+		fetchOrders();
 		setLoading(false);
 	}, [user]);
 
@@ -83,7 +96,7 @@ const AccountPage: NextPage = (): JSX.Element => {
 					</motion.p>
 				</Link>
 				<ChevronRightIcon />
-				<Link href="/account">
+				<Link href="/orders">
 					<motion.p
 						whileHover={{
 							color: colors.secondary,
@@ -94,12 +107,11 @@ const AccountPage: NextPage = (): JSX.Element => {
 						transition={{ duration: 0.2 }}
 						className="inline"
 					>
-						Your Account
+						Your Orders
 					</motion.p>
 				</Link>
 			</div>
-
-			<StyledSectionHeading title="Your Account" />
+			<StyledSectionHeading title="Your Orders" />
 			<div className="flex text-center justify-center pb-8">
 				<p>
 					{/* TODO: this will be different with email/password login */}
@@ -111,15 +123,11 @@ const AccountPage: NextPage = (): JSX.Element => {
 				</p>
 			</div>
 
-			<ProfileWrapper heading="Account Info">
-				<UserDataForm userData={userData} email={user.email!} />
-				<PasswordForm />
-				<AddressForm address={userData?.address} />
-			</ProfileWrapper>
+			<OrdersTable orders={orders} />
 
 			<NewsletterBanner />
 		</div>
 	);
 };
 
-export default AccountPage;
+export default OrdersPage;

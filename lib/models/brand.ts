@@ -1,11 +1,5 @@
 import mockBrands from "../../__mocks__/brands/brands.mock";
-
-export type Brand = {
-	id: number;
-	name: string;
-	slug: string;
-	image?: string;
-};
+import { Brand } from "../config/types";
 
 /**
  * Get all brands

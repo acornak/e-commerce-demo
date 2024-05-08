@@ -188,7 +188,25 @@ const Navbar = (): JSX.Element => {
 											}}
 											className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
 										>
-											Profile
+											Account
+										</motion.li>
+									</Link>
+									<Link
+										href="/orders"
+										onClick={() => setDropdownOpen(false)}
+									>
+										<motion.li
+											whileHover={{
+												scale: 1.05,
+												color: colors.secondary,
+											}}
+											whileTap={{
+												scale: 1.05,
+												color: colors.secondary,
+											}}
+											className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+										>
+											Orders
 										</motion.li>
 									</Link>
 									<motion.button

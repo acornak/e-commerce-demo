@@ -7,7 +7,8 @@ import {
 	StyledSubmitButton,
 	StyledTextInput,
 } from "@/components/styled/Inputs";
-import { Address, User, updateUser } from "@/lib/models/user";
+import { updateUser } from "@/lib/models/user";
+import { User, Address } from "@/lib/config/types";
 
 type AddressFormProps = {
 	address?: Address;
@@ -55,7 +56,7 @@ const AddressForm: FC<AddressFormProps> = ({ address }): JSX.Element => {
 	};
 
 	return (
-		<form className="space-y-4">
+		<form className="space-y-4 pb-10">
 			<div className="flex flex-col items-center py-4">
 				<p className="text-lg tracking-wider border-b border-secondary">
 					Address
