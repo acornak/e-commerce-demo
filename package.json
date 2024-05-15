@@ -18,10 +18,12 @@
 	"dependencies": {
 		"@types/google-map-react": "^2.1.10",
 		"@types/nodemailer": "^6.4.14",
+		"@types/uuid": "^9.0.8",
 		"@types/yup": "^0.32.0",
 		"@vercel/analytics": "^1.2.2",
 		"cookies-next": "^4.1.1",
 		"firebase": "^10.11.1",
+		"firebase-admin": "^12.1.0",
 		"formik": "^2.4.6",
 		"framer-motion": "^11.1.7",
 		"google-map-react": "^2.2.1",
@@ -32,7 +34,10 @@
 		"react-dom": "^18",
 		"react-google-recaptcha-v3": "^1.10.1",
 		"react-range": "^1.8.14",
+		"server-only": "^0.0.1",
 		"sharp": "^0.33.3",
+		"stripe": "^15.5.0",
+		"uuid": "^9.0.1",
 		"yup": "^1.4.0",
 		"zustand": "^4.5.2"
 	},

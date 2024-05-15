@@ -18,10 +18,11 @@ import { fetchAllSizes } from "@/lib/functions/size-fetcher";
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 // Hooks
 import useHydration from "@/lib/hooks/use-hydration";
+// Functions
+import { handleCheckout } from "@/lib/functions/checkout";
 // Types and constants
-import { Product, Size } from "@/lib/config/types";
+import { Product, Size, CartItem } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
-import { CartItem } from "@/lib/config/types";
 // Components
 import StyledLoading from "../styled/Loading";
 // Icons
@@ -286,6 +287,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 
 const CartTable = () => {
 	const items = useCartStore((state) => state.items);
+	const clearCart = useCartStore((state) => state.clearCart);
 	const hydrated = useHydration(useCartStore);
 
 	useEffect(() => {
@@ -426,25 +428,27 @@ const CartTable = () => {
 									.toFixed(2)}
 							</p>
 						</div>
-						<Link href="/checkout">
-							<motion.button
-								initial={{
-									color: colors.white,
-									backgroundColor: colors.black,
-								}}
-								whileHover={{
-									color: colors.white,
-									backgroundColor: colors.secondary,
-								}}
-								whileTap={{
-									color: colors.white,
-									backgroundColor: colors.secondary,
-								}}
-								className="uppercase px-6 py-4 mt-10 mb-6 tracking-widest"
-							>
-								Proceed to checkout
-							</motion.button>
-						</Link>
+						<motion.button
+							initial={{
+								color: colors.white,
+								backgroundColor: colors.black,
+							}}
+							whileHover={{
+								color: colors.white,
+								backgroundColor: colors.secondary,
+							}}
+							whileTap={{
+								color: colors.white,
+								backgroundColor: colors.secondary,
+							}}
+							className="uppercase px-6 py-4 mt-10 mb-6 tracking-widest"
+							onClick={() => {
+								handleCheckout(items);
+								clearCart();
+							}}
+						>
+							Proceed to checkout
+						</motion.button>
 					</div>
 				</>
 			)}

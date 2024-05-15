@@ -78,14 +78,23 @@ export type CartItem = {
 	quantity: number;
 };
 
+export type Address = {
+	street: string;
+	city: string;
+	state?: string;
+	zipCode: string;
+	country: string;
+};
+
 export type Order = {
 	id: string;
 	email: string;
 	items: CartItem[];
-	createdAt: Date;
-	updatedAt: Date;
 	status: "pending" | "processing" | "completed" | "cancelled";
 	paid: boolean;
+	address?: Address;
+	createdAt?: Date;
+	updatedAt?: Date;
 };
 
 export type WishlistItem = {
@@ -109,14 +118,6 @@ export type Category = {
 export type Size = {
 	id: number;
 	name: string;
-};
-
-export type Address = {
-	street: string;
-	city: string;
-	state?: string;
-	zipCode: string;
-	country: string;
 };
 
 export type User = {

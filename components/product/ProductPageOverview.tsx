@@ -4,6 +4,8 @@ import React, { FC, useEffect, useState } from "react";
 // Next
 import Image from "next/image";
 import Link from "next/link";
+// Stripe
+import Stripe from "stripe";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Stores
@@ -16,7 +18,10 @@ import {
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
 import { fetchAllCategories } from "@/lib/functions/category-fetcher";
+import generateOrderId from "@/lib/functions/orders";
+import { createOrder } from "@/lib/models/orders";
 // Types and Constants
+import { auth } from "@/lib/config/firebase";
 import { colors } from "@/lib/config/constants";
 import { Product, Size, Category } from "@/lib/config/types";
 // Images
@@ -253,7 +258,7 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 		};
 	}, []);
 
-	const handleAddToCart = (showModal: boolean) => {
+	const handleAddToCart = () => {
 		if (product && selectedSize) {
 			addItem({
 				productId: product.id,
@@ -262,9 +267,69 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 				sizeId: selectedSize.id,
 			});
 			setCartProduct(product, selectedSize);
-			if (showModal) setProductAddedModalOpen(true);
+			setProductAddedModalOpen(true);
 			setQuantity(1);
 		}
+	};
+
+	const handleBuytItNow = async () => {
+		const orderId = generateOrderId();
+		try {
+			await createOrder({
+				id: orderId,
+				email: auth.currentUser?.email || "",
+				items: [
+					{
+						productId: product.id,
+						sizeId: selectedSize?.id || 0,
+						price: product.price,
+						quantity,
+					},
+				],
+				createdAt: new Date(),
+				status: "pending",
+				paid: false,
+			});
+		} catch (error) {
+			console.error("Error:", error);
+			alert(error); // TODO: replace with toast
+			return;
+		}
+
+		const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+			{
+				price_data: {
+					currency: "usd",
+					product_data: {
+						name: `${product.name} Size:${selectedSize?.name}`,
+						// images: [imageUrl?.replace("blob:", "") || ""],
+					},
+					unit_amount: product.price * 100,
+				},
+				quantity,
+			},
+		];
+
+		fetch("/api/checkout-session", {
+			method: "POST",
+			body: JSON.stringify({
+				lineItems,
+				orderId,
+				email: auth.currentUser?.email || "",
+			}),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.sessionUrl) {
+					window.location.href = data.sessionUrl;
+				} else {
+					throw new Error("No session URL returned");
+				}
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				alert(error); // TODO: replace with toast
+			});
 	};
 
 	return (
@@ -317,14 +382,14 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 								? "hover:bg-secondary text-white"
 								: "bg-white text-gray-300 border border-gray-300"
 						}`}
-						onClick={() => handleAddToCart(true)}
+						onClick={handleAddToCart}
 						disabled={selectedSize === null}
 					>
 						Add to cart
 					</button>
 				</div>
 			</div>
-			<Link href="/checkout" className="flex flex-col col-span-2">
+			<div className="flex flex-col col-span-2">
 				<button
 					type="button"
 					className={`bg-black px-4 py-2 uppercase tracking-widest font-semibold ${
@@ -332,12 +397,12 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 							? "hover:bg-secondary text-white"
 							: "bg-white text-gray-300 border border-gray-300"
 					}`}
-					onClick={() => handleAddToCart(false)}
+					onClick={handleBuytItNow}
 					disabled={selectedSize === null}
 				>
 					Buy it now
 				</button>
-			</Link>
+			</div>
 		</>
 	);
 };
@@ -410,7 +475,6 @@ const ProductTags: FC<TagsProps> = ({ tags }): JSX.Element => {
 								backgroundColor: colors.secondary,
 								color: colors.white,
 							}}
-							key={tag}
 							className="bg-gray-200 text-gray-500 px-2 py-1 mr-2 mb-2 inline-block"
 						>
 							{tag}

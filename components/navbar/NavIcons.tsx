@@ -21,7 +21,7 @@ import HeartIcon from "../icon/Heart";
 
 const CartIcon = ({ cartItems }: { cartItems: number }) => {
 	const pathname = usePathname();
-	const shouldRenderIcon = pathname !== "/cart" && pathname !== "/checkout";
+	const shouldRenderIcon = pathname !== "/cart";
 
 	if (!shouldRenderIcon) return <div className="w-5 h-5 lg:w-6 lg:h-6" />;
 

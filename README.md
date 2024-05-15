@@ -9,6 +9,12 @@
 - Zustand
 - Framer Motion
 
+## Stripe Local Setup
+- `brew install stripe/stripe-cli/stripe`
+- `stripe login`
+- `stripe listen --forward-to localhost:3000/api/strapi-webhook`
+- `stripe trigger payment_intent.succeeded`
+
 ## Sources
 
 - https://medium.com/@akanksha.t05/how-to-add-husky-in-a-next-js-app-9a10817b761d
@@ -19,6 +25,8 @@
 - https://medium.com/@mak-dev/zustand-with-next-js-14-server-components-da9c191b73df
 - https://docs.pmnd.rs/zustand/guides/nextjs
 - https://blog.logrocket.com/integrating-google-maps-react/
+- https://youtu.be/_TVrn-pyTo8
+- https://www.jamesshopland.com/blog/nextjs-firebase-admin-sdk
 
 ## TODO:
 - Product variants
@@ -38,6 +46,11 @@
 - set default state for modals 
 - product filters into zustand
 - reset password
+- forgot password
+- address and email modal
+- orders add pay button
+- add global loader when clicked on checkout
+- add pagination to orders page
 
 ## Account Pages:
 - https://thesusoutdoors.com/account/addresses - Pass123

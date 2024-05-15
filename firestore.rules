@@ -3,24 +3,37 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    
-    match /users/{userId} {
-      // Allow create, write if the authenticated user's ID (email) matches the document ID and the user is not an admin
-      allow create, write:  if request.auth != null && request.auth.token.email == userId && !("admin" in request.resource.data);
-      // Allow read and write if the authenticated user's ID (email) matches the document ID
-      allow read: if request.auth != null && request.auth.token.email == userId;
-    }
-
-    match /orders/{document=**} {
-      // Allow read if the authenticated user's ID (email) matches the document ID
-      allow read, write: if request.auth != null && request.auth.token.email == resource.data.email;
-    } 
-
-
     match /{document=**} {
       // Admin overwrite for everything
       allow read, write: if get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.admin
       allow read, write: if false;
     }
+
+    match /users/{userId} {
+      // Ensure there is an authenticated request
+      allow read, create, update, delete: if request.auth != null && request.auth.token.email == userId;
+
+      // Allow create but prevent setting the 'admin' field
+      allow create: if request.auth != null && request.auth.token.email == userId && !("admin" in request.resource.data);
+
+      // Allow update but prevent modifying the 'admin' field if it already exists
+      allow update: if request.auth != null && request.auth.token.email == userId &&
+        (!("admin" in request.resource.data) || request.resource.data.admin == resource.data.admin);
+    }
+
+		match /orders/{document=**} {
+      // Allow read if the authenticated user's ID (email) matches the document ID
+      allow read: if request.auth.token.email == resource.data.email;
+      allow write: if isValidNewOrder();
+    }
   }
+}
+
+function isValidNewOrder() {
+  return request.resource.data.keys().hasAll(['id', 'email', 'items', 'status', 'paid']) &&
+         request.resource.data.id is string &&
+         request.resource.data.email is string &&
+         request.resource.data.email.matches('.+@.+\\..+') &&
+         (request.resource.data.status in ['pending', 'processing', 'completed', 'cancelled']) &&
+         request.resource.data.paid == false;
 }

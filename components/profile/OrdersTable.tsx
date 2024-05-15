@@ -7,6 +7,7 @@ import Link from "next/link";
 // Animations
 import { motion } from "framer-motion";
 // Types and constants
+import { auth } from "@/lib/config/firebase";
 import { colors } from "@/lib/config/constants";
 import { CartItem, Order, Product } from "@/lib/config/types";
 // Functions
@@ -15,8 +16,10 @@ import {
 	fetchProductById,
 	fetchProductImage,
 } from "@/lib/functions/product-fetcher";
+import { createCheckoutItems } from "@/lib/functions/checkout";
 // Icons
 import PdfIcon from "../icon/Pdf";
+import CheckmarkRoundIcon from "../icon/CheckmarkRound";
 
 type OrderProductProps = {
 	item: CartItem;
@@ -63,18 +66,41 @@ type OrderRowProps = {
 };
 
 const OrderRow: FC<OrderRowProps> = ({ order }): JSX.Element => {
+	const handleOrderPayment = async () => {
+		fetch("/api/checkout-session", {
+			method: "POST",
+			body: JSON.stringify({
+				lineItems: createCheckoutItems(order.items),
+				orderId: order.id,
+				email: auth.currentUser?.email || "",
+			}),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				if (data.sessionUrl) {
+					window.location.href = data.sessionUrl;
+				} else {
+					throw new Error("No session URL returned");
+				}
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+				alert(error); // TODO: replace with toast
+			});
+	};
+
 	return (
 		<tr>
 			<td className="px-6 py-4 whitespace-nowrap text-gray-900 text-sm hidden lg:table-cell">
 				<div>
-					{order.createdAt.toLocaleDateString("en-GB", {
+					{order.createdAt?.toLocaleDateString("en-GB", {
 						day: "2-digit",
 						month: "2-digit",
 						year: "numeric",
 					})}
 				</div>
 				<div>
-					{order.createdAt.toLocaleTimeString("en-GB", {
+					{order.createdAt?.toLocaleTimeString("en-GB", {
 						hour: "2-digit",
 						minute: "2-digit",
 						hour12: false,
@@ -145,8 +171,24 @@ const OrderRow: FC<OrderRowProps> = ({ order }): JSX.Element => {
 				${totalCartPrice(order.items).toFixed(2)}
 			</td>
 			<td className="px-6 py-4 whitespace-nowrap text-gray-900 text-sm">
-				{/* TODO: add checkmark instead of text */}
-				{order.paid ? "Yes" : "No"}
+				{order.paid ? (
+					<div className="text-green-600 font-bold justify-center flex">
+						<CheckmarkRoundIcon size="2em" />
+					</div>
+				) : (
+					<motion.button
+						whileHover={{
+							backgroundColor: colors.black,
+						}}
+						whileTap={{
+							backgroundColor: colors.black,
+						}}
+						className="bg-secondary text-white px-2 py-1 text-sm uppercase"
+						onClick={handleOrderPayment}
+					>
+						Pay Now
+					</motion.button>
+				)}
 			</td>
 			<td className="px-6 py-4 whitespace-nowrap text-gray-900 text-sm">
 				{order.status}

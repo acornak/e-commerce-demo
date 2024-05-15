@@ -12,6 +12,7 @@ import {
 	totalCartPrice,
 } from "@/lib/functions/cart-helpers";
 import useOutsideAlerter from "@/lib/hooks/outside-click";
+import { handleCheckout } from "@/lib/functions/checkout";
 // Store
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
@@ -29,6 +30,7 @@ const ProductAddedModal: FC = () => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	// Cart Store
 	const cartItems = useCartStore((state) => state.items);
+	const clearCart = useCartStore((state) => state.clearCart);
 	// Modal Store
 	const productAddedModalOpen = useModalsStore(
 		(state) => state.productAddedModalOpen,
@@ -188,7 +190,8 @@ const ProductAddedModal: FC = () => {
 									}}
 									className="w-full md:w-2/3 mt-6 py-4 bg-secondary text-white font-semibold uppercase text-sm tracking-widest"
 									onClick={() => {
-										router.push("/checkout");
+										handleCheckout(cartItems);
+										clearCart();
 										setProductAddedModalOpen(false);
 									}}
 								>

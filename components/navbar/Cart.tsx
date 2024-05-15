@@ -17,6 +17,7 @@ import {
 } from "@/lib/functions/product-fetcher";
 import { getCartItemSize } from "@/lib/functions/cart-helpers";
 import { fetchAllSizes } from "@/lib/functions/size-fetcher";
+import { handleCheckout } from "@/lib/functions/checkout";
 // Icons
 import TrashIcon from "../icon/Trash";
 import CloseIcon from "../icon/Close";
@@ -170,6 +171,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 
 const ShoppingCart: FC = () => {
 	const items = useCartStore((state) => state.items);
+	const clearCart = useCartStore((state) => state.clearCart);
 	const cartBarOpen = useModalsStore((state) => state.cartBarOpen);
 	const setCartBarOpen = useModalsStore((state) => state.setCartBarOpen);
 
@@ -273,11 +275,7 @@ const ShoppingCart: FC = () => {
 									View Cart
 								</motion.button>
 							</Link>
-							<Link
-								href="/checkout"
-								className="bg-black w-1/2 "
-								onClick={() => setCartBarOpen(false)}
-							>
+							<div className="bg-black w-1/2">
 								<motion.button
 									whileHover={{
 										backgroundColor: colors.secondary,
@@ -288,10 +286,15 @@ const ShoppingCart: FC = () => {
 										color: colors.black,
 									}}
 									className="text-center py-4 uppercase w-full"
+									onClick={() => {
+										setCartBarOpen(false);
+										handleCheckout(items);
+										clearCart();
+									}}
 								>
 									Checkout
 								</motion.button>
-							</Link>
+							</div>
 						</div>
 					</div>
 				</motion.div>

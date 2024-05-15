@@ -3,6 +3,7 @@ import { auth, db } from "../config/firebase";
 import { usersCollName } from "../config/constants";
 import { User } from "../config/types";
 
+// TODO: remove fsUser
 export async function getUser(): Promise<{
 	fsUser?: User | null;
 	error?: string;
@@ -25,10 +26,10 @@ export async function getUser(): Promise<{
 	}
 }
 
-export async function updateUser(user: User): Promise<{ error?: string }> {
+export async function updateUser(user: User): Promise<void> {
 	const email = auth.currentUser?.email;
 	if (!email) {
-		return { error: "No user logged in" };
+		throw new Error("No user logged in");
 	}
 
 	const userRef = doc(db, usersCollName, email);
@@ -40,18 +41,16 @@ export async function updateUser(user: User): Promise<{ error?: string }> {
 				await setDoc(userRef, { ...user, createdAt: new Date() });
 			} catch (e: any) {
 				console.error(e.message);
-				return { error: e.message };
 			}
 		} else {
 			try {
 				await updateDoc(userRef, { ...user, updatedAt: new Date() });
 			} catch (e: any) {
 				console.error(e.message);
-				return { error: e.message };
+				throw new Error(e.message);
 			}
 		}
 	} catch (e: any) {
-		return { error: e.message };
+		throw new Error(e.message);
 	}
-	return {};
 }

@@ -20,7 +20,10 @@ const RelatedProduct: FC<RelatedProductsProps> = ({ tags }): JSX.Element => {
 		<div className="container mx-auto mb-10">
 			<div className="grid grid-cols-2 lg:grid-cols-4">
 				{products.map((product) => (
-					<ProductPreview key={product.id} product={product} />
+					<ProductPreview
+						key={product.id + Math.random() * 4567}
+						product={product}
+					/>
 				))}
 			</div>
 		</div>
