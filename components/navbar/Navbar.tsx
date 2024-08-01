@@ -119,7 +119,7 @@ const Navbar = (): JSX.Element => {
 		<>
 			<MobileItems items={NavItemsMobile} />
 			<nav
-				className={`${navClass} fixed transition-all ease-in-out duration-300 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-8 border border-b border-gray-300`}
+				className={`${navClass} fixed transition-all ease-in-out duration-300 bg-white w-full z-50 flex justify-between items-center px-5 lg:px-12 py-3 lg:py-6 border border-b border-gray-300`}
 				style={{
 					zIndex: 20,
 				}}

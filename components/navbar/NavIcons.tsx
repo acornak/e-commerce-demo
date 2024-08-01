@@ -20,11 +20,6 @@ import UserIcon from "../icon/User";
 import HeartIcon from "../icon/Heart";
 
 const CartIcon = ({ cartItems }: { cartItems: number }) => {
-	const pathname = usePathname();
-	const shouldRenderIcon = pathname !== "/cart";
-
-	if (!shouldRenderIcon) return <div className="w-5 h-5 lg:w-6 lg:h-6" />;
-
 	return (
 		<>
 			<BagIcon />
@@ -40,13 +35,16 @@ const MenuIcons = (
 	loggedIn: boolean,
 	handleDropdown: () => void,
 ): NavIcon[] => {
+	const pathname = usePathname();
+	const shouldRenderIcon = pathname !== "/cart";
+
 	const setSearchBarOpen = useModalsStore((state) => state.setSearchBarOpen);
 	const setLoginModalOpen = useModalsStore(
 		(state) => state.setLoginModalOpen,
 	);
 	const setCartBarOpen = useModalsStore((state) => state.setCartBarOpen);
 
-	return [
+	const icons: NavIcon[] = [
 		{
 			title: "Magnifier",
 			icon: <MagnifierIcon />,
@@ -63,12 +61,17 @@ const MenuIcons = (
 			icon: <HeartIcon />,
 			url: "/wishlist",
 		},
-		{
+	];
+
+	if (shouldRenderIcon) {
+		icons.push({
 			title: "Cart",
 			icon: <CartIcon cartItems={cartItems} />,
 			onClick: () => setCartBarOpen(true),
-		},
-	];
+		});
+	}
+
+	return icons;
 };
 
 const AdminUserDropdown = ({
