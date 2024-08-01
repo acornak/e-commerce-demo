@@ -21,6 +21,7 @@ import useHydration from "@/lib/hooks/use-hydration";
 // Functions
 import { handleCheckout } from "@/lib/functions/checkout";
 // Types and constants
+import { auth } from "@/lib/config/firebase";
 import { Product, Size, CartItem } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
 // Components
@@ -443,7 +444,10 @@ const CartTable = () => {
 							}}
 							className="uppercase px-6 py-4 mt-10 mb-6 tracking-widest"
 							onClick={() => {
-								handleCheckout(items);
+								handleCheckout(
+									items,
+									auth.currentUser?.email || "",
+								);
 								clearCart();
 							}}
 						>

@@ -1,6 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 
-export default function generateOrderId() {
+/**
+ * Generate a unique order ID
+ * @returns Order ID
+ */
+export default function generateOrderId(): string {
 	const date = new Date();
 	const formattedDate = [
 		date.getDate().toString().padStart(2, "0"),

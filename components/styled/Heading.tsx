@@ -11,7 +11,7 @@ export const StyledSectionHeading: FC<HeadingProps> = ({
 }) => {
 	return (
 		<div
-			className={`text-3xl uppercase tracking-widest text-center ${className}`}
+			className={`text-3xl text-black uppercase tracking-widest text-center ${className}`}
 		>
 			{title}
 			<div className="max-w-60 bg-orange-500 h-1 mx-auto mt-2" />

@@ -1,5 +1,5 @@
 import { fetchAllSizes, fetchSizeById } from "@/lib/functions/size-fetcher";
-import { Size } from "@/lib/models/size";
+import { Size } from "@/lib/config/types";
 
 describe("fetchAllSizes function", () => {
 	let mockSetSizes: jest.Mock<void, [Size[]]>;

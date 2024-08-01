@@ -17,6 +17,7 @@ import { handleCheckout } from "@/lib/functions/checkout";
 import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 // Types and constants
+import { auth } from "@/lib/config/firebase";
 import { colors } from "@/lib/config/constants";
 // Icons
 import CloseIcon from "../icon/Close";
@@ -190,7 +191,10 @@ const ProductAddedModal: FC = () => {
 									}}
 									className="w-full md:w-2/3 mt-6 py-4 bg-secondary text-white font-semibold uppercase text-sm tracking-widest"
 									onClick={() => {
-										handleCheckout(cartItems);
+										handleCheckout(
+											cartItems,
+											auth.currentUser?.email || "",
+										);
 										clearCart();
 										setProductAddedModalOpen(false);
 									}}

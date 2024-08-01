@@ -1,25 +1,39 @@
 /* eslint-disable import/prefer-default-export */
 import createCheckoutSession from "@/lib/config/stripe";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+/**
+ * Create checkout session
+ * @param {Request} request - Request object
+ * @returns {Response} - Response with session URL
+ * @throws {Error} - Throws error if line items are not provided
+ * @example
+ * POST /api/checkout-session
+ * {
+ * 	"lineItems": [
+ * 		{
+ * 			"price": "price_1JkZ7vLzJ6Z6yZ",
+ * 			"quantity": 1
+ * 		}
+ * 	],
+ * 	"orderId": "order-id",
+ * 	"email": "me@example.com",
+ * }
+ */
+export async function POST(request: NextRequest): Promise<NextResponse> {
 	try {
 		const { lineItems, orderId, email } = await request.json();
 		if (!lineItems || lineItems.length === 0) {
-			return new Response(
-				JSON.stringify({ error: "No line items provided" }),
-				{
-					status: 400,
-					headers: {
-						"Content-Type": "application/json",
-					},
-				},
+			return NextResponse.json(
+				{ error: "No line items provided" },
+				{ status: 400 },
 			);
 		}
 		const session = await createCheckoutSession(lineItems, orderId, email);
-		return Response.json({ sessionUrl: session.url });
+		return NextResponse.json({ sessionUrl: session.url });
 	} catch (error) {
 		console.error("Error creating checkout session:", error);
-		return Response.json(
+		return NextResponse.json(
 			{ error: "Error creating checkout session" },
 			{ status: 500 },
 		);

@@ -124,8 +124,8 @@ export const updateCartStore = () => {
 onAuthStateChanged(auth, async (user) => {
 	if (user) {
 		const currentUser = await getUser();
-		if (currentUser?.fsUser?.cartItems) {
-			useCartStore.setState({ items: currentUser.fsUser.cartItems });
+		if (currentUser?.cartItems) {
+			useCartStore.setState({ items: currentUser?.cartItems });
 		}
 	}
 });

@@ -1,5 +1,5 @@
 import {
-	User,
+	User as FirebaseUser,
 	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
 	signInWithEmailAndPassword,
@@ -15,8 +15,11 @@ import { auth } from "../config/firebase";
 import { useCartStore } from "./cart-store";
 import { useWishlistStore } from "./wishlist-store";
 
+// TODO:
 export interface AuthStore {
-	user: User | null;
+	// make this logged in boolean
+	// add custom user type to the AuthStore
+	user: FirebaseUser | null;
 	initialLoading: boolean;
 	loading: boolean;
 	error: string | null;
@@ -24,7 +27,7 @@ export interface AuthStore {
 	signUpWithEmail: (email: string, password: string) => void;
 	signInWithGoogle: () => void;
 	resetPassword: (email: string) => void;
-	setUser: (user: User | null) => void;
+	setUser: (user: FirebaseUser | null) => void;
 	setLoading: (loading: boolean) => void;
 	setInitialLoading: (loading: boolean) => void;
 	setError: (error: string | null) => void;

@@ -1,5 +1,9 @@
 import { Category } from "../config/types";
 
+/**
+ * Fetch all categories from the API and set them using setCategories
+ * @param setCategories - Function to set categories in the state
+ */
 export const fetchAllCategories = async (
 	setCategories: (categories: Category[]) => void,
 ) => {
@@ -10,6 +14,11 @@ export const fetchAllCategories = async (
 };
 
 // TODO in API
+/**
+ * Fetch a category by its ID from the API and set it using setCategory
+ * @param categoryId - Category ID
+ * @param setCategory - Function to set the category in the state
+ */
 export const fetchCategoryById = async (
 	categoryId: number,
 	setCategory: (category: Category) => void,

@@ -5,6 +5,7 @@ import Image from "next/image";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
+import { auth } from "@/lib/config/firebase";
 import { colors } from "@/lib/config/constants";
 import { CartItem, Product, Size } from "@/lib/config/types";
 // Store
@@ -288,7 +289,10 @@ const ShoppingCart: FC = () => {
 									className="text-center py-4 uppercase w-full"
 									onClick={() => {
 										setCartBarOpen(false);
-										handleCheckout(items);
+										handleCheckout(
+											items,
+											auth.currentUser?.email || "",
+										);
 										clearCart();
 									}}
 								>

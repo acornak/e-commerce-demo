@@ -1,7 +1,13 @@
 /* eslint-disable import/prefer-default-export */
+import { NextRequest, NextResponse } from "next/server";
 import { getAllBrands } from "@/lib/models/brand";
 
-export async function GET(request: Request) {
+/**
+ * Get all brands
+ * @param {NextRequest} request - Request object
+ * @returns {NextResponse} - Response with brands
+ */
+export async function GET(request: NextRequest): Promise<NextResponse> {
 	const { searchParams } = new URL(request.url);
 	let limit = 1000;
 
@@ -11,5 +17,5 @@ export async function GET(request: Request) {
 
 	const brands = getAllBrands();
 
-	return Response.json({ brands: brands.slice(0, limit) });
+	return NextResponse.json({ brands: brands.slice(0, limit) });
 }

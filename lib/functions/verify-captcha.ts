@@ -1,7 +1,12 @@
+/**
+ * Verifies the captcha token with the server.
+ * @param token - Captcha token
+ * @param setVerified - Function to set the verification status
+ */
 const verifyCaptcha = async (
 	token: string,
 	setVerified: (verified: boolean) => void,
-) => {
+): Promise<void> => {
 	await fetch("/api/captcha", {
 		method: "POST",
 		headers: {

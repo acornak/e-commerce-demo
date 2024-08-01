@@ -33,23 +33,21 @@ const OrdersPage: NextPage = (): JSX.Element => {
 	useEffect(() => {
 		const fetchUserData = async () => {
 			if (user && user.email) {
-				const data = await getUser();
-				if (data.error) {
-					setError(data.error);
-				}
-				if (data.fsUser) {
-					setUserData(data.fsUser);
+				try {
+					const res = await getUser();
+					setUserData(res);
+				} catch (e: any) {
+					setError(e.message);
 				}
 			}
 		};
 		const fetchOrders = async () => {
 			if (user && user.email) {
-				const data = await getOrders();
-				if (data.error) {
-					setError(data.error);
-				}
-				if (data.orders) {
-					setOrders(data.orders);
+				try {
+					const res = await getOrders();
+					setOrders(res);
+				} catch (e: any) {
+					setError(e.message);
 				}
 			}
 		};

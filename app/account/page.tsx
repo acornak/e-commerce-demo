@@ -33,12 +33,11 @@ const AccountPage: NextPage = (): JSX.Element => {
 	useEffect(() => {
 		const fetchUserData = async () => {
 			if (user && user.email) {
-				const data = await getUser();
-				if (data.error) {
-					setError(data.error);
-				}
-				if (data.fsUser) {
-					setUserData(data.fsUser);
+				try {
+					const res = await getUser();
+					setUserData(res);
+				} catch (e: any) {
+					setError(e.message);
 				}
 			}
 		};

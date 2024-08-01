@@ -1,6 +1,11 @@
 // Types and constants
 import { SortOption, Product } from "../config/types";
 
+/**
+ * Fetch a product by its ID from the API and set it using setProduct
+ * @param productId - Product ID
+ * @param setProduct - Function to set the product in the state
+ */
 export const fetchProductById = async (
 	productId: number,
 	setProduct: (product: Product) => void,
@@ -13,6 +18,11 @@ export const fetchProductById = async (
 		);
 };
 
+/**
+ * Fetch all products from the API and set them using setProducts
+ * @param setProducts - Function to set products in the state
+ * @param limit - Maximum number of products to fetch
+ */
 export const fetchProductsPaginated = async (
 	setProducts: (products: Product[]) => void,
 	setTotalPages: (totalPages: number) => void,
@@ -49,6 +59,11 @@ export const fetchProductsPaginated = async (
 		.catch((error) => console.error("Fetching products failed:", error));
 };
 
+/**
+ * Fetch all products from the API and set them using setProducts
+ * @param setProducts - Function to set products in the state
+ * @param limit - Maximum number of products to fetch
+ */
 export const fetchAllProducts = async (
 	setProducts: (products: Product[]) => void,
 	limit: number = 10000,
@@ -59,6 +74,12 @@ export const fetchAllProducts = async (
 		.catch((error) => console.error("Fetching products failed:", error));
 };
 
+/**
+ * Fetch a product image by its ID from the API and set it using setImageUrl
+ * @param productId - Product ID
+ * @param setImageUrl - Function to set the image URL in the state
+ * @param setProductImageModalUrl - Function to set the image URL in the state
+ */
 export const fetchProductImage = async (
 	productId: number,
 	setImageUrl: (url: string) => void,
@@ -77,6 +98,11 @@ export const fetchProductImage = async (
 		.catch((error) => console.error("Fetching image failed:", error));
 };
 
+/**
+ * Fetch all products from the API and set them using setProducts
+ * @param setProducts - Function to set products in the state
+ * @param limit - Maximum number of products to fetch
+ */
 export const fetchProductsByCategory = async (
 	categoryId: number,
 	setProducts: (products: Product[]) => void,
@@ -92,6 +118,11 @@ export const fetchProductsByCategory = async (
 		);
 };
 
+/**
+ * Fetch all products from the API and set them using setProducts
+ * @param setProducts - Function to set products in the state
+ * @param limit - Maximum number of products to fetch
+ */
 export const fetchProductsByTag = async (
 	tags: string[],
 	setProducts: (products: Product[]) => void,
@@ -109,6 +140,11 @@ export const fetchProductsByTag = async (
 		);
 };
 
+/**
+ * Fetch all products from the API and set them using setProducts
+ * @param setProducts - Function to set products in the state
+ * @param limit - Maximum number of products to fetch
+ */
 export const fetchProductsMaxPrice = async (
 	setMaxPrice: (maxPrice: number) => void,
 	setPriceRange?: (priceRange: [number, number]) => void,

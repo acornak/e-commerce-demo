@@ -2,6 +2,11 @@ import "server-only";
 import { getFirestore } from "firebase-admin/firestore";
 import { Order } from "../config/types";
 
+/**
+ * Update an order in Firestore
+ * @param order - Order data to update
+ * @throws Error - If order update fails
+ */
 export default async function updateOrder(order: Order): Promise<void> {
 	const firestore = getFirestore();
 	const q = firestore.collection("orders").where("id", "==", order.id);
