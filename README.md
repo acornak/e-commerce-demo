@@ -51,6 +51,7 @@
 - orders add pay button
 - add global loader when clicked on checkout
 - add pagination to orders page
+- revise tests
 
 ## Account Pages:
 - https://thesusoutdoors.com/account/addresses - Pass123
