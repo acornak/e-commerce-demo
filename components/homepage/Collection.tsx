@@ -87,6 +87,7 @@ const CategoriesCarousel = ({
 						className="absolute -left-8 top-1/2 -translate-y-1/2 z-20"
 						onClick={handlePrev}
 						aria-label="Previous category"
+						data-testid="collection-previous-button"
 					>
 						<ChevronLeftIcon size="3em" />
 					</button>
@@ -144,6 +145,7 @@ const CategoriesCarousel = ({
 						className="absolute -right-8 top-1/2 -translate-y-1/2 z-20"
 						onClick={handleNext}
 						aria-label="Next category"
+						data-testid="collection-next-button"
 					>
 						<ChevronRightIcon size="3em" />
 					</button>
@@ -155,7 +157,10 @@ const CategoriesCarousel = ({
 
 const Collection = (): JSX.Element => {
 	return (
-		<div className="flex justify-center items-center">
+		<div
+			className="flex justify-center items-center"
+			data-testid="homepage-collection"
+		>
 			<div
 				className="w-[90%] bg-white z-60 -mt-10 border border-gray-200"
 				style={{ zIndex: 10 }}

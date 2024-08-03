@@ -37,7 +37,10 @@ const InstagramImages: FC<InstagramImagesProps> = ({
 	handlePrevious,
 }): JSX.Element => {
 	return (
-		<div className="flex relative w-full">
+		<div
+			className="flex relative w-full"
+			data-testid="footer-instagram-images"
+		>
 			{firstImage !== 0 && (
 				<button
 					type="button"
@@ -119,7 +122,10 @@ const Social = (): JSX.Element => {
 	};
 
 	return (
-		<div className="flex flex-col justify-center items-center text-center">
+		<div
+			className="flex flex-col justify-center items-center text-center"
+			data-testid="social-footer"
+		>
 			<StyledSectionHeading title="Glassify on Instagram" />
 			<p className="text-2xl tracking-widest py-6 text-secondary">
 				#glassify

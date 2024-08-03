@@ -10,7 +10,7 @@ import { useModalsStore } from "@/lib/stores/modals-store";
 // Components
 import useOutsideAlerter from "@/lib/hooks/outside-click";
 import { useAuthStore } from "@/lib/stores/auth-store";
-import HandleLoginForm from "../common/LoginForm";
+import HandleLoginForm from "../login/HandleLoginForm";
 // Icons
 import CloseIcon from "../icon/Close";
 

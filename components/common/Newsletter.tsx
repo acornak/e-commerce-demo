@@ -10,7 +10,10 @@ import EmailIcon from "../icon/Email";
 
 const NewsletterBanner = (): JSX.Element => {
 	return (
-		<div className="w-full border-t pt-4 border-gray-300 px-4">
+		<div
+			className="w-full border-t pt-4 border-gray-300 px-4"
+			data-testid="newsletter-banner"
+		>
 			<div className="container mx-auto py-4">
 				<div className="flex flex-col lg:flex-row items-center justify-between">
 					<div className="hidden lg:flex items-center w-1/4 xl:w-1/5 uppercase font-semibold border-r border-gray-300">

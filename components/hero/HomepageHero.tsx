@@ -212,7 +212,10 @@ const HomepageHero: FC = (): JSX.Element => {
 	}, [isChanging]);
 
 	return (
-		<section className="flex flex-col items-center justify-center h-[65vh] md:h-[75vh] lg:h-[95vh]">
+		<section
+			className="flex flex-col items-center justify-center h-[65vh] md:h-[75vh] lg:h-[95vh]"
+			data-testid="homepage-hero"
+		>
 			<div className="flex justify-center items-center relative w-full h-full">
 				<AnimatePresence mode="sync" initial={false}>
 					<motion.div

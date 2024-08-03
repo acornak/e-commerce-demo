@@ -9,7 +9,7 @@ import { colors } from "@/lib/config/constants";
 // Components
 import { useModalsStore } from "@/lib/stores/modals-store";
 import { useAuthStore } from "@/lib/stores/auth-store";
-import HandleLoginForm from "../common/LoginForm";
+import HandleLoginForm from "../login/HandleLoginForm";
 // Icons
 import BarsIcon from "../icon/Bars";
 import ChevronRightIcon from "../icon/ChevronRight";

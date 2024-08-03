@@ -38,8 +38,6 @@
 - tags as a separate sql table
 - reviews as a separate sql table
 - ProductPage Overview split
-- compress webp https://www.xconvert.com/compress-webp
-- resize webp https://www.simpleimageresizer.com/resize/webp
 - related products carousel
 - code splitting
 - investigate multiple rerenders
@@ -52,6 +50,9 @@
 - add global loader when clicked on checkout
 - add pagination to orders page
 - revise tests
+- update mocks so that tested are only necessary components
+- investigate using of snapshot testing
+- wishilist icon on ipad and mobile
 
 ## Account Pages:
 - https://thesusoutdoors.com/account/addresses - Pass123
