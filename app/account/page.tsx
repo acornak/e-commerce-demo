@@ -54,6 +54,7 @@ const AccountPage: NextPage = (): JSX.Element => {
 
 	if (!user) {
 		redirect("/login?redirect=account");
+		return <></>; // needed for the testing suite
 	}
 
 	if (error) {
@@ -65,7 +66,10 @@ const AccountPage: NextPage = (): JSX.Element => {
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-center text-center pt-14 lg:pt-24">
+		<div
+			className="flex flex-col items-center justify-center text-center pt-14 lg:pt-24"
+			data-testid="account-page"
+		>
 			<div className="text-start w-full px-4 flex items-center bg-gray-100 py-2 pt-4">
 				<Link href="/">
 					<motion.p
@@ -77,6 +81,7 @@ const AccountPage: NextPage = (): JSX.Element => {
 						}}
 						transition={{ duration: 0.2 }}
 						className="inline"
+						data-testid="about-page-redirect-home"
 					>
 						Home
 					</motion.p>
@@ -92,6 +97,7 @@ const AccountPage: NextPage = (): JSX.Element => {
 						}}
 						transition={{ duration: 0.2 }}
 						className="inline"
+						data-testid="about-page-redirect-account"
 					>
 						Your Account
 					</motion.p>
@@ -103,7 +109,10 @@ const AccountPage: NextPage = (): JSX.Element => {
 				<p>
 					{/* TODO: this will be different with email/password login */}
 					Welcome back
-					<span className="font-semibold">
+					<span
+						className="font-semibold"
+						data-testid="about-page-welcome"
+					>
 						{userData && ` ${userData.firstName}`}
 					</span>
 					!

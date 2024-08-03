@@ -15,7 +15,12 @@ const config: Config = {
 	setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
 	collectCoverage: true,
 	coverageReporters: ["json", "lcov", "text", "clover"],
-	collectCoverageFrom: ["app/**/*.ts", "components/**/*.tsx", "lib/**/*.ts"],
+	collectCoverageFrom: [
+		"app/**/*.ts",
+		"app/**/*.tsx",
+		"components/**/*.tsx",
+		"lib/**/*.ts",
+	],
 };
 
 export default createJestConfig(config);
