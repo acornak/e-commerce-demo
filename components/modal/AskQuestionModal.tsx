@@ -32,6 +32,7 @@ const AskQuestionModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
+					data-testid="ask-question-modal"
 				>
 					<motion.div
 						ref={modalRef}
@@ -40,6 +41,7 @@ const AskQuestionModal: FC = () => {
 						exit={{ scale: 0.9 }}
 						transition={{ duration: 0.3 }}
 						className="relative bg-white px-4 md:px-20 py-6 w-[95%] md:w-2/3 lg:w-1/2"
+						data-testid="ask-question-modal-backdrop"
 					>
 						<motion.button
 							initial={{ rotate: 0, color: colors.white }}
@@ -54,6 +56,7 @@ const AskQuestionModal: FC = () => {
 							transition={{ duration: 0.2 }}
 							className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 							onClick={() => setAskQuestionModalOpen(false)}
+							data-testid="ask-question-modal-close"
 						>
 							<CloseIcon />
 						</motion.button>

@@ -55,6 +55,7 @@ const ProductAddedModal: FC = () => {
 	}, []);
 
 	useEffect(() => {
+		console.log(cartProduct);
 		if (cartProduct) fetchProductImage(cartProduct.id, setImageUrl);
 	}, [cartProduct]);
 
@@ -68,6 +69,7 @@ const ProductAddedModal: FC = () => {
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.3 }}
 						className="fixed inset-0 z-50 flex items-center justify-center"
+						data-testid="product-added-modal"
 					>
 						<motion.div
 							ref={modalRef}
@@ -89,14 +91,20 @@ const ProductAddedModal: FC = () => {
 										height={150}
 										alt={cartProduct.name}
 										className="my-4"
+										data-testid="product-added-modal-image"
 									/>
 								)}
-								<p>{cartProduct.name}</p>
+								<p data-testid="product-added-modal-name">
+									{cartProduct.name}
+								</p>
 								<p className="flex items-center m-1">
 									<span className="text-xs uppercase font-semibold">
 										Price:
 									</span>
-									<span className="pl-2 text-secondary">
+									<span
+										className="pl-2 text-secondary"
+										data-testid="product-added-modal-price"
+									>
 										${cartProduct.price.toFixed(2)}
 									</span>
 								</p>
@@ -104,7 +112,10 @@ const ProductAddedModal: FC = () => {
 									<span className="text-xs uppercase font-semibold">
 										Size:
 									</span>
-									<span className="pl-2 text-secondary">
+									<span
+										className="pl-2 text-secondary"
+										data-testid="product-added-modal-size"
+									>
 										{cartProduct.selectedSize.name}
 									</span>
 								</p>
@@ -112,7 +123,10 @@ const ProductAddedModal: FC = () => {
 									<span className="text-xs uppercase font-semibold">
 										QTY:
 									</span>
-									<span className="pl-2 text-secondary">
+									<span
+										className="pl-2 text-secondary"
+										data-testid="product-added-modal-qty"
+									>
 										{getCartItemQty(
 											cartItems,
 											cartProduct.id,
@@ -124,7 +138,10 @@ const ProductAddedModal: FC = () => {
 									<span className="text-xs uppercase font-semibold">
 										Total:
 									</span>
-									<span className="pl-2 text-secondary">
+									<span
+										className="pl-2 text-secondary"
+										data-testid="product-added-modal-total"
+									>
 										$
 										{totalCartItemPrice(
 											cartItems,
@@ -164,6 +181,7 @@ const ProductAddedModal: FC = () => {
 									onClick={() =>
 										setProductAddedModalOpen(false)
 									}
+									data-testid="product-added-modal-continue"
 								>
 									Continue Shopping
 								</motion.button>
@@ -179,6 +197,7 @@ const ProductAddedModal: FC = () => {
 										router.push("/cart");
 										setProductAddedModalOpen(false);
 									}}
+									data-testid="product-added-modal-cart"
 								>
 									Go to cart
 								</motion.button>
@@ -198,6 +217,7 @@ const ProductAddedModal: FC = () => {
 										clearCart();
 										setProductAddedModalOpen(false);
 									}}
+									data-testid="product-added-modal-checkout"
 								>
 									Proceed to checkout
 								</motion.button>
@@ -215,6 +235,7 @@ const ProductAddedModal: FC = () => {
 								transition={{ duration: 0.2 }}
 								className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 								onClick={() => setProductAddedModalOpen(false)}
+								data-testid="product-added-modal-close"
 							>
 								<CloseIcon />
 							</motion.button>
