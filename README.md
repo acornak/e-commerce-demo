@@ -54,6 +54,7 @@
 - investigate using of snapshot testing
 - wishilist icon on ipad and mobile
 - next router mock - https://github.com/vercel/next.js/discussions/42527#discussioncomment-7205143
+- adjust test to use mock values
 
 ## Account Pages:
 - https://thesusoutdoors.com/account/addresses - Pass123

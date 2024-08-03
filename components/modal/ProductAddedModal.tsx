@@ -55,7 +55,6 @@ const ProductAddedModal: FC = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(cartProduct);
 		if (cartProduct) fetchProductImage(cartProduct.id, setImageUrl);
 	}, [cartProduct]);
 

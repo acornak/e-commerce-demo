@@ -66,6 +66,7 @@ const OrdersPage: NextPage = (): JSX.Element => {
 
 	if (!user) {
 		redirect("/login?redirect=account");
+		return <></>; // needed for the testing suite
 	}
 
 	if (error) {

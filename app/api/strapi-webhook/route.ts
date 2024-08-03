@@ -25,7 +25,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 		);
 		if (event.type === "checkout.session.completed") {
 			if (!event.data.object.metadata?.orderId) {
-				console.log("No orderId found in event metadata");
 				return NextResponse.json({});
 			}
 
