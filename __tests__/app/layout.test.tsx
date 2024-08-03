@@ -13,6 +13,7 @@ jest.mock("@/components/wrapper/LayoutWrapper", () => ({
 	),
 }));
 
+// Fully tested
 describe("Layout", () => {
 	it("renders the layout", () => {
 		render(

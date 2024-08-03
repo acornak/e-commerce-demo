@@ -1,12 +1,9 @@
 import verifyCaptcha from "@/lib/functions/verify-captcha";
 
 describe("verifyCaptcha function", () => {
-	let mockSetVerified: jest.Mock<void, [boolean]>;
-
 	const mockToken = "token";
 
 	beforeEach(() => {
-		mockSetVerified = jest.fn();
 		console.error = jest.fn();
 	});
 
@@ -19,17 +16,19 @@ describe("verifyCaptcha function", () => {
 			Promise.resolve({
 				json: () => Promise.resolve({}),
 				status: 200,
+				ok: true,
 			}),
 		) as jest.Mock;
 
-		await verifyCaptcha(mockToken, mockSetVerified);
+		const res = await verifyCaptcha(mockToken);
 
 		expect(global.fetch).toHaveBeenCalledWith("/api/captcha", {
-			body: '{"g-recaptcha-response":"token"}',
+			body: JSON.stringify({ "g-recaptcha-response": mockToken }),
 			headers: { "Content-Type": "application/json" },
 			method: "POST",
 		});
-		expect(mockSetVerified).toHaveBeenCalledWith(true);
+
+		expect(res).toBeTruthy();
 	});
 
 	it("should verify captcha and set false using setVerified", async () => {
@@ -40,24 +39,22 @@ describe("verifyCaptcha function", () => {
 			}),
 		) as jest.Mock;
 
-		await verifyCaptcha(mockToken, mockSetVerified);
+		const res = await verifyCaptcha(mockToken);
 
 		expect(global.fetch).toHaveBeenCalledWith("/api/captcha", {
 			body: '{"g-recaptcha-response":"token"}',
 			headers: { "Content-Type": "application/json" },
 			method: "POST",
 		});
-		expect(mockSetVerified).toHaveBeenCalledWith(false);
+		expect(res).toBeFalsy();
 	});
 
 	it("should log error if verifying captcha fails", async () => {
 		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
 
-		await verifyCaptcha(mockToken, mockSetVerified);
+		const res = await verifyCaptcha(mockToken);
 
-		expect(console.error).toHaveBeenCalledWith(
-			"Verifying captcha failed:",
-			"Fetch failed",
-		);
+		expect(console.error).toHaveBeenCalledWith("Fetch failed");
+		expect(res).toBeFalsy();
 	});
 });

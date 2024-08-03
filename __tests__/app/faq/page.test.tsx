@@ -8,6 +8,19 @@ jest.mock("@/components/hero/StyledHero", () => ({
 	default: () => <div data-testid="mock-hero" />,
 }));
 
+jest.mock("@/components/styled/Heading", () => {
+	return {
+		__esModule: true,
+		StyledSectionHeading: () => <div data-testid="mock-styled-heading" />,
+	};
+});
+
+jest.mock("@/components/common/Newsletter", () => ({
+	__esModule: true,
+	default: () => <div data-testid="mock-newsletter" />,
+}));
+
+// Fully tested
 describe("FAQ Page", () => {
 	it("renders the FAQ page", () => {
 		render(<FAQPage />);
@@ -17,6 +30,8 @@ describe("FAQ Page", () => {
 		expect(screen.getByTestId("faq-questions").children.length).toBe(
 			faqQuestions.length,
 		);
+		expect(screen.getByTestId("mock-newsletter")).toBeInTheDocument();
+		expect(screen.getByTestId("mock-styled-heading")).toBeInTheDocument();
 	});
 
 	it("handles the FAQ accordion", async () => {

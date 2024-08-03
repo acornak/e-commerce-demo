@@ -8,6 +8,7 @@ jest.mock("@/components/styled/Heading", () => {
 	};
 });
 
+// Fully tested
 describe("Admin Page", () => {
 	it("renders the admin page", () => {
 		render(<AdminPage />);

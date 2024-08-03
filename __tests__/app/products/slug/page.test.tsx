@@ -21,10 +21,14 @@ jest.mock("@/components/product/ProductPageOverview", () => ({
 	default: () => <div data-testid="mock-product-page-overview" />,
 }));
 
+jest.mock("@/components/common/Newsletter", () => ({
+	__esModule: true,
+	default: () => <div data-testid="mock-newsletter" />,
+}));
+
 const mockAllProducts: Product[] = mockProducts.slice(0, 5);
 
 jest.mock("@/lib/models/product", () => ({
-	__esModule: true,
 	getAllProducts: jest.fn(() => mockAllProducts),
 }));
 

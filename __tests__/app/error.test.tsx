@@ -1,7 +1,12 @@
 import ErrorPage from "@/app/error";
 import { fireEvent, render, screen } from "@testing-library/react";
 
+// Fully tested
 describe("Error Page", () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it("should display the error message and try again button", () => {
 		const error: Error = new Error("Test error") as Error;
 		const resetMock = jest.fn();

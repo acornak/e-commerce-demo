@@ -22,6 +22,7 @@ jest.mock("@/components/common/LoginPrompt", () => {
 	};
 });
 
+// Fully tested
 describe("Cart Page", () => {
 	it("renders the cart page", () => {
 		render(<CartPage />);

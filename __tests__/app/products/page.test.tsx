@@ -21,6 +21,12 @@ jest.mock("@/components/product/ProductsFilter", () => ({
 	default: () => <div data-testid="products-filter" />,
 }));
 
+jest.mock("@/components/styled/Loading", () => ({
+	__esModule: true,
+	default: () => <div data-testid="mock-loading" />,
+}));
+
+// Fully tested
 describe("Products Page", () => {
 	it("renders the products page", () => {
 		render(<ProductsPage />);

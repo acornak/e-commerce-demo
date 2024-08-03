@@ -29,11 +29,6 @@ jest.mock("@/components/profile/OrdersTable", () => ({
 	default: () => <div data-testid="orders-table" />,
 }));
 
-jest.mock("@/lib/models/orders", () => ({
-	__esModule: true,
-	getOrders: () => Promise.resolve([]),
-}));
-
 jest.mock("@/lib/models/user", () => ({
 	getUser: jest.fn(),
 }));
@@ -50,6 +45,7 @@ jest.mock("next/navigation", () => ({
 	redirect: jest.fn(),
 }));
 
+// Fully tested
 describe("Orders Page", () => {
 	beforeEach(() => {
 		jest.clearAllMocks();

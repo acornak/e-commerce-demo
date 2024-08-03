@@ -18,6 +18,7 @@ jest.mock("@/components/styled/Heading", () => {
 	};
 });
 
+// Fully tested
 describe("Privacy Policy Page", () => {
 	it("renders the privacy policy page", () => {
 		render(<PrivacyPolicyPage />);

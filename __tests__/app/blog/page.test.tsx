@@ -11,6 +11,7 @@ jest.mock("@/components/common/Newsletter", () => ({
 	default: () => <div data-testid="mock-newsletter" />,
 }));
 
+// Fully tested
 describe("Blog Page", () => {
 	it("renders the blog page", () => {
 		render(<BlogPage />);

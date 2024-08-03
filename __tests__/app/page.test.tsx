@@ -31,6 +31,7 @@ jest.mock("@/components/footer/Social", () => ({
 	default: () => <div data-testid="social" />,
 }));
 
+// Fully tested
 describe("Home Page", () => {
 	it("renders the home page", () => {
 		render(<Home />);

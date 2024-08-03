@@ -139,7 +139,6 @@ describe("ContactForm", () => {
 
 	it("shows an error if fetching fails", async () => {
 		const mockExecuteRecaptcha = jest.fn().mockResolvedValue("token");
-
 		(useGoogleReCaptcha as jest.Mock).mockReturnValue({
 			executeRecaptcha: mockExecuteRecaptcha,
 		});
