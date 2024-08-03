@@ -1,3 +1,4 @@
+import mockProducts from "@/__mocks__/products/products.mock";
 import SizePicker from "@/components/common/SizePicker";
 import { colors } from "@/lib/config/constants";
 import { Product, Size } from "@/lib/config/types";
@@ -14,17 +15,7 @@ jest.mock("@/lib/functions/size-fetcher", () => ({
 }));
 
 describe("SizePicker", () => {
-	const mockProduct: Product = {
-		id: 1,
-		name: "Test Product",
-		slug: "test-product",
-		price: 100,
-		brandId: 1,
-		perex: "Test perex",
-		sizeIds: [1, 2],
-		categories: [1],
-		tags: ["test"],
-	};
+	const mockProduct: Product = mockProducts[0];
 
 	it("renders sizes correctly", () => {
 		render(
@@ -92,6 +83,8 @@ describe("SizePicker", () => {
 	});
 
 	it("disables buttons for sizes not available in product", async () => {
+		mockProduct.sizeIds = [1, 2]; // Small and Medium available
+
 		render(
 			<SizePicker
 				product={mockProduct}

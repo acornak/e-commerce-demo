@@ -12,7 +12,9 @@ jest.mock("@/lib/stores/auth-store", () => ({
 	useAuthStore: jest.fn(),
 }));
 
+// Fully tested
 describe("LoginPrompt", () => {
+	// TODO: add to __mocks__ folder
 	const mockUser: User = {
 		firstName: "John",
 		lastName: "Doe",

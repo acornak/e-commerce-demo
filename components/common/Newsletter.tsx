@@ -34,6 +34,7 @@ const NewsletterBanner = (): JSX.Element => {
 							placeholder="Your email address..."
 							className="bg-gray-100 px-6 sm:px-20 py-3 sm:text-sm"
 						/>
+						{/* TODO: submit */}
 						<motion.button
 							initial={{
 								scale: 1,

@@ -109,10 +109,7 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 
 		if (formik.isSubmitting) {
 			return (
-				<div
-					className="flex items-center justify-center"
-					data-testid="contact-form-loading"
-				>
+				<div className="flex items-center justify-center">
 					<StyledLoading />
 				</div>
 			);
@@ -171,18 +168,17 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 							</div>
 							{formik.touched[field.id] &&
 							formik.errors[field.id] ? (
-								<div className="text-red-500 text-md px-2">
+								<div
+									className="text-red-500 text-md px-2"
+									data-testid={`contact-form-${field.id}-error`}
+								>
 									{formik.errors[field.id]}
 								</div>
 							) : null}
 						</Fragment>
 					) : (
 						<Fragment key={field.id}>
-							<div
-								className={`flex items-center border-b border-gray-200 py-2 my-2 ${
-									field.id === "subject" ? "hidden" : ""
-								}`}
-							>
+							<div className="flex items-center border-b border-gray-200 py-2 my-2">
 								<textarea
 									id={field.id}
 									name={field.id}
@@ -196,7 +192,10 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 							</div>
 							{formik.touched[field.id] &&
 							formik.errors[field.id] ? (
-								<div className="text-red-500 text-md px-2">
+								<div
+									className="text-red-500 text-md px-2"
+									data-testid={`contact-form-${field.id}-error`}
+								>
 									{formik.errors[field.id]}
 								</div>
 							) : null}

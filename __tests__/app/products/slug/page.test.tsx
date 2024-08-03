@@ -1,5 +1,5 @@
 import mockProducts from "@/__mocks__/products/products.mock";
-import ProductPage from "@/app/products/[slug]/page";
+import ProductPage, { generateStaticParams } from "@/app/products/[slug]/page";
 import { Product } from "@/lib/config/types";
 import { getAllProducts } from "@/lib/models/product";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -57,5 +57,29 @@ describe("Product Page", () => {
 			expect(screen.getByTestId("mock-hero")).toBeInTheDocument();
 			expect(screen.getByTestId("product-not-found")).toBeInTheDocument();
 		});
+	});
+});
+
+describe("generateStaticParams", () => {
+	beforeEach(() => {
+		(getAllProducts as jest.Mock).mockReturnValue(mockProducts.slice(0, 5));
+	});
+
+	it("generates static paths", async () => {
+		const paths = await generateStaticParams();
+
+		expect(paths).toEqual(
+			mockProducts.slice(0, 5).map((product) => ({
+				slug: product.slug,
+			})),
+		);
+	});
+
+	it("returns an empty array if no products are found", async () => {
+		(getAllProducts as jest.Mock).mockReturnValue([]);
+
+		const paths = await generateStaticParams();
+
+		expect(paths).toEqual([]);
 	});
 });

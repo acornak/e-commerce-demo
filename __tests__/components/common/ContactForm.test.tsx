@@ -13,6 +13,12 @@ jest.mock("react-google-recaptcha-v3", () => ({
 	useGoogleReCaptcha: jest.fn(),
 }));
 
+jest.mock("@/components/styled/Loading", () => ({
+	__esModule: true,
+	default: () => <div data-testid="mock-loading" />,
+}));
+
+// Fully tested
 describe("ContactForm", () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
@@ -199,7 +205,7 @@ describe("ContactForm", () => {
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
 				ok: true,
-				json: () => Promise.resolve({}), // Add more methods if needed
+				json: () => Promise.resolve({}),
 			}),
 		) as jest.Mock;
 
@@ -218,9 +224,7 @@ describe("ContactForm", () => {
 		fireEvent.click(screen.getByTestId("contact-form-submit"));
 
 		await waitFor(() => {
-			expect(
-				screen.getByTestId("contact-form-loading"),
-			).toBeInTheDocument();
+			expect(screen.getByTestId("mock-loading")).toBeInTheDocument();
 		});
 
 		await waitFor(() => {
@@ -279,6 +283,48 @@ describe("ContactForm", () => {
 			).toBeInTheDocument();
 			expect(
 				screen.getByText("Message sent successfully. Thank you!"),
+			).toBeInTheDocument();
+		});
+	});
+
+	it("shows field errors if fields are empty", async () => {
+		render(<ContactForm width="w-full" />);
+
+		await act(async () => {
+			fireEvent.change(screen.getByTestId("contact-form-name"), {
+				target: { value: "John" },
+			});
+			fireEvent.change(screen.getByTestId("contact-form-name"), {
+				target: { value: "" },
+			});
+			fireEvent.blur(screen.getByTestId("contact-form-name"));
+
+			fireEvent.change(screen.getByTestId("contact-form-email"), {
+				target: { value: "me@example.com" },
+			});
+			fireEvent.change(screen.getByTestId("contact-form-email"), {
+				target: { value: "" },
+			});
+			fireEvent.blur(screen.getByTestId("contact-form-email"));
+
+			fireEvent.change(screen.getByTestId("contact-form-message"), {
+				target: { value: "Hello, World!" },
+			});
+			fireEvent.change(screen.getByTestId("contact-form-message"), {
+				target: { value: "" },
+			});
+			fireEvent.blur(screen.getByTestId("contact-form-message"));
+		});
+
+		await waitFor(() => {
+			expect(
+				screen.getByTestId("contact-form-name-error"),
+			).toBeInTheDocument();
+			expect(
+				screen.getByTestId("contact-form-to-error"),
+			).toBeInTheDocument();
+			expect(
+				screen.getByTestId("contact-form-message-error"),
 			).toBeInTheDocument();
 		});
 	});
