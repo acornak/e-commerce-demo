@@ -12,6 +12,7 @@ jest.mock("@/components/common/ContactForm", () => ({
 	default: () => <div data-testid="contact-form" />,
 }));
 
+// Fully tested
 describe("AskQuestionModal", () => {
 	beforeEach(() => {
 		jest.clearAllMocks();

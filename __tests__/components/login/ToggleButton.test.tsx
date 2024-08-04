@@ -1,6 +1,7 @@
 import ToggleButton from "@/components/login/ToggleButton";
 import { render, screen } from "@testing-library/react";
 
+// Fully tested
 describe("ToggleButton", () => {
 	it("renders without crashing", () => {
 		render(<ToggleButton onClick={() => {}}>Test</ToggleButton>);

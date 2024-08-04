@@ -11,6 +11,7 @@ jest.mock("@/components/login/LoginForm", () => ({
 	default: () => <div data-testid="login-form" />,
 }));
 
+// Fully tested
 describe("HandleLoginForm", () => {
 	it("renders RegisterForm when showRegister is true", () => {
 		render(<HandleLoginForm showRegister setShowRegister={jest.fn()} />);

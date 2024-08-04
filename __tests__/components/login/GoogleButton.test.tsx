@@ -6,6 +6,7 @@ jest.mock("@/lib/stores/auth-store", () => ({
 	useAuthStore: jest.fn(),
 }));
 
+// Fully tested
 describe("GoogleButton", () => {
 	it("renders without crashing", () => {
 		render(<GoogleButton text="Test" />);

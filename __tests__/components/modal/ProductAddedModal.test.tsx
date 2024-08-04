@@ -11,11 +11,20 @@ import {
 import { CartItem } from "@/lib/config/types";
 import { act } from "react-dom/test-utils";
 import mockRouter from "next-router-mock";
+import { handleCheckout } from "@/lib/functions/checkout";
+import { auth } from "@/lib/config/firebase";
 
 jest.mock("next/image", () => ({
 	__esModule: true,
-	// eslint-disable-next-line react/jsx-props-no-spreading
-	default: (props: any) => <img {...props} />,
+	default: ({
+		src,
+		alt,
+		"data-testid": dataTestId,
+	}: {
+		src: string;
+		alt: string;
+		"data-testid"?: string;
+	}) => <img src={src} alt={alt} data-testid={dataTestId} />,
 }));
 
 jest.mock("firebase/firestore", () => ({
@@ -65,6 +74,7 @@ jest.mock("@/lib/config/firebase", () => ({
 	db: {},
 }));
 
+// Fully tested
 describe("ProductAddedModal", () => {
 	const mockCartItems: CartItem[] = [
 		{
@@ -139,7 +149,6 @@ describe("ProductAddedModal", () => {
 
 			expect(modal).toBeInTheDocument();
 
-			// TODO
 			const productImage = screen.getByTestId(
 				"product-added-modal-image",
 			);
@@ -334,7 +343,7 @@ describe("ProductAddedModal", () => {
 		});
 	});
 
-	it("handles checkout button click", async () => {
+	it("handles checkout button click without user logged in", async () => {
 		const mockModalsStore = useModalsStore as unknown as jest.Mock;
 		const mockSetProductAddedModalOpen = jest.fn();
 		mockModalsStore.mockImplementation((fn: any) => {
@@ -354,6 +363,9 @@ describe("ProductAddedModal", () => {
 			});
 		});
 
+		const mockHandleCheckout = jest.fn();
+		(handleCheckout as jest.Mock).mockImplementation(mockHandleCheckout);
+
 		render(<ProductAddedModal />);
 
 		const checkoutButton = screen.getByTestId(
@@ -365,9 +377,60 @@ describe("ProductAddedModal", () => {
 		});
 
 		await waitFor(() => {
-			// TODO
-			// expect(mockHandleCheckout).toHaveBeenCalledTimes(1);
-			// expect(mockHandleCheckout).toHaveBeenCalledWith(mockCartItems);
+			expect(mockHandleCheckout).toHaveBeenCalledTimes(1);
+			expect(mockHandleCheckout).toHaveBeenCalledWith(mockCartItems, "");
+
+			expect(mockSetProductAddedModalOpen).toHaveBeenCalledTimes(1);
+			expect(mockSetProductAddedModalOpen).toHaveBeenCalledWith(false);
+
+			expect(mockClearCart).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	it("handles checkout button click with user logged in", async () => {
+		const mockModalsStore = useModalsStore as unknown as jest.Mock;
+		const mockSetProductAddedModalOpen = jest.fn();
+		mockModalsStore.mockImplementation((fn: any) => {
+			return fn({
+				productAddedModalOpen: true,
+				setProductAddedModalOpen: mockSetProductAddedModalOpen,
+				cartProduct: mockCartProduct,
+			});
+		});
+
+		const mockCartStore = useCartStore as unknown as jest.Mock;
+		const mockClearCart = jest.fn();
+		mockCartStore.mockImplementation((fn: any) => {
+			return fn({
+				items: mockCartItems,
+				clearCart: mockClearCart,
+			});
+		});
+
+		const mockHandleCheckout = jest.fn();
+		(handleCheckout as jest.Mock).mockImplementation(mockHandleCheckout);
+
+		// mock auth to return a user
+		(auth as any).currentUser = {
+			email: "me@example.com",
+		};
+
+		render(<ProductAddedModal />);
+
+		const checkoutButton = screen.getByTestId(
+			"product-added-modal-checkout",
+		);
+
+		await act(async () => {
+			checkoutButton.click();
+		});
+
+		await waitFor(() => {
+			expect(mockHandleCheckout).toHaveBeenCalledTimes(1);
+			expect(mockHandleCheckout).toHaveBeenCalledWith(
+				mockCartItems,
+				"me@example.com",
+			);
 
 			expect(mockSetProductAddedModalOpen).toHaveBeenCalledTimes(1);
 			expect(mockSetProductAddedModalOpen).toHaveBeenCalledWith(false);

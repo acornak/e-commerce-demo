@@ -4,8 +4,9 @@ import { render, screen } from "@testing-library/react";
 
 jest.mock("next/image", () => ({
 	__esModule: true,
-	// eslint-disable-next-line react/jsx-props-no-spreading
-	default: (props: any) => <img {...props} />,
+	default: ({ src, alt }: { src: string; alt: string }) => (
+		<img src={src} alt={alt} />
+	),
 }));
 
 jest.mock("@/components/icon/ChevronRight", () => ({

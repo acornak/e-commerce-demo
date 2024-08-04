@@ -4,6 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 const mockHandleNext = jest.fn();
 const mockHandlePrevious = jest.fn();
 
+// Fully tested
 describe("InstagramImages", () => {
 	it("renders the correct number of images based on firstImage and imageCount", () => {
 		render(

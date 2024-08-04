@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Next
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
@@ -25,7 +25,6 @@ type Category = {
 	slug: string;
 };
 
-// TODO: add category type
 const categories: Category[] = [
 	{
 		image: aviator,
@@ -156,6 +155,30 @@ const CategoriesCarousel = ({
 };
 
 const Collection = (): JSX.Element => {
+	const [screenSize, setScreenSize] = useState<number>(window.innerWidth);
+
+	const updateScreenSize = () => {
+		setScreenSize(window.innerWidth);
+	};
+
+	useEffect(() => {
+		window.addEventListener("resize", updateScreenSize);
+		return () => {
+			window.removeEventListener("resize", updateScreenSize);
+		};
+	}, []);
+
+	let itemCount;
+	if (screenSize < 640) {
+		itemCount = 2;
+	} else if (screenSize >= 640 && screenSize < 768) {
+		itemCount = 3;
+	} else if (screenSize >= 768 && screenSize < 1024) {
+		itemCount = 4;
+	} else {
+		itemCount = 6;
+	}
+
 	return (
 		<div
 			className="flex justify-center items-center"
@@ -166,18 +189,7 @@ const Collection = (): JSX.Element => {
 				style={{ zIndex: 10 }}
 			>
 				<StyledSectionHeading title="Our Collection" />
-				<div className="sm:hidden">
-					<CategoriesCarousel itemCount={2} />
-				</div>
-				<div className="hidden sm:block md:hidden">
-					<CategoriesCarousel itemCount={3} />
-				</div>
-				<div className="hidden md:block lg:hidden">
-					<CategoriesCarousel itemCount={4} />
-				</div>
-				<div className="hidden lg:block">
-					<CategoriesCarousel itemCount={6} />
-				</div>
+				<CategoriesCarousel itemCount={itemCount} />
 			</div>
 		</div>
 	);

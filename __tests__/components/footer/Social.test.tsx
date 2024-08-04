@@ -38,6 +38,7 @@ jest.mock("@/components/footer/InstagramImages", () => ({
 	),
 }));
 
+// Fully tested
 describe("Social", () => {
 	it("renders without crashing", () => {
 		render(<Social />);

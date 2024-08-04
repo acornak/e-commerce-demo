@@ -28,10 +28,7 @@ const LoginForm: FC<FormProps> = ({ setShowRegister }) => {
 
 	if (loading) {
 		return (
-			<div
-				className="p-10 items-center justify-center flex"
-				data-testid="login-loading"
-			>
+			<div className="p-10 items-center justify-center flex">
 				<StyledLoading />
 			</div>
 		);

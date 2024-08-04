@@ -68,6 +68,7 @@ const ProductImageModal: FC = () => {
 							alt="Product image"
 							layout="fill"
 							objectFit="contain"
+							data-testid="product-image"
 						/>
 					</motion.div>
 				</motion.div>

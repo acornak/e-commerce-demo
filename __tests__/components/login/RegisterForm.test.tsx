@@ -7,6 +7,18 @@ jest.mock("@/lib/stores/auth-store", () => ({
 	useAuthStore: jest.fn(),
 }));
 
+jest.mock("@/components/login/ToggleButton", () => ({
+	__esModule: true,
+	default: ({ onClick }: any) => (
+		<div>
+			<button onClick={onClick} type="button">
+				Toggle Button
+			</button>
+		</div>
+	),
+}));
+
+// Fully tested
 describe("RegisterForm", () => {
 	const setShowRegister = jest.fn();
 	const signUpWithEmail = jest.fn();
@@ -93,5 +105,17 @@ describe("RegisterForm", () => {
 		});
 
 		expect(signUpWithEmail).toHaveBeenCalled();
+	});
+
+	it("handles toggle button click", async () => {
+		render(<RegisterForm setShowRegister={setShowRegister} />);
+
+		await act(async () => {
+			fireEvent.click(screen.getByText("Toggle Button"));
+		});
+
+		await waitFor(() => {
+			expect(setShowRegister).toHaveBeenCalled();
+		});
 	});
 });

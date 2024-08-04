@@ -12,6 +12,7 @@ jest.mock("next/navigation", () => ({
 	usePathname: jest.fn(),
 }));
 
+// Fully tested
 describe("CookieConsent", () => {
 	beforeEach(() => {
 		jest.clearAllMocks();

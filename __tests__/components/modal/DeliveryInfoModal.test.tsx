@@ -7,6 +7,7 @@ jest.mock("@/lib/stores/modals-store", () => ({
 	useModalsStore: jest.fn(),
 }));
 
+// Fully tested
 describe("DeliveryInfoModal", () => {
 	beforeEach(() => {
 		jest.clearAllMocks();

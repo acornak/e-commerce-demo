@@ -14,6 +14,7 @@ jest.mock("@/lib/functions/size-fetcher", () => ({
 	fetchAllSizes: jest.fn((callback) => callback(mockSizes)),
 }));
 
+// Fully tested
 describe("SizePicker", () => {
 	const mockProduct: Product = mockProducts[0];
 

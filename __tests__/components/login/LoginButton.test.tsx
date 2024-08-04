@@ -1,6 +1,7 @@
 import LoginButton from "@/components/login/LoginButton";
 import { render, screen } from "@testing-library/react";
 
+// Fully tested
 describe("LoginButton", () => {
 	it("renders without crashing", () => {
 		render(<LoginButton onClick={() => {}}>Test</LoginButton>);
