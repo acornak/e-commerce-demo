@@ -155,29 +155,26 @@ const CategoriesCarousel = ({
 };
 
 const Collection = (): JSX.Element => {
-	const [screenSize, setScreenSize] = useState<number>(window.innerWidth);
-
-	const updateScreenSize = () => {
-		setScreenSize(window.innerWidth);
-	};
+	const [itemCount, setItemCount] = useState<number>(0);
 
 	useEffect(() => {
-		window.addEventListener("resize", updateScreenSize);
-		return () => {
-			window.removeEventListener("resize", updateScreenSize);
+		const updateScreenSize = () => {
+			const width = window.innerWidth;
+			if (width < 640) {
+				setItemCount(2);
+			} else if (width >= 640 && width < 768) {
+				setItemCount(3);
+			} else if (width >= 768 && width < 1024) {
+				setItemCount(4);
+			} else {
+				setItemCount(6);
+			}
 		};
-	}, []);
 
-	let itemCount;
-	if (screenSize < 640) {
-		itemCount = 2;
-	} else if (screenSize >= 640 && screenSize < 768) {
-		itemCount = 3;
-	} else if (screenSize >= 768 && screenSize < 1024) {
-		itemCount = 4;
-	} else {
-		itemCount = 6;
-	}
+		updateScreenSize();
+		window.addEventListener("resize", updateScreenSize);
+		return () => window.removeEventListener("resize", updateScreenSize);
+	}, []);
 
 	return (
 		<div
