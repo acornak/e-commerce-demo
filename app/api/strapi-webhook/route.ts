@@ -2,10 +2,16 @@
 import { initAdmin } from "@/lib/config/firebase-admin";
 import { Order } from "@/lib/config/types";
 import updateOrder from "@/lib/models/orders-admin";
+import { NextRequest, NextResponse } from "next/server";
 
 import Stripe from "stripe";
 
-export async function POST(request: Request) {
+/**
+ * Handle Stripe webhook events.
+ * @param {NextRequest} request - Request object
+ * @returns {Response} - Response with a status message
+ */
+export async function POST(request: NextRequest): Promise<NextResponse> {
 	let event: Stripe.Event;
 
 	try {
@@ -19,7 +25,7 @@ export async function POST(request: Request) {
 		);
 		if (event.type === "checkout.session.completed") {
 			if (!event.data.object.metadata?.orderId) {
-				return new Response("OK", { status: 200 });
+				return NextResponse.json({});
 			}
 
 			let paid: boolean = false;
@@ -27,22 +33,19 @@ export async function POST(request: Request) {
 				paid = true;
 			}
 
-			try {
-				await initAdmin();
-				await updateOrder({
-					id: event.data.object.metadata.orderId,
-					paid,
-				} as Order);
-			} catch (e: any) {
-				console.error("Failed to update order:", e);
-				return new Response("Internal Server Error", { status: 500 });
-			}
-
-			return new Response("OK", { status: 200 });
+			await initAdmin();
+			await updateOrder({
+				id: event.data.object.metadata.orderId,
+				paid,
+			} as Order);
 		}
-		return new Response("OK", { status: 200 });
 	} catch (err) {
 		console.error(err);
-		return new Response("Internal Server Error", { status: 500 });
+		return NextResponse.json(
+			{ error: "Error creating order" },
+			{ status: 500 },
+		);
 	}
+
+	return NextResponse.json({});
 }

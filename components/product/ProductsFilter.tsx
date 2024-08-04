@@ -407,7 +407,11 @@ const ProductsFilter = (): JSX.Element => {
 	useEffect(() => {
 		fetchAllCategories(setCategories);
 		fetchAllBrands(setBrands);
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error(`Fetching sizes failed: ${error}`);
+			});
 		fetchProductsMaxPrice(setMaxPrice);
 	}, []);
 

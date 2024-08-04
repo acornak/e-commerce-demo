@@ -1,4 +1,8 @@
-const scrollToAboveElement = (id: string) => {
+/**
+ * Scrolls to the element with the given ID
+ * @param id - ID of the element to scroll to
+ */
+const scrollToAboveElement = (id: string): void => {
 	setTimeout(() => {
 		const element = document.getElementById(id);
 		if (element) {

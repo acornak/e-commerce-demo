@@ -48,9 +48,7 @@ export function generateNotificationTemplate(
                 <div class="banner">
                     <h2>Nová správa od ${name}</h2>
                 </div>
-                <p class="leading">Antonín, máte novú správu od ${name}, z emailovej adresy: ${email}${
-					telephone && `, a telefónneho čísla ${telephone}`
-				}.</p>
+                <p class="leading">Antonín, máte novú správu od ${name}, z emailovej adresy: ${email} a telefónneho čísla${telephone}.</p>
                 <p class="leading">Here's what they sent you:</p>
                 <blockquote>${message}</blockquote>
                 <p class="leading">cylinderpece.sk</p>

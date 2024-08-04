@@ -20,13 +20,14 @@ const LoginPrompt = (): JSX.Element | null => {
 	if (user) return null;
 
 	return (
-		<h2 className="my-4 pb-6">
+		<h2 className="my-4 pb-6" data-testid="login-prompt">
 			For better experience, please{" "}
 			<motion.p
 				whileHover={{ color: colors.secondary }}
 				whileTap={{ color: colors.secondary }}
 				className="inline font-bold cursor-pointer"
 				onClick={() => setLoginModalOpen(true)}
+				data-testid="login-prompt-login"
 			>
 				login
 			</motion.p>{" "}

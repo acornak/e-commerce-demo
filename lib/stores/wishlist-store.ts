@@ -62,9 +62,9 @@ export const updateWishlistStore = () => {
 onAuthStateChanged(auth, async (user) => {
 	if (user) {
 		const currentUser = await getUser();
-		if (currentUser?.fsUser?.wishlistItems) {
+		if (currentUser?.wishlistItems) {
 			useWishlistStore.setState({
-				items: currentUser.fsUser.wishlistItems,
+				items: currentUser.wishlistItems,
 			});
 		}
 	}

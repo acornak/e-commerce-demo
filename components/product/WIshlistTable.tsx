@@ -60,8 +60,19 @@ const WishlistItem: FC<WishlistItemProps> = ({ productId }): JSX.Element => {
 	}, []);
 
 	useEffect(() => {
-		fetchProductById(productId, setProduct);
-		fetchProductImage(productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [productId]);
 
 	const handleAddToCart = () => {

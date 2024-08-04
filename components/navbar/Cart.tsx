@@ -5,6 +5,7 @@ import Image from "next/image";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
+import { auth } from "@/lib/config/firebase";
 import { colors } from "@/lib/config/constants";
 import { CartItem, Product, Size } from "@/lib/config/types";
 // Store
@@ -71,7 +72,11 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
 
 	useEffect(() => {
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error(`Fetching sizes failed: ${error}`);
+			});
 
 		document.addEventListener("visibilitychange", updateCartStore);
 		window.addEventListener("focus", updateCartStore);
@@ -82,8 +87,19 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 	}, []);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
 	if (!product || !imageUrl) {
@@ -288,7 +304,10 @@ const ShoppingCart: FC = () => {
 									className="text-center py-4 uppercase w-full"
 									onClick={() => {
 										setCartBarOpen(false);
-										handleCheckout(items);
+										handleCheckout(
+											items,
+											auth.currentUser?.email || "",
+										);
 										clearCart();
 									}}
 								>

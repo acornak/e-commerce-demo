@@ -1,7 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { getAllCategories } from "@/lib/models/category";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+/**
+ * Get all categories
+ * @param {NextRequest} request - Request object
+ * @returns {NextResponse} - Response with categories
+ */
+export async function GET(request: NextRequest): Promise<NextResponse> {
 	const { searchParams } = new URL(request.url);
 	let limit = 1000;
 
@@ -11,5 +17,5 @@ export async function GET(request: Request) {
 
 	const categories = getAllCategories();
 
-	return Response.json({ categories: categories.slice(0, limit) });
+	return NextResponse.json({ categories: categories.slice(0, limit) });
 }

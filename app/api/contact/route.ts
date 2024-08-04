@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 // Templates
+import { NextRequest, NextResponse } from "next/server";
 import {
 	generateNotificationTemplate,
 	generateConfirmationTemplate,
@@ -7,12 +8,21 @@ import {
 
 export const revalidate = 0;
 
+/**
+ * Send mail
+ * @param {string} to - Recipient email address
+ * @param {string} subject - Email subject
+ * @param {string} html - Email content
+ * @param {string} from - Sender email address
+ * @returns {Promise<void>} - Promise
+ * @throws {Error} - Throws error if mail sending fails
+ */
 async function sendMail(
 	to: string,
 	subject: string,
 	html: string,
 	from: string,
-) {
+): Promise<void> {
 	const transporter = nodemailer.createTransport({
 		service: "gmail",
 		host: "smtp.gmail.com",
@@ -40,7 +50,13 @@ async function sendMail(
 	}
 }
 
-async function verifyRecaptcha(token: string) {
+/**
+ * Verify reCAPTCHA token
+ * @param {string} token - reCAPTCHA token
+ * @returns {Promise<void>} - Promise
+ * @throws {Error} - Throws error if reCAPTCHA verification fails
+ */
+async function verifyRecaptcha(token: string): Promise<void> {
 	const response = await fetch(
 		"https://www.google.com/recaptcha/api/siteverify",
 		{
@@ -59,7 +75,7 @@ async function verifyRecaptcha(token: string) {
 	}
 }
 
-export async function POST(req: Request): Promise<Response> {
+export async function POST(req: NextRequest): Promise<NextResponse> {
 	const body: {
 		to: string;
 		message: string;
@@ -69,10 +85,17 @@ export async function POST(req: Request): Promise<Response> {
 	} = await req.json();
 
 	if (body.subject) {
-		return new Response(JSON.stringify({ message: "No bots allowed" }), {
-			status: 500,
-			headers: { "Content-Type": "application/json" },
-		});
+		return NextResponse.json(
+			{ message: "No bots allowed" },
+			{ status: 500 },
+		);
+	}
+
+	if (!body.to || !body.message || !body.name) {
+		return NextResponse.json(
+			{ message: "Please provide all required fields" },
+			{ status: 400 },
+		);
 	}
 
 	let message: string = "Email sent";
@@ -85,7 +108,7 @@ export async function POST(req: Request): Promise<Response> {
 		// Send mail to user
 		await sendMail(
 			body.to,
-			"Cylinder Pece | Ďakujeme za vašu správu",
+			"Glassify | Thank you for your request",
 			generateConfirmationTemplate(body.name, body.message),
 			process.env.EMAIL_USERNAME!,
 		);
@@ -93,7 +116,7 @@ export async function POST(req: Request): Promise<Response> {
 		// Send mail to me
 		await sendMail(
 			process.env.EMAIL_USERNAME!,
-			"Žiadosť o cenovú ponuku",
+			"Glassify | New message",
 			generateNotificationTemplate(body.name, body.to, body.message, ""),
 			body.to,
 		);
@@ -105,8 +128,9 @@ export async function POST(req: Request): Promise<Response> {
 		status = 500;
 	}
 
-	return new Response(JSON.stringify({ message }), {
-		status,
-		headers: { "Content-Type": "application/json" },
-	});
+	// return new NextResponse(JSON.stringify({ message }), {
+	// 	status,
+	// 	headers: { "Content-Type": "application/json" },
+	// });
+	return NextResponse.json({ message }, { status });
 }

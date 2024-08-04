@@ -3,14 +3,15 @@ import { auth, db } from "../config/firebase";
 import { usersCollName } from "../config/constants";
 import { User } from "../config/types";
 
-// TODO: remove fsUser
-export async function getUser(): Promise<{
-	fsUser?: User | null;
-	error?: string;
-}> {
+/**
+ * Get user data from Firestore
+ * @returns User | null - User data or null if user does not exist
+ * @throws Error - If user is not logged in
+ */
+export async function getUser(): Promise<User | null> {
 	const email = auth.currentUser?.email;
 	if (!email) {
-		return { error: "No user logged in" };
+		throw new Error("No user logged in");
 	}
 
 	const userRef = doc(db, usersCollName, email);
@@ -18,11 +19,11 @@ export async function getUser(): Promise<{
 	try {
 		const docSnapshot = await getDoc(userRef);
 		if (docSnapshot.exists()) {
-			return { fsUser: docSnapshot.data() as User };
+			return docSnapshot.data() as User | null;
 		}
-		return { fsUser: null };
+		return null;
 	} catch (e: any) {
-		return { error: e.message };
+		throw new Error(e.message);
 	}
 }
 
@@ -37,18 +38,9 @@ export async function updateUser(user: User): Promise<void> {
 	try {
 		const docSnapshot = await getDoc(userRef);
 		if (!docSnapshot.exists()) {
-			try {
-				await setDoc(userRef, { ...user, createdAt: new Date() });
-			} catch (e: any) {
-				console.error(e.message);
-			}
+			await setDoc(userRef, { ...user, createdAt: new Date() });
 		} else {
-			try {
-				await updateDoc(userRef, { ...user, updatedAt: new Date() });
-			} catch (e: any) {
-				console.error(e.message);
-				throw new Error(e.message);
-			}
+			await updateDoc(userRef, { ...user, updatedAt: new Date() });
 		}
 	} catch (e: any) {
 		throw new Error(e.message);

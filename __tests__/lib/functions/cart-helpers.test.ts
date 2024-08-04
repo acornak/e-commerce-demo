@@ -1,11 +1,11 @@
 import mockProducts from "@/__mocks__/products/products.mock";
+import { CartItem } from "@/lib/config/types";
 import {
 	getCartItemQty,
 	getCartItemSize,
 	totalCartItemPrice,
 	totalCartPrice,
 } from "@/lib/functions/cart-helpers";
-import { CartItem } from "@/lib/stores/cart-store";
 
 describe("getCartItemSize", () => {
 	const sizes = [

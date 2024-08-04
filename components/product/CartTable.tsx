@@ -21,6 +21,7 @@ import useHydration from "@/lib/hooks/use-hydration";
 // Functions
 import { handleCheckout } from "@/lib/functions/checkout";
 // Types and constants
+import { auth } from "@/lib/config/firebase";
 import { Product, Size, CartItem } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
 // Components
@@ -57,8 +58,19 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 	}, []);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
 	return (
@@ -178,7 +190,11 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
 
 	useEffect(() => {
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error(`Fetching sizes failed: ${error}`);
+			});
 
 		document.addEventListener("visibilitychange", updateCartStore);
 		window.addEventListener("focus", updateCartStore);
@@ -193,8 +209,19 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 	}, [item, sizes]);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
 	return (
@@ -443,7 +470,10 @@ const CartTable = () => {
 							}}
 							className="uppercase px-6 py-4 mt-10 mb-6 tracking-widest"
 							onClick={() => {
-								handleCheckout(items);
+								handleCheckout(
+									items,
+									auth.currentUser?.email || "",
+								);
 								clearCart();
 							}}
 						>
