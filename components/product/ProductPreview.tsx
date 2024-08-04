@@ -145,7 +145,16 @@ const ProductPreview: FC<ProductPreviewProps> = ({ product }): JSX.Element => {
 	};
 
 	useEffect(() => {
-		fetchProductImage(product.id, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const resp = await fetchProductImage(product.id);
+				setImageUrl(resp);
+			} catch (error) {
+				console.error("Fetching product image failed:", error);
+			}
+		};
+
+		fetchData();
 	}, []);
 
 	return (

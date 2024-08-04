@@ -12,10 +12,7 @@ import mockProducts from "@/__mocks__/products/products.mock";
 import { sortOptions } from "@/lib/config/constants";
 
 describe("fetchProduct function", () => {
-	let mockSetProduct: jest.Mock<void, [Product]>;
-
 	beforeEach(() => {
-		mockSetProduct = jest.fn();
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
 				json: () => Promise.resolve({ product: mockProducts[0] }),
@@ -30,21 +27,28 @@ describe("fetchProduct function", () => {
 	});
 
 	it("should fetch product and set it using setProduct", async () => {
-		await fetchProductById(1, mockSetProduct);
+		const resp = await fetchProductById(1);
 
 		expect(global.fetch).toHaveBeenCalledWith("/api/products?productId=1");
-		expect(mockSetProduct).toHaveBeenCalledWith(mockProducts[0]);
+		expect(resp).toEqual(mockProducts[0]);
 	});
 
 	it("should log error if fetching product fails", async () => {
 		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
 
-		await fetchProductById(1, mockSetProduct);
+		let resp;
+		try {
+			resp = await fetchProductById(1);
+		} catch (error) {
+			expect(error).toEqual("Fetch failed");
+		}
 
 		expect(console.error).toHaveBeenCalledWith(
 			"Fetching product by id failed:",
 			"Fetch failed",
 		);
+
+		expect(resp).toBeUndefined();
 	});
 });
 
@@ -195,14 +199,9 @@ describe("fetchAllProducts function", () => {
 });
 
 describe("fetchProductImage function", () => {
-	let mockSetImageUrl: jest.Mock<void, [string]>;
-	let mockSetProductImageModalUrl: jest.Mock<void, [string]>;
-
 	const mockBlob = new Blob(["test data"], { type: "image/png" });
 
 	beforeEach(() => {
-		mockSetImageUrl = jest.fn();
-		mockSetProductImageModalUrl = jest.fn();
 		global.fetch = jest.fn().mockResolvedValue({
 			blob: () => Promise.resolve(mockBlob),
 		}) as jest.Mock;
@@ -214,12 +213,8 @@ describe("fetchProductImage function", () => {
 		jest.clearAllMocks();
 	});
 
-	it("should fetch product image and set it using setImageUrl and setProductImageModalUrl", async () => {
-		await fetchProductImage(
-			1,
-			mockSetImageUrl,
-			mockSetProductImageModalUrl,
-		);
+	it("should fetch product image", async () => {
+		const resp = await fetchProductImage(1);
 
 		expect(global.fetch).toHaveBeenCalledWith(
 			"/api/products/image?productId=1",
@@ -227,22 +222,25 @@ describe("fetchProductImage function", () => {
 
 		expect(URL.createObjectURL).toHaveBeenCalledWith(mockBlob);
 
-		expect(mockSetImageUrl).toHaveBeenCalledWith("image-url");
-		expect(mockSetProductImageModalUrl).toHaveBeenCalledWith("image-url");
+		expect(resp).toEqual("image-url");
 	});
+
 	it("should log error if fetching product image fails", async () => {
 		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
 
-		await fetchProductImage(
-			1,
-			mockSetImageUrl,
-			mockSetProductImageModalUrl,
-		);
+		let resp;
+		try {
+			resp = await fetchProductImage(1);
+		} catch (error) {
+			expect(error).toEqual("Fetch failed");
+		}
 
 		expect(console.error).toHaveBeenCalledWith(
-			"Fetching image failed:",
+			"Fetching product image failed:",
 			"Fetch failed",
 		);
+
+		expect(resp).toBeUndefined();
 	});
 });
 

@@ -497,18 +497,25 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 	const setProductImageModalOpen = useModalsStore(
 		(state) => state.setProductImageModalOpen,
 	);
-	const setProductImageModalUrl = useModalsStore(
-		(state) => state.setProductImageModalUrl,
-	);
-
 	const [product, setProduct] = useState<Product>();
 	const [imageUrl, setImageUrl] = useState<string | null>();
 
 	const [productMenuSelected, setProductMenuSelected] = useState<number>(0);
 
 	useEffect(() => {
-		fetchProductById(productId, setProduct);
-		fetchProductImage(productId, setImageUrl, setProductImageModalUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 
 		document.getElementById("product-overview")?.scrollIntoView();
 	}, [productId]);

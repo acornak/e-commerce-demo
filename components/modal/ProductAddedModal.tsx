@@ -55,7 +55,17 @@ const ProductAddedModal: FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (cartProduct) fetchProductImage(cartProduct.id, setImageUrl);
+		const fetchData = async () => {
+			if (!cartProduct) return;
+			try {
+				const response = await fetchProductImage(cartProduct.id);
+				setImageUrl(response);
+			} catch (error) {
+				console.error("Fetching product image failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [cartProduct]);
 
 	return (

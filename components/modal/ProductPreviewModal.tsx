@@ -59,11 +59,23 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	useEffect(() => setSelectedSize(null), [productPreviewModalOpen]);
 
 	useEffect(() => {
-		if (!productId) return () => {};
-		fetchProductById(productId, setProduct);
-		fetchProductImage(productId, setImageUrl);
-		const timeout = setTimeout(() => setLoading(false), 400);
-		return () => clearTimeout(timeout);
+		if (!productId) return;
+		setLoading(true);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchData();
 	}, [productId]);
 
 	useEffect(() => {
@@ -96,6 +108,9 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	});
 
 	const handleContent = () => {
+		console.log("loading", loading);
+		console.log("product", product);
+		console.log("imageUrl", imageUrl);
 		if (loading || !product || !imageUrl) {
 			return <StyledLoading />;
 		}

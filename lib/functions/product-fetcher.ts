@@ -4,18 +4,17 @@ import { SortOption, Product } from "../config/types";
 /**
  * Fetch a product by its ID from the API and set it using setProduct
  * @param productId - Product ID
- * @param setProduct - Function to set the product in the state
+ * @returns Product
  */
-export const fetchProductById = async (
-	productId: number,
-	setProduct: (product: Product) => void,
-) => {
-	await fetch(`/api/products?productId=${productId}`)
-		.then((response) => response.json())
-		.then((data) => setProduct(data.product))
-		.catch((error) =>
-			console.error("Fetching product by id failed:", error),
-		);
+export const fetchProductById = async (productId: number): Promise<Product> => {
+	try {
+		const response = await fetch(`/api/products?productId=${productId}`);
+		const data = await response.json();
+		return data.product;
+	} catch (error) {
+		console.error("Fetching product by id failed:", error);
+		throw error;
+	}
 };
 
 /**
@@ -77,25 +76,20 @@ export const fetchAllProducts = async (
 /**
  * Fetch a product image by its ID from the API and set it using setImageUrl
  * @param productId - Product ID
- * @param setImageUrl - Function to set the image URL in the state
- * @param setProductImageModalUrl - Function to set the image URL in the state
+ * @returns Image URL
  */
-export const fetchProductImage = async (
-	productId: number,
-	setImageUrl: (url: string) => void,
-	setProductImageModalUrl?: (url: string) => void,
-) => {
-	await fetch(`/api/products/image?productId=${productId}`)
-		.then((response) => response.blob())
-		.then((blob) => {
-			const url = URL.createObjectURL(blob);
-			setImageUrl(url);
-			if (setProductImageModalUrl) {
-				setProductImageModalUrl(url);
-			}
-			return () => URL.revokeObjectURL(url);
-		})
-		.catch((error) => console.error("Fetching image failed:", error));
+export const fetchProductImage = async (productId: number): Promise<string> => {
+	try {
+		const response = await fetch(
+			`/api/products/image?productId=${productId}`,
+		);
+		const blob = await response.blob();
+		const url = URL.createObjectURL(blob);
+		return url;
+	} catch (error) {
+		console.error("Fetching product image failed:", error);
+		throw error;
+	}
 };
 
 /**

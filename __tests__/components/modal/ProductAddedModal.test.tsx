@@ -136,11 +136,10 @@ describe("ProductAddedModal", () => {
 		mockGetCartItemQty.mockReturnValue(1);
 
 		const mockFetchProductImage = fetchProductImage as jest.Mock;
-		mockFetchProductImage.mockImplementation(
-			(id: number, callback: (url: string) => void) => {
-				callback("product-image-url");
-			},
-		);
+		// TODO
+		mockFetchProductImage.mockImplementation(() => {
+			return Promise.resolve("https://example.com/image.jpg");
+		});
 
 		render(<ProductAddedModal />);
 
@@ -191,15 +190,14 @@ describe("ProductAddedModal", () => {
 			expect(mockFetchProductImage).toHaveBeenCalledTimes(1);
 			expect(mockFetchProductImage).toHaveBeenCalledWith(
 				mockCartProduct.id,
-				expect.any(Function),
 			);
 
 			// Validate mock function behavior
-			const setImageUrlCallback = mockFetchProductImage.mock.calls[0][1];
-			expect(setImageUrlCallback).toBeInstanceOf(Function);
-			expect(() =>
-				setImageUrlCallback("product-image-url"),
-			).not.toThrow();
+			// const setImageUrlCallback = mockFetchProductImage.mock.calls[0][1];
+			// expect(setImageUrlCallback).toBeInstanceOf(Function);
+			// expect(() =>
+			// 	setImageUrlCallback("product-image-url"),
+			// ).not.toThrow();
 
 			expect(mockGetCartItemQty).toHaveBeenCalled();
 			expect(mockGetCartItemQty).toHaveBeenCalledWith(

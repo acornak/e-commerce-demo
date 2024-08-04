@@ -58,8 +58,19 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 	}, []);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
 	return (
@@ -198,8 +209,19 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 	}, [item, sizes]);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
 	return (
