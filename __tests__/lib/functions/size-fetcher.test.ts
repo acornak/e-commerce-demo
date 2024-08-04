@@ -2,15 +2,12 @@ import { fetchAllSizes, fetchSizeById } from "@/lib/functions/size-fetcher";
 import { Size } from "@/lib/config/types";
 
 describe("fetchAllSizes function", () => {
-	let mockSetSizes: jest.Mock<void, [Size[]]>;
-
 	const mockSizes = [
 		{ id: 1, name: "S" },
 		{ id: 2, name: "M" },
 	];
 
 	beforeEach(() => {
-		mockSetSizes = jest.fn();
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
 				json: () => Promise.resolve({ sizes: mockSizes }),
@@ -24,20 +21,18 @@ describe("fetchAllSizes function", () => {
 	});
 
 	it("should fetch all sizes and set them using setSizes", async () => {
-		await fetchAllSizes(mockSetSizes);
+		const response = await fetchAllSizes();
 
 		expect(global.fetch).toHaveBeenCalledWith("/api/sizes");
-		expect(mockSetSizes).toHaveBeenCalledWith(mockSizes);
+
+		expect(response).toEqual(mockSizes);
 	});
 
-	it("should log error if fetching sizes fails", async () => {
+	it("should throw error if fetching sizes fails", async () => {
 		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
 
-		await fetchAllSizes(mockSetSizes);
-
-		expect(console.error).toHaveBeenCalledWith(
-			"Fetching sizes failed:",
-			"Fetch failed",
+		await expect(fetchAllSizes()).rejects.toThrow(
+			"Fetching sizes failed: Fetch failed",
 		);
 	});
 });

@@ -110,6 +110,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 				onClick={() => {
 					setQuantity(1);
 				}}
+				data-testid="product-preview-modal"
 			>
 				<motion.div
 					ref={modalRef}
@@ -133,6 +134,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 						transition={{ duration: 0.2 }}
 						className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 						onClick={() => setProductPreviewModalOpen(false)}
+						data-testid="close-product-preview-modal"
 					>
 						<CloseIcon />
 					</motion.button>

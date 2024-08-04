@@ -22,9 +22,12 @@ const SizePicker: FC<SizePickerProps> = ({
 }): JSX.Element => {
 	const [sizes, setSizes] = useState<Size[]>([]);
 
-	// TODO add maybe error handling here
 	useEffect(() => {
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error(`Fetching sizes failed: ${error}`);
+			});
 	}, []);
 
 	const border = (size: Size): string => {

@@ -2,13 +2,17 @@ import { Size } from "../config/types";
 
 /**
  * Fetch all sizes from the API and set them using setSizes
- * @param setSizes - Function to set sizes in the state
+ * @returns Array of sizes
  */
-export const fetchAllSizes = async (setSizes: (sizes: Size[]) => void) => {
-	await fetch("/api/sizes")
-		.then((response) => response.json())
-		.then((data) => setSizes(data.sizes))
-		.catch((error) => console.error("Fetching sizes failed:", error));
+export const fetchAllSizes = async (): Promise<Size[]> => {
+	try {
+		const response = await fetch("/api/sizes");
+		const data = await response.json();
+
+		return data.sizes;
+	} catch (error: any) {
+		throw new Error(`Fetching sizes failed: ${error}`);
+	}
 };
 
 /**

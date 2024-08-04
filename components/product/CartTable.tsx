@@ -179,7 +179,11 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
 
 	useEffect(() => {
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error(`Fetching sizes failed: ${error}`);
+			});
 
 		document.addEventListener("visibilitychange", updateCartStore);
 		window.addEventListener("focus", updateCartStore);
