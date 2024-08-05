@@ -15,7 +15,7 @@ import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
 import { useModalsStore } from "@/lib/stores/modals-store";
 import useOutsideAlerter from "@/lib/hooks/outside-click";
 import { useAuthStore } from "@/lib/stores/auth-store";
-import DesktopItems from "./Desktop";
+import DesktopItems from "./DesktopItems";
 import MobileItems from "./NavbarMobile";
 import { NavItemsDesktop, NavItemsMobile } from "./NavItems";
 import { NavIcons, MenuIcons } from "./NavIcons";

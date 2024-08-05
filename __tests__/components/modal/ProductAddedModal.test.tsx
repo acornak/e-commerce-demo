@@ -29,12 +29,8 @@ jest.mock("next/image", () => ({
 
 jest.mock("firebase/firestore", () => ({
 	...jest.requireActual("firebase/firestore"),
-	collection: jest.fn().mockReturnValue({
-		// Return a mock CollectionReference or DocumentReference if needed
-	}),
-	doc: jest.fn().mockReturnValue({
-		// Mock DocumentReference if needed
-	}),
+	collection: jest.fn().mockReturnValue({}),
+	doc: jest.fn().mockReturnValue({}),
 	getDocs: jest.fn(),
 	setDoc: jest.fn(),
 	updateDoc: jest.fn(),

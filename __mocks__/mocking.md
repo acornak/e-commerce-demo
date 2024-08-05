@@ -164,4 +164,26 @@ const consoleErrorMock = jest
 	.mockImplementation(() => {});
 ```
 
-## Running for loop with async
+## Mocking auth 
+```ts
+jest.mock("@/lib/config/firebase", () => ({
+	auth: {},
+	db: {},
+}));
+
+jest.mock("firebase/firestore", () => ({
+	...jest.requireActual("firebase/firestore"),
+	collection: jest.fn().mockReturnValue({
+	}),
+	doc: jest.fn().mockReturnValue({
+	}),
+	getDocs: jest.fn(),
+	setDoc: jest.fn(),
+	updateDoc: jest.fn(),
+	deleteDoc: jest.fn(),
+}));
+
+(auth as any).currentUser = {
+	email: "me@example.com",
+};
+```

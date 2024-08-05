@@ -1,4 +1,4 @@
-import DesktopItems from "@/components/navbar/Desktop";
+import DesktopItems from "@/components/navbar/DesktopItems";
 import { NavItem } from "@/lib/config/types";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import mockRouter from "next-router-mock";

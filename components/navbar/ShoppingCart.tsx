@@ -75,7 +75,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 		fetchAllSizes()
 			.then((res) => setSizes(res))
 			.catch((error) => {
-				console.error(`Fetching sizes failed: ${error}`);
+				console.error("Fetching sizes failed:", error);
 			});
 
 		document.addEventListener("visibilitychange", updateCartStore);
@@ -102,7 +102,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 		fetchData();
 	}, [item.productId]);
 
-	if (!product || !imageUrl) {
+	if (!product || !imageUrl || !sizes) {
 		return <></>;
 	}
 
@@ -121,8 +121,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 					<div>
 						<h1 className="font-semibold">{product.name}</h1>
 						<p className="text-gray-500 text-lg md:text-base px-3">
-							Size:{" "}
-							{sizes && getCartItemSize(sizes, item.sizeId)?.name}
+							Size: {getCartItemSize(sizes, item.sizeId)?.name}
 						</p>
 						<p className="text-gray-500 text-lg md:text-base">
 							<motion.button
@@ -138,6 +137,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 									removeQuantity(item.productId, item.sizeId)
 								}
 								className="w-3"
+								data-testid="remove-quantity-button"
 							>
 								-
 							</motion.button>{" "}
@@ -155,6 +155,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 									addQuantity(item.productId, item.sizeId)
 								}
 								className="w-3"
+								data-testid="add-quantity-button"
 							>
 								+
 							</motion.button>
@@ -175,6 +176,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 						whileTap={{ color: colors.secondary }}
 						transition={{ duration: 0.2 }}
 						onClick={() => removeItem(item)}
+						data-testid="remove-item-button"
 					>
 						<TrashIcon />
 					</motion.button>

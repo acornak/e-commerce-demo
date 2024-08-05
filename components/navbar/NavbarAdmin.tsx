@@ -12,7 +12,7 @@ import useOutsideAlerter from "@/lib/hooks/outside-click";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Components
-import DesktopItems from "./Desktop";
+import DesktopItems from "./DesktopItems";
 import MobileItems from "./NavbarMobile";
 import { NavItemsAdmin } from "./NavItems";
 import { NavIcons, adminIcons } from "./NavIcons";
