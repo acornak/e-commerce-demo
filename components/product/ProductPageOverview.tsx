@@ -497,6 +497,9 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 	const setProductImageModalOpen = useModalsStore(
 		(state) => state.setProductImageModalOpen,
 	);
+	const setProductImageModalUrl = useModalsStore(
+		(state) => state.setProductImageModalUrl,
+	);
 	const [product, setProduct] = useState<Product>();
 	const [imageUrl, setImageUrl] = useState<string | null>();
 
@@ -510,6 +513,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 
 				const fetchedUrl = await fetchProductImage(productId);
 				setImageUrl(fetchedUrl);
+				setProductImageModalUrl(fetchedUrl);
 			} catch (error) {
 				console.error("Fetching product failed:", error);
 			}

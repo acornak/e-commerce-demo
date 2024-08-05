@@ -35,6 +35,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [quantity, setQuantity] = useState<number>(1);
+	const [error, setError] = useState<string | null>(null);
 	const addItem = useCartStore((state) => state.addItem);
 
 	// Modals store
@@ -56,7 +57,10 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 		};
 	}, []);
 
-	useEffect(() => setSelectedSize(null), [productPreviewModalOpen]);
+	useEffect(() => {
+		setSelectedSize(null);
+		setQuantity(1);
+	}, [productPreviewModalOpen]);
 
 	useEffect(() => {
 		if (!productId) return;
@@ -68,8 +72,9 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 
 				const fetchedUrl = await fetchProductImage(productId);
 				setImageUrl(fetchedUrl);
-			} catch (error) {
-				console.error("Fetching product failed:", error);
+			} catch (err) {
+				console.error("Fetching product failed:", err);
+				setError("Something went wrong. Please try again later.");
 			} finally {
 				setLoading(false);
 			}
@@ -78,18 +83,11 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 		fetchData();
 	}, [productId]);
 
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				setProductPreviewModalOpen(false);
-			}
-		};
-		window.addEventListener("keydown", handleKeyDown);
-		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [setProductPreviewModalOpen]);
-
 	const handleAddToCart = () => {
+		console.log("product", product);
+		console.log("selectedSize", selectedSize);
 		if (product && selectedSize) {
+			console.log("adding item to cart");
 			addItem({
 				productId: product.id,
 				price: product.price,
@@ -108,9 +106,12 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	});
 
 	const handleContent = () => {
-		console.log("loading", loading);
-		console.log("product", product);
-		console.log("imageUrl", imageUrl);
+		// TODO: add error notification
+		if (error) {
+			setProductPreviewModalOpen(false);
+			return <></>;
+		}
+
 		if (loading || !product || !imageUrl) {
 			return <StyledLoading />;
 		}
@@ -122,9 +123,6 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
 				className="fixed inset-0 z-50 flex items-center justify-center"
-				onClick={() => {
-					setQuantity(1);
-				}}
 				data-testid="product-preview-modal"
 			>
 				<motion.div
@@ -159,7 +157,6 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 								href={`/products/${product.slug}`}
 								onClick={() => {
 									setProductPreviewModalOpen(false);
-									setQuantity(1);
 								}}
 							>
 								<Image
@@ -168,6 +165,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 									width={500}
 									height={500}
 									className="mx-auto w-3/5 sm:w-full"
+									data-testid="product-preview-image"
 								/>
 							</Link>
 						</div>
@@ -210,10 +208,14 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 											setQuantity((prev) => prev - 1);
 										}}
 										disabled={quantity === 1}
+										data-testid="decrease-quantity"
 									>
 										-
 									</button>
-									<div className="w-12 text-center select-none">
+									<div
+										className="w-12 text-center select-none"
+										data-testid="quantity"
+									>
 										{quantity}
 									</div>
 									<button
@@ -227,6 +229,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 											setQuantity((prev) => prev + 1);
 										}}
 										disabled={quantity === 10}
+										data-testid="increase-quantity"
 									>
 										+
 									</button>
@@ -241,6 +244,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 										}`}
 										onClick={handleAddToCart}
 										disabled={selectedSize === null}
+										data-testid="add-to-cart"
 									>
 										Add to cart
 									</button>

@@ -192,13 +192,6 @@ describe("ProductAddedModal", () => {
 				mockCartProduct.id,
 			);
 
-			// Validate mock function behavior
-			// const setImageUrlCallback = mockFetchProductImage.mock.calls[0][1];
-			// expect(setImageUrlCallback).toBeInstanceOf(Function);
-			// expect(() =>
-			// 	setImageUrlCallback("product-image-url"),
-			// ).not.toThrow();
-
 			expect(mockGetCartItemQty).toHaveBeenCalled();
 			expect(mockGetCartItemQty).toHaveBeenCalledWith(
 				mockCartItems,
@@ -434,6 +427,49 @@ describe("ProductAddedModal", () => {
 			expect(mockSetProductAddedModalOpen).toHaveBeenCalledWith(false);
 
 			expect(mockClearCart).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	it("handles fetch product image error", async () => {
+		const mockModalsStore = useModalsStore as unknown as jest.Mock;
+		mockModalsStore.mockImplementation((fn: any) => {
+			return fn({
+				productAddedModalOpen: true,
+				setProductAddedModalOpen: jest.fn(),
+				cartProduct: mockCartProduct,
+			});
+		});
+
+		const mockCartStore = useCartStore as unknown as jest.Mock;
+		mockCartStore.mockImplementation((fn: any) => {
+			return fn({
+				items: mockCartItems,
+				clearCart: jest.fn(),
+			});
+		});
+
+		const mockFetchProductImage = fetchProductImage as jest.Mock;
+		mockFetchProductImage.mockImplementation(() => {
+			return Promise.reject(new Error("Image fetch error"));
+		});
+
+		const consoleErrorMock = jest
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
+
+		render(<ProductAddedModal />);
+
+		await waitFor(() => {
+			const productImage = screen.queryByTestId(
+				"product-added-modal-image",
+			);
+			expect(productImage).not.toBeInTheDocument();
+
+			expect(consoleErrorMock).toHaveBeenCalledTimes(1);
+			expect(consoleErrorMock).toHaveBeenCalledWith(
+				"Fetching product image failed:",
+				new Error("Image fetch error"),
+			);
 		});
 	});
 });

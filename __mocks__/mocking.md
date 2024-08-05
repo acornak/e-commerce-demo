@@ -46,6 +46,25 @@ expect(redirect).toHaveBeenCalledWith("/login?redirect=account");
 ```
 Note - you have to return after redirect
 
+## Mock useRouter
+```ts
+import mockRouter from "next-router-mock";
+
+jest.mock("next/navigation", () => {
+	// eslint-disable-next-line global-require
+	const { useRouter } = require("next-router-mock");
+	return { useRouter };
+});
+
+mockRouter.push("/");
+
+expect(mockRouter).toMatchObject({
+	asPath: "/cart",
+	pathname: "/cart",
+	query: {},
+});
+```
+
 ## Mock imported function
 ```ts
 import { getUser } from "@/lib/models/user";
@@ -137,3 +156,12 @@ jest.mock("@/components/login/HandleLoginForm", () => ({
 	),
 }));
 ```
+
+## Mock console.error
+```ts
+const consoleErrorMock = jest
+	.spyOn(console, "error")
+	.mockImplementation(() => {});
+```
+
+## Running for loop with async
