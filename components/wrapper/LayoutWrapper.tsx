@@ -13,7 +13,7 @@ import { useModalsStore } from "@/lib/stores/modals-store";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import Navbar from "../navbar/Navbar";
 import SearchBar from "../navbar/SearchBar";
-import ShoppingCart from "../navbar/Cart";
+
 import NavbarAdmin from "../navbar/NavbarAdmin";
 import Sitemap from "../footer/Sitemap";
 import Footer from "../footer/Footer";
@@ -26,6 +26,7 @@ import SizeGuideModal from "../modal/SizeGuideModal";
 import AskQuestionModal from "../modal/AskQuestionModal";
 import ProductImageModal from "../modal/ProductImageModal";
 import StyledLoading from "../styled/Loading";
+import ShoppingCart from "../navbar/ShoppingCart";
 
 type LayoutWrapperProps = {
 	children: ReactNode;

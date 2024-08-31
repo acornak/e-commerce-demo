@@ -115,6 +115,7 @@ const NavbarAdmin = (): JSX.Element => {
 						onClick={() => {
 							setDrawerOpen(false);
 						}}
+						data-testid="navbar-admin-fade"
 					/>
 				)}
 			</AnimatePresence>
