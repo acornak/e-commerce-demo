@@ -4,7 +4,7 @@ import { SortOption, Product } from "../config/types";
 /**
  * Fetch a product by its ID from the API and set it using setProduct
  * @param productId - Product ID
- * @returns Product
+ * @returns Product - Product object
  */
 export const fetchProductById = async (productId: number): Promise<Product> => {
 	try {
@@ -21,6 +21,15 @@ export const fetchProductById = async (productId: number): Promise<Product> => {
  * Fetch all products from the API and set them using setProducts
  * @param setProducts - Function to set products in the state
  * @param limit - Maximum number of products to fetch
+ * @param page - Page number
+ * @param categoryId - Category ID
+ * @param brandId - Brand ID
+ * @param sizes - Array of size IDs
+ * @param priceRange - Array of min and max price
+ * @param sort - Sort option
+ * @param setLoading - Function to set loading state
+ * @param limit - Maximum number of products to fetch
+ * @returns void
  */
 export const fetchProductsPaginated = async (
 	setProducts: (products: Product[]) => void,
@@ -76,7 +85,7 @@ export const fetchAllProducts = async (
 /**
  * Fetch a product image by its ID from the API and set it using setImageUrl
  * @param productId - Product ID
- * @returns Image URL
+ * @returns string - Image URL
  */
 export const fetchProductImage = async (productId: number): Promise<string> => {
 	try {
@@ -94,44 +103,53 @@ export const fetchProductImage = async (productId: number): Promise<string> => {
 
 /**
  * Fetch all products from the API and set them using setProducts
- * @param setProducts - Function to set products in the state
+ * @param categoryId - Category ID
  * @param limit - Maximum number of products to fetch
+ *
+ * @returns Product[] - Array of products
  */
 export const fetchProductsByCategory = async (
 	categoryId: number,
-	setProducts: (products: Product[]) => void,
 	limit?: number,
-) => {
-	await fetch(
-		`/api/products?categoryId=${categoryId}${limit && `&limit=${limit}`}`,
-	)
-		.then((response) => response.json())
-		.then((data) => setProducts(data.products))
-		.catch((error) =>
-			console.error("Fetching products by category failed:", error),
+): Promise<Product[]> => {
+	try {
+		const response = await fetch(
+			`/api/products?categoryId=${categoryId}${
+				limit && `&limit=${limit}`
+			}`,
 		);
+		const data = await response.json();
+		return data.products;
+	} catch (error) {
+		console.error("Fetching products by category failed:", error);
+		throw error;
+	}
 };
 
 /**
  * Fetch all products from the API and set them using setProducts
- * @param setProducts - Function to set products in the state
+ * @param tags - Array of tags
  * @param limit - Maximum number of products to fetch
+ * @returns Product[] - Array of products
  */
 export const fetchProductsByTag = async (
 	tags: string[],
-	setProducts: (products: Product[]) => void,
 	limit?: number,
-) => {
+): Promise<Product[]> => {
 	const queryParams = tags
 		.map((tag) => `tags=${encodeURIComponent(tag)}`)
 		.join("&");
 
-	await fetch(`/api/products?${queryParams}${limit && `&limit=${limit}`}`)
-		.then((response) => response.json())
-		.then((data) => setProducts(data.products))
-		.catch((error) =>
-			console.error("Fetching products by tag failed:", error),
+	try {
+		const response = await fetch(
+			`/api/products?${queryParams}${limit && `&limit=${limit}`}`,
 		);
+		const data = await response.json();
+		return data.products;
+	} catch (error) {
+		console.error("Fetching products by tag failed:", error);
+		throw error;
+	}
 };
 
 /**

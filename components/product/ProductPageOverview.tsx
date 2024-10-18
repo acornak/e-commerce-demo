@@ -32,7 +32,7 @@ import { StyledSectionHeading } from "../styled/Heading";
 import ProductPageDescription from "./ProductPageDescription";
 import ProductPageAdditional from "./ProductPageAdditional";
 import ProductPageReviews from "./ProductPageReviews";
-import RelatedProduct from "./RelatedProducts";
+import RelatedProducts from "./RelatedProducts";
 import SizePicker from "../common/SizePicker";
 // Icons
 import ChevronRightIcon from "../icon/ChevronRight";
@@ -893,7 +893,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 					title="Related products"
 					className="pt-4"
 				/>
-				<RelatedProduct tags={product.tags} />
+				<RelatedProducts tags={product.tags} />
 			</section>
 		</>
 	);

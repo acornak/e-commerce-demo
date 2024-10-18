@@ -245,10 +245,7 @@ describe("fetchProductImage function", () => {
 });
 
 describe("fetchProductsByCategory function", () => {
-	let mockSetProducts: jest.Mock<void, [Product[]]>;
-
 	beforeEach(() => {
-		mockSetProducts = jest.fn();
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
 				json: () =>
@@ -264,32 +261,38 @@ describe("fetchProductsByCategory function", () => {
 	});
 
 	it("should fetch products by category and set it using setProducts", async () => {
-		await fetchProductsByCategory(1, mockSetProducts, 100);
+		const resp = await fetchProductsByCategory(1, 100);
 
 		expect(global.fetch).toHaveBeenCalledWith(
 			"/api/products?categoryId=1&limit=100",
 		);
-		expect(mockSetProducts).toHaveBeenCalledWith(mockProducts.slice(0, 20));
+
+		expect(resp).toEqual(mockProducts.slice(0, 20));
 	});
 
 	it("should log error if fetching products by category fails", async () => {
 		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
 
-		await fetchProductsByCategory(1, mockSetProducts);
+		let resp;
+		try {
+			resp = await fetchProductsByCategory(1);
+		} catch (error) {
+			expect(error).toEqual("Fetch failed");
+		}
 
 		expect(console.error).toHaveBeenCalledWith(
 			"Fetching products by category failed:",
 			"Fetch failed",
 		);
+
+		expect(resp).toBeUndefined();
 	});
 });
 
 describe("fetchProductsByTag function", () => {
-	let mockSetProducts: jest.Mock<void, [Product[]]>;
 	const mockTags = ["tag1", "tag2"];
 
 	beforeEach(() => {
-		mockSetProducts = jest.fn();
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
 				json: () =>
@@ -304,24 +307,32 @@ describe("fetchProductsByTag function", () => {
 		jest.clearAllMocks();
 	});
 
-	it("should fetch products by category and set it using setProducts", async () => {
-		await fetchProductsByTag(mockTags, mockSetProducts, 100);
+	it("should fetch products by tag and set it using setProducts", async () => {
+		const resp = await fetchProductsByTag(mockTags, 100);
 
 		expect(global.fetch).toHaveBeenCalledWith(
 			"/api/products?tags=tag1&tags=tag2&limit=100",
 		);
-		expect(mockSetProducts).toHaveBeenCalledWith(mockProducts.slice(0, 20));
+
+		expect(resp).toEqual(mockProducts.slice(0, 20));
 	});
 
-	it("should log error if fetching products by category fails", async () => {
+	it("should log error if fetching products by tag fails", async () => {
 		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
 
-		await fetchProductsByTag(mockTags, mockSetProducts);
+		let resp;
+		try {
+			resp = await fetchProductsByTag(mockTags);
+		} catch (error) {
+			expect(error).toEqual("Fetch failed");
+		}
 
 		expect(console.error).toHaveBeenCalledWith(
 			"Fetching products by tag failed:",
 			"Fetch failed",
 		);
+
+		expect(resp).toBeUndefined();
 	});
 });
 
@@ -347,7 +358,7 @@ describe("fetchProductsMaxPrice function", () => {
 		jest.clearAllMocks();
 	});
 
-	it("should fetch products by category and set it using setProducts", async () => {
+	it("should fetch products by max price and set it using setProducts", async () => {
 		await fetchProductsMaxPrice(
 			mockSetMaxPrice,
 			mockSetPriceRange,
@@ -360,7 +371,7 @@ describe("fetchProductsMaxPrice function", () => {
 		expect(mockSetMax).toHaveBeenCalledWith(500);
 	});
 
-	it("should log error if fetching products by category fails", async () => {
+	it("should log error if fetching products by max price fails", async () => {
 		global.fetch = jest.fn().mockRejectedValue("Fetch failed");
 
 		await fetchProductsMaxPrice(
