@@ -20,6 +20,8 @@ const config: Config = {
 		"app/**/*.tsx",
 		"components/**/*.tsx",
 		"lib/**/*.ts",
+		"!lib/config/stripe.ts",
+		"!lib/config/constants.ts",
 	],
 };
 

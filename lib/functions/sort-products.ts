@@ -1,6 +1,15 @@
 import { Product } from "../config/types";
 
 /**
+ * Sort products by default order
+ * @param products - Array of products
+ * @returns Array of products
+ */
+export function sortProductsDefault(products: Product[]): Product[] {
+	return products;
+}
+
+/**
  * Sort products by price in ascending order
  * @param products - Array of products
  * @returns Array of products

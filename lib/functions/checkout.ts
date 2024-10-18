@@ -50,13 +50,22 @@ export const handleCheckout = async (cartItems: CartItem[], email: string) => {
 	}
 
 	try {
+		let userEmail;
+
+		/* istanbul ignore next */
+		if (auth.currentUser) {
+			userEmail = auth.currentUser.email;
+		} else {
+			// TODO
+			userEmail = "";
+		}
+
 		const response = await fetch("/api/checkout-session", {
 			method: "POST",
 			body: JSON.stringify({
 				lineItems: createCheckoutItems(cartItems),
 				orderId,
-				// TODO
-				email: auth.currentUser?.email || "",
+				email: userEmail,
 			}),
 		});
 		const data = await response.json();

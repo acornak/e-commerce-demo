@@ -173,6 +173,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 						<AnimatePresence>
 							{showFade() && (
 								<motion.div
+									data-testid="fade-overlay-admin"
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 0.7 }}
 									exit={{ opacity: 0 }}
@@ -221,6 +222,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			<AnimatePresence>
 				{showFade() && (
 					<motion.div
+						data-testid="fade-overlay"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.7 }}
 						exit={{ opacity: 0 }}

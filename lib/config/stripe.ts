@@ -10,7 +10,7 @@ export default async function createCheckoutSession(
 	email?: string,
 ): Promise<Stripe.Checkout.Session> {
 	let session: Stripe.Checkout.Session;
-	/* istanbul ignore next */
+
 	if (!email) {
 		session = await stripe.checkout.sessions.create({
 			mode: "payment",
@@ -23,7 +23,7 @@ export default async function createCheckoutSession(
 		});
 		return session;
 	}
-	/* istanbul ignore next */
+
 	session = await stripe.checkout.sessions.create({
 		mode: "payment",
 		line_items: lineItems,
@@ -35,6 +35,6 @@ export default async function createCheckoutSession(
 			email,
 		},
 	});
-	/* istanbul ignore next */
+
 	return session;
 }
