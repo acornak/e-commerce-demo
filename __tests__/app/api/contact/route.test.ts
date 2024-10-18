@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import { POST } from "@/app/api/contact/route";
+import { POST, revalidate } from "@/app/api/contact/route";
 import { NextRequest } from "next/server";
 import nodemailer from "nodemailer";
 
@@ -33,6 +33,8 @@ describe("POST /api/contact", () => {
 		expect(await response.json()).toEqual({
 			message: "No bots allowed",
 		});
+
+		expect(revalidate).toBe(0);
 	});
 
 	it("should return a 400 status if no email is provided", async () => {

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 // Next
 import Link from "next/link";
 // Animations
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 // Types and constants
 import { colors } from "@/lib/config/constants";
 // Hooks
@@ -12,18 +12,22 @@ import useOutsideAlerter from "@/lib/hooks/outside-click";
 // Fonts
 import { dancing } from "@/app/fonts";
 // Components
+import { useModalsStore } from "@/lib/stores/modals-store";
 import DesktopItems from "./DesktopItems";
 import MobileItems from "./NavbarMobile";
 import { NavItemsAdmin } from "./NavItems";
 import { NavIcons, adminIcons } from "./NavIcons";
+// Store
 // Icons
 import BarsIcon from "../icon/Bars";
 
 const NavbarAdmin = (): JSX.Element => {
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const [selected, setSelected] = useState<number | null>(null);
-	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 	const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+	const toggleDrawerMenuOpen = useModalsStore(
+		(state) => state.toggleDrawerMenuOpen,
+	);
 
 	useOutsideAlerter(dropdownRef, () => {
 		if (dropdownOpen) setDropdownOpen(false);
@@ -33,7 +37,6 @@ const NavbarAdmin = (): JSX.Element => {
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
 				if (dropdownOpen) setDropdownOpen(false);
-				if (drawerOpen) setDrawerOpen(false);
 			}
 		};
 
@@ -42,15 +45,10 @@ const NavbarAdmin = (): JSX.Element => {
 		return () => {
 			window.removeEventListener("keydown", handleEsc);
 		};
-	}, [dropdownOpen, drawerOpen]);
+	}, [dropdownOpen]);
 
 	const handleDropdown = () => {
 		setDropdownOpen((prev) => !prev);
-	};
-
-	const showFade = (): boolean => {
-		if (drawerOpen) return true;
-		return false;
 	};
 
 	return (
@@ -68,7 +66,7 @@ const NavbarAdmin = (): JSX.Element => {
 					whileHover={{ color: colors.secondary }}
 					whileTap={{ color: colors.secondary }}
 					transition={{ duration: 0.2 }}
-					onClick={() => setDrawerOpen((prev) => !prev)}
+					onClick={() => toggleDrawerMenuOpen()}
 				>
 					<BarsIcon />
 				</motion.div>
@@ -101,24 +99,6 @@ const NavbarAdmin = (): JSX.Element => {
 					/>
 				</div>
 			</nav>
-			<AnimatePresence>
-				{showFade() && (
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 0.7 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.2 }}
-						className="fixed inset-0 bg-black bg-opacity-80"
-						style={{
-							zIndex: 20,
-						}}
-						onClick={() => {
-							setDrawerOpen(false);
-						}}
-						data-testid="navbar-admin-fade"
-					/>
-				)}
-			</AnimatePresence>
 		</>
 	);
 };

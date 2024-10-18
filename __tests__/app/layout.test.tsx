@@ -1,5 +1,5 @@
 import React from "react";
-import RootLayout from "@/app/layout";
+import RootLayout, { metadata } from "@/app/layout";
 import { render, screen } from "@testing-library/react";
 
 jest.mock("@vercel/analytics/react", () => ({
@@ -23,5 +23,7 @@ describe("Layout", () => {
 		);
 
 		expect(screen.getByTestId("layout")).toBeInTheDocument();
+
+		expect(metadata).not.toBeNull();
 	});
 });

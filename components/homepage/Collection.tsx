@@ -59,9 +59,9 @@ const categories: Category[] = [
 ];
 
 const CategoriesCarousel = ({
-	itemCount = 4,
+	itemCount,
 }: {
-	itemCount?: number;
+	itemCount: number;
 }): JSX.Element => {
 	const [visibleStart, setVisibleStart] = useState<number>(0);
 

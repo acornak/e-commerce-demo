@@ -30,6 +30,7 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 	const [showRegister, setShowRegister] = useState<boolean>(false);
 	const user = useAuthStore((state) => state.user);
 	const initialLoading = useAuthStore((state) => state.initialLoading);
+	const logOut = useAuthStore((state) => state.logOut);
 
 	const handleContent = () => {
 		if (showLogin) {
@@ -42,6 +43,7 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 							</p>
 						</div>
 						<motion.li
+							data-testid={`nav-item-${items.length + 1}`}
 							className="border-b border-t border-gray-300"
 							onHoverStart={() => setHoverIndex(items.length + 1)}
 							onHoverEnd={() => setHoverIndex(null)}
@@ -78,6 +80,7 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 							</a>
 						</motion.li>
 						<motion.li
+							data-testid={`nav-item-${items.length + 2}`}
 							className="border-b border-gray-300"
 							onHoverStart={() => setHoverIndex(items.length + 2)}
 							onHoverEnd={() => setHoverIndex(null)}
@@ -115,6 +118,7 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 						</motion.li>
 						<div className="flex items-center justify-center">
 							<motion.button
+								data-testid="logout-button"
 								type="button"
 								whileHover={{
 									backgroundColor: colors.black,
@@ -122,7 +126,7 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 								whileTap={{
 									backgroundColor: colors.black,
 								}}
-								onClick={() => useAuthStore.getState().logOut()}
+								onClick={() => logOut()}
 								className="w-2/3 p-4 mt-4 text-white uppercase bg-secondary"
 							>
 								Logout
@@ -142,6 +146,7 @@ const MobileItems: FC<MobileItemsProps> = ({ items }): JSX.Element => {
 		}
 		return items.map((item, index) => (
 			<motion.li
+				data-testid={`nav-item-${index}`}
 				key={item.title}
 				className="border-b border-gray-300"
 				onHoverStart={() => setHoverIndex(index)}

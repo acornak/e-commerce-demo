@@ -170,6 +170,23 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 				)}
 				{user && (
 					<>
+						<AnimatePresence>
+							{showFade() && (
+								<motion.div
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 0.7 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.2 }}
+									className="fixed inset-0 bg-black bg-opacity-80"
+									style={{
+										zIndex: 30,
+									}}
+									onClick={() => {
+										setDrawerMenuOpen(false);
+									}}
+								/>
+							)}
+						</AnimatePresence>
 						<NavbarAdmin />
 						{children}
 						<div className="sticky top-[100vh]">
