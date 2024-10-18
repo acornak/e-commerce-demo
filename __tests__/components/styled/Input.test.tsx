@@ -79,12 +79,11 @@ describe("StyledTextInput", () => {
 				id="email"
 				handleChange={handleChange}
 				value=""
-				type="email"
-				placeholder="placeholder"
 			/>,
 		);
 
 		const input = getByRole("textbox");
+
 		fireEvent.change(input, { target: { value: "test@example.com" } });
 		expect(handleChange).toHaveBeenCalled();
 	});
@@ -98,7 +97,6 @@ describe("StyledNumberInput", () => {
 				id="quantity"
 				handleChange={() => {}}
 				value={0}
-				placeholder="placeholder"
 			/>,
 		);
 

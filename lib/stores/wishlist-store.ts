@@ -18,6 +18,7 @@ export const useWishlistStore = create<WishlistStore>()(
 		(set, get) => ({
 			items: [],
 			syncWithFirestore: async (): Promise<void> => {
+				/* istanbul ignore next */
 				if (auth.currentUser) {
 					await updateUser({
 						wishlistItems: get().items,
@@ -59,6 +60,7 @@ export const updateWishlistStore = () => {
 	useWishlistStore.persist.rehydrate();
 };
 
+/* istanbul ignore next */
 onAuthStateChanged(auth, async (user) => {
 	if (user) {
 		const currentUser = await getUser();

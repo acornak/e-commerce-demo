@@ -57,6 +57,7 @@
 - adjust test to use mock values
 - rework fetching to not use callbacks
 - product image preview not working
+- add notification when user logs in and logs out
 
 ## Account Pages:
 - https://thesusoutdoors.com/account/addresses - Pass123

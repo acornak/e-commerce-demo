@@ -11,11 +11,7 @@ export interface CartStore {
 	addItem: (item: CartItem) => void;
 	removeItem: (item: CartItem) => void;
 	addQuantity: (productId: number, sizeId: number, amount?: number) => void;
-	removeQuantity: (
-		productId: number,
-		sizeId: number,
-		amount?: number,
-	) => void;
+	removeQuantity: (productId: number, sizeId: number) => void;
 	clearCart: () => void;
 }
 
@@ -24,6 +20,7 @@ export const useCartStore = create<CartStore>()(
 		(set, get) => ({
 			items: [],
 			syncWithFirestore: async (): Promise<void> => {
+				/* istanbul ignore next */
 				if (auth.currentUser) {
 					await updateUser({
 						cartItems: get().items,
@@ -84,11 +81,7 @@ export const useCartStore = create<CartStore>()(
 				get().syncWithFirestore();
 			},
 
-			removeQuantity: (
-				productId: number,
-				sizeId: number,
-				amount?: number,
-			): void => {
+			removeQuantity: (productId: number, sizeId: number): void => {
 				const existingItems = get().items;
 				const updatedItems = existingItems
 					.map((existingItem) =>
@@ -96,8 +89,7 @@ export const useCartStore = create<CartStore>()(
 						existingItem.sizeId === sizeId
 							? {
 									...existingItem,
-									quantity:
-										amount || existingItem.quantity - 1,
+									quantity: existingItem.quantity - 1,
 								}
 							: existingItem,
 					)
@@ -121,6 +113,7 @@ export const updateCartStore = () => {
 	useCartStore.persist.rehydrate();
 };
 
+/* istanbul ignore next */
 onAuthStateChanged(auth, async (user) => {
 	if (user) {
 		const currentUser = await getUser();

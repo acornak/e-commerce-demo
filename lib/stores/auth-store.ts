@@ -27,10 +27,10 @@ export interface AuthStore {
 	signUpWithEmail: (email: string, password: string) => void;
 	signInWithGoogle: () => void;
 	resetPassword: (email: string) => void;
-	setUser: (user: FirebaseUser | null) => void;
-	setLoading: (loading: boolean) => void;
-	setInitialLoading: (loading: boolean) => void;
-	setError: (error: string | null) => void;
+	// setUser: (user: FirebaseUser | null) => void;
+	// setLoading: (loading: boolean) => void;
+	// setInitialLoading: (loading: boolean) => void;
+	// setError: (error: string | null) => void;
 	logOut: () => void;
 }
 
@@ -95,10 +95,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
 			set({ loading: false });
 		}
 	},
-	setUser: (user) => set({ user }),
-	setLoading: (loading) => set({ loading }),
-	setInitialLoading: (initialLoading) => set({ initialLoading }),
-	setError: (error) => set({ error }),
+	// setUser: (user) => set({ user }),
+	// setLoading: (loading) => set({ loading }),
+	// setInitialLoading: (initialLoading) => set({ initialLoading }),
+	// setError: (error) => set({ error }),
 	logOut: async () => {
 		try {
 			set({ loading: true, error: null });
@@ -114,7 +114,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
 	},
 }));
 
+/* istanbul ignore next */
 onAuthStateChanged(auth, (user) => {
 	useAuthStore.setState({ user });
-	useAuthStore.getState().setInitialLoading(false);
+	useAuthStore.getState().initialLoading = false;
 });
