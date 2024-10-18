@@ -109,7 +109,7 @@ describe("LayoutWrapper Component", () => {
 		jest.clearAllMocks();
 	});
 
-	test("renders non-admin layout correctly", () => {
+	it("renders non-admin layout correctly", () => {
 		(usePathname as jest.Mock).mockReturnValue("/");
 		mockModalsStore.mockImplementation((fn: any) => {
 			return fn({
@@ -150,7 +150,7 @@ describe("LayoutWrapper Component", () => {
 		expect(screen.getByText("Content")).toBeInTheDocument();
 	});
 
-	test("renders admin layout when user is authenticated", () => {
+	it("renders admin layout when user is authenticated", () => {
 		(usePathname as jest.Mock).mockReturnValue("/admin/dashboard");
 
 		mockAuthStore.mockImplementation((fn: any) => {
@@ -196,7 +196,7 @@ describe("LayoutWrapper Component", () => {
 		expect(screen.getByText("Admin Content")).toBeInTheDocument();
 	});
 
-	test("admin layout fade drawer", () => {
+	it("admin layout fade drawer", () => {
 		(usePathname as jest.Mock).mockReturnValue("/admin/dashboard");
 
 		mockAuthStore.mockImplementation((fn: any) => {
@@ -245,7 +245,7 @@ describe("LayoutWrapper Component", () => {
 		expect(setDrawerMenuOpen).toHaveBeenCalledWith(false);
 	});
 
-	test("redirects to login page when not authenticated on admin path", () => {
+	it("redirects to login page when not authenticated on admin path", () => {
 		(usePathname as jest.Mock).mockReturnValue("/admin/dashboard");
 
 		mockAuthStore.mockImplementation((fn: any) => {
@@ -266,7 +266,7 @@ describe("LayoutWrapper Component", () => {
 		);
 	});
 
-	test("shows fade overlay when any modal is open", () => {
+	it("shows fade overlay when any modal is open", () => {
 		(usePathname as jest.Mock).mockReturnValue("/");
 
 		const setLoginModalOpen = jest.fn();
@@ -308,7 +308,7 @@ describe("LayoutWrapper Component", () => {
 		expect(setLoginModalOpen).toHaveBeenCalledWith(false);
 	});
 
-	test("closes modals when Escape key is pressed", () => {
+	it("closes modals when Escape key is pressed", () => {
 		(usePathname as jest.Mock).mockReturnValue("/");
 
 		const setLoginModalOpen = jest.fn();

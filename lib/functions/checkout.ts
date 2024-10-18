@@ -1,8 +1,11 @@
 import Stripe from "stripe";
+// Auth
 import { auth } from "../config/firebase";
+// Functions
 import generateOrderId from "./orders";
-import { CartItem } from "../config/types";
 import { createOrder } from "../models/orders";
+// Types and constants
+import { CartItem } from "../config/types";
 
 /**
  * Create line items for a Stripe Checkout session

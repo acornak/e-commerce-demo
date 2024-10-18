@@ -44,6 +44,7 @@ const OrderProduct: FC<OrderProductProps> = ({
 				const fetchedUrl = await fetchProductImage(item.productId);
 				setImageUrl(fetchedUrl);
 			} catch (error) {
+				// TODO: show warning
 				console.error("Fetching product failed:", error);
 			}
 		};

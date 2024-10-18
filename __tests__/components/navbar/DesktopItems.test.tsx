@@ -62,7 +62,7 @@ describe("DesktopItems", () => {
 		expect(setSelected).toHaveBeenCalledWith(null);
 	});
 
-	test("navigates to the correct URL on click", async () => {
+	it("navigates to the correct URL on click", async () => {
 		const setSelected = jest.fn();
 
 		mockRouter.push("/About");
