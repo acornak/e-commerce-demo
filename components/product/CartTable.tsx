@@ -111,6 +111,7 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 										);
 									}}
 									disabled={item.quantity === 1}
+									data-testid={`mobile-decrease-quantity-${item.productId}-${item.sizeId}`}
 								>
 									-
 								</button>
@@ -131,6 +132,7 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 										);
 									}}
 									disabled={item.quantity === 10}
+									data-testid={`mobile-increase-quantity-${item.productId}-${item.sizeId}`}
 								>
 									+
 								</button>
@@ -146,6 +148,7 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 							onClick={() => removeItem(item)}
 							type="button"
 							aria-label="Remove item"
+							data-testid={`mobile-remove-item-${item.productId}-${item.sizeId}`}
 						>
 							<TrashIcon />
 						</motion.button>
@@ -269,6 +272,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 							removeQuantity(item.productId, item.sizeId);
 						}}
 						disabled={item.quantity === 1}
+						data-testid={`decrease-quantity-${item.productId}-${item.sizeId}`}
 					>
 						-
 					</button>
@@ -286,6 +290,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 							addQuantity(item.productId, item.sizeId);
 						}}
 						disabled={item.quantity === 10}
+						data-testid={`increase-quantity-${item.productId}-${item.sizeId}`}
 					>
 						+
 					</button>
@@ -304,6 +309,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 					onClick={() => removeItem(item)}
 					type="button"
 					aria-label="Remove item"
+					data-testid={`remove-item-${item.productId}-${item.sizeId}`}
 				>
 					<TrashIcon />
 				</motion.button>
@@ -334,7 +340,7 @@ const CartTable = () => {
 		<>
 			{items.length === 0 ? (
 				<div className="py-6">
-					<div className="text-lg pb-6">
+					<div className="text-lg pb-6" data-testid="empty-cart">
 						Looks like you haven&apos;t added any items to your
 						Shopping Cart.
 					</div>
@@ -476,6 +482,7 @@ const CartTable = () => {
 								);
 								clearCart();
 							}}
+							data-testid="checkout-button"
 						>
 							Proceed to checkout
 						</motion.button>
