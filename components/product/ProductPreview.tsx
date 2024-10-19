@@ -68,6 +68,7 @@ const ProductButton: FC<ProductButtonProps> = ({
 				className="bg-white rounded-full p-2 m-1"
 				type="button"
 				aria-label="Go to the product page"
+				data-testid="product-preview-button"
 			>
 				{children}
 			</motion.button>
@@ -78,6 +79,7 @@ const ProductButton: FC<ProductButtonProps> = ({
 					animate="visible"
 					variants={tooltipVariants}
 					style={{ whiteSpace: "nowrap" }}
+					data-testid="product-preview-tooltip"
 				>
 					{tooltipText}
 				</motion.span>

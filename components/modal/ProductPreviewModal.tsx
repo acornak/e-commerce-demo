@@ -84,10 +84,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	}, [productId]);
 
 	const handleAddToCart = () => {
-		console.log("product", product);
-		console.log("selectedSize", selectedSize);
 		if (product && selectedSize) {
-			console.log("adding item to cart");
 			addItem({
 				productId: product.id,
 				price: product.price,

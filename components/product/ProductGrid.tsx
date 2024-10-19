@@ -100,6 +100,7 @@ const ProductGrid = (): JSX.Element => {
 			const splittedPrice = price.split("-");
 			if (splittedPrice.length !== 2) {
 				setSelectedPriceRange(null);
+				setUrlParamsHandled(true);
 				return;
 			}
 			const min = Number(splittedPrice[0]);
@@ -245,6 +246,7 @@ const ProductGrid = (): JSX.Element => {
 						<button
 							type="button"
 							aria-label="First page"
+							data-testid="first-page-button"
 							disabled={currentPage === 1}
 							className={`mx-1 w-8 h-8 sm:w-14 sm:h-14 border flex items-center justify-center ${
 								currentPage === 1
@@ -271,6 +273,7 @@ const ProductGrid = (): JSX.Element => {
 									Math.min(prev - 1, totalPages),
 								);
 							}}
+							data-testid="previous-page-button"
 						>
 							<ChevronLeftIcon size="2em" />
 						</button>
@@ -285,6 +288,7 @@ const ProductGrid = (): JSX.Element => {
 								onClick={() => {
 									setCurrentPage(totalPages - 2);
 								}}
+								data-testid="page-total-2-button"
 							>
 								{totalPages - 2}
 							</button>
@@ -308,6 +312,7 @@ const ProductGrid = (): JSX.Element => {
 									onClick={() => {
 										setCurrentPage(page);
 									}}
+									data-testid={`page-${page}-button`}
 								>
 									{page}
 								</button>
@@ -322,6 +327,7 @@ const ProductGrid = (): JSX.Element => {
 								onClick={() => {
 									setCurrentPage(3);
 								}}
+								data-testid="page-3-button"
 							>
 								3
 							</button>
@@ -340,12 +346,14 @@ const ProductGrid = (): JSX.Element => {
 									Math.min(prev + 1, totalPages),
 								);
 							}}
+							data-testid="next-page-button"
 						>
 							<ChevronRightIcon size="2em" />
 						</button>
 						<button
 							type="button"
 							aria-label="Last page"
+							data-testid="last-page-button"
 							disabled={currentPage === totalPages}
 							className={`mx-3 sm:mx-1 w-8 h-8 sm:w-14 sm:h-14 border flex items-center justify-center ${
 								currentPage === totalPages
