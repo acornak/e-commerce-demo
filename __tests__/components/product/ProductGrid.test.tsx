@@ -190,9 +190,9 @@ describe("ProductGrid Component", () => {
 				_limit: number,
 			) => {
 				mockCurrentPage = page;
-				if (page === 1) {
+				if (mockCurrentPage === 1) {
 					setPageProducts(mockProductsPage1);
-				} else if (page === 2) {
+				} else if (mockCurrentPage === 2) {
 					setPageProducts(mockProductsPage2);
 				}
 				setTotalPages(2);
