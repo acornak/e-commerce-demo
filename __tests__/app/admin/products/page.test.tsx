@@ -1,7 +1,7 @@
-// Testing
+// Test
 import { render, screen } from "@testing-library/react";
 // Components
-import AdminPage from "@/app/admin/page";
+import AdminProductsPage from "@/app/admin/products/page";
 
 jest.mock("@/components/styled/Heading", () => {
 	return {
@@ -11,9 +11,9 @@ jest.mock("@/components/styled/Heading", () => {
 });
 
 // Fully tested
-describe("Admin Page", () => {
-	it("renders the admin page", () => {
-		render(<AdminPage />);
+describe("Admin Products Page", () => {
+	it("renders the admin products page", () => {
+		render(<AdminProductsPage />);
 
 		expect(screen.getByTestId("mock-styled-heading")).toBeInTheDocument();
 	});
