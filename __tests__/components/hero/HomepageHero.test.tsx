@@ -2,7 +2,6 @@ import HomepageHero from "@/components/hero/HomepageHero";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 
-// Mock dependencies
 jest.mock("next/image", () => ({
 	__esModule: true,
 	default: ({ src, alt }: { src: string; alt: string }) => (
