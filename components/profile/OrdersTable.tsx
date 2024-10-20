@@ -36,8 +36,20 @@ const OrderProduct: FC<OrderProductProps> = ({
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				// TODO: show warning
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
 	if (!product || !imageUrl) {

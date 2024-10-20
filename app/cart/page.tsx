@@ -15,9 +15,12 @@ import LoginPrompt from "@/components/common/LoginPrompt";
 // Icons
 import ChevronRightIcon from "@/components/icon/ChevronRight";
 
-const Cart: NextPage = (): JSX.Element => {
+const CartPage: NextPage = (): JSX.Element => {
 	return (
-		<div className="flex flex-col items-center justify-center text-center pt-14 lg:pt-24">
+		<div
+			className="flex flex-col items-center justify-center text-center pt-14 lg:pt-24"
+			data-testid="cart-page"
+		>
 			<div className="text-start w-full px-4 flex items-center bg-gray-100 py-2 pt-4">
 				<Link href="/">
 					<motion.p
@@ -58,4 +61,4 @@ const Cart: NextPage = (): JSX.Element => {
 	);
 };
 
-export default Cart;
+export default CartPage;

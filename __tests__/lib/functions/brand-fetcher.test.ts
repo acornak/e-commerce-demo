@@ -1,5 +1,5 @@
 import { fetchAllBrands, fetchBrandById } from "@/lib/functions/brand-fetcher";
-import { Brand } from "@/lib/models/brand";
+import { Brand } from "@/lib/config/types";
 
 describe("fetchAllBrands function", () => {
 	let mockSetBrands: jest.Mock<void, [Brand[]]>;

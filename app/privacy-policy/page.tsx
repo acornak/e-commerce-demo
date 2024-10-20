@@ -8,7 +8,7 @@ import NewsletterBanner from "@/components/common/Newsletter";
 // Images
 import privacyImage from "@/public/misc/privacy.webp";
 
-const PrivacyPolicy: NextPage = (): JSX.Element => {
+const PrivacyPolicyPage: NextPage = (): JSX.Element => {
 	return (
 		<>
 			<StyledHero
@@ -28,4 +28,4 @@ const PrivacyPolicy: NextPage = (): JSX.Element => {
 	);
 };
 
-export default PrivacyPolicy;
+export default PrivacyPolicyPage;

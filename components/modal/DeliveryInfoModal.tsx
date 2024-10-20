@@ -31,6 +31,7 @@ const DeliveryInfoModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
+					data-testid="delivery-info-modal"
 				>
 					<motion.div
 						ref={modalRef}
@@ -53,6 +54,7 @@ const DeliveryInfoModal: FC = () => {
 							transition={{ duration: 0.2 }}
 							className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 							onClick={() => setDeliveryInfoModalOpen(false)}
+							data-testid="delivery-info-modal-close"
 						>
 							<CloseIcon />
 						</motion.button>

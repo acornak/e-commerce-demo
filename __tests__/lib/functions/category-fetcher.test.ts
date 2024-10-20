@@ -2,7 +2,7 @@ import {
 	fetchAllCategories,
 	fetchCategoryById,
 } from "@/lib/functions/category-fetcher";
-import { Category } from "@/lib/models/category";
+import { Category } from "@/lib/config/types";
 
 describe("fetchAllCategories function", () => {
 	let mockSetCategories: jest.Mock<void, [Category[]]>;

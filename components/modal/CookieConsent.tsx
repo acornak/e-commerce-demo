@@ -38,7 +38,10 @@ const CookieConsent = (): JSX.Element | null => {
 				zIndex: 1000,
 			}}
 		>
-			<div className="bg-white text-black p-6 w-2/3">
+			<div
+				className="bg-white text-black p-6 w-2/3"
+				data-testid="cookie-consent"
+			>
 				<h1 className="text-xl font-bold tracking-widest text-center pb-4">
 					Cookie Consent
 				</h1>
@@ -61,6 +64,7 @@ const CookieConsent = (): JSX.Element | null => {
 						type="button"
 						className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4"
 						onClick={() => acceptCookie()}
+						data-testid="cookie-consent-accept"
 					>
 						Accept
 					</button>
@@ -68,6 +72,7 @@ const CookieConsent = (): JSX.Element | null => {
 						type="button"
 						className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4"
 						onClick={() => rejectCookie()}
+						data-testid="cookie-consent-decline"
 					>
 						Decline
 					</button>

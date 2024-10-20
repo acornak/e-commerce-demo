@@ -35,6 +35,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [quantity, setQuantity] = useState<number>(1);
+	const [error, setError] = useState<string | null>(null);
 	const addItem = useCartStore((state) => state.addItem);
 
 	// Modals store
@@ -56,25 +57,31 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 		};
 	}, []);
 
-	useEffect(() => setSelectedSize(null), [productPreviewModalOpen]);
+	useEffect(() => {
+		setSelectedSize(null);
+		setQuantity(1);
+	}, [productPreviewModalOpen]);
 
 	useEffect(() => {
-		if (!productId) return () => {};
-		fetchProductById(productId, setProduct);
-		fetchProductImage(productId, setImageUrl);
-		const timeout = setTimeout(() => setLoading(false), 400);
-		return () => clearTimeout(timeout);
-	}, [productId]);
+		if (!productId) return;
+		setLoading(true);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(productId);
+				setProduct(fetchedProduct);
 
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				setProductPreviewModalOpen(false);
+				const fetchedUrl = await fetchProductImage(productId);
+				setImageUrl(fetchedUrl);
+			} catch (err) {
+				console.error("Fetching product failed:", err);
+				setError("Something went wrong. Please try again later.");
+			} finally {
+				setLoading(false);
 			}
 		};
-		window.addEventListener("keydown", handleKeyDown);
-		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [setProductPreviewModalOpen]);
+
+		fetchData();
+	}, [productId]);
 
 	const handleAddToCart = () => {
 		if (product && selectedSize) {
@@ -96,6 +103,12 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 	});
 
 	const handleContent = () => {
+		// TODO: add error notification
+		if (error) {
+			setProductPreviewModalOpen(false);
+			return <></>;
+		}
+
 		if (loading || !product || !imageUrl) {
 			return <StyledLoading />;
 		}
@@ -107,9 +120,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
 				className="fixed inset-0 z-50 flex items-center justify-center"
-				onClick={() => {
-					setQuantity(1);
-				}}
+				data-testid="product-preview-modal"
 			>
 				<motion.div
 					ref={modalRef}
@@ -133,6 +144,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 						transition={{ duration: 0.2 }}
 						className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 						onClick={() => setProductPreviewModalOpen(false)}
+						data-testid="close-product-preview-modal"
 					>
 						<CloseIcon />
 					</motion.button>
@@ -142,7 +154,6 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 								href={`/products/${product.slug}`}
 								onClick={() => {
 									setProductPreviewModalOpen(false);
-									setQuantity(1);
 								}}
 							>
 								<Image
@@ -151,6 +162,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 									width={500}
 									height={500}
 									className="mx-auto w-3/5 sm:w-full"
+									data-testid="product-preview-image"
 								/>
 							</Link>
 						</div>
@@ -193,10 +205,14 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 											setQuantity((prev) => prev - 1);
 										}}
 										disabled={quantity === 1}
+										data-testid="decrease-quantity"
 									>
 										-
 									</button>
-									<div className="w-12 text-center select-none">
+									<div
+										className="w-12 text-center select-none"
+										data-testid="quantity"
+									>
 										{quantity}
 									</div>
 									<button
@@ -210,6 +226,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 											setQuantity((prev) => prev + 1);
 										}}
 										disabled={quantity === 10}
+										data-testid="increase-quantity"
 									>
 										+
 									</button>
@@ -224,6 +241,7 @@ const ProductPreviewModal: FC = (): JSX.Element => {
 										}`}
 										onClick={handleAddToCart}
 										disabled={selectedSize === null}
+										data-testid="add-to-cart"
 									>
 										Add to cart
 									</button>

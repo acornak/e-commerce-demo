@@ -38,8 +38,6 @@
 - tags as a separate sql table
 - reviews as a separate sql table
 - ProductPage Overview split
-- compress webp https://www.xconvert.com/compress-webp
-- resize webp https://www.simpleimageresizer.com/resize/webp
 - related products carousel
 - code splitting
 - investigate multiple rerenders
@@ -51,6 +49,17 @@
 - orders add pay button
 - add global loader when clicked on checkout
 - add pagination to orders page
+- revise tests
+- update mocks so that tested are only necessary components
+- investigate using of snapshot testing
+- wishilist icon on ipad and mobile
+- next router mock - https://github.com/vercel/next.js/discussions/42527#discussioncomment-7205143
+- adjust test to use mock values
+- rework fetching to not use callbacks
+- product image preview not working
+- add notification when user logs in and logs out
+
+- https://medium.com/@abrar.adam.09/implementing-rate-limiting-in-next-js-api-routes-without-external-packages-7195ca4ef768 - implement rate limiting for openAI
 
 ## Account Pages:
 - https://thesusoutdoors.com/account/addresses - Pass123

@@ -13,7 +13,7 @@ import { useModalsStore } from "@/lib/stores/modals-store";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import Navbar from "../navbar/Navbar";
 import SearchBar from "../navbar/SearchBar";
-import ShoppingCart from "../navbar/Cart";
+
 import NavbarAdmin from "../navbar/NavbarAdmin";
 import Sitemap from "../footer/Sitemap";
 import Footer from "../footer/Footer";
@@ -26,6 +26,7 @@ import SizeGuideModal from "../modal/SizeGuideModal";
 import AskQuestionModal from "../modal/AskQuestionModal";
 import ProductImageModal from "../modal/ProductImageModal";
 import StyledLoading from "../styled/Loading";
+import ShoppingCart from "../navbar/ShoppingCart";
 
 type LayoutWrapperProps = {
 	children: ReactNode;
@@ -169,6 +170,24 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 				)}
 				{user && (
 					<>
+						<AnimatePresence>
+							{showFade() && (
+								<motion.div
+									data-testid="fade-overlay-admin"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 0.7 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.2 }}
+									className="fixed inset-0 bg-black bg-opacity-80"
+									style={{
+										zIndex: 30,
+									}}
+									onClick={() => {
+										setDrawerMenuOpen(false);
+									}}
+								/>
+							)}
+						</AnimatePresence>
 						<NavbarAdmin />
 						{children}
 						<div className="sticky top-[100vh]">
@@ -203,6 +222,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 			<AnimatePresence>
 				{showFade() && (
 					<motion.div
+						data-testid="fade-overlay"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 0.7 }}
 						exit={{ opacity: 0 }}

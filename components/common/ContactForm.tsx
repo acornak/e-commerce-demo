@@ -38,14 +38,15 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 
 		validationSchema,
 		onSubmit: async (values, { setSubmitting }) => {
-			if (!executeRecaptcha) {
-				return;
-			}
-
-			const token = await executeRecaptcha("contact_form");
-
-			setSubmitting(true);
 			try {
+				if (!executeRecaptcha) {
+					throw new Error("Recaptcha not loaded");
+				}
+
+				const token = await executeRecaptcha("contact_form");
+
+				setSubmitting(true);
+
 				const response = await fetch("/api/contact", {
 					method: "POST",
 					headers: {
@@ -74,23 +75,32 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 		id: string;
 		type: string;
 		placeholder: string;
+		"data-testid": string;
 	}[] = [
 		{
 			id: "name",
 			type: "text",
 			placeholder: "Name",
+			"data-testid": "contact-form-name",
 		},
 		{
 			id: "to",
 			type: "email",
 			placeholder: "Email",
+			"data-testid": "contact-form-email",
 		},
 		{
 			id: "message",
 			type: "textarea",
 			placeholder: "Message",
+			"data-testid": "contact-form-message",
 		},
-		{ id: "subject", type: "text", placeholder: "Subject" },
+		{
+			id: "subject",
+			type: "text",
+			placeholder: "Subject",
+			"data-testid": "contact-form-subject",
+		},
 	];
 
 	const handleForm = (): JSX.Element => {
@@ -106,7 +116,10 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 		}
 		if (submitError) {
 			return (
-				<div className="flex items-center justify-center">
+				<div
+					className="flex items-center justify-center"
+					data-testid="contact-form-error"
+				>
 					<ErrorIcon className="w-12 h-12 text-red-500 px-2" />
 					<div className="flex justify-center items-center ${className">
 						<p>Something went wrong. Please try again later.</p>
@@ -116,7 +129,10 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 		}
 		if (submitSuccess) {
 			return (
-				<div className="flex items-center justify-center">
+				<div
+					className="flex items-center justify-center"
+					data-testid="contact-form-success"
+				>
 					<SuccessIcon className="w-12 h-12 px-2 text-green-700" />
 					<div className="flex justify-center items-center">
 						<p>Message sent successfully. Thank you!</p>
@@ -128,6 +144,7 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 			<form
 				onSubmit={formik.handleSubmit}
 				className="text-xs flex flex-col w-full"
+				data-testid="contact-form"
 			>
 				{formFields.map((field) =>
 					field.type !== "textarea" ? (
@@ -146,22 +163,22 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 									onBlur={formik.handleBlur}
 									value={formik.values[field.id]}
 									className={inputClasses}
+									data-testid={field["data-testid"]}
 								/>
 							</div>
 							{formik.touched[field.id] &&
 							formik.errors[field.id] ? (
-								<div className="text-red-500 text-md px-2">
+								<div
+									className="text-red-500 text-md px-2"
+									data-testid={`contact-form-${field.id}-error`}
+								>
 									{formik.errors[field.id]}
 								</div>
 							) : null}
 						</Fragment>
 					) : (
 						<Fragment key={field.id}>
-							<div
-								className={`flex items-center border-b border-gray-200 py-2 my-2 ${
-									field.id === "subject" ? "hidden" : ""
-								}`}
-							>
+							<div className="flex items-center border-b border-gray-200 py-2 my-2">
 								<textarea
 									id={field.id}
 									name={field.id}
@@ -170,11 +187,15 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 									onBlur={formik.handleBlur}
 									value={formik.values[field.id]}
 									className={inputClasses}
+									data-testid={field["data-testid"]}
 								/>
 							</div>
 							{formik.touched[field.id] &&
 							formik.errors[field.id] ? (
-								<div className="text-red-500 text-md px-2">
+								<div
+									className="text-red-500 text-md px-2"
+									data-testid={`contact-form-${field.id}-error`}
+								>
 									{formik.errors[field.id]}
 								</div>
 							) : null}
@@ -191,6 +212,7 @@ const ContactForm: FC<ContactFormProps> = ({ width }): JSX.Element => {
 								: "bg-gray-300 cursor-not-allowed"
 						}`}
 						disabled={!formik.isValid || !formik.dirty}
+						data-testid="contact-form-submit"
 					>
 						Send Message
 					</button>

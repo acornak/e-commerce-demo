@@ -1,22 +1,23 @@
 /* eslint-disable import/prefer-default-export */
 import fs, { Dirent } from "fs";
+import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 
 function getFileExtension(file: string): string {
-	return file.split(".").pop() || "";
+	return file.split(".").pop() as string; // TODO: not sure
 }
 
 /**
  * Get category image by category ID
- * @param {Request} request - Request object
- * @returns {Response} - Response with image
+ * @param {NextRequest} request - Request object
+ * @returns {NextResponse} - Response with image
  */
-export async function GET(request: Request) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
 	const { searchParams } = new URL(request.url);
 	const categoryId = searchParams.get("categoryId");
 
 	if (!categoryId) {
-		return Response.json(
+		return NextResponse.json(
 			{ error: "Category ID is required" },
 			{ status: 400 },
 		);
@@ -36,13 +37,13 @@ export async function GET(request: Request) {
 		}
 	});
 
-	if (matchedFiles.length === 0) {
-		return new Response(null, { status: 404 });
+	if (!matchedFiles || matchedFiles.length === 0) {
+		return NextResponse.json({}, { status: 404 });
 	}
 
 	const imageBuffer = fs.readFileSync(matchedFiles[0]);
 
-	return new Response(imageBuffer, {
+	return new NextResponse(imageBuffer, {
 		headers: {
 			"Content-Type": `image/${getFileExtension(matchedFiles[0])}`,
 		},

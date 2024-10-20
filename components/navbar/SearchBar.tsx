@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useModalsStore } from "@/lib/stores/modals-store";
 import MagnifierIcon from "../icon/Magnifier";
 
+// TODO: Add search functionality
 const SearchBar: FC = () => {
 	const searchBarOpen = useModalsStore((state) => state.searchBarOpen);
 

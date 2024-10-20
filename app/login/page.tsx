@@ -8,7 +8,7 @@ import { redirect, useSearchParams } from "next/navigation";
 import { useAuthStore } from "@/lib/stores/auth-store";
 // Components
 import { StyledSectionHeading } from "@/components/styled/Heading";
-import HandleLoginForm from "@/components/common/LoginForm";
+import HandleLoginForm from "@/components/login/HandleLoginForm";
 import StyledLoading from "@/components/styled/Loading";
 
 const RedirectHandler: React.FC = () => {

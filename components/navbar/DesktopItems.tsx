@@ -13,6 +13,7 @@ interface DesktopItemsProps extends DesktopNavProps {
 	items: NavItem[];
 }
 
+// TODO: fix underline on ipad
 const DesktopItems: FC<DesktopItemsProps> = ({
 	selected,
 	setSelected,

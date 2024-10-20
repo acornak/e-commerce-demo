@@ -28,7 +28,7 @@ const mockProducts = [
 		rating: 4.9,
 		countInStock: 5,
 		// variants: ["gold", "white"],
-		reviews: ["Great product", "Nice shoes"],
+
 		tags: ["round", "sunglasses"],
 	},
 	{

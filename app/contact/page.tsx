@@ -33,11 +33,12 @@ const ContactInfo = (): JSX.Element => {
 		const verify = async () => {
 			if (executeRecaptcha) {
 				const token = await executeRecaptcha("google_map");
-				verifyCaptcha(token, setVerified);
+				const res = await verifyCaptcha(token);
+				setVerified(res);
 			}
 		};
 		verify();
-	});
+	}, [executeRecaptcha]);
 
 	return (
 		<>
@@ -124,10 +125,8 @@ const ContactInfo = (): JSX.Element => {
 						{verified && (
 							<GoogleMapReact
 								bootstrapURLKeys={{
-									key:
-										process.env
-											.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
-										"",
+									key: process.env
+										.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
 								}}
 								defaultCenter={{
 									lat: location.lat,
@@ -144,9 +143,7 @@ const ContactInfo = (): JSX.Element => {
 				{verified && (
 					<GoogleMapReact
 						bootstrapURLKeys={{
-							key:
-								process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
-								"",
+							key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
 						}}
 						defaultCenter={{
 							lat: location.lat,

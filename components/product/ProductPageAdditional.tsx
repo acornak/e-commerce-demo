@@ -10,7 +10,10 @@ const ProductPageAdditional: FC<ProductPageAdditionalProps> = ({
 	imageUrl,
 }): JSX.Element => {
 	return (
-		<div className="flex px-4 items-center justify-center">
+		<div
+			className="flex px-4 items-center justify-center"
+			data-testid="product-page-additional"
+		>
 			<div className="w-full xl:w-2/3 flex flex-wrap md:flex-nowrap">
 				<div className="w-full md:w-2/3">
 					<h1 className="text-xs uppercase tracking-widest text-gray-500 pt-4">

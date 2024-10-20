@@ -1,9 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
-import {
-	CartItem,
-	updateCartStore,
-	useCartStore,
-} from "@/lib/stores/cart-store";
+import { updateCartStore, useCartStore } from "@/lib/stores/cart-store";
+import { CartItem } from "@/lib/config/types";
 
 describe("useCartStore", () => {
 	const mockCartItem: CartItem = {

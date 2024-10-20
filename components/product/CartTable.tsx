@@ -21,6 +21,7 @@ import useHydration from "@/lib/hooks/use-hydration";
 // Functions
 import { handleCheckout } from "@/lib/functions/checkout";
 // Types and constants
+import { auth } from "@/lib/config/firebase";
 import { Product, Size, CartItem } from "@/lib/config/types";
 import { colors } from "@/lib/config/constants";
 // Components
@@ -57,8 +58,19 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 	}, []);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
 	return (
@@ -99,6 +111,7 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 										);
 									}}
 									disabled={item.quantity === 1}
+									data-testid={`mobile-decrease-quantity-${item.productId}-${item.sizeId}`}
 								>
 									-
 								</button>
@@ -119,6 +132,7 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 										);
 									}}
 									disabled={item.quantity === 10}
+									data-testid={`mobile-increase-quantity-${item.productId}-${item.sizeId}`}
 								>
 									+
 								</button>
@@ -134,6 +148,7 @@ const CartItemMobile: FC<CartItemMobileProps> = ({
 							onClick={() => removeItem(item)}
 							type="button"
 							aria-label="Remove item"
+							data-testid={`mobile-remove-item-${item.productId}-${item.sizeId}`}
 						>
 							<TrashIcon />
 						</motion.button>
@@ -178,7 +193,11 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
 
 	useEffect(() => {
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error(`Fetching sizes failed: ${error}`);
+			});
 
 		document.addEventListener("visibilitychange", updateCartStore);
 		window.addEventListener("focus", updateCartStore);
@@ -193,8 +212,19 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 	}, [item, sizes]);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
 	return (
@@ -242,6 +272,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 							removeQuantity(item.productId, item.sizeId);
 						}}
 						disabled={item.quantity === 1}
+						data-testid={`decrease-quantity-${item.productId}-${item.sizeId}`}
 					>
 						-
 					</button>
@@ -259,6 +290,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 							addQuantity(item.productId, item.sizeId);
 						}}
 						disabled={item.quantity === 10}
+						data-testid={`increase-quantity-${item.productId}-${item.sizeId}`}
 					>
 						+
 					</button>
@@ -277,6 +309,7 @@ const CartTableItem: FC<CartTableItemProps> = ({ item }): JSX.Element => {
 					onClick={() => removeItem(item)}
 					type="button"
 					aria-label="Remove item"
+					data-testid={`remove-item-${item.productId}-${item.sizeId}`}
 				>
 					<TrashIcon />
 				</motion.button>
@@ -307,7 +340,7 @@ const CartTable = () => {
 		<>
 			{items.length === 0 ? (
 				<div className="py-6">
-					<div className="text-lg pb-6">
+					<div className="text-lg pb-6" data-testid="empty-cart">
 						Looks like you haven&apos;t added any items to your
 						Shopping Cart.
 					</div>
@@ -443,9 +476,13 @@ const CartTable = () => {
 							}}
 							className="uppercase px-6 py-4 mt-10 mb-6 tracking-widest"
 							onClick={() => {
-								handleCheckout(items);
+								handleCheckout(
+									items,
+									auth.currentUser?.email || "",
+								);
 								clearCart();
 							}}
+							data-testid="checkout-button"
 						>
 							Proceed to checkout
 						</motion.button>

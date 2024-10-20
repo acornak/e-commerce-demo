@@ -10,7 +10,7 @@ import { useModalsStore } from "@/lib/stores/modals-store";
 // Components
 import useOutsideAlerter from "@/lib/hooks/outside-click";
 import { useAuthStore } from "@/lib/stores/auth-store";
-import HandleLoginForm from "../common/LoginForm";
+import HandleLoginForm from "../login/HandleLoginForm";
 // Icons
 import CloseIcon from "../icon/Close";
 
@@ -44,6 +44,7 @@ const LoginModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
+					data-testid="login-modal"
 				>
 					<motion.div
 						ref={modalRef}
@@ -66,6 +67,7 @@ const LoginModal: FC = () => {
 							transition={{ duration: 0.2 }}
 							className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 							onClick={() => setLoginModalOpen(false)}
+							data-testid="login-modal-close"
 						>
 							<CloseIcon />
 						</motion.button>

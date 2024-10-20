@@ -32,7 +32,7 @@ import { StyledSectionHeading } from "../styled/Heading";
 import ProductPageDescription from "./ProductPageDescription";
 import ProductPageAdditional from "./ProductPageAdditional";
 import ProductPageReviews from "./ProductPageReviews";
-import RelatedProduct from "./RelatedProducts";
+import RelatedProducts from "./RelatedProducts";
 import SizePicker from "../common/SizePicker";
 // Icons
 import ChevronRightIcon from "../icon/ChevronRight";
@@ -281,7 +281,7 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 				items: [
 					{
 						productId: product.id,
-						sizeId: selectedSize?.id || 0,
+						sizeId: selectedSize!.id,
 						price: product.price,
 						quantity,
 					},
@@ -500,15 +500,26 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 	const setProductImageModalUrl = useModalsStore(
 		(state) => state.setProductImageModalUrl,
 	);
-
 	const [product, setProduct] = useState<Product>();
 	const [imageUrl, setImageUrl] = useState<string | null>();
 
 	const [productMenuSelected, setProductMenuSelected] = useState<number>(0);
 
 	useEffect(() => {
-		fetchProductById(productId, setProduct);
-		fetchProductImage(productId, setImageUrl, setProductImageModalUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(productId);
+				setImageUrl(fetchedUrl);
+				setProductImageModalUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 
 		document.getElementById("product-overview")?.scrollIntoView();
 	}, [productId]);
@@ -522,6 +533,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 	}
 
 	const handleContent = () => {
+		/* istanbul ignore next */
 		switch (productMenuSelected) {
 			case 0:
 				return (
@@ -542,6 +554,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 					</motion.div>
 				);
 			default:
+				/* istanbul ignore next */
 				return <></>;
 		}
 	};
@@ -607,6 +620,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 							aria-label="Product image"
 							className="md:flex-2/3 md:pr-10 pb-10 max-h-screen"
 							onClick={() => setProductImageModalOpen(true)}
+							data-testid="product-image"
 						>
 							<Image
 								src={imageUrl}
@@ -882,7 +896,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 					title="Related products"
 					className="pt-4"
 				/>
-				<RelatedProduct tags={product.tags} />
+				<RelatedProducts tags={product.tags} />
 			</section>
 		</>
 	);
