@@ -42,7 +42,10 @@ const Explore = (): JSX.Element => {
 	return (
 		<>
 			<StyledSectionHeading title="Explore new arrivals" />
-			<div className="flex justify-center items-center mt-10 px-8">
+			<div
+				className="flex justify-center items-center mt-10 px-8"
+				data-testid="homepage-explore"
+			>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
 					<div className="flex flex-col bg-secondary-red">
 						<div

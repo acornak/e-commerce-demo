@@ -123,6 +123,7 @@ const Navbar = (): JSX.Element => {
 				style={{
 					zIndex: 20,
 				}}
+				data-testid="navbar"
 			>
 				<motion.div
 					className="cursor-pointer lg:hidden"

@@ -1,6 +1,7 @@
 {
     "*/**/*.{js,jsx,ts,tsx}": [
         "jest --bail --findRelatedTests --passWithNoTests",
+        "cross-env PRE_COMMIT=1 yarn playwright test",
         "prettier --write",
         "eslint --cache --fix",
         "eslint"

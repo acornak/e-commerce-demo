@@ -23,6 +23,7 @@ const config: Config = {
 		"!lib/config/stripe.ts",
 		"!lib/config/constants.ts",
 	],
+	testPathIgnorePatterns: ["\\.spec\\.ts$"],
 };
 
 export default createJestConfig(config);

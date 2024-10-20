@@ -25,7 +25,10 @@ const TopProducts = (): JSX.Element => {
 	}, []);
 
 	return (
-		<div className="flex justify-center items-center text-center mt-6">
+		<div
+			className="flex justify-center items-center text-center mt-6"
+			data-testid="homepage-top-products"
+		>
 			<div>
 				<StyledSectionHeading title="Pick your Winner" />
 				<div className="container mx-auto">
