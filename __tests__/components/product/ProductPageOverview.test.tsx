@@ -24,6 +24,7 @@ import ProductPageOverview from "@/components/product/ProductPageOverview";
 import mockProducts from "@/__mocks__/products/products.mock";
 import mockCategories from "@/__mocks__/categories/categories.mock";
 import generateOrderId from "@/lib/functions/orders";
+import { auth } from "@/lib/config/firebase";
 
 jest.mock("@/lib/stores/wishlist-store", () => ({
 	useWishlistStore: jest.fn(),
@@ -122,7 +123,6 @@ jest.mock("@/lib/functions/orders", () => ({
 }));
 
 describe("ProductPageOverview Component", () => {
-	// Mock functions and stores
 	const mockWishlistItems = [{ productId: 1 }];
 	const mockAddWishlistItem = jest.fn();
 	const mockRemoveWishlistItem = jest.fn();
@@ -441,29 +441,31 @@ describe("ProductPageOverview Component", () => {
 			expect(screen.getAllByText(mockProducts[0].name)).toHaveLength(2);
 		});
 
-		// Initially, quantity is 1 and no size selected
 		expect(screen.getByText("1")).toBeInTheDocument();
 
 		const addButton = screen.getAllByText("+")[0];
 		const subtractButton = screen.getAllByText("-")[0];
 
-		// Click add quantity
 		fireEvent.click(addButton);
 		expect(screen.getByText("2")).toBeInTheDocument();
 
-		// Click subtract quantity
+		for (let i = 0; i < 9; i += 1) {
+			fireEvent.click(addButton);
+		}
+		expect(screen.getByText("10")).toBeInTheDocument();
+		expect(addButton).toBeDisabled();
+
 		fireEvent.click(subtractButton);
+		expect(screen.getByText("9")).toBeInTheDocument();
+
+		for (let i = 0; i < 9; i += 1) {
+			fireEvent.click(subtractButton);
+		}
 		expect(screen.getByText("1")).toBeInTheDocument();
 
-		// Click subtract again (should be disabled)
-		fireEvent.click(subtractButton);
-		expect(screen.getByText("1")).toBeInTheDocument(); // Still 1
-
-		// // Select size
 		const selectSmallButton = screen.getByText("Select Small");
 		fireEvent.click(selectSmallButton);
 
-		// After selecting size, "Add to cart" and "Buy it now" buttons should be enabled
 		const addToCartButton = screen.getByRole("button", {
 			name: /add to cart/i,
 		});
@@ -474,7 +476,6 @@ describe("ProductPageOverview Component", () => {
 		expect(addToCartButton).toBeEnabled();
 		expect(buyItNowButton).toBeEnabled();
 
-		// Click "Add to cart"
 		fireEvent.click(addToCartButton);
 		expect(mockAddItem).toHaveBeenCalledWith({
 			productId: 1,
@@ -565,7 +566,6 @@ describe("ProductPageOverview Component", () => {
 				}),
 		);
 
-		// spy on console error
 		const consoleSpy = jest.spyOn(console, "error").mockImplementation();
 
 		renderComponent();
@@ -978,5 +978,90 @@ describe("ProductPageOverview Component", () => {
 		fireEvent.click(reviewsButton);
 
 		expect(screen.getByText("Product Reviews")).toBeInTheDocument();
+	});
+
+	it('handles "Buy it now" functionality with unauthenticated user', async () => {
+		window.location.href = "http://localhost:3000";
+
+		(auth as any).currentUser = {
+			email: "",
+		};
+
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () =>
+					Promise.resolve({
+						sessionUrl: "https://checkout.stripe.com/sessionId",
+					}),
+			}),
+		) as jest.Mock;
+
+		(generateOrderId as jest.Mock).mockReturnValue("order123");
+
+		renderComponent();
+
+		await waitFor(() => {
+			expect(screen.getByText("Select Small")).toBeInTheDocument();
+		});
+
+		const selectSmallButton = screen.getByText("Select Small");
+		fireEvent.click(selectSmallButton);
+
+		const addButton = screen.getAllByText("+")[0];
+		fireEvent.click(addButton);
+		expect(screen.getByText("2")).toBeInTheDocument();
+
+		const buyItNowButton = screen.getByRole("button", {
+			name: /buy it now/i,
+		});
+		fireEvent.click(buyItNowButton);
+
+		await waitFor(() => {
+			expect(createOrder).toHaveBeenCalledWith({
+				id: expect.any(String),
+				email: "",
+				items: [
+					{
+						productId: 1,
+						sizeId: 1,
+						price: mockProducts[0].price,
+						quantity: 2,
+					},
+				],
+				createdAt: expect.any(Date),
+				status: "pending",
+				paid: false,
+			});
+		});
+
+		await waitFor(() => {
+			expect(global.fetch).toHaveBeenCalledWith("/api/checkout-session", {
+				method: "POST",
+				body: JSON.stringify({
+					lineItems: [
+						{
+							price_data: {
+								currency: "usd",
+								product_data: {
+									name: `${mockProducts[0].name} Size:S`,
+								},
+								unit_amount: 5200,
+							},
+							quantity: 2,
+						},
+					],
+					orderId: "order123",
+					email: "",
+				}),
+			});
+		});
+
+		await waitFor(() => {
+			expect(window.location.href).toBe(
+				"https://checkout.stripe.com/sessionId",
+			);
+		});
+
+		(global.fetch as jest.Mock).mockClear();
 	});
 });

@@ -281,7 +281,7 @@ const BuyingSection: FC<BuyingSectionProps> = ({ product }): JSX.Element => {
 				items: [
 					{
 						productId: product.id,
-						sizeId: selectedSize?.id || 0,
+						sizeId: selectedSize!.id,
 						price: product.price,
 						quantity,
 					},
