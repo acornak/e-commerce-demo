@@ -23,6 +23,7 @@ import ProductPageOverview from "@/components/product/ProductPageOverview";
 // Mocks
 import mockProducts from "@/__mocks__/products/products.mock";
 import mockCategories from "@/__mocks__/categories/categories.mock";
+import generateOrderId from "@/lib/functions/orders";
 
 jest.mock("@/lib/stores/wishlist-store", () => ({
 	useWishlistStore: jest.fn(),
@@ -62,15 +63,7 @@ jest.mock("@/lib/config/firebase", () => ({
 	},
 }));
 
-jest.mock("firebase/firestore", () => ({
-	...jest.requireActual("firebase/firestore"),
-	collection: jest.fn().mockReturnValue({}),
-	doc: jest.fn().mockReturnValue({}),
-	getDocs: jest.fn(),
-	setDoc: jest.fn(),
-	updateDoc: jest.fn(),
-	deleteDoc: jest.fn(),
-}));
+jest.mock("firebase/firestore");
 
 jest.mock("@/lib/hooks/use-hydration", () => ({
 	__esModule: true,
@@ -123,6 +116,11 @@ jest.mock("@/components/common/SizePicker", () => ({
 	),
 }));
 
+jest.mock("@/lib/functions/orders", () => ({
+	__esModule: true,
+	default: jest.fn(),
+}));
+
 describe("ProductPageOverview Component", () => {
 	// Mock functions and stores
 	const mockWishlistItems = [{ productId: 1 }];
@@ -135,6 +133,9 @@ describe("ProductPageOverview Component", () => {
 	const mockSetProductAddedModalOpen = jest.fn();
 	const mockSetCartProduct = jest.fn();
 	const mockSetProductImageModalUrl = jest.fn();
+	const mockSetProductImageModalOpen = jest.fn();
+
+	const originalWindowLocation = window.location;
 
 	beforeEach(() => {
 		jest.clearAllMocks();
@@ -147,6 +148,7 @@ describe("ProductPageOverview Component", () => {
 				setProductAddedModalOpen: mockSetProductAddedModalOpen,
 				setCartProduct: mockSetCartProduct,
 				setProductImageModalUrl: mockSetProductImageModalUrl,
+				setProductImageModalOpen: mockSetProductImageModalOpen,
 			});
 		});
 
@@ -174,6 +176,20 @@ describe("ProductPageOverview Component", () => {
 
 		(createOrder as jest.Mock).mockImplementation(async () => {
 			return { success: true, orderId: "order123" };
+		});
+
+		Object.defineProperty(window, "location", {
+			configurable: true,
+			enumerable: true,
+			value: new URL(window.location.href),
+		});
+	});
+
+	afterEach(() => {
+		Object.defineProperty(window, "location", {
+			configurable: true,
+			enumerable: true,
+			value: originalWindowLocation,
 		});
 	});
 
@@ -563,87 +579,6 @@ describe("ProductPageOverview Component", () => {
 		consoleSpy.mockRestore();
 	});
 
-	// it('handles "Buy it now" functionality', async () => {
-	// 	// Mock window.location.href
-	// 	delete (window as any).location;
-	// 	(window as any).location = { href: "" };
-
-	// 	renderComponent();
-
-	// 	// Wait for product to be rendered
-	// 	await waitFor(() => {
-	// 		expect(screen.getByText("Test Product")).toBeInTheDocument();
-	// 	});
-
-	// 	// Select size
-	// 	const selectSmallButton = screen.getByText("Select Small");
-	// 	fireEvent.click(selectSmallButton);
-
-	// 	// Set quantity to 2
-	// 	const addButton = screen.getAllByText("+")[0];
-	// 	fireEvent.click(addButton);
-	// 	expect(screen.getByText("2")).toBeInTheDocument();
-
-	// 	const buyItNowButton = screen.getByRole("button", {
-	// 		name: /buy it now/i,
-	// 	});
-	// 	fireEvent.click(buyItNowButton);
-
-	// 	// Wait for order creation and redirect
-	// 	await waitFor(() => {
-	// 		expect(createOrder).toHaveBeenCalledWith({
-	// 			id: "order123",
-	// 			email: "test@example.com",
-	// 			items: [
-	// 				{
-	// 					productId: 1,
-	// 					sizeId: "size1",
-	// 					price: 100.0,
-	// 					quantity: 2,
-	// 				},
-	// 			],
-	// 			createdAt: expect.any(Date),
-	// 			status: "pending",
-	// 			paid: false,
-	// 		});
-	// 	});
-
-	// 	// Check fetch was called to create checkout session
-	// 	expect(global.fetch).toHaveBeenCalledWith("/api/checkout-session", {
-	// 		method: "POST",
-	// 		body: JSON.stringify({
-	// 			lineItems: [
-	// 				{
-	// 					price_data: {
-	// 						currency: "usd",
-	// 						product_data: {
-	// 							name: "Test Product Size:Small",
-	// 						},
-	// 						unit_amount: 10000, // 100 * 100
-	// 					},
-	// 					quantity: 2,
-	// 				},
-	// 			],
-	// 			orderId: "order123",
-	// 			email: "test@example.com",
-	// 		}),
-	// 	});
-
-	// 	// Mock fetch response
-	// 	(global.fetch as jest.Mock).mockResolvedValueOnce({
-	// 		json: jest.fn().mockResolvedValue({
-	// 			sessionUrl: "https://checkout.stripe.com/pay/session123",
-	// 		}),
-	// 	});
-
-	// 	// Wait for window.location.href to be set
-	// 	await waitFor(() => {
-	// 		expect(window.location.href).toBe(
-	// 			"https://checkout.stripe.com/pay/session123",
-	// 		);
-	// 	});
-	// });
-
 	it('handles "Add to cart" button disabled when no size is selected', async () => {
 		mockWishlistStore.mockImplementation((fn: any) => {
 			return fn({
@@ -674,5 +609,374 @@ describe("ProductPageOverview Component", () => {
 
 		expect(addToCartButton).toBeEnabled();
 		expect(buyItNowButton).toBeEnabled();
+	});
+
+	it('handles "Buy it now" functionality', async () => {
+		window.location.href = "http://localhost:3000";
+
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () =>
+					Promise.resolve({
+						sessionUrl: "https://checkout.stripe.com/sessionId",
+					}),
+			}),
+		) as jest.Mock;
+
+		(generateOrderId as jest.Mock).mockReturnValue("order123");
+
+		renderComponent();
+
+		await waitFor(() => {
+			expect(screen.getByText("Select Small")).toBeInTheDocument();
+		});
+
+		const selectSmallButton = screen.getByText("Select Small");
+		fireEvent.click(selectSmallButton);
+
+		const addButton = screen.getAllByText("+")[0];
+		fireEvent.click(addButton);
+		expect(screen.getByText("2")).toBeInTheDocument();
+
+		const buyItNowButton = screen.getByRole("button", {
+			name: /buy it now/i,
+		});
+		fireEvent.click(buyItNowButton);
+
+		await waitFor(() => {
+			expect(createOrder).toHaveBeenCalledWith({
+				id: expect.any(String),
+				email: "test@example.com",
+				items: [
+					{
+						productId: 1,
+						sizeId: 1,
+						price: mockProducts[0].price,
+						quantity: 2,
+					},
+				],
+				createdAt: expect.any(Date),
+				status: "pending",
+				paid: false,
+			});
+		});
+
+		await waitFor(() => {
+			expect(global.fetch).toHaveBeenCalledWith("/api/checkout-session", {
+				method: "POST",
+				body: JSON.stringify({
+					lineItems: [
+						{
+							price_data: {
+								currency: "usd",
+								product_data: {
+									name: `${mockProducts[0].name} Size:S`,
+								},
+								unit_amount: 5200,
+							},
+							quantity: 2,
+						},
+					],
+					orderId: "order123",
+					email: "test@example.com",
+				}),
+			});
+		});
+
+		await waitFor(() => {
+			expect(window.location.href).toBe(
+				"https://checkout.stripe.com/sessionId",
+			);
+		});
+
+		(global.fetch as jest.Mock).mockClear();
+	});
+
+	it('handles "Buy it now" functionality - create order error', async () => {
+		window.location.href = "http://localhost:3000";
+
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () =>
+					Promise.resolve({
+						sessionUrl: "https://checkout.stripe.com/sessionId",
+					}),
+			}),
+		) as jest.Mock;
+
+		const mockError = new Error("Creation failed");
+
+		(createOrder as jest.Mock).mockImplementation(async () => {
+			throw mockError;
+		});
+
+		(generateOrderId as jest.Mock).mockReturnValue("order123");
+
+		const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+
+		renderComponent();
+
+		await waitFor(() => {
+			expect(screen.getByText("Select Small")).toBeInTheDocument();
+		});
+
+		const selectSmallButton = screen.getByText("Select Small");
+		fireEvent.click(selectSmallButton);
+
+		const addButton = screen.getAllByText("+")[0];
+		fireEvent.click(addButton);
+		expect(screen.getByText("2")).toBeInTheDocument();
+
+		const buyItNowButton = screen.getByRole("button", {
+			name: /buy it now/i,
+		});
+		fireEvent.click(buyItNowButton);
+
+		await waitFor(() => {
+			expect(createOrder).toHaveBeenCalledWith({
+				id: expect.any(String),
+				email: "test@example.com",
+				items: [
+					{
+						productId: 1,
+						sizeId: 1,
+						price: mockProducts[0].price,
+						quantity: 2,
+					},
+				],
+				createdAt: expect.any(Date),
+				status: "pending",
+				paid: false,
+			});
+		});
+
+		expect(consoleSpy).toHaveBeenCalled();
+
+		consoleSpy.mockRestore();
+	});
+
+	it('handles "Buy it now" functionality - global fetch error', async () => {
+		window.location.href = "http://localhost:3000";
+
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				ok: true,
+			}),
+		) as jest.Mock;
+
+		(generateOrderId as jest.Mock).mockReturnValue("order123");
+
+		const originalAlert = global.alert;
+		const mockAlert = jest.fn();
+		global.alert = mockAlert;
+
+		renderComponent();
+
+		await waitFor(() => {
+			expect(screen.getByText("Select Small")).toBeInTheDocument();
+		});
+
+		const selectSmallButton = screen.getByText("Select Small");
+		fireEvent.click(selectSmallButton);
+
+		const addButton = screen.getAllByText("+")[0];
+		fireEvent.click(addButton);
+		expect(screen.getByText("2")).toBeInTheDocument();
+
+		const buyItNowButton = screen.getByRole("button", {
+			name: /buy it now/i,
+		});
+		fireEvent.click(buyItNowButton);
+
+		await waitFor(() => {
+			expect(createOrder).toHaveBeenCalledWith({
+				id: expect.any(String),
+				email: "test@example.com",
+				items: [
+					{
+						productId: 1,
+						sizeId: 1,
+						price: mockProducts[0].price,
+						quantity: 2,
+					},
+				],
+				createdAt: expect.any(Date),
+				status: "pending",
+				paid: false,
+			});
+		});
+
+		await waitFor(() => {
+			expect(global.fetch).toHaveBeenCalledWith("/api/checkout-session", {
+				method: "POST",
+				body: JSON.stringify({
+					lineItems: [
+						{
+							price_data: {
+								currency: "usd",
+								product_data: {
+									name: `${mockProducts[0].name} Size:S`,
+								},
+								unit_amount: 5200,
+							},
+							quantity: 2,
+						},
+					],
+					orderId: "order123",
+					email: "test@example.com",
+				}),
+			});
+		});
+
+		await waitFor(() => {
+			expect(window.location.href).toBe("http://localhost:3000/");
+			expect(mockAlert).toHaveBeenCalledTimes(1);
+		});
+
+		(global.fetch as jest.Mock).mockClear();
+
+		global.alert = originalAlert;
+	});
+
+	it('handles "Buy it now" functionality - missing data session url', async () => {
+		window.location.href = "http://localhost:3000";
+
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () => Promise.resolve({}),
+			}),
+		) as jest.Mock;
+
+		(generateOrderId as jest.Mock).mockReturnValue("order123");
+
+		try {
+			renderComponent();
+
+			await waitFor(() => {
+				expect(screen.getByText("Select Small")).toBeInTheDocument();
+			});
+
+			const selectSmallButton = screen.getByText("Select Small");
+			fireEvent.click(selectSmallButton);
+
+			const addButton = screen.getAllByText("+")[0];
+			fireEvent.click(addButton);
+			expect(screen.getByText("2")).toBeInTheDocument();
+
+			const buyItNowButton = screen.getByRole("button", {
+				name: /buy it now/i,
+			});
+			fireEvent.click(buyItNowButton);
+
+			await waitFor(() => {
+				expect(createOrder).toHaveBeenCalledWith({
+					id: expect.any(String),
+					email: "test@example.com",
+					items: [
+						{
+							productId: 1,
+							sizeId: 1,
+							price: mockProducts[0].price,
+							quantity: 2,
+						},
+					],
+					createdAt: expect.any(Date),
+					status: "pending",
+					paid: false,
+				});
+			});
+
+			await waitFor(() => {
+				expect(global.fetch).toHaveBeenCalledWith(
+					"/api/checkout-session",
+					{
+						method: "POST",
+						body: JSON.stringify({
+							lineItems: [
+								{
+									price_data: {
+										currency: "usd",
+										product_data: {
+											name: `${mockProducts[0].name} Size:S`,
+										},
+										unit_amount: 5200,
+									},
+									quantity: 2,
+								},
+							],
+							orderId: "order123",
+							email: "test@example.com",
+						}),
+					},
+				);
+			});
+		} catch (error: any) {
+			expect(error).toBeInstanceOf(Error);
+			expect(error.message).toBe("No session URL returned");
+		}
+
+		(global.fetch as jest.Mock).mockClear();
+	});
+
+	it("handles product image modal opening", async () => {
+		renderComponent();
+
+		await waitFor(() => {
+			expect(screen.getAllByText(mockProducts[0].name)).toHaveLength(2);
+		});
+
+		const productImage = screen.getByTestId("product-image");
+
+		fireEvent.click(productImage);
+
+		expect(mockSetProductImageModalUrl).toHaveBeenCalledWith(
+			"/images/test-product.jpg",
+		);
+
+		await waitFor(() => {
+			expect(mockSetProductImageModalOpen).toHaveBeenCalledWith(true);
+		});
+	});
+
+	it("handles product menu - click on description", async () => {
+		renderComponent();
+
+		await waitFor(() => {
+			expect(screen.getAllByText(mockProducts[0].name)).toHaveLength(2);
+		});
+
+		const descriptionButton = screen.getByText("Description");
+
+		fireEvent.click(descriptionButton);
+
+		expect(screen.getByText("Product Description")).toBeInTheDocument();
+	});
+
+	it("handles product menu - click on additional info", async () => {
+		renderComponent();
+
+		await waitFor(() => {
+			expect(screen.getAllByText(mockProducts[0].name)).toHaveLength(2);
+		});
+
+		const additionalButton = screen.getByText("Additional Info");
+
+		fireEvent.click(additionalButton);
+
+		expect(screen.getByText("Product Additional Info")).toBeInTheDocument();
+	});
+
+	it("handles product menu - click on reviews", async () => {
+		renderComponent();
+
+		await waitFor(() => {
+			expect(screen.getAllByText(mockProducts[0].name)).toHaveLength(2);
+		});
+
+		const reviewsButton = screen.getByText("Reviews");
+
+		fireEvent.click(reviewsButton);
+
+		expect(screen.getByText("Product Reviews")).toBeInTheDocument();
 	});
 });

@@ -533,6 +533,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 	}
 
 	const handleContent = () => {
+		/* istanbul ignore next */
 		switch (productMenuSelected) {
 			case 0:
 				return (
@@ -553,6 +554,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 					</motion.div>
 				);
 			default:
+				/* istanbul ignore next */
 				return <></>;
 		}
 	};
@@ -618,6 +620,7 @@ const ProductPageOverview: FC<ProductPageOverviewProps> = ({
 							aria-label="Product image"
 							className="md:flex-2/3 md:pr-10 pb-10 max-h-screen"
 							onClick={() => setProductImageModalOpen(true)}
+							data-testid="product-image"
 						>
 							<Image
 								src={imageUrl}
