@@ -69,6 +69,7 @@ const HeroButton: FC<HeroButtonProps> = ({ text, href }): JSX.Element => (
 				borderRadius: "9999px",
 			}}
 			className="py-3 rounded-full px-6 uppercase text-xs cursor-pointer"
+			data-testid="hero-button"
 		>
 			{text}
 		</motion.div>

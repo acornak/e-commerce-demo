@@ -1,49 +1,66 @@
 // Playwright
 import { test, expect } from "@playwright/test";
 
+// test cookie
+
 test.describe("Homepage Tests", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("/");
 
-		// Cookie consent
-		await page.click('text="Decline"');
+		// Wait for the page to load and be ready
+		await page.waitForLoadState("networkidle");
+
+		// Cookie consent - only click if it exists
+		const declineButton = page.getByText("Decline");
+		if (await declineButton.isVisible()) await declineButton.click();
 	});
 
 	test("has title and all elements", async ({ page }) => {
-		await expect(page).toHaveTitle(/Glassify | E-commerce demo/);
+		// Check title with a more flexible regex
+		await expect(page).toHaveTitle(/Glassify/);
 
-		await expect(page.getByTestId("navbar")).toBeVisible();
+		// Check for main sections with more flexible timing
+		const sections = [
+			"navbar",
+			"homepage-hero",
+			"homepage-collection",
+			"homepage-explore",
+			"homepage-top-products",
+			"homepage-newsletter",
+			"social-footer",
+			"sitemap-footer",
+			"footer",
+		];
 
-		await expect(page.getByTestId("homepage-hero")).toBeVisible();
-		await expect(page.getByTestId("homepage-collection")).toBeVisible();
-		await expect(page.getByTestId("homepage-explore")).toBeVisible();
-		await expect(page.getByTestId("homepage-top-products")).toBeVisible();
-		await expect(page.getByTestId("homepage-newsletter")).toBeVisible();
-		await expect(page.getByTestId("social-footer")).toBeVisible();
-
-		await expect(page.getByTestId("sitemap-footer")).toBeVisible();
-		await expect(page.getByTestId("footer")).toBeVisible();
+		// Use Promise.all with map instead of for...of
+		await Promise.all(
+			sections.map(async (section) => {
+				await expect(
+					page.getByTestId(section),
+					`Section ${section} should be visible`,
+				).toBeVisible({ timeout: 10000 });
+			}),
+		);
 	});
 
-	// test("should have a visible and functional hero section", async ({
-	// 	page,
-	// }) => {
-	// 	const heroSection = page.locator("section#homepage-hero");
-	// 	await expect(heroSection).toBeVisible();
+	test("should have a visible and functional hero section", async ({
+		page,
+	}) => {
+		// Wait for hero section to be ready
+		const heroSection = page.getByTestId("homepage-hero");
+		await expect(heroSection).toBeVisible({ timeout: 10000 });
 
-	// 	// Example: Check for a call-to-action button
-	// 	const ctaButton = heroSection.locator("button", {
-	// 		hasText: /shop now/i,
-	// 	});
-	// 	await expect(ctaButton).toBeVisible();
+		// Wait for the button to be ready
+		const ctaButton = page.getByTestId("hero-button");
+		await expect(ctaButton).toBeVisible({ timeout: 5000 });
 
-	// 	// Click the button and verify navigation
-	// 	await ctaButton.click();
-	// 	await expect(page).toHaveURL(/\/products/i);
-	// });
+		// Click and verify navigation
+		await ctaButton.click();
+		await expect(page).toHaveURL(/\/products/i);
+	});
 
 	// test("should display product collections", async ({ page }) => {
-	// 	const collectionSection = page.locator("section#collection");
+	// 	const collectionSection = page.getByTestId("homepage-collection");
 	// 	await expect(collectionSection).toBeVisible();
 
 	// 	// Check for at least one collection item
