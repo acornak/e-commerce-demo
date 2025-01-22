@@ -13,12 +13,13 @@ import {
 	signInWithPopup,
 } from "firebase/auth";
 import { act } from "react-dom/test-utils";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 jest.mock("firebase/firestore", () => ({
+	doc: jest.fn(),
 	getDoc: jest.fn(),
 	setDoc: jest.fn(),
 	updateDoc: jest.fn(),
-	doc: jest.fn(),
 	collection: jest.fn(),
 }));
 
@@ -202,16 +203,28 @@ describe("signInWithGoogle", () => {
 	beforeEach(() => {
 		useAuthStore.setState({
 			user: null,
+			userData: null,
 			loading: false,
 			initialLoading: true,
 			error: null,
 		});
+		jest.clearAllMocks();
 	});
 
 	it("allows a user to sign up with Google", async () => {
 		const { result } = renderHook(() => useAuthStore());
 		const email = "test@example.com";
-		const mockUser = { uid: "123", email } as User;
+		const mockUser = {
+			uid: "123",
+			email,
+			displayName: "Test User",
+		} as User;
+
+		(doc as jest.Mock).mockReturnValue({});
+		(getDoc as jest.Mock).mockResolvedValue({
+			exists: () => false,
+		});
+		(setDoc as jest.Mock).mockResolvedValue(undefined);
 
 		(setPersistence as jest.Mock).mockResolvedValueOnce(
 			browserLocalPersistence,
@@ -232,6 +245,48 @@ describe("signInWithGoogle", () => {
 			browserLocalPersistence,
 		);
 		expect(signInWithPopup).toHaveBeenCalledWith(auth, {});
+		expect(doc).toHaveBeenCalled();
+		expect(getDoc).toHaveBeenCalled();
+		expect(setDoc).toHaveBeenCalled();
+		expect(result.current.error).toBeNull();
+		expect(result.current.loading).toBeFalsy();
+	});
+
+	it("handles existing user sign in with Google", async () => {
+		const { result } = renderHook(() => useAuthStore());
+		const email = "test@example.com";
+		const mockUser = {
+			uid: "123",
+			email,
+		} as User;
+
+		(doc as jest.Mock).mockReturnValue({});
+		(getDoc as jest.Mock).mockResolvedValue({
+			exists: () => true,
+		});
+
+		(setPersistence as jest.Mock).mockResolvedValueOnce(
+			browserLocalPersistence,
+		);
+		(signInWithPopup as jest.Mock).mockResolvedValueOnce({
+			user: mockUser,
+		});
+
+		act(() => {
+			result.current.signInWithGoogle();
+		});
+
+		await waitFor(() => expect(result.current.user).toEqual(mockUser));
+
+		expect(GoogleAuthProvider).toHaveBeenCalled();
+		expect(setPersistence).toHaveBeenCalledWith(
+			auth,
+			browserLocalPersistence,
+		);
+		expect(signInWithPopup).toHaveBeenCalledWith(auth, {});
+		expect(doc).toHaveBeenCalled();
+		expect(getDoc).toHaveBeenCalled();
+		expect(setDoc).not.toHaveBeenCalled();
 		expect(result.current.error).toBeNull();
 		expect(result.current.loading).toBeFalsy();
 	});
@@ -247,11 +302,17 @@ describe("signInWithGoogle", () => {
 			new Error(errorMessage),
 		);
 
+		// Mock Firestore operations
+		(doc as jest.Mock).mockReturnValue({});
+		(getDoc as jest.Mock).mockResolvedValue({
+			exists: () => false,
+		});
+
 		act(() => {
 			result.current.signInWithGoogle();
 		});
 
-		await waitFor(() => expect(result.current.user).toBeNull());
+		await waitFor(() => expect(result.current.error).toBe(errorMessage));
 
 		expect(GoogleAuthProvider).toHaveBeenCalled();
 		expect(setPersistence).toHaveBeenCalledWith(

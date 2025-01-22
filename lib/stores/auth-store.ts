@@ -11,7 +11,7 @@ import {
 	signInWithPopup,
 } from "firebase/auth";
 import { create } from "zustand";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import { useCartStore } from "./cart-store";
 import { useWishlistStore } from "./wishlist-store";
@@ -69,6 +69,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
 				email,
 				password,
 			);
+
+			// Create new user document
+			const userRef = doc(db, usersCollName, user.email!);
+			const newUserData: User = {
+				firstName: "",
+				lastName: "",
+				createdAt: new Date(),
+			};
+			await setDoc(userRef, newUserData);
+
 			set({ user });
 		} catch (error: any) {
 			set({ error: error.message });
@@ -82,6 +92,24 @@ export const useAuthStore = create<AuthStore>((set) => ({
 			await setPersistence(auth, browserLocalPersistence);
 			const provider = new GoogleAuthProvider();
 			const result = await signInWithPopup(auth, provider);
+
+			// Check if user document exists, create if it doesn't
+			const userRef = doc(db, usersCollName, result.user.email!);
+			const docSnapshot = await getDoc(userRef);
+
+			if (!docSnapshot.exists()) {
+				const newUserData: User = {
+					firstName: result.user.displayName?.split(" ")[0] || "",
+					lastName:
+						result.user.displayName
+							?.split(" ")
+							.slice(1)
+							.join(" ") || "",
+					createdAt: new Date(),
+				};
+				await setDoc(userRef, newUserData);
+			}
+
 			set({ user: result.user });
 		} catch (error: any) {
 			set({ error: error.message });
