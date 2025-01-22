@@ -131,6 +131,7 @@ export type User = {
 	wishlistItems?: WishlistItem[];
 	createdAt?: Date;
 	updatedAt?: Date;
+	admin?: boolean;
 };
 
 export type FormProps = {

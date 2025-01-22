@@ -85,6 +85,7 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 		(state) => state.setProductImageModalOpen,
 	);
 	const user = useAuthStore((state) => state.user);
+	const userData = useAuthStore((state) => state.userData);
 	const initialLoading = useAuthStore((state) => state.initialLoading);
 
 	useEffect(() => {
@@ -149,8 +150,20 @@ const LayoutWrapper: FC<LayoutWrapperProps> = ({ children }) => {
 	};
 
 	if (pathname.includes("/admin")) {
-		if (!initialLoading && !user) {
+		if (initialLoading) {
+			return (
+				<div className="flex h-screen items-center justify-center p-10">
+					<StyledLoading />
+				</div>
+			);
+		}
+
+		if (!user) {
 			redirect(`/login?redirect=${pathname.replace("/", "")}`);
+		}
+
+		if (!userData?.admin) {
+			redirect("/not-found");
 		}
 
 		return (
