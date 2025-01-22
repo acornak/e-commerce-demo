@@ -194,6 +194,7 @@ describe("UserDataForm Component", () => {
 		const submitButton = screen.getByText("Save Changes");
 		fireEvent.click(submitButton);
 
-		expect(await screen.findByText(errorMessage)).toBeInTheDocument();
+		const notification = await screen.findByTestId("notification");
+		expect(notification).toHaveTextContent(errorMessage);
 	});
 });

@@ -9,6 +9,7 @@ import {
 // Types and constants
 import { updateUser } from "@/lib/models/user";
 import { User } from "@/lib/config/types";
+import Notification from "@/components/common/Notification";
 
 type UserDataFormProps = {
 	userData: User | null;
@@ -25,7 +26,11 @@ const UserDataForm: FC<UserDataFormProps> = ({
 	const [lastName, setLastName] = useState<string>(userData?.lastName || "");
 	const [phoneNumber, setPhoneNumber] = useState(userData?.phoneNumber || "");
 	const [loading, setLoading] = useState<boolean>(false);
-	const [error, setError] = useState<string | null>(null);
+	const [showNotification, setShowNotification] = useState<boolean>(false);
+	const [notificationType, setNotificationType] = useState<
+		"success" | "error"
+	>("success");
+	const [notificationMessage, setNotificationMessage] = useState<string>("");
 
 	useEffect(() => {
 		if (userData) {
@@ -51,7 +56,6 @@ const UserDataForm: FC<UserDataFormProps> = ({
 	const handleSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		setLoading(true);
-		setError(null);
 
 		try {
 			await updateUser({
@@ -59,56 +63,69 @@ const UserDataForm: FC<UserDataFormProps> = ({
 				lastName,
 				phoneNumber,
 			});
+			setNotificationType("success");
+			setNotificationMessage("Changes saved successfully!");
+			setShowNotification(true);
 		} catch (err: any) {
-			setError(err.message);
+			setNotificationType("error");
+			setNotificationMessage(err.message);
+			setShowNotification(true);
 		}
 
 		setLoading(false);
 	};
 
 	return (
-		<form className="space-y-4">
-			<StyledTextInput
-				label="First Name"
-				id="firstName"
-				handleChange={(e) => setFirstName(e.target.value)}
-				value={firstName}
-				placeholder="John"
-				disabled={loading}
-			/>
-			<StyledTextInput
-				label="Last Name"
-				id="lastName"
-				handleChange={(e) => setLastName(e.target.value)}
-				value={lastName}
-				placeholder="Doe"
-				disabled={loading}
-			/>
-			<StyledTextInput
-				type="email"
-				label="Email"
-				id="email"
-				handleChange={() => {}}
-				value={email}
-				disabled
-			/>
-			<StyledTextInput
-				label="Phone Number"
-				id="phoneNumber"
-				handleChange={handlePhoneChange}
-				value={phoneNumber}
-				pattern="\\d{3}-\\d{3}-\\d{4}"
-				placeholder="123-456-7890"
-				disabled={loading}
-			/>
+		<>
+			{showNotification && (
+				<Notification
+					message={notificationMessage}
+					type={notificationType}
+					onClose={() => setShowNotification(false)}
+				/>
+			)}
+			<form className="space-y-4">
+				<StyledTextInput
+					label="First Name"
+					id="firstName"
+					handleChange={(e) => setFirstName(e.target.value)}
+					value={firstName}
+					placeholder="John"
+					disabled={loading}
+				/>
+				<StyledTextInput
+					label="Last Name"
+					id="lastName"
+					handleChange={(e) => setLastName(e.target.value)}
+					value={lastName}
+					placeholder="Doe"
+					disabled={loading}
+				/>
+				<StyledTextInput
+					type="email"
+					label="Email"
+					id="email"
+					handleChange={() => {}}
+					value={email}
+					disabled
+				/>
+				<StyledTextInput
+					label="Phone Number"
+					id="phoneNumber"
+					handleChange={handlePhoneChange}
+					value={phoneNumber}
+					pattern="\\d{3}-\\d{3}-\\d{4}"
+					placeholder="123-456-7890"
+					disabled={loading}
+				/>
 
-			<div className="flex items-center justify-center">
-				<StyledSubmitButton onSubmit={handleSubmit}>
-					Save Changes
-				</StyledSubmitButton>
-			</div>
-			{error && <p className="text-red-500 text-center">{error}</p>}
-		</form>
+				<div className="flex items-center justify-center">
+					<StyledSubmitButton onSubmit={handleSubmit}>
+						Save Changes
+					</StyledSubmitButton>
+				</div>
+			</form>
+		</>
 	);
 };
 
