@@ -23,7 +23,11 @@ const SizePicker: FC<SizePickerProps> = ({
 	const [sizes, setSizes] = useState<Size[]>([]);
 
 	useEffect(() => {
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error(`Fetching sizes failed: ${error}`);
+			});
 	}, []);
 
 	const border = (size: Size): string => {
@@ -82,6 +86,7 @@ const SizePicker: FC<SizePickerProps> = ({
 						color: textColor(size),
 					}}
 					disabled={!product.sizeIds.includes(size.id)}
+					data-testid={`size-picker-${size.id}`}
 				>
 					<div className="h-full flex items-center justify-center">
 						{size.name}

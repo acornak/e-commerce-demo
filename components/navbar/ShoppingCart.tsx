@@ -5,6 +5,7 @@ import Image from "next/image";
 // Animations
 import { AnimatePresence, motion } from "framer-motion";
 // Types and constants
+import { auth } from "@/lib/config/firebase";
 import { colors } from "@/lib/config/constants";
 import { CartItem, Product, Size } from "@/lib/config/types";
 // Store
@@ -71,7 +72,11 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 	const removeQuantity = useCartStore((state) => state.removeQuantity);
 
 	useEffect(() => {
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error("Fetching sizes failed:", error);
+			});
 
 		document.addEventListener("visibilitychange", updateCartStore);
 		window.addEventListener("focus", updateCartStore);
@@ -82,11 +87,22 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 	}, []);
 
 	useEffect(() => {
-		fetchProductById(item.productId, setProduct);
-		fetchProductImage(item.productId, setImageUrl);
+		const fetchData = async () => {
+			try {
+				const fetchedProduct = await fetchProductById(item.productId);
+				setProduct(fetchedProduct);
+
+				const fetchedUrl = await fetchProductImage(item.productId);
+				setImageUrl(fetchedUrl);
+			} catch (error) {
+				console.error("Fetching product failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [item.productId]);
 
-	if (!product || !imageUrl) {
+	if (!product || !imageUrl || !sizes) {
 		return <></>;
 	}
 
@@ -105,8 +121,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 					<div>
 						<h1 className="font-semibold">{product.name}</h1>
 						<p className="text-gray-500 text-lg md:text-base px-3">
-							Size:{" "}
-							{sizes && getCartItemSize(sizes, item.sizeId)?.name}
+							Size: {getCartItemSize(sizes, item.sizeId)?.name}
 						</p>
 						<p className="text-gray-500 text-lg md:text-base">
 							<motion.button
@@ -122,6 +137,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 									removeQuantity(item.productId, item.sizeId)
 								}
 								className="w-3"
+								data-testid="remove-quantity-button"
 							>
 								-
 							</motion.button>{" "}
@@ -139,6 +155,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 									addQuantity(item.productId, item.sizeId)
 								}
 								className="w-3"
+								data-testid="add-quantity-button"
 							>
 								+
 							</motion.button>
@@ -159,6 +176,7 @@ const CartItemPreview: FC<CartItemPreviewProps> = ({
 						whileTap={{ color: colors.secondary }}
 						transition={{ duration: 0.2 }}
 						onClick={() => removeItem(item)}
+						data-testid="remove-item-button"
 					>
 						<TrashIcon />
 					</motion.button>
@@ -288,7 +306,10 @@ const ShoppingCart: FC = () => {
 									className="text-center py-4 uppercase w-full"
 									onClick={() => {
 										setCartBarOpen(false);
-										handleCheckout(items);
+										handleCheckout(
+											items,
+											auth.currentUser?.email || "",
+										);
 										clearCart();
 									}}
 								>

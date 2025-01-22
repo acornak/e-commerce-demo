@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // Next
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
@@ -25,7 +25,6 @@ type Category = {
 	slug: string;
 };
 
-// TODO: add category type
 const categories: Category[] = [
 	{
 		image: aviator,
@@ -60,9 +59,9 @@ const categories: Category[] = [
 ];
 
 const CategoriesCarousel = ({
-	itemCount = 4,
+	itemCount,
 }: {
-	itemCount?: number;
+	itemCount: number;
 }): JSX.Element => {
 	const [visibleStart, setVisibleStart] = useState<number>(0);
 
@@ -87,6 +86,7 @@ const CategoriesCarousel = ({
 						className="absolute -left-8 top-1/2 -translate-y-1/2 z-20"
 						onClick={handlePrev}
 						aria-label="Previous category"
+						data-testid="collection-previous-button"
 					>
 						<ChevronLeftIcon size="3em" />
 					</button>
@@ -144,6 +144,7 @@ const CategoriesCarousel = ({
 						className="absolute -right-8 top-1/2 -translate-y-1/2 z-20"
 						onClick={handleNext}
 						aria-label="Next category"
+						data-testid="collection-next-button"
 					>
 						<ChevronRightIcon size="3em" />
 					</button>
@@ -154,25 +155,38 @@ const CategoriesCarousel = ({
 };
 
 const Collection = (): JSX.Element => {
+	const [itemCount, setItemCount] = useState<number>(0);
+
+	useEffect(() => {
+		const updateScreenSize = () => {
+			const width = window.innerWidth;
+			if (width < 640) {
+				setItemCount(2);
+			} else if (width >= 640 && width < 768) {
+				setItemCount(3);
+			} else if (width >= 768 && width < 1024) {
+				setItemCount(4);
+			} else {
+				setItemCount(6);
+			}
+		};
+
+		updateScreenSize();
+		window.addEventListener("resize", updateScreenSize);
+		return () => window.removeEventListener("resize", updateScreenSize);
+	}, []);
+
 	return (
-		<div className="flex justify-center items-center">
+		<div
+			className="flex justify-center items-center"
+			data-testid="homepage-collection"
+		>
 			<div
 				className="w-[90%] bg-white z-60 -mt-10 border border-gray-200"
 				style={{ zIndex: 10 }}
 			>
 				<StyledSectionHeading title="Our Collection" />
-				<div className="sm:hidden">
-					<CategoriesCarousel itemCount={2} />
-				</div>
-				<div className="hidden sm:block md:hidden">
-					<CategoriesCarousel itemCount={3} />
-				</div>
-				<div className="hidden md:block lg:hidden">
-					<CategoriesCarousel itemCount={4} />
-				</div>
-				<div className="hidden lg:block">
-					<CategoriesCarousel itemCount={6} />
-				</div>
+				<CategoriesCarousel itemCount={itemCount} />
 			</div>
 		</div>
 	);

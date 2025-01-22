@@ -38,11 +38,13 @@ const HeadingWithHr: FC<HeadingWithHrProps> = ({
 			onMouseEnter={() => setHovered(true)}
 			onMouseLeave={() => setHovered(false)}
 			onClick={onClick}
+			data-testid="filter-heading"
 		>
 			<h1
 				className={`tracking-widest uppercase border-l-4 px-4 py-2 ${
 					hovered ? "border-secondary" : "border-black"
 				}`}
+				data-testid="filter-heading-title"
 			>
 				{title}
 			</h1>
@@ -98,8 +100,9 @@ const CategoryFilter = ({
 								isHovered === category.id ||
 								selectedCategory === category.id
 									? colors.secondary
-									: "initial",
+									: colors.black,
 						}}
+						data-testid={`category-filter-${category.id}`}
 					>
 						<motion.div
 							initial={{ opacity: 0, x: -10 }}
@@ -119,6 +122,7 @@ const CategoryFilter = ({
 							onMouseEnter={() => setIsHovered(category.id)}
 							onMouseLeave={() => setIsHovered(null)}
 							onClick={() => handleCategoryChange(category.id)}
+							data-testid={`category-filter-button-${category.id}`}
 						>
 							{category.name}
 						</button>
@@ -148,13 +152,12 @@ const PriceFilter = ({ maxPrice }: { maxPrice: number }): JSX.Element => {
 				const [paramsMin, paramsMax] = price.split("-").map(Number);
 				setPriceRange([paramsMin, paramsMax]);
 			}
-		} else {
-			setPriceRange([0, maxPrice]);
 		}
 	}, [searchParams, maxPrice]);
 
 	useEffect(() => {
 		if (min !== 0 || max !== maxPrice) {
+			// istanbul ignore next
 			handleFilterChange(
 				{
 					page: "1",
@@ -192,6 +195,7 @@ const PriceFilter = ({ maxPrice }: { maxPrice: number }): JSX.Element => {
 									<div
 										// eslint-disable-next-line react/jsx-props-no-spreading
 										{...props}
+										data-testid="price-range"
 										style={{
 											...props.style,
 											width: "100%",
@@ -364,8 +368,9 @@ const BrandsFilter = ({ brands }: { brands: Brand[] }): JSX.Element => {
 						color:
 							isHovered === brand.id || selectedBrand === brand.id
 								? colors.secondary
-								: "initial",
+								: colors.black,
 					}}
+					data-testid={`brand-filter-title-${brand.id}`}
 					onClick={() => handleBrandChange(brand.id)}
 				>
 					<motion.div
@@ -383,6 +388,7 @@ const BrandsFilter = ({ brands }: { brands: Brand[] }): JSX.Element => {
 						className="cursor-pointer"
 						onMouseEnter={() => setIsHovered(brand.id)}
 						onMouseLeave={() => setIsHovered(null)}
+						data-testid={`brand-filter-${brand.id}`}
 					>
 						{brand.name}
 					</p>
@@ -407,7 +413,11 @@ const ProductsFilter = (): JSX.Element => {
 	useEffect(() => {
 		fetchAllCategories(setCategories);
 		fetchAllBrands(setBrands);
-		fetchAllSizes(setSizes);
+		fetchAllSizes()
+			.then((res) => setSizes(res))
+			.catch((error) => {
+				console.error(`Fetching sizes failed: ${error}`);
+			});
 		fetchProductsMaxPrice(setMaxPrice);
 	}, []);
 

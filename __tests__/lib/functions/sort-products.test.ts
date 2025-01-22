@@ -4,9 +4,18 @@ import {
 	sortProductsByNameDesc,
 	sortProductsByPriceAsc,
 	sortProductsByPriceDesc,
+	sortProductsDefault,
 } from "@/lib/functions/sort-products";
 
 describe("sortProductsByPriceAsc", () => {
+	it("should correctly return default products sorting", () => {
+		const products = mockProducts.slice(0, 4);
+
+		const sortedProducts = sortProductsDefault(products);
+
+		expect(sortedProducts).toEqual(products);
+	});
+
 	it("should correctly sort the products in ascending order of price", () => {
 		const products = mockProducts.slice(0, 4);
 

@@ -38,7 +38,9 @@ const SortButton: FC<SortButtonProps> = ({
 					onClick={toggleDropdown}
 					className="bg-white text-gray-500 py-1 mx-4 text-sm flex items-center border-b border-gray-500"
 				>
-					<span className="mr-2">{selectedOption.label}</span>
+					<span className="mr-2" data-testid="selected-option">
+						{selectedOption.label}
+					</span>
 					<ChevronDownIcon size="1em" />
 				</button>
 
@@ -51,6 +53,7 @@ const SortButton: FC<SortButtonProps> = ({
 							transition={{ duration: 0.2 }}
 							className="absolute top-7 right-4 mt-2 py-1 w-40 bg-white border border-gray-300 rounded shadow-lg z-50"
 							ref={buttonRef}
+							data-testid="sort-options"
 						>
 							{sortOptions.map((option) => (
 								<motion.button
@@ -61,6 +64,7 @@ const SortButton: FC<SortButtonProps> = ({
 											? "font-bold text-secondary"
 											: ""
 									}`}
+									data-testid={`sort-option-${option.value}`}
 								>
 									{option.label}
 								</motion.button>

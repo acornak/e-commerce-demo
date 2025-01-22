@@ -16,7 +16,10 @@ import PaperPlaneIcon from "../icon/PaperPlane";
 
 const HomepageNewsletter = (): JSX.Element => {
 	return (
-		<div className="my-12 items-center justify-center text-center">
+		<div
+			className="my-12 items-center justify-center text-center"
+			data-testid="homepage-newsletter"
+		>
 			<StyledSectionHeading title="Let's stay in touch" />
 			<div className="flex justify-center items-center">
 				<div className="flex flex-row w-full justify-center">

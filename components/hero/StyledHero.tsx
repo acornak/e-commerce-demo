@@ -31,6 +31,7 @@ const StyledHero: FC<StyledHeroProps> = ({
 	return (
 		<section
 			className={`flex flex-col items-center justify-center min-h-[65vh] ${h}`}
+			data-testid="styled-hero"
 		>
 			<div className="flex justify-center items-center relative w-full h-full">
 				<Image

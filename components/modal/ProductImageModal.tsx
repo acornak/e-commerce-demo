@@ -36,6 +36,7 @@ const ProductImageModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
+					data-testid="product-image-modal"
 				>
 					<motion.div
 						ref={modalRef}
@@ -58,6 +59,7 @@ const ProductImageModal: FC = () => {
 							transition={{ duration: 0.2 }}
 							className="absolute top-0 right-0 transform -translate-y-1/2 translate-x-1/2 -mt-8"
 							onClick={() => setProductImageModalOpen(false)}
+							data-testid="product-image-modal-close"
 						>
 							<CloseIcon />
 						</motion.button>
@@ -66,6 +68,7 @@ const ProductImageModal: FC = () => {
 							alt="Product image"
 							layout="fill"
 							objectFit="contain"
+							data-testid="product-image"
 						/>
 					</motion.div>
 				</motion.div>

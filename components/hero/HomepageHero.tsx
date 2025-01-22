@@ -69,6 +69,7 @@ const HeroButton: FC<HeroButtonProps> = ({ text, href }): JSX.Element => (
 				borderRadius: "9999px",
 			}}
 			className="py-3 rounded-full px-6 uppercase text-xs cursor-pointer"
+			data-testid="hero-button"
 		>
 			{text}
 		</motion.div>
@@ -212,7 +213,10 @@ const HomepageHero: FC = (): JSX.Element => {
 	}, [isChanging]);
 
 	return (
-		<section className="flex flex-col items-center justify-center h-[65vh] md:h-[75vh] lg:h-[95vh]">
+		<section
+			className="flex flex-col items-center justify-center h-[65vh] md:h-[75vh] lg:h-[95vh]"
+			data-testid="homepage-hero"
+		>
 			<div className="flex justify-center items-center relative w-full h-full">
 				<AnimatePresence mode="sync" initial={false}>
 					<motion.div

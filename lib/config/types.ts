@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type Variant = {
 	id: number;
 	name: string;
@@ -129,4 +131,13 @@ export type User = {
 	wishlistItems?: WishlistItem[];
 	createdAt?: Date;
 	updatedAt?: Date;
+};
+
+export type FormProps = {
+	setShowRegister: (show: boolean) => void;
+};
+
+export type ButtonProps = {
+	children: ReactNode;
+	onClick?: () => void;
 };

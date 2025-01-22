@@ -9,11 +9,20 @@ type RelatedProductsProps = {
 	tags: string[];
 };
 
-const RelatedProduct: FC<RelatedProductsProps> = ({ tags }): JSX.Element => {
+const RelatedProducts: FC<RelatedProductsProps> = ({ tags }): JSX.Element => {
 	const [products, setProducts] = useState<Product[]>([]);
 
 	useEffect(() => {
-		fetchProductsByTag(tags, setProducts, 4);
+		const fetchData = async () => {
+			try {
+				const fetchedProducts = await fetchProductsByTag(tags);
+				setProducts(fetchedProducts);
+			} catch (error) {
+				console.error("Fetching related products failed:", error);
+			}
+		};
+
+		fetchData();
 	}, [tags]);
 
 	return (
@@ -30,4 +39,4 @@ const RelatedProduct: FC<RelatedProductsProps> = ({ tags }): JSX.Element => {
 	);
 };
 
-export default RelatedProduct;
+export default RelatedProducts;

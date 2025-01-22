@@ -23,7 +23,10 @@ import ReturnsIcon from "@/components/icon/Returns";
 import SupportIcon from "@/components/icon/Support";
 
 const OurStory = (): JSX.Element => (
-	<div className="flex flex-col items-center justify-center text-center my-16">
+	<div
+		className="flex flex-col items-center justify-center text-center my-16"
+		data-testid="about-our-story"
+	>
 		<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 			<div className="mx-8 flex md:relative">
 				<motion.div
@@ -92,7 +95,10 @@ const OurStory = (): JSX.Element => (
 );
 
 const OurBrand = (): JSX.Element => (
-	<div className="flex items-center justify-center min-h-[60vh] h-[95vh] md:h-[70vh] lg:h-[80vh]">
+	<div
+		className="flex items-center justify-center min-h-[60vh] h-[95vh] md:h-[70vh] lg:h-[80vh]"
+		data-testid="about-our-brand"
+	>
 		<div className="relative w-full h-full ">
 			<Image
 				src={aboutBanner.src}
@@ -175,7 +181,10 @@ const OurBrand = (): JSX.Element => (
 );
 
 const OurCommitment = (): JSX.Element => (
-	<div className="flex flex-col items-center justify-center text-center mt-6 mb-10">
+	<div
+		className="flex flex-col items-center justify-center text-center mt-6 mb-10"
+		data-testid="about-our-commitment"
+	>
 		<DiamondIcon />
 		<p className="text-xl sm:text-2xl lg:text-4xl font-semibold pt-4 pb-10">
 			We&apos;re committing to create the change

@@ -11,7 +11,10 @@ import { colors } from "@/lib/config/constants";
 
 const Footer = (): JSX.Element => {
 	return (
-		<footer className="bg-white text-black text-start border-t border-gray-300">
+		<footer
+			className="bg-white text-black text-start border-t border-gray-300"
+			data-testid="footer"
+		>
 			<div className="container mx-auto">
 				<div className="flex justify-between items-start">
 					<div className="text-xs uppercase tracking-widest py-6 px-4">

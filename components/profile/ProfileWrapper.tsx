@@ -12,7 +12,10 @@ const ProfileWrapper: FC<ProfileWrapperProps> = ({
 	width = "w-full md:w-2/3",
 }): JSX.Element => {
 	return (
-		<div className={`flex flex-col items-center justify-center ${width}`}>
+		<div
+			className={`flex flex-col items-center justify-center ${width}`}
+			data-testid="profile-wrapper"
+		>
 			<h1 className="text-xl tracking-wider border-b border-secondary mb-4">
 				{heading}
 			</h1>

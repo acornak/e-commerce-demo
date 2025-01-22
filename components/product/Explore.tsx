@@ -42,7 +42,10 @@ const Explore = (): JSX.Element => {
 	return (
 		<>
 			<StyledSectionHeading title="Explore new arrivals" />
-			<div className="flex justify-center items-center mt-10 px-8">
+			<div
+				className="flex justify-center items-center mt-10 px-8"
+				data-testid="homepage-explore"
+			>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
 					<div className="flex flex-col bg-secondary-red">
 						<div
@@ -77,6 +80,7 @@ const Explore = (): JSX.Element => {
 								}
 								transition={{ duration: 1 }}
 								className="absolute -right-20 sm:-right-40 xl:-right-60 -bottom-16 w-[120%] h-[120%] overflow-hidden"
+								data-testid="explore-image-0"
 							>
 								<Image
 									src={borat.src}
@@ -123,6 +127,7 @@ const Explore = (): JSX.Element => {
 								}
 								transition={{ duration: 1 }}
 								className="absolute -right-30 md:-right-40 lg:-right-40 xl:-right-52 -bottom-20 lg:-bottom-16 w-[120%] h-[120%] xl:w-[110%] xl:h-[110%] overflow-hidden"
+								data-testid="explore-image-1"
 							>
 								<Image
 									src={woman.src}

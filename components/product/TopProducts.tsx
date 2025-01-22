@@ -11,12 +11,24 @@ import { StyledSectionHeading } from "../styled/Heading";
 
 const TopProducts = (): JSX.Element => {
 	const [topProducts, setTopProducts] = useState<Product[]>([]);
+
 	useEffect((): void => {
-		fetchProductsByCategory(1, setTopProducts, 12);
+		const fetchData = async (): Promise<void> => {
+			try {
+				const products = await fetchProductsByCategory(1, 12);
+				setTopProducts(products);
+			} catch (error) {
+				console.error("Failed to fetch top products:", error);
+			}
+		};
+		fetchData();
 	}, []);
 
 	return (
-		<div className="flex justify-center items-center text-center mt-6">
+		<div
+			className="flex justify-center items-center text-center mt-6"
+			data-testid="homepage-top-products"
+		>
 			<div>
 				<StyledSectionHeading title="Pick your Winner" />
 				<div className="container mx-auto">

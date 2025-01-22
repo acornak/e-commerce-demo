@@ -16,9 +16,12 @@ import { StyledSectionHeading } from "@/components/styled/Heading";
 import { faqQuestions } from "@/lib/config/constants";
 import { FaqQuestion } from "@/lib/config/types";
 
-type QuestionItemProps = { question: FaqQuestion };
+type QuestionItemProps = { question: FaqQuestion; index: number };
 
-const QuestionItem: FC<QuestionItemProps> = ({ question }): JSX.Element => {
+const QuestionItem: FC<QuestionItemProps> = ({
+	question,
+	index,
+}): JSX.Element => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	return (
@@ -40,6 +43,7 @@ const QuestionItem: FC<QuestionItemProps> = ({ question }): JSX.Element => {
 								animate={{ opacity: 1, scale: 1 }}
 								exit={{ opacity: 0, scale: 0.8 }}
 								transition={{ duration: 0.2 }}
+								data-testid="faq-icon"
 							>
 								{isOpen ? "-" : "+"}
 							</motion.span>
@@ -57,6 +61,7 @@ const QuestionItem: FC<QuestionItemProps> = ({ question }): JSX.Element => {
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -10 }}
 					className="text-start text-sm pb-4 px-10"
+					data-testid={`faq-answer-${index}`}
 				>
 					<p>{question.answer}</p>
 				</motion.div>
@@ -82,9 +87,16 @@ const FAQPage: NextPage = (): JSX.Element => {
 				</Link>
 				.
 			</div>
-			<div className="text-center my-6 pb-6 mx-10">
-				{faqQuestions.map((question) => (
-					<QuestionItem key={question.question} question={question} />
+			<div
+				className="text-center my-6 pb-6 mx-10"
+				data-testid="faq-questions"
+			>
+				{faqQuestions.map((question, index) => (
+					<QuestionItem
+						key={question.question}
+						question={question}
+						index={index}
+					/>
 				))}
 			</div>
 			<NewsletterBanner />

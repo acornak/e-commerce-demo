@@ -6,7 +6,7 @@ const createJestConfig = nextJest({
 });
 
 const config: Config = {
-	coverageProvider: "v8",
+	coverageProvider: "babel",
 	testEnvironment: "jsdom",
 	moduleNameMapper: {
 		"^@/components/(.*)$": "<rootDir>/components/$1",
@@ -14,8 +14,16 @@ const config: Config = {
 	},
 	setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
 	collectCoverage: true,
-	coverageReporters: ["json", "lcov", "text", "clover"],
-	collectCoverageFrom: ["app/**/*.ts", "components/**/*.tsx", "lib/**/*.ts"],
+	coverageReporters: ["json", "lcov", "text", "clover", "html"],
+	collectCoverageFrom: [
+		"app/**/*.ts",
+		"app/**/*.tsx",
+		"components/**/*.tsx",
+		"lib/**/*.ts",
+		"!lib/config/stripe.ts",
+		"!lib/config/constants.ts",
+	],
+	testPathIgnorePatterns: ["\\.spec\\.ts$"],
 };
 
 export default createJestConfig(config);

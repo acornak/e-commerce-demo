@@ -5,8 +5,9 @@ import {
 	sortProductsByNameDesc,
 	sortProductsByPriceAsc,
 	sortProductsByPriceDesc,
+	sortProductsDefault,
 } from "../functions/sort-products";
-import { Color, FaqQuestion, Product, SortOption } from "./types";
+import { Color, FaqQuestion, SortOption } from "./types";
 import { db } from "./firebase";
 
 export const colors: Color = {
@@ -35,7 +36,7 @@ export const sortOptions: SortOption[] = [
 	{
 		label: "Default Sorting",
 		value: "default",
-		sortFunc: (products: Product[]): Product[] => products,
+		sortFunc: sortProductsDefault,
 	},
 	{
 		label: "Alphabetical, A-Z",

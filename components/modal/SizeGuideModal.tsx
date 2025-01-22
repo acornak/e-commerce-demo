@@ -12,7 +12,10 @@ import CloseIcon from "../icon/Close";
 const DressesTable = (): JSX.Element => {
 	return (
 		<>
-			<h2 className="text-2xl font-bold py-4 uppercase tracking-widest text-lg">
+			<h2
+				className="text-2xl font-bold py-4 uppercase tracking-widest text-lg"
+				data-testid="dresses-table"
+			>
 				Dresses Size Chart
 			</h2>
 			<hr className="my-2 w-20 border-black" />
@@ -208,7 +211,10 @@ const DressesTable = (): JSX.Element => {
 const SwimwearTable = (): JSX.Element => {
 	return (
 		<>
-			<h2 className="text-2xl font-bold py-4 uppercase tracking-widest text-lg">
+			<h2
+				className="text-2xl font-bold py-4 uppercase tracking-widest text-lg"
+				data-testid="swimwear-table"
+			>
 				Swimwear Size Chart
 			</h2>
 			<hr className="my-2 w-20 border-black" />
@@ -404,7 +410,10 @@ const SwimwearTable = (): JSX.Element => {
 const ShoesTable = (): JSX.Element => {
 	return (
 		<>
-			<h2 className="text-2xl font-bold py-4 uppercase tracking-widest text-lg">
+			<h2
+				className="text-2xl font-bold py-4 uppercase tracking-widest text-lg"
+				data-testid="shoes-table"
+			>
 				Shoes Size Chart
 			</h2>
 			<hr className="mt-2 mb-6 w-20 border-black" />
@@ -507,18 +516,10 @@ const SizeGuideModal: FC = () => {
 	);
 
 	const handleContent = () => {
-		switch (currentTab) {
-			case "dresses":
-				return <DressesTable />;
-			case "swimwear":
-				return <SwimwearTable />;
-			case "shoes":
-				return <ShoesTable />;
-			default:
-				<></>;
-		}
+		if (currentTab === "swimwear") return <SwimwearTable />;
+		if (currentTab === "shoes") return <ShoesTable />;
 
-		return <></>;
+		return <DressesTable />;
 	};
 
 	useOutsideAlerter(modalRef, () => {
@@ -534,6 +535,7 @@ const SizeGuideModal: FC = () => {
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
 					className="fixed inset-0 z-50 flex items-center justify-center"
+					data-testid="size-guide-modal"
 				>
 					<motion.div
 						ref={modalRef}
@@ -552,6 +554,7 @@ const SizeGuideModal: FC = () => {
 										? "border-t border-x border-gray-300"
 										: "border-b border-gray-300 hover:text-secondary hover:border-gray-200 hover:border-b-0 hover:border-t hover:border-x"
 								}`}
+								data-testid="dresses-tab"
 							>
 								Dresses
 							</button>
@@ -563,6 +566,7 @@ const SizeGuideModal: FC = () => {
 										? "border-t border-x border-gray-300"
 										: "border-b border-t-transparent border-gray-300 hover:text-secondary hover:border-gray-200 hover:border-b-0 hover:border-t hover:border-x"
 								}`}
+								data-testid="swimwear-tab"
 							>
 								Swimwear
 							</button>
@@ -574,6 +578,7 @@ const SizeGuideModal: FC = () => {
 										? "border-t border-x border-gray-300"
 										: "border-b border-gray-300 hover:text-secondary hover:border-gray-200 hover:border-b-0 hover:border-t hover:border-x"
 								}`}
+								data-testid="shoes-tab"
 							>
 								Shoes
 							</button>
@@ -592,6 +597,7 @@ const SizeGuideModal: FC = () => {
 							transition={{ duration: 0.2 }}
 							className="absolute top-0 right-0 mt-4 mr-4"
 							onClick={() => setSizeGuideModalOpen(false)}
+							data-testid="size-guide-modal-close"
 						>
 							<CloseIcon />
 						</motion.button>

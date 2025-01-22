@@ -1,11 +1,24 @@
 /* eslint-disable import/prefer-default-export */
-export async function POST(req: Request): Promise<Response> {
+import { NextRequest, NextResponse } from "next/server";
+
+/**
+ * Validate reCAPTCHA response
+ * @param {NextRequest} req - Request object
+ * @returns {NextResponse} - Response with status
+ * @throws {Error} - Throws error if reCAPTCHA response is invalid
+ * @example
+ * POST /api/captcha
+ * {
+ * 	"g-recaptcha-response": "valid-token"
+ * }
+ */
+export async function POST(req: NextRequest): Promise<NextResponse> {
 	const body: {
 		"g-recaptcha-response": string;
 	} = await req.json();
 
 	if (!body["g-recaptcha-response"]) {
-		return Response.json({ status: 401 });
+		return NextResponse.json({}, { status: 401 });
 	}
 
 	const response = await fetch(
@@ -22,8 +35,8 @@ export async function POST(req: Request): Promise<Response> {
 	const data = await response.json();
 
 	if (!data.success) {
-		return Response.json({ status: 401 });
+		return NextResponse.json({}, { status: 401 });
 	}
 
-	return Response.json({ status: 200 });
+	return NextResponse.json({});
 }
