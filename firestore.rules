@@ -5,20 +5,27 @@ service cloud.firestore {
 
     match /{document=**} {
       // Admin overwrite for everything
-      allow read, write: if get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.admin
+      allow read, write: if get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.admin == true;
       allow read, write: if false;
     }
 
     match /users/{userId} {
-      // Ensure there is an authenticated request
-      allow read, create, update, delete: if request.auth != null && request.auth.token.email == userId;
+      // Ensure there is an authenticated request and user is modifying their own document
+      allow read: if request.auth != null && request.auth.token.email == userId;
 
-      // Allow create but prevent setting the 'admin' field
-      allow create: if request.auth != null && request.auth.token.email == userId && !("admin" in request.resource.data);
+      // Allow create with required fields and force admin: false
+      allow create: if request.auth != null 
+        && request.auth.token.email == userId
+        && request.resource.data.keys().hasAll(['firstName', 'lastName', 'createdAt'])
+        && (request.resource.data.admin == false || !("admin" in request.resource.data))
+        && request.resource.data.diff(resource == null ? {} : resource.data).affectedKeys()
+            .hasOnly(['firstName', 'lastName', 'createdAt', 'admin']);
 
-      // Allow update but prevent modifying the 'admin' field if it already exists
-      allow update: if request.auth != null && request.auth.token.email == userId &&
-        (!("admin" in request.resource.data) || request.resource.data.admin == resource.data.admin);
+      // Allow update but prevent modifying the admin field and createdAt
+      allow update: if request.auth != null 
+        && request.auth.token.email == userId
+        && (!("admin" in request.resource.data) || resource.data.admin == request.resource.data.admin)
+        && (!("createdAt" in request.resource.data) || resource.data.createdAt == request.resource.data.createdAt);
     }
 
 		match /orders/{document=**} {

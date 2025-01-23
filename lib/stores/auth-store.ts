@@ -11,15 +11,19 @@ import {
 	signInWithPopup,
 } from "firebase/auth";
 import { create } from "zustand";
-import { auth } from "../config/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "../config/firebase";
 import { useCartStore } from "./cart-store";
 import { useWishlistStore } from "./wishlist-store";
+import { usersCollName } from "../config/constants";
+import { User } from "../config/types";
 
 // TODO:
 export interface AuthStore {
 	// make this logged in boolean
 	// add custom user type to the AuthStore
 	user: FirebaseUser | null;
+	userData: User | null; // Add Firestore user data
 	initialLoading: boolean;
 	loading: boolean;
 	error: string | null;
@@ -36,6 +40,7 @@ export interface AuthStore {
 
 export const useAuthStore = create<AuthStore>((set) => ({
 	user: null,
+	userData: null, // Add Firestore user data
 	loading: false,
 	initialLoading: true,
 	error: null,
@@ -64,6 +69,16 @@ export const useAuthStore = create<AuthStore>((set) => ({
 				email,
 				password,
 			);
+
+			// Create new user document
+			const userRef = doc(db, usersCollName, user.email!);
+			const newUserData: User = {
+				firstName: "",
+				lastName: "",
+				createdAt: new Date(),
+			};
+			await setDoc(userRef, newUserData);
+
 			set({ user });
 		} catch (error: any) {
 			set({ error: error.message });
@@ -77,6 +92,24 @@ export const useAuthStore = create<AuthStore>((set) => ({
 			await setPersistence(auth, browserLocalPersistence);
 			const provider = new GoogleAuthProvider();
 			const result = await signInWithPopup(auth, provider);
+
+			// Check if user document exists, create if it doesn't
+			const userRef = doc(db, usersCollName, result.user.email!);
+			const docSnapshot = await getDoc(userRef);
+
+			if (!docSnapshot.exists()) {
+				const newUserData: User = {
+					firstName: result.user.displayName?.split(" ")[0] || "",
+					lastName:
+						result.user.displayName
+							?.split(" ")
+							.slice(1)
+							.join(" ") || "",
+					createdAt: new Date(),
+				};
+				await setDoc(userRef, newUserData);
+			}
+
 			set({ user: result.user });
 		} catch (error: any) {
 			set({ error: error.message });
@@ -115,7 +148,33 @@ export const useAuthStore = create<AuthStore>((set) => ({
 }));
 
 /* istanbul ignore next */
-onAuthStateChanged(auth, (user) => {
-	useAuthStore.setState({ user });
-	useAuthStore.getState().initialLoading = false;
+onAuthStateChanged(auth, async (user) => {
+	if (user?.email) {
+		try {
+			const userRef = doc(db, usersCollName, user.email);
+			const docSnapshot = await getDoc(userRef);
+			const userData = docSnapshot.exists()
+				? (docSnapshot.data() as User)
+				: null;
+
+			useAuthStore.setState({
+				user,
+				userData,
+				initialLoading: false,
+			});
+		} catch (error) {
+			console.error("Error fetching user data:", error);
+			useAuthStore.setState({
+				user,
+				userData: null,
+				initialLoading: false,
+			});
+		}
+	} else {
+		useAuthStore.setState({
+			user: null,
+			userData: null,
+			initialLoading: false,
+		});
+	}
 });
